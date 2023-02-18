@@ -23,7 +23,7 @@ jobs:
           git config user.name "Chronicle_Protocol_CI"
           git config user.email "helm-maintainers@users.noreply.github.com"
       - name: Install Helm
-        uses: azure/setup-helm@v3.4
+        uses: azure/setup-helm@v3.5
         with:
           version: v3.8.1
 
