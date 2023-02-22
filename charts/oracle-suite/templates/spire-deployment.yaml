@@ -31,11 +31,11 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.spire.image.repository }}:{{ .Values.spire.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.spire.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.spire.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:

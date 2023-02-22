@@ -1,13 +1,13 @@
-apiVersion: v1
+ssb.apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "oracle-suite.fullname" . }}
   labels:
     {{- include "oracle-suite.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.ssb.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.ssb.service.port }}
       targetPort: http
       protocol: TCP
       name: http
