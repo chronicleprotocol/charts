@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "omnia.fullname" . }}
+  name: {{ include "oracle-suite.fullname" . }}
   labels:
-    {{- include "omnia.labels" . | nindent 4 }}
+    {{- include "oracle-suite.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "omnia.fullname" . }}
+    name: {{ include "oracle-suite.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
