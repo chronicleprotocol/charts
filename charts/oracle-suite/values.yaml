@@ -2,13 +2,9 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+type: relay # feed or relay accepted only
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+replicaCount: 1
 
 imagePullSecrets: []
 nameOverride: ""
@@ -23,6 +19,62 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+ssb:
+  image: image: ghcr.io/chronicleprotocol/ssb_server
+  tag: 1.12.9
+
+  service:
+    type: ClusterIP
+    port: 80
+
+ssb_helper:
+  image: ghcr.io/chronicleprotocol/ssb-rpc-client
+  tag: latest
+
+  service:
+    type: ClusterIP
+    port: 80
+
+spire:
+  image: ghcr.io/chronicleprotocol/spire
+  tag: latest
+
+  service:
+    type: ClusterIP
+    port: 80
+
+gofer:
+  image: ghcr.io/chronicleprotocol/gofer
+  tag: latest
+
+  service:
+    type: ClusterIP
+    port: 80
+
+rpcsplitter:
+  image: ghcr.io/chronicleprotocol/rpc-splitter
+  tag: latest
+
+  service:
+    type: ClusterIP
+    port: 80
+
+omnia:
+  image: ghcr.io/chronicleprotocol/omnia:dev
+  tag:
+
+  service:
+    type: ClusterIP
+    port: 80
+
+torproxy:
+  image: dperson/torproxy
+  tag:
+
+  service:
+    type: ClusterIP
+    port: 80
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -36,9 +88,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false
