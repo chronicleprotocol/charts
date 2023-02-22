@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "oracle-suite.fullname" . }}
+  name: {{ include "oracle-suite.fullname" . }}-gofer
   labels:
     {{- include "oracle-suite.labels" . | nindent 4 }}
 spec:
