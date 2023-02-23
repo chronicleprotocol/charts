@@ -9,7 +9,7 @@ replicaCount: 1
 imagePullSecrets: []
 imagePullPolicy: Always
 nameOverride: ""
-fullnameOverride: "dev"
+fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -137,3 +137,31 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+externalSecrets:
+  enabled: false
+  # external secret key
+  # key: "some/path/secret"
+  # decodginStrategy: "None"
+  # # secret-store config
+  # secretStore: "vault"
+  # vault:
+  #   server: "https://vault:8200"
+  #   mountPath: "k8s-mount-path"
+  #   namespace: "our/namespace/"
+  #   serviceAccount: "k8s-service-account"
+  #   role: "my-role"
+  #   path: "path/"
+  #   version: "v1"
+
+
+# Environment variable listing
+env:
+  # non sensitive variables
+  normal:
+    # env vars for all pods
+    FOO: "bar"
+
+  # sensitive variables stored in a secret
+  secret:
+    BAR: foo
