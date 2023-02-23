@@ -7,8 +7,9 @@ type: relay # feed or relay accepted only
 replicaCount: 1
 
 imagePullSecrets: []
+imagePullPolicy: Always
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "dev"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -20,56 +21,63 @@ serviceAccount:
   name: ""
 
 ssb:
-  image: image: ghcr.io/chronicleprotocol/ssb_server
-  tag: 1.12.9
+  image: 
+    repository: ghcr.io/chronicleprotocol/ssb_server
+    tag: 1.12.9
 
   service:
     type: ClusterIP
     port: 80
 
 ssb_helper:
-  image: ghcr.io/chronicleprotocol/ssb-rpc-client
-  tag: latest
+  image: 
+    repository: ghcr.io/chronicleprotocol/ssb-rpc-client
+    tag: latest
 
   service:
     type: ClusterIP
     port: 80
 
 spire:
-  image: ghcr.io/chronicleprotocol/spire
-  tag: latest
+  image: 
+    repository: ghcr.io/chronicleprotocol/spire
+    tag: latest
 
   service:
     type: ClusterIP
     port: 80
 
 gofer:
-  image: ghcr.io/chronicleprotocol/gofer
-  tag: latest
+  image: 
+    repository: ghcr.io/chronicleprotocol/gofer
+    tag: latest
 
   service:
     type: ClusterIP
     port: 80
 
 rpcsplitter:
-  image: ghcr.io/chronicleprotocol/rpc-splitter
-  tag: latest
+  image: 
+    repository: ghcr.io/chronicleprotocol/rpc-splitter
+    tag: latest
 
   service:
     type: ClusterIP
     port: 80
 
 omnia:
-  image: ghcr.io/chronicleprotocol/omnia:dev
-  tag:
+  image: 
+    repository: ghcr.io/chronicleprotocol/omnia:dev
+    tag:
 
   service:
     type: ClusterIP
     port: 80
 
 torproxy:
-  image: dperson/torproxy
-  tag:
+  image: 
+    repository: dperson/torproxy
+    tag: latest
 
   service:
     type: ClusterIP

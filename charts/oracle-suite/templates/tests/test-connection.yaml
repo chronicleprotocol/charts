@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "oracle-suite.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "oracle-suite.fullname" . }}:{{ .Values.ssb.service.port }}']
   restartPolicy: Never

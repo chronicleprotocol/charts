@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "oracle-suite.fullname" . }}-gofer
+  name: {{ include "oracle-suite.fullname" . }}-rpcsplitter
   labels:
     {{- include "oracle-suite.labels" . | nindent 4 }}
 spec:
@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "oracle-suite.selectorLabels" . | nindent 6 }}
+      service: {{ include "oracle-suite.fullname" . }}-rpcsplitter
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -31,11 +31,11 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.gofer.image.repository }}:{{ .Values.gofer.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.rpcsplitter.image.repository }}:{{ .Values.rpcsplitter.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.gofer.service.port }}
+              containerPort: {{ .Values.rpcsplitter.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:

@@ -10,7 +10,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "oracle-suite.selectorLabels" . | nindent 6 }}
+      service: {{ include "oracle-suite.fullname" . }}-ssb-helper
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -32,7 +32,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.ssb_helper.image.repository }}:{{ .Values.ssb_helper.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.ssb_helper.service.port }}

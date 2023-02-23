@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "oracle-suite.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.sb_helper.service.type }}
+  type: {{ .Values.ssb_helper.service.type }}
   ports:
-    - port: {{ .Values.sb_helper.service.port }}
+    - port: {{ .Values.ssb_helper.service.port }}
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "oracle-suite.selectorLabels" . | nindent 4 }}
+    service: {{ include "oracle-suite.fullname" . }}-ssb-helper
