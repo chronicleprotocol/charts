@@ -7,9 +7,11 @@ metadata:
 spec:
   type: {{ .Values.spire.service.type }}
   ports:
-    - port: {{ .Values.spire.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    {{- range .Values.spire.service.ports }}
+    - port: {{ .port }}
+      targetPort: {{ .name }}
+      protocol: {{ .protocol }}}
+      name: {{ .name }}
+    {{- end }}
   selector:
     service: {{ include "oracle-suite.fullname" . }}-spire

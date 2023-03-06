@@ -34,9 +34,11 @@ spec:
           image: "{{ .Values.spire.image.repository }}:{{ .Values.spire.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.spire.service.port }}
-              protocol: TCP
+          {{- range .Values.spire.service.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .port }}
+              protocol: {{ .protocol }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /
