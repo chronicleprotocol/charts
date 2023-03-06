@@ -27,16 +27,21 @@ ssb:
 
   service:
     type: ClusterIP
-    port: 80
+    ports: 
+      - name: "8008"
+        port: 8008
+        protocol: TCP
+      - name: "8009"
+        port: 8009
+        protocol: TCP
+      - name: "8098"
+        port: 8098
+        protocol: TCP
 
 ssb_helper:
   image: 
     repository: ghcr.io/chronicleprotocol/ssb-rpc-client
     tag: latest
-
-  service:
-    type: ClusterIP
-    port: 80
 
 spire:
   image: 
@@ -45,7 +50,10 @@ spire:
 
   service:
     type: ClusterIP
-    port: 80
+    port:
+      - 9100
+      - 8100
+      - 8800
 
 gofer:
   image: 
@@ -54,7 +62,7 @@ gofer:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8081
 
 rpcsplitter:
   image: 
@@ -63,16 +71,12 @@ rpcsplitter:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 9989
 
 omnia:
   image: 
     repository: ghcr.io/chronicleprotocol/omnia:dev
     tag:
-
-  service:
-    type: ClusterIP
-    port: 80
 
 torproxy:
   image: 
@@ -81,7 +85,7 @@ torproxy:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 9050
 
 podAnnotations: {}
 

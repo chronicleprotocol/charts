@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.omnia.service.port }}
+              containerPort: 9090
               protocol: TCP
           livenessProbe:
             httpGet:
