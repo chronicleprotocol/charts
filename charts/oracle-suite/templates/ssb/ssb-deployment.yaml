@@ -34,9 +34,11 @@ spec:
           image: "{{ .Values.ssb.image.repository }}:{{ .Values.ssb.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.ssb.service.port }}
-              protocol: TCP
+          {{- range .Values.ssb.service.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .port }}
+              protocol: {{ .protocol }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /

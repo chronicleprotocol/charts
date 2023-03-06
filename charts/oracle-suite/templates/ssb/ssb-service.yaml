@@ -7,9 +7,11 @@ metadata:
 spec:
   type: {{ .Values.ssb.service.type }}
   ports:
-    - port: {{ .Values.ssb.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    {{- range .Values.ssb.service.ports }}
+    - port: {{ .port }}
+      targetPort: {{ .name }}
+      protocol: {{ .protocol }}}
+      name: {{ .name }}
+    {{- end }}
   selector:
     service: {{ include "oracle-suite.fullname" . }}-ssb
