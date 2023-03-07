@@ -1,6 +1,9 @@
 apiVersion: v2
 name: leeloo
 description: A Helm chart for Kubernetes
+maintainers:
+  - name: WesleyCharlesBlake
+    url: https://github.com/WesleyCharlesBlake/
 
 # A chart can be either an 'application' or a 'library' chart.
 #
