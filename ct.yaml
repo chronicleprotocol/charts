@@ -3,5 +3,5 @@ target-branch: main
 chart-dirs:
   - charts
 chart-repos:
-  - pokt=https://chronicleprotocol.github.io/charts/
+  - chroniclelabs=https://chronicleprotocol.github.io/charts/
 helm-extra-args: --timeout 600s
