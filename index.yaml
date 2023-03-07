@@ -1,0 +1,73 @@
+apiVersion: v1
+entries:
+  ghost:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-07T15:48:14.474640145Z"
+    description: A Helm chart for Kubernetes
+    digest: 9900c3c45b3c3cae5c964c30bb6096e31df69afd3d93a9c8086717252831c015
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: ghost
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ghost-0.1.1/ghost-0.1.1.tgz
+    version: 0.1.1
+  lair:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-07T15:48:14.737148296Z"
+    description: A Helm chart for Kubernetes
+    digest: 71fc5a7ef68cf3fc3a63e7edb5e065581a4432b99e00580801c1a21fe0434eac
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: lair
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lair-0.1.1/lair-0.1.1.tgz
+    version: 0.1.1
+  leeloo:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-07T15:48:14.946156504Z"
+    description: A Helm chart for Kubernetes
+    digest: 0cd9b9eeffdd532549f11308adae712aee0b5273c0b13b90bf1486710f829191
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: leeloo
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/leeloo-0.1.1/leeloo-0.1.1.tgz
+    version: 0.1.1
+  monitor:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-07T15:48:15.172700595Z"
+    description: A Helm chart for Kubernetes
+    digest: a93b9045102ddf9fe25853feec2ae6c816258d6038381a8a940162212c6d5ada
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: monitor
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/monitor-0.1.1/monitor-0.1.1.tgz
+    version: 0.1.1
+  spectre:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-07T15:48:15.445842775Z"
+    description: A Helm chart for Kubernetes
+    digest: 54dd81c03019eea03bda56f547116e6e6a95228e99657b552a349597fb746c86
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.1/spectre-0.1.1.tgz
+    version: 0.1.1
+generated: "2023-03-07T15:48:15.445847375Z"
