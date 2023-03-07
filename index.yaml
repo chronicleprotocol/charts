@@ -3,6 +3,19 @@ entries:
   ghost:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2023-03-07T17:25:37.271053877Z"
+    description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+    digest: 728eba91c7cc52a6ab8d83361a5e444e06814ef2ef479071b40ec72614a7b312
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: ghost
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ghost-0.1.2/ghost-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2023-03-07T15:48:14.474640145Z"
     description: A Helm chart for Kubernetes
     digest: 9900c3c45b3c3cae5c964c30bb6096e31df69afd3d93a9c8086717252831c015
@@ -70,4 +83,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.1/spectre-0.1.1.tgz
     version: 0.1.1
-generated: "2023-03-07T15:48:15.445847375Z"
+generated: "2023-03-07T17:25:37.271061577Z"
