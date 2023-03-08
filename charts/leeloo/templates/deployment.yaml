@@ -33,18 +33,29 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/usr/local/bin/leeloo"]
+          args: ["run", "--config", "/config/config.json"]
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          volumeMounts:
+          {{- if .Values.config.enabled }}
+          - mountPath: "/config"
+            name: secrets
+            readOnly: true
+          {{- else }}
+          - mountPath: /config
+            name: config
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -59,3 +70,13 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        {{- if .Values.config.enabled }}
+        - name: secrets
+          secret:
+            secretName:  {{ include "leeloo.fullname" . }}-secret
+        {{- else }}
+        - name: config
+          configMap:
+            name: {{ include "leeloo.fullname" . -}}-cm
+        {{- end }}
