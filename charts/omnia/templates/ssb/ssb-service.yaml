@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "omnia.fullname" . }}-ssb
+  labels:
+    {{- include "omnia.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ssb.service.type }}
+  ports:
+    {{- range .Values.ssb.service.ports }}
+    - port: {{ .port }}
+      targetPort: {{ .name }}
+      protocol: {{ .protocol }}}
+      name: {{ .name }}
+    {{- end }}
+  selector:
+    service: {{ include "omnia.fullname" . }}-ssb
