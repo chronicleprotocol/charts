@@ -34,7 +34,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.rpcsplitter.image.repository }}:{{ .Values.rpcsplitter.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-          args: [ "--eth-rpc", "{{ .Values.rpcsplitter.config.ethRpc }}", "-l", "0.0.0.0:9989", "run" ]
+          args: [ "--eth-rpc", "{{ .Values.rpcsplitter.config.ethRpc }}", "-l", "0.0.0.0:9989", "run", "-v", "debug"]
           ports:
             - name: http
               containerPort: {{ .Values.rpcsplitter.service.port }}

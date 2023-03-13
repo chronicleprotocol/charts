@@ -20,7 +20,7 @@ data:
         "setzerTimeout": 10,
         "setzerCacheExpiry": 120,
         "setzerMinMedian": 3,
-        "setzerEthRpcUrl": "http://rpc-splitter.local:9989",
+        "setzerEthRpcUrl": "{{ include "omnia-feed.fullname" . }}-rpcsplitter:{{ .Values.rpcsplitter.service.port }}",
         "verbose": true,
         "logFormat": "json",
         "ethGas": 200000

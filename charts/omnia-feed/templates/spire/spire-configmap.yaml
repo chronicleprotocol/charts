@@ -14,7 +14,7 @@ data:
         "transport":"webapi",
         "webapi": {
           "listenAddr": "0.0.0.0:8800",
-          "socks5ProxyAddr": "torproxy.local:9050"
+          "socks5ProxyAddr": "{{ include "omnia-feed.fullname" . }}-torproxy:{{ .Values.torproxy.service.port }}",
         },
         "libp2p": {
           "bootstrapAddrs": [
@@ -36,7 +36,7 @@ data:
         "rpc": {
           "address": "127.0.0.1:9100"
         },
-        "rpcAgentAddr": "spire.local:9100",
+        "rpcAgentAddr": "{{ include "omnia-feed.fullname" . }}-spire:9100",
         "rpcListenAddr": "0.0.0.0:9100",
         "pairs": [
           "BTCUSD",
