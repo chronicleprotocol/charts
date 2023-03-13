@@ -9,8 +9,8 @@ spec:
   ports:
     {{- range .Values.spire.service.ports }}
     - port: {{ .port }}
-      targetPort: {{ .name }}
-      protocol: {{ .protocol }}}
+      targetPort: {{ .port }}
+      protocol: {{ .protocol }}
       name: {{ .name }}
     {{- end }}
   selector:

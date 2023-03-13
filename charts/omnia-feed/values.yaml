@@ -30,13 +30,13 @@ ssb:
   service:
     type: ClusterIP
     ports:
-      - name: "8008"
+      - name: "port-8008"
         port: 8008
         protocol: TCP
-      - name: "8009"
+      - name: "port-8009"
         port: 8009
         protocol: TCP
-      - name: "8098"
+      - name: "port-8098"
         port: 8098
         protocol: TCP
 
@@ -52,10 +52,16 @@ spire:
 
   service:
     type: ClusterIP
-    port:
-      - 9100
-      - 8100
-      - 8800
+    ports:
+      - name: "port-8800"
+        port: 8800
+        protocol: TCP
+      - name: "port-8100"
+        port: 8100
+        protocol: TCP
+      - name: "port-9100"
+        port: 9100
+        protocol: TCP
 
 gofer:
   image:
@@ -77,7 +83,7 @@ rpcsplitter:
 
 omnia:
   image:
-    repository: ghcr.io/chronicleprotocol/omnia
+    repository:
     tag: ""
 
 torproxy:
