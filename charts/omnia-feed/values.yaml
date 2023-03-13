@@ -2,8 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-type: feed # feed or relay accepted only
-
+type: feed
 ## feed: spire, gofer, rpcsplitter, ssb, ssb_helper, torproxy
 ## relay: spire, ssb, torproxy
 
