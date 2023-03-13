@@ -34,7 +34,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.gofer.image.repository }}:{{ .Values.gofer.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-          args: [ "-c", "/config/gofer.json", "agent" ]
+          args: [ "-c", "/config/gofer.json", "agent", "-v", "debug" ]
           ports:
             - name: http
               containerPort: {{ .Values.gofer.service.port }}
