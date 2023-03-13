@@ -18,7 +18,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "omnia-feed.selectorLabels" . | nindent 8 }}
+        service: {{ include "omnia-feed.fullname" . }}-gofer
+        {{- include "omnia-feed.labels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -33,20 +34,25 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.gofer.image.repository }}:{{ .Values.gofer.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
+          args: [ "-c", "/config/gofer.json", "agent" ]
           ports:
             - name: http
               containerPort: {{ .Values.gofer.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config
+            mountPath: /config/gofer.json
+            subPath: gofer.json
           env:
           {{- include "helpers.list-env-variables" . | indent 12 }}
           {{- if not .Values.externalSecrets.enabled }}
@@ -57,6 +63,10 @@ spec:
           - secretRef:
               name: {{ include "omnia-feed.fullname" . }}-ext-secret
           {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "omnia-feed.fullname" . -}}-gofer-cm
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
