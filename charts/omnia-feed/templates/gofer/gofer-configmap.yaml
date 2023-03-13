@@ -6,13 +6,13 @@ data:
   gofer.json: |-
     {
       "ethereum": {
-        "rpc": "http://rpc-splitter.local:9989"
+        "rpc": "http://{{ include "omnia-feed.fullname" . }}-rpcsplitter:{{ .Values.rpcsplitter.service.port }}"
       },
       "gofer": {
         "rpc": {
           "address": "127.0.0.1:8081"
         },
-        "rpcAgentAddr": "gofer.local:8081",
+        "rpcAgentAddr": "127.0.0.1:8081",
         "rpcListenAddr": "0.0.0.0:8081",
         "origins": {
           "balancerV2": {

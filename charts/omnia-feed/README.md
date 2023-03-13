@@ -1,6 +1,6 @@
 # omnia
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.14.0](https://img.shields.io/badge/AppVersion-v1.14.0-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.2](https://img.shields.io/badge/AppVersion-1.13.2-informational?style=flat-square)
 
 A Helm chart for deploying an omnia feed or relay on Kubernetes
 
@@ -39,12 +39,13 @@ A Helm chart for deploying an omnia feed or relay on Kubernetes
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| omnia.image.repository | string | `nil` |  |
+| omnia.image.repository | string | `"ghcr.io/chronicleprotocol/omnia"` |  |
 | omnia.image.tag | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| rpcsplitter.config.ethRpc | string | `"http://my-eth-rpc.domain"` |  |
 | rpcsplitter.image.repository | string | `"ghcr.io/chronicleprotocol/rpc-splitter"` |  |
 | rpcsplitter.image.tag | string | `"latest"` |  |
 | rpcsplitter.service.port | int | `9989` |  |
