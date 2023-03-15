@@ -22,44 +22,21 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-ssb:
-  image:
-    repository: ghcr.io/chronicleprotocol/ssb_server
-    tag: 1.12.9
-
-  service:
-    type: ClusterIP
-    ports:
-      - name: "port-8008"
-        port: 8008
-        protocol: TCP
-      - name: "port-8009"
-        port: 8009
-        protocol: TCP
-      - name: "port-8098"
-        port: 8098
-        protocol: TCP
-
-ssb_helper:
-  image:
-    repository: ghcr.io/chronicleprotocol/ssb-rpc-client
-    tag: latest
-
 spire:
   image:
     repository: ghcr.io/chronicleprotocol/spire
-    tag: latest
+    tag: 0.9.0
 
   service:
     type: ClusterIP
     ports:
-      - name: "port-8800"
+      - name: "webapi"
         port: 8800
         protocol: TCP
-      - name: "port-8100"
+      - name: "listener"
         port: 8100
         protocol: TCP
-      - name: "port-9100"
+      - name: "rpc"
         port: 9100
         protocol: TCP
 

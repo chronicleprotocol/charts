@@ -7,8 +7,7 @@ data:
     {
       "ethereum": {
         "from": "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
-        "keystore": "/home/terra/.omnia/keys",
-        "password": "/home/terra/.omnia/pass"
+        "keystore": "/wallet/creds"
       },
       "transport": {
         "transport":"webapi",

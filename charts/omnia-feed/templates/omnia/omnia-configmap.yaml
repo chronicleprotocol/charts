@@ -30,8 +30,7 @@ data:
         "setzer"
       ],
       "transports": [
-        "spire",
-        "ssb-rpc"
+        "spire"
       ],
       "pairs": {
         "BTC/USD": {
