@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "omnia-feed.fullname" . }}-rpcsplitter
+  name: {{ include "spire.fullname" . }}
   labels:
-    {{- include "omnia-feed.labels" . | nindent 4 }}
+    {{- include "spire.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      service: {{ include "omnia-feed.fullname" . }}-rpcsplitter
+      {{- include "spire.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,37 +18,46 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        service: {{ include "omnia-feed.fullname" . }}-rpcsplitter
-        {{- include "omnia-feed.labels" . | nindent 8 }}
+        {{- include "spire.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "omnia-feed.serviceAccountName" . }}
+      serviceAccountName: {{ include "spire.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.rpcsplitter.image.repository }}:{{ .Values.rpcsplitter.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          args: [ "--eth-rpc", "{{ .Values.rpcsplitter.config.ethRpc }}", "-l", "0.0.0.0:9989", "run", "-v", "debug"]
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: [ "-c", "/config/spire.json", "agent" ]
           ports:
-            - name: http
-              containerPort: {{ .Values.rpcsplitter.service.port }}
-              protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          {{- range .Values.service.ports }}
+            - name: {{ .name }}
+              containerPort: {{ .port }}
+              protocol: {{ .protocol }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config
+            mountPath: /config/spire.json
+            subPath: spire.json
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "spire.fullname" . -}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
