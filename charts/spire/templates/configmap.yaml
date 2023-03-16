@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "spire.fullname" . }}-config
+data:
+  spire.json: |-
+    {
+      "ethereum": {
+        "from": "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
+        "keystore": "/wallet/creds"
+      },
+      "transport": {
+        "transport":"webapi",
+        "webapi": {
+          "listenAddr": "0.0.0.0:{{ template "spire.webapiPort" . }}",
+          "socks5ProxyAddr": "{{ include "spire.fullname" . }}-torproxy:{{ .Values.service.port }}",
+        },
+        "libp2p": {
+          "bootstrapAddrs": [
+            "/ip4/35.155.209.175/tcp/{{ template "spire.webapiPort" . }}/p2p/12D3KooWSEu9AoHYVWebopgy43E4rNMgeyy1NKXtcT84RRrtoJXD"
+          ],
+          "listenAddrs": [
+            "/ip4/0.0.0.0/tcp/{{ template "spire.listenerPort" . }}"
+          ]
+        }
+      },
+      "feeds": [
+        "0xc4b015761A92F0dE17A2D065298fB048d612c6d6",
+        "0x0c4FC7D66b7b6c684488c1F218caA18D4082da18",
+        "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
+        "0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9",
+        "0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4"
+      ],
+      "spire": {
+        "rpc": {
+          "address": "127.0.0.1:{{ template "spire.rpcPort" . }}",
+        },
+        "rpcAgentAddr": "{{ include "spire.fullname" . }}:{{ template "spire.rpcPort" . }}",
+        "rpcListenAddr": "0.0.0.0:{{ template "spire.rpcPort" . }}",
+        "pairs": [
+          "BTCUSD",
+          "ETHUSD",
+          "ETHBTC",
+          "GNOUSD",
+          "LINKUSD",
+          "MANAUSD",
+          "MATICUSD",
+          "WSTETHUSD",
+          "YFIUSD",
+          "RETHUSD",
+          "MKRUSD",
+          "MKRETH"
+        ]
+      },
+      "logger": {}
+    }
