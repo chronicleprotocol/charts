@@ -11,6 +11,12 @@ A Helm chart for deploying gofer to Kubernetes
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | Chronicle Labs |  | <https://chroniclelabs.org> |
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://chronicleprotocol.github.io/charts/ | rpc-splitter | 0.0.1 |
+
 ## Values
 
 | Key | Type | Default | Description |
