@@ -1,0 +1,97 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "spire.fullname" . }}
+  labels:
+    {{- include "spire.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "spire.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- if .Values.keystore.enabled }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "spire.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "spire.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: [ "-c", "/config/config.json", "agent", "-v", "{{ .Values.logLevel | default "debug" }}" ]
+          # command: [ "sleep", "99999" ]
+          ports:
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config
+            mountPath: /config/
+          {{- if .Values.keystore.enabled }}
+          - name: keystore
+            mountPath: /keystore/
+          - name: password
+            mountPath: /password/
+          {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "spire.fullname" . }}-config
+      {{- if .Values.keystore.enabled }}
+      - name: keystore
+        configMap:
+          name: {{ include "spire.fullname" . }}-keystore
+          items:
+          - key: keystore.json
+            path: keystore.json
+      - name: password
+        configMap:
+          name: {{ include "spire.fullname" . }}-keystore
+          items:
+          - key: password.txt
+            path: password.txt
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
