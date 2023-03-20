@@ -3,24 +3,29 @@ kind: ConfigMap
 metadata:
   name: {{ include "spire.fullname" . }}-config
 data:
-  spire.json: |-
+  config.json: |-
     {
+      {{- if .Values.keystore.enabled }}
       "ethereum": {
-        "from": "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
-        "keystore": "/wallet/creds"
+        "from": "{{ .Values.keystore.ethFromAddress }}",
+        "keystore": "/keystore/",
+        "password": "/password/password.txt",
       },
+      {{- end }}
       "transport": {
-        "transport":"webapi",
+        "transport": ["libp2p"],
         "webapi": {
-          "listenAddr": "0.0.0.0:{{ template "spire.webapiPort" . }}",
-          "socks5ProxyAddr": "{{ include "spire.fullname" . }}-torproxy:{{ .Values.service.port }}",
+          "listenAddr": "0.0.0.0:{{ .Values.service.ports.webapi.port }}",
+          "socks5ProxyAddr": "{{ .Release.Name }}-tor-proxy:{{ index .Values "tor-proxy" "service" "port" }}",
         },
         "libp2p": {
+          "privKeySeed": "02082cf471002b5c5dfefdd6cbd30666ff02c4df90169f766877caec26ed4f88",
           "bootstrapAddrs": [
-            "/ip4/35.155.209.175/tcp/{{ template "spire.webapiPort" . }}/p2p/12D3KooWSEu9AoHYVWebopgy43E4rNMgeyy1NKXtcT84RRrtoJXD"
+            "/dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi",
+            "/dns/spire-bootstrap2.makerops.services/tcp/8000/p2p/12D3KooWBGqjW4LuHUoYZUhbWW1PnDVRUvUEpc4qgWE3Yg9z1MoR"
           ],
           "listenAddrs": [
-            "/ip4/0.0.0.0/tcp/{{ template "spire.listenerPort" . }}"
+            "/ip4/0.0.0.0/tcp/{{ .Values.service.ports.listener.port }}"
           ]
         }
       },
@@ -28,15 +33,15 @@ data:
         "0xc4b015761A92F0dE17A2D065298fB048d612c6d6",
         "0x0c4FC7D66b7b6c684488c1F218caA18D4082da18",
         "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
-        "0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9",
-        "0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4"
+        "0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9"
       ],
       "spire": {
+        "transport": ["libp2p"],
         "rpc": {
-          "address": "127.0.0.1:{{ template "spire.rpcPort" . }}",
+          "address": "0.0.0.0:{{ .Values.service.ports.rpc.port }}",
         },
-        "rpcAgentAddr": "{{ include "spire.fullname" . }}:{{ template "spire.rpcPort" . }}",
-        "rpcListenAddr": "0.0.0.0:{{ template "spire.rpcPort" . }}",
+        "rpcAgentAddr": "{{ include "spire.fullname" . }}:{{ .Values.service.ports.rpc.port }}",
+        "rpcListenAddr": "0.0.0.0:{{ .Values.service.ports.rpc.port  }}",
         "pairs": [
           "BTCUSD",
           "ETHUSD",
