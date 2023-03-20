@@ -1,6 +1,0 @@
-dependencies:
-- name: tor-proxy
-  repository: file://../tor-proxy
-  version: 0.0.1
-digest: sha256:42523e4a66d5f176c370b6b9b713f4fa6bcf1cf44b5bcb308a11608da20e7575
-generated: "2023-03-16T17:49:12.952023348+02:00"
