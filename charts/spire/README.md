@@ -4,12 +4,6 @@
 
 A Helm chart for deploying spire to  Kubernetes
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| file://../tor-proxy | tor-proxy | 0.0.1 |
-
 ## Values
 
 | Key | Type | Default | Description |
