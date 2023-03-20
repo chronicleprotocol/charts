@@ -1,0 +1,103 @@
+# Default values for spire.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/chronicleprotocol/spire
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "0.9.1-dev.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    webapi:
+      port: 8800
+      protocol: TCP
+    listener:
+      port: 8100
+      protocol: TCP
+    rpc:
+      port: 9100
+      protocol: TCP
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+logLevel: "warn"
+
+keystore:
+  enabled: false
+  keyStoreFile: |-
+    {"address":"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6","id":"073dd01b-1b87-46b4-b52f-ca243bcf4b7b","version":3,"Crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"},"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"}}
+  password: "ilikeapples"
+  ethFromAddress: "0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
+
+torProxy:
+  enabled: true

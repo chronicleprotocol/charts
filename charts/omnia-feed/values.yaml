@@ -1,0 +1,145 @@
+# Default values for omnia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+type: feed
+## feed: spire, gofer, rpcsplitter, ssb, ssb_helper, torproxy
+## relay: spire, ssb, torproxy
+
+replicaCount: 1
+
+imagePullSecrets: []
+imagePullPolicy: Always
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+spire:
+  image:
+    repository: ghcr.io/chronicleprotocol/spire
+    tag: 0.9.0
+
+  service:
+    type: ClusterIP
+    ports:
+      - name: "webapi"
+        port: 8800
+        protocol: TCP
+      - name: "listener"
+        port: 8100
+        protocol: TCP
+      - name: "rpc"
+        port: 9100
+        protocol: TCP
+
+gofer:
+  image:
+    repository: ghcr.io/chronicleprotocol/gofer
+    tag: latest
+
+  service:
+    type: ClusterIP
+    port: 8081
+
+rpcsplitter:
+  image:
+    repository: ghcr.io/chronicleprotocol/rpc-splitter
+    tag: latest
+
+  service:
+    type: ClusterIP
+    port: 9989
+
+  config:
+    ethRpc: "http://my-eth-rpc.domain"
+
+omnia:
+  image:
+    repository: ghcr.io/chronicleprotocol/omnia
+    tag: ""
+
+torproxy:
+  image:
+    repository: dperson/torproxy
+    tag: latest
+
+  service:
+    type: ClusterIP
+    port: 9050
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Environment variable listing
+env:
+  # non sensitive variables
+  normal:
+    # env vars for all pods
+    FOO: "bar"
+
+  # sensitive variables stored in a secret
+  secret:
+    BAR: foo
+
+externalSecrets:
+  enabled: false
