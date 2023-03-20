@@ -50,27 +50,13 @@ app.kubernetes.io/name: {{ include "spire.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "spire.portNumber" -}}
-{{- $portName := . -}}
-{{- $ports := . -}}
-{{- range $ports }}
-{{- if eq .name $portName }}
-{{- .port }}
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "spire.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "spire.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
 {{- end }}
-{{- end }}
-{{- end }}
-
-
-{{- define "spire.webapiPort" -}}
-{{- $webapiPort := template "spire.portNumber" (list .Values.service.ports "webapi") -}}
-{{- end }}
-
-{{- define "spire.rpcPort" -}}
-{{- $rpcPort := template "spire.portNumber" (list .Values.service.ports "rpc") -}}
-{{- $rpcPort -}}
-{{- end }}
-
-{{- define "spire.listenerPort" -}}
-{{- $listenerPort := template "spire.portNumber" (list .Values.service.ports "listener") -}}
-{{- $listenerPort -}}
 {{- end }}

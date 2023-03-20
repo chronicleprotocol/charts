@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,8 +14,12 @@ spec:
       {{- include "spire.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+      {{- if .Values.keystore.enabled }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,12 +38,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: [ "-c", "/config/spire.json", "agent" ]
+          args: [ "-c", "/config/config.json", "agent", "-v", "{{ .Values.logLevel | default "debug" }}" ]
+          # command: [ "sleep", "99999" ]
           ports:
-          {{- range .Values.service.ports }}
-            - name: {{ .name }}
-              containerPort: {{ .port }}
-              protocol: {{ .protocol }}
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
           {{- end }}
           # livenessProbe:
           #   httpGet:
@@ -52,12 +58,31 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: config
-            mountPath: /config/spire.json
-            subPath: spire.json
+            mountPath: /config/
+          {{- if .Values.keystore.enabled }}
+          - name: keystore
+            mountPath: /keystore/
+          - name: password
+            mountPath: /password/
+          {{- end }}
       volumes:
       - name: config
         configMap:
-          name: {{ include "spire.fullname" . -}}
+          name: {{ include "spire.fullname" . }}-config
+      {{- if .Values.keystore.enabled }}
+      - name: keystore
+        configMap:
+          name: {{ include "spire.fullname" . }}-keystore
+          items:
+          - key: keystore.json
+            path: keystore.json
+      - name: password
+        configMap:
+          name: {{ include "spire.fullname" . }}-keystore
+          items:
+          - key: password.txt
+            path: password.txt
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

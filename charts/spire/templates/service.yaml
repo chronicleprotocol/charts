@@ -7,11 +7,11 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{- range .Values.service.ports }}
-    - port: {{ .port }}
-      targetPort: {{ .port }}
-      protocol: {{ .protocol }}
-      name: {{ .name }}
+    {{- range $key, $val := .Values.service.ports }}
+    - port: {{ $val.port }}
+      targetPort: {{ $val.port }}
+      protocol: {{ $val.protocol }}
+      name: {{ $key }}
     {{- end }}
   selector:
     {{- include "spire.selectorLabels" . | nindent 4 }}
