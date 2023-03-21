@@ -33,8 +33,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - geth
+          args:
+            - --networkid={{ .Values.network }}
+            - --rpc
+            - --rpcaddr=0.0.0.0
+            - --rpcport={{ .Values.rpc.port }}
           ports:
-            - name: http
+            - name: rpc
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:

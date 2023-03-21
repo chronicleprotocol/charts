@@ -15,7 +15,7 @@ A Helm chart for Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"nginx"` |  |
+| image.repository | string | `"ethereum/client-go"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
@@ -26,13 +26,14 @@ A Helm chart for Kubernetes
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
+| network | string | `"goerli"` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
+| service.port | int | `8545` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
