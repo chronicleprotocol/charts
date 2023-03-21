@@ -1,0 +1,9 @@
+dependencies:
+- name: spire
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.0.1
+- name: gofer
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.0.1
+digest: sha256:0dddc6fe581cece30f28ac59fea5396c1ab6e99903252f7ad6ffd508dcfb70f6
+generated: "2023-03-21T12:41:46.859843624+02:00"

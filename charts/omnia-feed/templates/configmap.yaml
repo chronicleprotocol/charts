@@ -1,18 +1,20 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "omnia-feed.fullname" . -}}-omnia-cm
+  name: {{ include "omnia-feed.fullname" . }}-config
 data:
-  omni.json: |-
+  config.json: |-
     {
       "mode": "feed",
+      {{- if .Values.keystore.enabled }}
       "ethereum": {
-        "from": "0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD",
-        "keystore": "/home/terra/.omnia/keys",
-        "password": "/home/terra/.omnia/pass",
+        "from": "{{ .Values.keystore.ethFromAddress }}",
+        "keystore": "/keystore/",
+        "password": "/password/password.txt",
         "network": "",
         "type": "ethereum"
       },
+      {{- end }}
       "options": {
         "interval": 60,
         "msgLimit": 35,
@@ -20,7 +22,7 @@ data:
         "setzerTimeout": 10,
         "setzerCacheExpiry": 120,
         "setzerMinMedian": 3,
-        "setzerEthRpcUrl": "{{ include "omnia-feed.fullname" . }}-rpcsplitter:{{ .Values.rpcsplitter.service.port }}",
+        "setzerEthRpcUrl": "http://{{ .Release.Name }}-rpc-splitter:9989"",
         "verbose": true,
         "logFormat": "json",
         "ethGas": 200000

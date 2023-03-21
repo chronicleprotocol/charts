@@ -1,8 +1,8 @@
-# omnia
+# omnia-feed
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.13.2](https://img.shields.io/badge/AppVersion-1.13.2-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
-A Helm chart for deploying an omnia feed or relay on Kubernetes
+A Helm chart for deploying an Omnia feed in Kubernetes
 
 ## Maintainers
 
@@ -10,6 +10,13 @@ A Helm chart for deploying an omnia feed or relay on Kubernetes
 | ---- | ------ | --- |
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://github.com/chronicleprotocol> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://chronicleprotocol.github.io/charts/ | gofer | 0.0.1 |
+| https://chronicleprotocol.github.io/charts/ | spire | 0.0.1 |
 
 ## Values
 
@@ -20,15 +27,11 @@ A Helm chart for deploying an omnia feed or relay on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env.normal.FOO | string | `"bar"` |  |
-| env.secret.BAR | string | `"foo"` |  |
-| externalSecrets.enabled | bool | `false` |  |
 | fullnameOverride | string | `""` |  |
-| gofer.image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
-| gofer.image.tag | string | `"latest"` |  |
-| gofer.service.port | int | `8081` |  |
-| gofer.service.type | string | `"ClusterIP"` |  |
-| imagePullPolicy | string | `"Always"` |  |
+| gofer.enabled | bool | `true` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"ghcr.io/chronicleprotocol/omnia"` |  |
+| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -37,41 +40,29 @@ A Helm chart for deploying an omnia feed or relay on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| keystore.enabled | bool | `false` |  |
+| keystore.ethFromAddress | string | `"0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"` |  |
+| keystore.keyStoreFile | string | `"{\"address\":\"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6\",\"id\":\"073dd01b-1b87-46b4-b52f-ca243bcf4b7b\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"},\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"}}"` |  |
+| keystore.password | string | `"ilikeapples"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| omnia.image.repository | string | `"ghcr.io/chronicleprotocol/omnia"` |  |
-| omnia.image.tag | string | `""` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpcsplitter.config.ethRpc | string | `"http://my-eth-rpc.domain"` |  |
-| rpcsplitter.image.repository | string | `"ghcr.io/chronicleprotocol/rpc-splitter"` |  |
-| rpcsplitter.image.tag | string | `"latest"` |  |
-| rpcsplitter.service.port | int | `9989` |  |
-| rpcsplitter.service.type | string | `"ClusterIP"` |  |
 | securityContext | object | `{}` |  |
+| service.ports.listener.port | int | `8100` |  |
+| service.ports.listener.protocol | string | `"TCP"` |  |
+| service.ports.rpc.port | int | `9100` |  |
+| service.ports.rpc.protocol | string | `"TCP"` |  |
+| service.ports.webapi.port | int | `8800` |  |
+| service.ports.webapi.protocol | string | `"TCP"` |  |
+| service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| spire.image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |
-| spire.image.tag | string | `"0.9.0"` |  |
-| spire.service.ports[0].name | string | `"webapi"` |  |
-| spire.service.ports[0].port | int | `8800` |  |
-| spire.service.ports[0].protocol | string | `"TCP"` |  |
-| spire.service.ports[1].name | string | `"listener"` |  |
-| spire.service.ports[1].port | int | `8100` |  |
-| spire.service.ports[1].protocol | string | `"TCP"` |  |
-| spire.service.ports[2].name | string | `"rpc"` |  |
-| spire.service.ports[2].port | int | `9100` |  |
-| spire.service.ports[2].protocol | string | `"TCP"` |  |
-| spire.service.type | string | `"ClusterIP"` |  |
+| spire.enabled | bool | `true` |  |
 | tolerations | list | `[]` |  |
-| torproxy.image.repository | string | `"dperson/torproxy"` |  |
-| torproxy.image.tag | string | `"latest"` |  |
-| torproxy.service.port | int | `9050` |  |
-| torproxy.service.type | string | `"ClusterIP"` |  |
-| type | string | `"feed"` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
