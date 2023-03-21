@@ -1,7 +1,6 @@
 apiVersion: v2
-name: omnia
-description: A Helm chart for deploying an omnia feed or relay on Kubernetes
-icon: https://avatars.githubusercontent.com/u/87739326?s=400&u=c357005bd0083f58381ef007153094d02317717d&v=4
+name: omnia-feed
+description: A Helm chart for deploying an Omnia feed in Kubernetes
 
 maintainers:
   - name: WesleyCharlesBlake
@@ -22,10 +21,20 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.1
+version: 0.0.2
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.13.2"
+appVersion: "1.14.2"
+
+dependencies:
+  - name: spire
+    version: 0.0.1
+    repository: https://chronicleprotocol.github.io/charts/
+    condition: spire.enabled
+  - name: gofer
+    version: 0.0.1
+    repository: https://chronicleprotocol.github.io/charts/
+    condition: gofer.enabled
