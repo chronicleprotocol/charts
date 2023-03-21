@@ -13,8 +13,9 @@ spec:
       {{- include "omnia-feed.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,25 +34,35 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: ["sleep", "infinity"]
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+          - name: SPIRE_CONFIG
+            value: /config/spire/config.json
+          - name: GOFER_CONFIG
+            value: /config/gofer/gofer.json
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: config
-            mountPath: /config/
+            mountPath: /home/omnia/
+          - name: gofer
+            mountPath: /config/gofer/
+          - name: spire
+            mountPath: /config/spire/
           {{- if .Values.keystore.enabled }}
           - name: keystore
             mountPath: /keystore/
@@ -62,6 +73,18 @@ spec:
       - name: config
         configMap:
           name: {{ include "omnia-feed.fullname" . }}-config
+      - name: spire
+        configMap:
+          name: {{ .Release.Name }}-gofer-config
+          items:
+          - key: gofer.json
+            path: gofer.json
+      - name: gofer
+        configMap:
+          name: {{ .Release.Name }}-spire-config
+          items:
+          - key: config.json
+            path: config.json
       {{- if .Values.keystore.enabled }}
       - name: keystore
         configMap:

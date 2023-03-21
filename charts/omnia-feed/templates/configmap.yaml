@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ include "omnia-feed.fullname" . }}-config
 data:
-  config.json: |-
+  omnia.json: |-
     {
       "mode": "feed",
       {{- if .Values.keystore.enabled }}
@@ -22,7 +22,7 @@ data:
         "setzerTimeout": 10,
         "setzerCacheExpiry": 120,
         "setzerMinMedian": 3,
-        "setzerEthRpcUrl": "http://{{ .Release.Name }}-rpc-splitter:9989"",
+        "setzerEthRpcUrl": "http://{{ .Release.Name }}-rpc-splitter:9989",
         "verbose": true,
         "logFormat": "json",
         "ethGas": 200000
