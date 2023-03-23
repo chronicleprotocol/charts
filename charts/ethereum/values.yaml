@@ -5,6 +5,14 @@
 replicaCount: 1
 
 network: goerli
+## can be goerli, mainnet, sepolia etc
+
+data:
+  path: /ethereum-data
+
+persistence:
+  storageClass: standard
+  storageSize: 20Gi
 
 image:
   repository: ethereum/client-go
@@ -41,6 +49,9 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 8545
+
+probes:
+  enabled: false
 
 ingress:
   enabled: false
