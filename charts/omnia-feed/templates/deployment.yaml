@@ -59,6 +59,7 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /home/omnia/
+            mode: 0777
           - name: gofer
             mountPath: /config/gofer/
           - name: spire
