@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "ethereum.fullname" . }}
   labels:
@@ -11,6 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "ethereum.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "ethereum.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -32,37 +33,46 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
             - geth
           args:
-            - --networkid={{ .Values.network }}
-            - --rpc
-            - --rpcaddr=0.0.0.0
-            - --rpcport={{ .Values.rpc.port }}
+            - --{{ .Values.network }}
+            - --goerli
+            - --datadir={{ .Values.data.path }}/data
+            - --http
+            - --http.port=8545
+            - --http.addr=0.0.0.0
+            - --http.vhosts=*
+            - --allow-insecure-unlock
+            - --http.api=eth,net,engine,admin,web3
+            - --authrpc.addr=0.0.0.0
           ports:
             - name: rpc
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{ if .Values.probes.enabled }}
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: rpc
           readinessProbe:
             httpGet:
               path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+              port: rpc
+          {{ end }}
+          volumeMounts:
+            - name: ethereum-data
+              mountPath: {{ .Values.data.path }}
+      volumes:
+        - name: ethereum-data
+          persistentVolumeClaim:
+            claimName: ethereum-data
+  volumeClaimTemplates:
+    - metadata:
+        name: ethereum-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: {{ .Values.persistence.storageClass }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size }}
