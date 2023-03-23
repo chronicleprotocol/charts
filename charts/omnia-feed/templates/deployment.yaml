@@ -50,6 +50,8 @@ spec:
           #     path: /
           #     port: http
           env:
+          - name: OMNIA_CONFIG
+            value: /config/omnia/omnia.json
           - name: SPIRE_CONFIG
             value: /config/spire/config.json
           - name: GOFER_CONFIG
@@ -57,9 +59,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: config
+          - name: omnia
             mountPath: /home/omnia/
-            mode: 0777
+          - name: config
+            mountPath: /config/omnia/
           - name: gofer
             mountPath: /config/gofer/
           - name: spire
@@ -74,6 +77,8 @@ spec:
       - name: config
         configMap:
           name: {{ include "omnia-feed.fullname" . }}-config
+      - name: omnia
+        emptyDir: {}
       - name: spire
         configMap:
           name: {{ .Release.Name }}-gofer-config
