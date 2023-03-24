@@ -19,7 +19,7 @@ genesisBeaconApiUrl: https://goerli.checkpoint-sync.ethpandaops.io
 # can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
 executionEndpoint: https://goerli.prylabs.net
-# can be https://goerli.prylabs.net https://mainnet.infura.io/v3/your-api-key
+# can your own eth instance. eg https://goerli.mydomain.com/v.....
 
 # -- JWT secret used by client as a secret. Change this value.
 jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a

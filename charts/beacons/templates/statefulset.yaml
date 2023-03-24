@@ -34,17 +34,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           args:
-          {{- if ne .Values.mode "mainnet" }}
             - --{{ .Values.network }}
-          {{- end }}
-            - --http-web3provider {{ .Values.executionEndpoint }}
             - --jwt-secret /data/jwt.hex
             - --accept-terms-of-use
             - --execution-endpoint {{ .Values.executionEndpoint }}
-            - --checkpoint-sync-url={{ .Values.checkpointSyncUrl }}
-            - --genesis-beacon-api-url={{ .Values.genesisBeaconApiUrl }}
-            - --rpc-host=0.0.0.0
-            - --grpc-gateway-host=0.0.0.0
+            - --checkpoint-sync-url {{ .Values.checkpointSyncUrl }}
+            - --genesis-beacon-api-url {{ .Values.genesisBeaconApiUrl }}
+            - --rpc-host 0.0.0.0
+            - --rpc-port {{ .Values.rpcPort }}
+            - --grpc-gateway-host 0.0.0.0
           ports:
             - name: p2p-tcp
               containerPort: {{ .Values.p2pPort }}
