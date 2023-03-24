@@ -33,8 +33,6 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          command:
-            - geth
           args:
           {{- if ne .Values.mode "mainnet" }}
             - --{{ .Values.network }}
