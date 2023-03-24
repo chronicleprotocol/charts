@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "beacons.fullname" . }}-test-connection"
+  labels:
+    {{- include "beacons.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "beacons.fullname" . }}:{{ .Values.httpPort }}/eth/v1/node/version']
+  restartPolicy: Never
