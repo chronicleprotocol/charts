@@ -5,7 +5,7 @@ description: A Helm chart for deploying gofer to Kubernetes
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake
-  - name: Chronicle Labs
+  - name: chronicleprotocol
     url: https://chroniclelabs.org
 
 # A chart can be either an 'application' or a 'library' chart.
