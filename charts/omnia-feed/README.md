@@ -15,8 +15,8 @@ A Helm chart for deploying an Omnia feed in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | gofer | 0.0.1 |
-| https://chronicleprotocol.github.io/charts/ | spire | 0.0.1 |
+| https://chronicleprotocol.github.io/charts/ | gofer | 0.0.2 |
+| https://chronicleprotocol.github.io/charts/ | spire | 0.0.2 |
 
 ## Values
 
