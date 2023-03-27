@@ -44,7 +44,7 @@ A Helm chart for deploying gofer to Kubernetes
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpc-splitter.ethRpc | string | `"https://eth-mainnet.blastapi.io/e2a2f996-1a98-4b22-b72e-69b81ee4bc23"` |  |
+| rpc-splitter.ethRpc | string | `"https://eth-mainnet.public.blastapi.io"` |  |
 | securityContext | object | `{}` |  |
 | service.port | int | `8081` |  |
 | service.type | string | `"ClusterIP"` |  |
