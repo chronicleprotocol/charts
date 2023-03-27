@@ -8,8 +8,11 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
+    - name: nc
       image: busybox
-      command: ['wget']
-      args: ['{{ include "tor-proxy.fullname" . }}:{{ .Values.service.port }}']
+      command: ['nc']
+      args:
+        - '-zv'
+        - '{{ include "tor-proxy.fullname" . }}'
+        - '{{ .Values.service.port }}'
   restartPolicy: Never
