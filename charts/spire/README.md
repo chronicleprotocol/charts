@@ -15,7 +15,7 @@ A Helm chart for deploying spire to  Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.1 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.2 |
 
 ## Values
 
