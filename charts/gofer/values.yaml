@@ -82,4 +82,4 @@ tolerations: []
 affinity: {}
 
 rpc-splitter:
-  ethRpc: "https://eth-mainnet.blastapi.io/e2a2f996-1a98-4b22-b72e-69b81ee4bc23"
+  ethRpc: "https://eth-mainnet.public.blastapi.io"
