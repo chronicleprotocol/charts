@@ -53,7 +53,7 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /config/gofer.hcl
-            subPath: gofer.json
+            subPath: gofer.hcl
       volumes:
       - name: config
         configMap:
