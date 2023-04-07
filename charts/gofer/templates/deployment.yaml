@@ -33,7 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: [ "-c", "/config/gofer.json", "agent", "-v", "debug" ]
+          args: [ "-c", "/config/gofer.hcl", "agent", "-v", "debug" ]
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -52,7 +52,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: config
-            mountPath: /config/gofer.json
+            mountPath: /config/gofer.hcl
             subPath: gofer.json
       volumes:
       - name: config

@@ -2,5 +2,5 @@ dependencies:
 - name: rpc-splitter
   repository: https://chronicleprotocol.github.io/charts/
   version: 0.0.1
-digest: sha256:9ca7991520e491e87ff767c1827d78a365ff50daf558b0a6d97fcda71ed0868f
-generated: "2023-03-20T15:34:43.124683403+02:00"
+digest: sha256:673b90c9d624d5798a5efd87a464304857cf83ac343897e42de1f4cceb949c60
+generated: "2023-04-07T10:50:23.355588+02:00"

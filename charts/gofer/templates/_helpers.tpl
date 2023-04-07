@@ -60,3 +60,13 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Convert HCL-formatted data to YAML using the `tpl` function
+*/}}
+{{- define "gofer.configMapData" -}}
+{{- $hclData := .Values.gofer.config | trimSuffix "\n" | indent 4 -}}
+{{- $jsonData := $hclData | toJson -}}
+{{- $yamlData := $jsonData | fromJson | toYaml -}}
+{{- $yamlData | indent 2 | trimSuffix "\n" | quote -}}
+{{- end -}}
