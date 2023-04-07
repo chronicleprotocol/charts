@@ -56,9 +56,6 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-config:
-  data: |-
-    ${file("config.hcl")}
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
