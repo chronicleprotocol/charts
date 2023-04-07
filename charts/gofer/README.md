@@ -11,12 +11,6 @@ A Helm chart for deploying gofer to Kubernetes
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://chroniclelabs.org> |
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | rpc-splitter | 0.0.1 |
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -38,16 +32,18 @@ A Helm chart for deploying gofer to Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| logLevel | string | `"debug"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpc-splitter.enabled | bool | `false` |  |
-| rpc-splitter.ethRpc | string | `"https://eth-mainnet.public.blastapi.io"` |  |
+| rpcNodes.arbRpc | string | `"https://arbitrum-one.public.blastapi.io"` |  |
+| rpcNodes.ethRpc | string | `"https://eth-mainnet.public.blastapi.io"` |  |
+| rpcNodes.optRpc | string | `"https://optimism-mainnet.public.blastapi.io"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `8081` |  |
+| service.port | int | `9000` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
