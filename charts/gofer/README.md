@@ -26,6 +26,7 @@ A Helm chart for deploying gofer to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| config.data | string | `"${file(\"config.hcl\")}"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |

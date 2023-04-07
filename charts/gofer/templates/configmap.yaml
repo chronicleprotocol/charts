@@ -4,4 +4,4 @@ metadata:
   name: {{ include "gofer.fullname" . }}-config
 data:
   gofer.hcl: |
-    {{ include "gofer.configHcl" . }}
+    {{ .Values.config.data }}
