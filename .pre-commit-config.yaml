@@ -12,7 +12,7 @@ repos:
     - id: helm-docs
       args: []
 - repo: https://github.com/chronicleprotocol/charts/
-  rev: chart-test-0.0.1
+  rev: chart-lint-0.0.2
   hooks:
     - id: chart-lint
       args: []
