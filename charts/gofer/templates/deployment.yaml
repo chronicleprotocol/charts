@@ -36,7 +36,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args: [ "-c", "/config/gofer.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
           ports:
-            - name: http
+            - name: listener
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           # readinessProbe:
@@ -55,6 +55,9 @@ spec:
           - name: config
             mountPath: /config/gofer.hcl
             subPath: gofer.hcl
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+
       volumes:
       - name: config
         configMap:

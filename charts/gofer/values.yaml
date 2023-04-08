@@ -11,6 +11,12 @@ rpcNodes:
   arbRpc: https://arbitrum-one.public.blastapi.io
   optRpc: https://optimism-mainnet.public.blastapi.io
 
+# Environment variable listing
+env:
+  # non sensitive variables
+  normal:
+    FOO: "bar"
+
 image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent

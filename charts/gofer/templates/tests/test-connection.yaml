@@ -12,7 +12,7 @@ spec:
       image: busybox
       command: ['nc']
       args:
-        - '-zv'
+        - '-zvv'
         - '{{ include "gofer.fullname" . }}'
         - '{{ .Values.service.port }}'
   restartPolicy: Never
