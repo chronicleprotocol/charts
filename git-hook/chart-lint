@@ -3,8 +3,13 @@
 set -e
 
 if ! command -v ct > /dev/null 2>&1; then
-    echo "Please install chart-testing to run the ct-lint hook! https://github.com/norwoodj/helm-docs#installation"
+    echo "Please install chart-testing to run the ct-lint hook! https://github.com/helm/chart-testing#installation"
     exit 1
+fi
+
+changed=$(ct list-changed --config ct.yaml)
+if [[ -n "$changed" ]]; then
+echo "::set-output name=changed::true"
 fi
 
 ct lint --config ct.yaml
