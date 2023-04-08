@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -e
+
+if ! command -v ct > /dev/null 2>&1; then
+    echo "Please install chart-testing to run the ct-lint hook! https://github.com/norwoodj/helm-docs#installation"
+    exit 1
+fi
+
+ct lint --config ct.yaml
