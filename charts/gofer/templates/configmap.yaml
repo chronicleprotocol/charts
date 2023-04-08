@@ -60,7 +60,7 @@ data:
             "type": "openexchangerates",
             "name": "openexchangerates",
             "params": {
-              "apiKey": "***REMOVED***"
+              "apiKey": "<REMOVED>"
             }
           },
           "poloniex": {
