@@ -34,7 +34,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.configHcl }}}
           args: [ "-c", "/config/gofer.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
             - name: listener
               containerPort: {{ .Values.service.port }}
@@ -52,9 +56,11 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+          {{- if .Values.configHcl }}
           - name: config
             mountPath: /config/gofer.hcl
             subPath: gofer.hcl
+          {{- end }}
           env:
           {{- include "helpers.list-env-variables" . | indent 12 }}
 

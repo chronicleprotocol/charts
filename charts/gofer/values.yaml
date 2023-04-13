@@ -6,11 +6,6 @@ replicaCount: 1
 
 logLevel: "debug"
 
-rpcNodes:
-  ethRpc: https://eth-mainnet.public.blastapi.io
-  arbRpc: https://arbitrum-one.public.blastapi.io
-  optRpc: https://optimism-mainnet.public.blastapi.io
-
 # Environment variable listing
 env:
   # non sensitive variables
@@ -21,7 +16,7 @@ image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "sha-7375716"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -94,3 +89,10 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+# configHcl: |
+  # This is a sample config file for gofer.
+  # It is in HCL format.
+  # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+  
