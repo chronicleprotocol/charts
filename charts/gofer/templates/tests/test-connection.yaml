@@ -10,9 +10,9 @@ spec:
   containers:
     - name: nc
       image: busybox
-      command: ['nc']
+      command: ['echo']
       args:
-        - '-zvv'
-        - '{{ include "gofer.fullname" . }}'
-        - '{{ .Values.service.port }}'
+        - 'We need to test something'
+        # - '{{ include "gofer.fullname" . }}'
+        # - '{{ .Values.service.port }}'
   restartPolicy: Never
