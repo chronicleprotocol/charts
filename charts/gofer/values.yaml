@@ -95,4 +95,3 @@ affinity: {}
   # This is a sample config file for gofer.
   # It is in HCL format.
   # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
-  
