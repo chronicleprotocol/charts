@@ -20,11 +20,12 @@ A Helm chart for deploying gofer to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env.normal.FOO | string | `"bar"` |  |
+| configHcl | object | `{}` |  |
+| env | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"sha-7375716"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -40,11 +41,8 @@ A Helm chart for deploying gofer to Kubernetes
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpcNodes.arbRpc | string | `"https://arbitrum-one.public.blastapi.io"` |  |
-| rpcNodes.ethRpc | string | `"https://eth-mainnet.public.blastapi.io"` |  |
-| rpcNodes.optRpc | string | `"https://optimism-mainnet.public.blastapi.io"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `9000` |  |
+| service.port | int | `9200` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

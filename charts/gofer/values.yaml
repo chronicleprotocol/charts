@@ -7,10 +7,11 @@ replicaCount: 1
 logLevel: "debug"
 
 # Environment variable listing
-env:
+env: {}
   # non sensitive variables
-  normal:
-    FOO: "bar"
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
+  # normal:
+  #   CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
 
 image:
   repository: ghcr.io/chronicleprotocol/gofer
@@ -46,7 +47,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 9000
+  port: 9200
 
 ingress:
   enabled: false
@@ -90,8 +91,7 @@ tolerations: []
 
 affinity: {}
 
-
-# configHcl: |
-  # This is a sample config file for gofer.
-  # It is in HCL format.
-  # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+# This is a config file for gofer. it can override the default config if supplied
+# It is in HCL format.
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+configHcl: {}
