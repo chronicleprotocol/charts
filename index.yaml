@@ -43,6 +43,21 @@ entries:
     version: 0.1.1
   gofer:
   - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2023-04-13T13:20:40.972245398Z"
+    description: A Helm chart for deploying gofer to Kubernetes
+    digest: 369e5dbebfc1de9c1da94da4ce0cb0a61af9f94591b6b1be6e23d35dba016e3d
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: gofer
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.0.3/gofer-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     appVersion: 0.9.0
     created: "2023-03-27T11:49:48.472218765Z"
     dependencies:
@@ -252,4 +267,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-03-27T19:29:16.586565629Z"
+generated: "2023-04-13T13:20:40.972261498Z"
