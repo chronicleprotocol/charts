@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.9.0](https://img.shields.io/badge/AppVersion-0.9.0-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -11,12 +11,6 @@ A Helm chart for deploying gofer to Kubernetes
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://chroniclelabs.org> |
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | rpc-splitter | 0.0.1 |
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -26,10 +20,12 @@ A Helm chart for deploying gofer to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| configHcl | object | `{}` |  |
+| env | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"sha-7375716"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -38,15 +34,15 @@ A Helm chart for deploying gofer to Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| logLevel | string | `"debug"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpc-splitter.ethRpc | string | `"https://eth-mainnet.public.blastapi.io"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `8081` |  |
+| service.port | int | `9200` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: listener
       protocol: TCP
-      name: http
+      name: listener
   selector:
     {{- include "gofer.selectorLabels" . | nindent 4 }}
