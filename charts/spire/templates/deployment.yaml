@@ -64,8 +64,8 @@ spec:
           volumeMounts:
           {{- if .Values.configHcl }}
           - name: config
-            mountPath: /config/gofer.hcl
-            subPath: gofer.hcl
+            mountPath: /config/spire.hcl
+            subPath: spire.hcl
           {{- end }}
           {{- if .Values.keystore.enabled }}
           - name: keystore
