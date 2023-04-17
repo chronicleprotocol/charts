@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.9.0](https://img.shields.io/badge/AppVersion-0.9.0-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A Helm chart for deploying spire to  Kubernetes
 
@@ -26,10 +26,12 @@ A Helm chart for deploying spire to  Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| configHcl | object | `{}` |  |
+| env | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |
-| image.tag | string | `"0.9.1-dev.0"` |  |
+| image.tag | string | `"sha-7375716"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -42,7 +44,7 @@ A Helm chart for deploying spire to  Kubernetes
 | keystore.ethFromAddress | string | `"0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"` |  |
 | keystore.keyStoreFile | string | `"{\"address\":\"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6\",\"id\":\"073dd01b-1b87-46b4-b52f-ca243bcf4b7b\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"},\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"}}"` |  |
 | keystore.password | string | `"ilikeapples"` |  |
-| logLevel | string | `"warn"` |  |
+| logLevel | string | `"debug"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -50,12 +52,10 @@ A Helm chart for deploying spire to  Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.ports.listener.port | int | `8100` |  |
-| service.ports.listener.protocol | string | `"TCP"` |  |
+| service.ports.libp2p.port | int | `8000` |  |
+| service.ports.libp2p.protocol | string | `"TCP"` |  |
 | service.ports.rpc.port | int | `9100` |  |
 | service.ports.rpc.protocol | string | `"TCP"` |  |
-| service.ports.webapi.port | int | `8800` |  |
-| service.ports.webapi.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

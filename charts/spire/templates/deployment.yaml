@@ -38,8 +38,11 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: [ "-c", "/config/config.json", "agent", "-v", "{{ .Values.logLevel | default "debug" }}" ]
-          # command: [ "sleep", "99999" ]
+          {{- if .Values.configHcl }}
+          args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -56,9 +59,14 @@ spec:
           #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
           volumeMounts:
+          {{- if .Values.configHcl }}
           - name: config
-            mountPath: /config/
+            mountPath: /config/spire.hcl
+            subPath: spire.hcl
+          {{- end }}
           {{- if .Values.keystore.enabled }}
           - name: keystore
             mountPath: /keystore/
