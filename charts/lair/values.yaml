@@ -4,11 +4,20 @@
 
 replicaCount: 1
 
+logLevel: "info"
+
+# Environment variable listing
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/lair#environment-variables
+  # normal:
+  #   CFG_LAIR_LISTEN_ADDR: "0.0.0.0:8082"
+
 image:
   repository: ghcr.io/chronicleprotocol/lair
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "develop"
+  tag: "sha-7375716"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +47,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8082
 
 ingress:
   enabled: false
@@ -55,6 +64,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -80,3 +90,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# This is a config file for lair. it can override the default config if supplied
+# It is in HCL format.
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+configHcl: {}

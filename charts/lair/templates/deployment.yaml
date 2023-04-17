@@ -15,6 +15,9 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        {{- if .Values.configHcl }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- end }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,20 +36,40 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.configHcl }}
+          args: [ "run", "-c", "/config/lair.hcl", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["run", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
-            - name: http
+            - name: listener
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.configHcl }}
+          - name: config
+            mountPath: /config/lair.hcl
+            subPath: lair.hcl
+          {{- end }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "lair.fullname" . -}}-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
