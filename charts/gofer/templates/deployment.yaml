@@ -15,6 +15,9 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        {{- if .Values.configHcl }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- end }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,27 +36,36 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          args: [ "-c", "/config/gofer.json", "agent", "-v", "debug" ]
+          {{- if .Values.configHcl }}
+          args: [ "-c", "/config/gofer.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
-            - name: http
+            - name: listener
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          readinessProbe:
-            tcpSocket:
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            tcpSocket:
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 15
-            periodSeconds: 20
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+          {{- if .Values.configHcl }}
           - name: config
-            mountPath: /config/gofer.json
-            subPath: gofer.json
+            mountPath: /config/gofer.hcl
+            subPath: gofer.hcl
+          {{- end }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+
       volumes:
       - name: config
         configMap:

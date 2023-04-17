@@ -6,3 +6,10 @@
   language: script
   name: Helm Docs
   require_serial: true
+- id: chart-lint
+  args: []
+  description: Uses 'chart-lint' to to run static-analysis on your charts.
+  entry: git-hook/chart-lint
+  language: script
+  name: Chart Lint
+  require_serial: true
