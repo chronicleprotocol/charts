@@ -1,5 +1,21 @@
 apiVersion: v1
 entries:
+  beacons:
+  - apiVersion: v2
+    appVersion: v3.2.2
+    created: "2023-04-17T19:35:37.075738724Z"
+    description: A Helm chart for Kubernetes
+    digest: d7cd1f95b982918df11f28c128d1d3b5fffbeb3400890bac71c18448913fe4bc
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.1/beacons-0.0.1.tgz
+    version: 0.0.1
   ethereum:
   - apiVersion: v2
     appVersion: v1.11.5
@@ -92,6 +108,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.0.1/gofer-0.0.1.tgz
     version: 0.0.1
   lair:
+  - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2023-04-17T19:35:37.252571415Z"
+    description: A Helm chart for deploying lair to Kubernetes
+    digest: e131a8bf512d9c292b6074de33b10f88bd038c1f90136ef4eeb3b3205a31212f
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: lair
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lair-0.1.2/lair-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-07T15:48:14.737148296Z"
@@ -287,4 +318,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-17T16:29:39.508730093Z"
+generated: "2023-04-17T19:35:37.252599416Z"
