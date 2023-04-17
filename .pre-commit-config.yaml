@@ -7,7 +7,7 @@ repos:
     # -   id: check-yaml
     -   id: check-added-large-files
 - repo: https://github.com/chronicleprotocol/charts/
-  rev: precommit-hooks-0.0.1
+  rev: gofer-0.0.3
   hooks:
     - id: helm-docs
       args: []

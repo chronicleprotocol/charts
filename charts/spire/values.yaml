@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spire
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.9.1-dev.0"
+  tag: "sha-7375716"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,11 +39,8 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    webapi:
-      port: 8800
-      protocol: TCP
-    listener:
-      port: 8100
+    libp2p:
+      port: 8000
       protocol: TCP
     rpc:
       port: 9100
@@ -90,7 +87,7 @@ tolerations: []
 
 affinity: {}
 
-logLevel: "warn"
+logLevel: "debug"
 
 keystore:
   enabled: false
@@ -101,3 +98,15 @@ keystore:
 
 torProxy:
   enabled: true
+
+# Environment variable listing
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
+  # normal:
+  #   CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
+
+# This is a config file for gofer. it can override the default config if supplied
+# It is in HCL format.
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+configHcl: {}
