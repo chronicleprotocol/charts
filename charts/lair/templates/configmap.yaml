@@ -1,0 +1,9 @@
+{{- if .Values.configHcl }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "lair.fullname" . }}-config
+data:
+  lair.hcl: |
+    {{- .Values.configHcl | nindent 4 }}
+{{- end }}
