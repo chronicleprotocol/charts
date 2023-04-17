@@ -8,11 +8,15 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: nc
+  {{- $serviceName := include "spire.fullname" . }}
+  {{- range $name, $config := .Values.service.ports }}
+    - name: nc-{{ $name }}
       image: busybox
       command: ['nc']
       args:
         - '-zv'
-        - '{{ include "spire.fullname" . }}'
-        - '{{ .Values.service.ports.listener.port }}'
+        - '-v'
+        - '{{ $serviceName }}'
+        - '{{ $config.port }}'
+  {{- end }}
   restartPolicy: Never
