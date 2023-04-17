@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "beacons.fullname" . }}
+  labels:
+    {{- include "beacons.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "beacons.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "beacons.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "beacons.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "beacons.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          args:
+            - --{{ .Values.network }}
+            - --jwt-secret /data/jwt.hex
+            - --accept-terms-of-use
+            - --execution-endpoint {{ .Values.executionEndpoint }}
+            - --checkpoint-sync-url {{ .Values.checkpointSyncUrl }}
+            - --genesis-beacon-api-url {{ .Values.genesisBeaconApiUrl }}
+            - --rpc-host 0.0.0.0
+            - --rpc-port {{ .Values.rpcPort }}
+            - --grpc-gateway-host 0.0.0.0
+          ports:
+            - name: p2p-tcp
+              containerPort: {{ .Values.p2pPort }}
+              protocol: TCP
+            - name: p2p-udp
+              containerPort: {{ .Values.p2pPort }}
+              protocol: UDP
+            - name: http-api
+              containerPort: {{ .Values.httpPort }}
+              protocol: TCP
+            - name: rpc
+              containerPort: {{ .Values.rpcPort }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.metricsPort }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - name: storage
+              mountPath: "/data/"
+            - name: jwt
+              mountPath: "/data/jwt.hex"
+              subPath: jwt.hex
+              readOnly: true
+      volumes:
+        - name: jwt
+          secret:
+            secretName: {{ include "beacons.fullname" . }}-jwt
+  {{- if not .Values.persistence.enabled }}
+        - name: storage
+          emptyDir: {}
+  {{- else if .Values.persistence.existingClaim }}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+  {{- else }}
+
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+        annotations:
+          {{- toYaml .Values.persistence.annotations | nindent 8 }}
+      spec:
+        accessModes:
+          {{- toYaml .Values.persistence.accessModes | nindent 8 }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+        storageClassName: {{ .Values.persistence.storageClassName }}
+        {{- if .Values.persistence.selector }}
+        selector:
+          {{- toYaml .Values.persistence.selector | nindent 8 }}
+        {{- end }}
+  {{- end }}
