@@ -65,6 +65,23 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+readinessProbe:
+  enabled: true
+  # optional values for tuning probes
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
+livenessProbe:
+  enabled: true
+  # optional values for tuning probes
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
