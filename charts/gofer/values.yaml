@@ -4,11 +4,20 @@
 
 replicaCount: 1
 
+logLevel: "debug"
+
+# Environment variable listing
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
+  # normal:
+  #   CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
+
 image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "sha-7375716"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +47,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8081
+  port: 9200
 
 ingress:
   enabled: false
@@ -55,6 +64,7 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -81,5 +91,7 @@ tolerations: []
 
 affinity: {}
 
-rpc-splitter:
-  ethRpc: "https://eth-mainnet.blastapi.io/e2a2f996-1a98-4b22-b72e-69b81ee4bc23"
+# This is a config file for gofer. it can override the default config if supplied
+# It is in HCL format.
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+configHcl: {}

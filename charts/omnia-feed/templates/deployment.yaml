@@ -1,35 +1,31 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "spire.fullname" . }}
+  name: {{ include "omnia-feed.fullname" . }}
   labels:
-    {{- include "spire.labels" . | nindent 4 }}
+    {{- include "omnia-feed.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "spire.selectorLabels" . | nindent 6 }}
+      {{- include "omnia-feed.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
-      {{- if .Values.keystore.enabled }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
-      {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "spire.selectorLabels" . | nindent 8 }}
+        {{- include "omnia-feed.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "spire.serviceAccountName" . }}
+      serviceAccountName: {{ include "omnia-feed.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,11 +34,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.configHcl }}
-          args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- else }}
-          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- end }}
+          # command: ["sleep", "infinity"]
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -57,16 +49,24 @@ spec:
           #   httpGet:
           #     path: /
           #     port: http
+          env:
+          - name: OMNIA_CONFIG
+            value: /config/omnia/omnia.json
+          - name: SPIRE_CONFIG
+            value: /config/spire/config.json
+          - name: GOFER_CONFIG
+            value: /config/gofer/gofer.json
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-          {{- include "helpers.list-env-variables" . | indent 12 }}
           volumeMounts:
-          {{- if .Values.configHcl }}
+          - name: omnia
+            mountPath: /home/omnia/
           - name: config
-            mountPath: /config/spire.hcl
-            subPath: spire.hcl
-          {{- end }}
+            mountPath: /config/omnia/
+          - name: gofer
+            mountPath: /config/gofer/
+          - name: spire
+            mountPath: /config/spire/
           {{- if .Values.keystore.enabled }}
           - name: keystore
             mountPath: /keystore/
@@ -76,17 +76,31 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ include "spire.fullname" . }}-config
+          name: {{ include "omnia-feed.fullname" . }}-config
+      - name: omnia
+        emptyDir: {}
+      - name: spire
+        configMap:
+          name: {{ .Release.Name }}-gofer-config
+          items:
+          - key: gofer.json
+            path: gofer.json
+      - name: gofer
+        configMap:
+          name: {{ .Release.Name }}-spire-config
+          items:
+          - key: config.json
+            path: config.json
       {{- if .Values.keystore.enabled }}
       - name: keystore
         configMap:
-          name: {{ include "spire.fullname" . }}-keystore
+          name: {{ include "omnia-feed.fullname" . }}-keystore
           items:
           - key: keystore.json
             path: keystore.json
       - name: password
         configMap:
-          name: {{ include "spire.fullname" . }}-keystore
+          name: {{ include "omnia-feed.fullname" . }}-keystore
           items:
           - key: password.txt
             path: password.txt

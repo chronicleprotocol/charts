@@ -2,8 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "spire.fullname" . }}-config
+  name: {{ include "lair.fullname" . }}-config
 data:
-  spire.hcl: |
+  lair.hcl: |
     {{- .Values.configHcl | nindent 4 }}
 {{- end }}

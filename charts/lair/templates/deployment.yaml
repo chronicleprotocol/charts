@@ -15,6 +15,9 @@ spec:
     metadata:
       {{- with .Values.podAnnotations }}
       annotations:
+        {{- if .Values.configHcl }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- end }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,20 +36,50 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.configHcl }}
+          args: [ "run", "-c", "/config/lair.hcl", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["run", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
-            - name: http
+            - name: listener
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /health
+              port: listener
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds | default 10 }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds | default 5 }}
+            successThreshold: {{ .Values.livenessProbe.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold | default 3 }}
+          {{ end }}
+          {{ if .Values.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /health
+              port: listener
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds | default 10 }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds | default 5 }}
+            successThreshold: {{ .Values.readinessProbe.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold | default 3 }}
+          {{ end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.configHcl }}
+          - name: config
+            mountPath: /config/lair.hcl
+            subPath: lair.hcl
+          {{- end }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "lair.fullname" . -}}-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
