@@ -19,6 +19,19 @@ entries:
   ethereum:
   - apiVersion: v2
     appVersion: v1.11.5
+    created: "2023-04-19T15:18:31.150544368Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: 0bca358a3b18b5594922349b5aee6a8f4c83f47020c7e87c8c1bdf9ab4fd1fe5
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.1.1/ethereum-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.11.5
     created: "2023-03-23T14:30:35.066452825Z"
     description: A Helm chart for Kubernetes
     digest: 33448bc45403731276785ff29e80689ec29149264289337d981da25c7fbe585c
@@ -333,4 +346,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-19T13:05:47.590066476Z"
+generated: "2023-04-19T15:18:31.150571368Z"
