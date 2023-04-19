@@ -18,7 +18,7 @@ checkpointSyncUrl: https://goerli.checkpoint-sync.ethpandaops.io
 genesisBeaconApiUrl: https://goerli.checkpoint-sync.ethpandaops.io
 # can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
-executionEndpoint: https://goerli.prylabs.net
+executionEndpoint: http://eth-rpc-ethereum:8551
 # can your own eth instance. eg https://goerli.mydomain.com/v.....
 
 # -- JWT secret used by client as a secret. Change this value.
