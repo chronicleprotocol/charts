@@ -36,8 +36,13 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.storageClass | string | `"standard"` |  |
-| persistence.storageSize | string | `"20Gi"` |  |
+| persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
+| persistence.annotations | object | `{}` | Annotations for volume claim template |
+| persistence.enabled | bool | `false` | Uses an EmptyDir when not enabled |
+| persistence.existingClaim | string | `nil` | Use an existing PVC when persistence.enabled |
+| persistence.selector | object | `{}` | Selector for volume claim template |
+| persistence.size | string | `"20Gi"` | Requested size for volume claim template |
+| persistence.storageClassName | string | `nil` | Use a specific storage class E.g 'local-path' for local storage to achieve best performance Read more (https://github.com/rancher/local-path-provisioner) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | probes.enabled | bool | `false` |  |

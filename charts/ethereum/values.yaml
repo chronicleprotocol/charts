@@ -13,10 +13,6 @@ data:
 # -- JWT secret used by client as a secret. Change this value.
 jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
 
-persistence:
-  storageClass: standard
-  storageSize: 20Gi
-
 image:
   repository: ethereum/client-go
   pullPolicy: IfNotPresent
@@ -71,6 +67,27 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+persistence:
+  # -- Uses an EmptyDir when not enabled
+  enabled: false
+  # -- Use an existing PVC when persistence.enabled
+  existingClaim: null
+  # -- Access mode for the volume claim template
+  accessModes:
+  - ReadWriteOnce
+  # -- Requested size for volume claim template
+  size: 20Gi
+  # -- Use a specific storage class
+  # E.g 'local-path' for local storage to achieve best performance
+  # Read more (https://github.com/rancher/local-path-provisioner)
+  storageClassName: null
+  # -- Annotations for volume claim template
+  annotations: {}
+  # -- Selector for volume claim template
+  selector: {}
+  #   matchLabels:
+  #     app.kubernetes.io/name: something
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
