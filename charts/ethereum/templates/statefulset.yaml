@@ -48,9 +48,12 @@ spec:
             - --authrpc.vhosts=*
             - --authrpc.jwtsecret=/data/jwt.hex
           ports:
-            - name: rpc
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+
           {{ if .Values.probes.enabled }}
           livenessProbe:
             httpGet:

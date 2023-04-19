@@ -49,7 +49,13 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `8545` |  |
+| service.ports.auth.port | int | `8551` |  |
+| service.ports.auth.protocol | string | `"TCP"` |  |
+| service.ports.http.port | int | `8545` |  |
+| service.ports.http.protocol | string | `"TCP"` |  |
+| service.ports.metrics.port | int | `6060` |  |
+| service.ports.ws.port | int | `8546` |  |
+| service.ports.ws.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

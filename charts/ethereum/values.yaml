@@ -47,7 +47,18 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8545
+  ports:
+    http:
+      port: 8545
+      protocol: TCP
+    ws:
+      port: 8546
+      protocol: TCP
+    auth:
+      port: 8551
+      protocol: TCP
+    metrics:
+      port: 6060
 
 probes:
   enabled: false
