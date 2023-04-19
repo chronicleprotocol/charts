@@ -1,8 +1,8 @@
 # ethereum
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.5](https://img.shields.io/badge/AppVersion-v1.11.5-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.5](https://img.shields.io/badge/AppVersion-v1.11.5-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A Helm chart for deploying Ethereum nodes on Kubernetes
 
 ## Maintainers
 
@@ -32,6 +32,7 @@ A Helm chart for Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
 | nodeSelector | object | `{}` |  |

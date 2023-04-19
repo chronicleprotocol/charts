@@ -37,7 +37,6 @@ spec:
             - geth
           args:
             - --{{ .Values.network }}
-            - --goerli
             - --datadir={{ .Values.data.path }}/data
             - --http
             - --http.port=8545
@@ -46,6 +45,8 @@ spec:
             - --allow-insecure-unlock
             - --http.api=eth,net,engine,admin,web3
             - --authrpc.addr=0.0.0.0
+            - --authrpc.vhosts=*
+            - --authrpc.jwtsecret=/data/jwt.hex
           ports:
             - name: rpc
               containerPort: {{ .Values.service.port }}
@@ -63,10 +64,17 @@ spec:
           volumeMounts:
             - name: ethereum-data
               mountPath: {{ .Values.data.path }}
+            - name: jwt
+              mountPath: "/data/jwt.hex"
+              subPath: jwt.hex
+              readOnly: true
       volumes:
         - name: ethereum-data
           persistentVolumeClaim:
             claimName: ethereum-data
+        - name: jwt
+          secret:
+            secretName: {{ include "ethereum.fullname" . }}-jwt
   volumeClaimTemplates:
     - metadata:
         name: ethereum-data
