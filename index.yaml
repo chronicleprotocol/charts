@@ -138,6 +138,21 @@ entries:
     version: 0.1.1
   leeloo:
   - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2023-04-19T13:05:47.590039676Z"
+    description: A Helm chart for deploying leeloo to Kubernetes
+    digest: a145f74ed92eaad0e314b400e3ae4d179c60df0c61157830e9f3a3a67e75d043
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: leeloo
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/leeloo-0.1.2/leeloo-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-07T15:48:14.946156504Z"
     description: A Helm chart for Kubernetes
@@ -318,4 +333,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-04-17T19:35:37.252599416Z"
+generated: "2023-04-19T13:05:47.590066476Z"
