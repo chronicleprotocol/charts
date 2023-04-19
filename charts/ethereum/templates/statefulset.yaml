@@ -37,7 +37,6 @@ spec:
             - geth
           args:
             - --{{ .Values.network }}
-            - --goerli
             - --datadir={{ .Values.data.path }}/data
             - --http
             - --http.port=8545
@@ -46,10 +45,15 @@ spec:
             - --allow-insecure-unlock
             - --http.api=eth,net,engine,admin,web3
             - --authrpc.addr=0.0.0.0
+            - --authrpc.vhosts=*
+            - --authrpc.jwtsecret=/data/jwt.hex
           ports:
-            - name: rpc
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+
           {{ if .Values.probes.enabled }}
           livenessProbe:
             httpGet:
@@ -63,16 +67,37 @@ spec:
           volumeMounts:
             - name: ethereum-data
               mountPath: {{ .Values.data.path }}
+            - name: jwt
+              mountPath: "/data/jwt.hex"
+              subPath: jwt.hex
+              readOnly: true
       volumes:
+        - name: jwt
+          secret:
+            secretName: {{ include "ethereum.fullname" . }}-jwt
+  {{- if not .Values.persistence.enabled }}
+        - name: ethereum-data
+          emptyDir: {}
+  {{- else if .Values.persistence.existingClaim }}
         - name: ethereum-data
           persistentVolumeClaim:
-            claimName: ethereum-data
+            claimName: {{ .Values.persistence.existingClaim }}
+  {{- else }}
+
   volumeClaimTemplates:
     - metadata:
         name: ethereum-data
+        annotations:
+          {{- toYaml .Values.persistence.annotations | nindent 8 }}
       spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: {{ .Values.persistence.storageClass }}
+        accessModes:
+          {{- toYaml .Values.persistence.accessModes | nindent 8 }}
         resources:
           requests:
-            storage: {{ .Values.persistence.size }}
+            storage: {{ .Values.persistence.size | quote }}
+        storageClassName: {{ .Values.persistence.storageClassName }}
+        {{- if .Values.persistence.selector }}
+        selector:
+          {{- toYaml .Values.persistence.selector | nindent 8 }}
+        {{- end }}
+  {{- end }}

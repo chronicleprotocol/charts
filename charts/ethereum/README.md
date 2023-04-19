@@ -1,8 +1,8 @@
 # ethereum
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.5](https://img.shields.io/badge/AppVersion-v1.11.5-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.5](https://img.shields.io/badge/AppVersion-v1.11.5-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A Helm chart for deploying Ethereum nodes on Kubernetes
 
 ## Maintainers
 
@@ -32,18 +32,30 @@ A Helm chart for Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
 | nodeSelector | object | `{}` |  |
-| persistence.storageClass | string | `"standard"` |  |
-| persistence.storageSize | string | `"20Gi"` |  |
+| persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
+| persistence.annotations | object | `{}` | Annotations for volume claim template |
+| persistence.enabled | bool | `false` | Uses an EmptyDir when not enabled |
+| persistence.existingClaim | string | `nil` | Use an existing PVC when persistence.enabled |
+| persistence.selector | object | `{}` | Selector for volume claim template |
+| persistence.size | string | `"20Gi"` | Requested size for volume claim template |
+| persistence.storageClassName | string | `nil` | Use a specific storage class E.g 'local-path' for local storage to achieve best performance Read more (https://github.com/rancher/local-path-provisioner) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | probes.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `8545` |  |
+| service.ports.auth.port | int | `8551` |  |
+| service.ports.auth.protocol | string | `"TCP"` |  |
+| service.ports.http.port | int | `8545` |  |
+| service.ports.http.protocol | string | `"TCP"` |  |
+| service.ports.metrics.port | int | `6060` |  |
+| service.ports.ws.port | int | `8546` |  |
+| service.ports.ws.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
