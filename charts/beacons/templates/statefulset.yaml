@@ -34,7 +34,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           args:
+            {{ if ne .Values.network "mainnet" }}
             - --{{ .Values.network }}
+            {{ end }}
             - --jwt-secret=/data/jwt.hex
             - --accept-terms-of-use
             - --execution-endpoint={{ .Values.executionEndpoint }}
