@@ -116,7 +116,7 @@ affinity: {}
 
 persistence:
   # -- Uses an EmptyDir when not enabled
-  enabled: false
+  enabled: true
   # -- Use an existing PVC when persistence.enabled
   existingClaim: null
   # -- Access mode for the volume claim template
