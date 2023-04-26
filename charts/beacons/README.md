@@ -45,7 +45,7 @@ A Helm chart for deploying a beacon node to Kubernetes
 | p2pPort | int | `13000` | P2P Port |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
-| persistence.enabled | bool | `true` | Uses an EmptyDir when not enabled |
+| persistence.enabled | bool | `false` | Uses an EmptyDir when not enabled |
 | persistence.existingClaim | string | `nil` | Use an existing PVC when persistence.enabled |
 | persistence.selector | object | `{}` | Selector for volume claim template |
 | persistence.size | string | `"20Gi"` | Requested size for volume claim template |
