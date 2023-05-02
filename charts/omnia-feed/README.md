@@ -47,6 +47,7 @@ A Helm chart for deploying an Omnia feed in Kubernetes
 | keystore.password | string | `"ilikeapples"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| omniaConfig | string | `"\"mode\": \"feed\",\n\"options\": {\n  \"interval\": 60,\n  \"msgLimit\": 35,\n  \"srcTimeout\": 10,\n  \"setzerTimeout\": 10,\n  \"setzerCacheExpiry\": 120,\n  \"setzerMinMedian\": 3,\n  \"setzerEthRpcUrl\": \"https://eth.public-rpc.com\"\n},\n\"sources\":[\"gofer\",\"setzer\"],\n\"transports\":[\"spire\"],\n\"pairs\": {\n  \"BTC/USD\":{\"msgExpiration\":300,\"msgSpread\":0.5},\n  \"ETH/USD\":{\"msgExpiration\":300,\"msgSpread\":0.5}\n}\n"` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
