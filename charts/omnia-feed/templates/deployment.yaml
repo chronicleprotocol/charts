@@ -53,9 +53,9 @@ spec:
           - name: OMNIA_CONFIG
             value: /config/omnia/omnia.json
           - name: SPIRE_CONFIG
-            value: /config/spire/config.json
+            value: /config/spire/config.hcl
           - name: GOFER_CONFIG
-            value: /config/gofer/gofer.json
+            value: /config/gofer/gofer.hcl
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -83,14 +83,14 @@ spec:
         configMap:
           name: {{ .Release.Name }}-gofer-config
           items:
-          - key: gofer.json
-            path: gofer.json
+          - key: gofer.hcl
+            path: gofer.hcl
       - name: gofer
         configMap:
           name: {{ .Release.Name }}-spire-config
           items:
-          - key: config.json
-            path: config.json
+          - key: spire.hcl
+            path: spire.hcl
       {{- if .Values.keystore.enabled }}
       - name: keystore
         configMap:
