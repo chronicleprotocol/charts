@@ -1,0 +1,13 @@
+apiVersion: v2
+description: A Prometheus metrics exporter for Ethereum consensus & execution nodes
+home: https://github.com/chronicleprotocol/charts
+
+maintainers:
+  - name: WesleyCharlesBlake
+    url: https://github.com/WesleyCharlesBlake
+  - name: chronicleprotocol
+    url: https://github.com/chronicleprotocol
+
+name: ethereum-metrics-exporter
+type: application
+version: 0.1.3
