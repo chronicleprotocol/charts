@@ -1,9 +1,5 @@
 # Chronicle Labs Helm Charts
 
---
-permalink: /index.html
----
-
 ## Usage
 
 Add the Helm repository locally and update.
