@@ -5,19 +5,25 @@
 replicaCount: 1
 
 # Environment variable listing
-env: {}
+env:
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/TweetBot/blob/master/keys_sample.env
-  # normal:
-  #   CONSUMER_KEY: ""
-  #   CONSUMER_SECRET: ""
-  #   TELOXIDE_TOKEN: ""
-  #   ACCESS_TOKEN: ""
-  #   ACCESS_TOKEN_SECRET: ""
-  #   CHAT_ID: ""
-  #   ACCOUNTS: ""
-  #   KEYWORDS: ""
+  normal:
+    CONSUMER_KEY: "foo"
+    CONSUMER_SECRET: "bar"
+    TELOXIDE_TOKEN: "foo"
+    ACCESS_TOKEN: "foo"
+    ACCESS_TOKEN_SECRET: "bar"
+    CHAT_ID: "1111"
+    ACCOUNTS: "someaccount"
+    KEYWORDS: "my,key,words"
 
+# If a secret exists with required keys, use it instead of .Values.env.normal .
+existinSecret: {}
+  # name: foo
+
+probes:
+  enabled: false
 
 image:
   repository: ghcr.io/chronicleprotocol/tweet_bot

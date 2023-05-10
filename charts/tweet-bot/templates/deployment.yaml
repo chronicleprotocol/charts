@@ -37,6 +37,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- if .Values.probes.enabled }}
           livenessProbe:
             httpGet:
               path: /
@@ -45,6 +46,14 @@ spec:
             httpGet:
               path: /
               port: http
+          {{- end }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+          {{- if .Values.existinSecret }}
+          envFrom:
+          - secretRef:
+              name: {{ .Values.existinSecret.name }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

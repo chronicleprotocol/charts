@@ -22,7 +22,15 @@ A Helm chart for deploying the discord Tweet-bot to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env | object | `{}` |  |
+| env.normal.ACCESS_TOKEN | string | `"foo"` |  |
+| env.normal.ACCESS_TOKEN_SECRET | string | `"bar"` |  |
+| env.normal.ACCOUNTS | string | `"someaccount"` |  |
+| env.normal.CHAT_ID | string | `"1111"` |  |
+| env.normal.CONSUMER_KEY | string | `"foo"` |  |
+| env.normal.CONSUMER_SECRET | string | `"bar"` |  |
+| env.normal.KEYWORDS | string | `"my,key,words"` |  |
+| env.normal.TELOXIDE_TOKEN | string | `"foo"` |  |
+| existinSecret | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/tweet_bot"` |  |
@@ -32,6 +40,7 @@ A Helm chart for deploying the discord Tweet-bot to Kubernetes
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| probes.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
