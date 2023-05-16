@@ -8,14 +8,17 @@ network: goerli
 ## can be goerli, mainnet, sepolia etc
 
 data:
-  path: /arbitrum-data
+  path: /home/user/.arbitrum
 
 nitro:
   httpApi: ["net", "web3", "eth", "debug"]
-  l1RpcUrl: https://eth-mainnet.public.blastapi.io
-  l2ChainId: 42161
-  extraArgs:
-    - "--init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
+  l1RpcUrl: https://ethereum-goerli-rpc.allthatnode.com
+  l2ChainId: 421613
+  httpCorsDomain: {}
+  httpAddr: {}
+  httpVhosts: {}
+  extraArgs: {}
+    # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
 
 image:
   repository: offchainlabs/nitro-node
@@ -106,7 +109,7 @@ persistence:
   #     app.kubernetes.io/name: something
 
 metrics:
-  enabled: false
+  enabled: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

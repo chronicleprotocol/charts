@@ -38,15 +38,15 @@ spec:
           args:
             - --l1.url={{ .Values.nitro.l1RpcUrl }}
             - --http.api={{ .Values.nitro.httpApi | join "," }}
-            - --http.corsdomain=*
-            - --http.addr=0.0.0.0
-            - --http.vhosts=*
-            - --l2.chain-id={{ .Values.nitro.chainId }}
+            - --http.corsdomain={{ .Values.nitro.httpCorsDomain | default "*" }}
+            - --http.addr={{ .Values.nitro.httpAddr | default "0.0.0.0" }}
+            - --http.vhosts={{ .Values.nitro.httpVhosts | default "*" }}
+            - --l2.chain-id={{ .Values.nitro.l2ChainId }}
           {{- if .Values.metrics.enabled }}
             - --metrics
           {{- end }}
           {{- range $arg := .Values.nitro.extraArgs }}
-            {{- $arg | nindent 16 }} \
+            {{- $arg | nindent 12 }}
           {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
@@ -54,7 +54,6 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-
           {{ if .Values.probes.enabled }}
           livenessProbe:
             httpGet:
@@ -68,14 +67,7 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.data.path }}
-            - name: jwt
-              mountPath: "/data/jwt.hex"
-              subPath: jwt.hex
-              readOnly: true
       volumes:
-        - name: jwt
-          secret:
-            secretName: {{ include "arbitrum.fullname" . }}-jwt
       {{- if .Values.extraVolumes }}
         {{ toYaml .Values.extraVolumes | nindent 8}}
       {{- end }}

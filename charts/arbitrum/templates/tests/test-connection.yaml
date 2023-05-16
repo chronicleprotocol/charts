@@ -19,5 +19,5 @@ spec:
         - --header
         - 'Content-Type: application/json'
         - --data-raw
-        - '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+        - '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":64}'
   restartPolicy: Never

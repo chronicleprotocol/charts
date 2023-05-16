@@ -20,7 +20,7 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| data.path | string | `"/arbitrum-data"` |  |
+| data.path | string | `"/home/user/.arbitrum"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"offchainlabs/nitro-node"` |  |
@@ -33,16 +33,19 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| metrics.enabled | bool | `false` |  |
+| metrics.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
-| nitro.extraArgs[0] | string | `"--init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"` |  |
+| nitro.extraArgs | object | `{}` |  |
+| nitro.httpAddr | object | `{}` |  |
 | nitro.httpApi[0] | string | `"net"` |  |
 | nitro.httpApi[1] | string | `"web3"` |  |
 | nitro.httpApi[2] | string | `"eth"` |  |
 | nitro.httpApi[3] | string | `"debug"` |  |
-| nitro.l1RpcUrl | string | `"https://eth-mainnet.public.blastapi.io"` |  |
-| nitro.l2ChainId | int | `42161` |  |
+| nitro.httpCorsDomain | object | `{}` |  |
+| nitro.httpVhosts | object | `{}` |  |
+| nitro.l1RpcUrl | string | `"https://ethereum-goerli-rpc.allthatnode.com"` |  |
+| nitro.l2ChainId | int | `421613` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
