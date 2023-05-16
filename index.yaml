@@ -1,5 +1,21 @@
 apiVersion: v1
 entries:
+  arbitrum:
+  - apiVersion: v2
+    appVersion: v2.0.14
+    created: "2023-05-16T13:09:16.161076083Z"
+    description: A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
+    digest: 3a62e176e0bba067bc77fd8c041614ea44384dde9f29af40672a2ee0a08b03d7
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: arbitrum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/arbitrum-0.0.1/arbitrum-0.0.1.tgz
+    version: 0.0.1
   beacons:
   - apiVersion: v2
     appVersion: v3.2.2
@@ -458,4 +474,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-03T15:15:34.829173913Z"
+generated: "2023-05-16T13:09:16.161115183Z"
