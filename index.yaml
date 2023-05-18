@@ -3,6 +3,21 @@ entries:
   arbitrum:
   - apiVersion: v2
     appVersion: v2.0.14
+    created: "2023-05-18T15:05:39.746115099Z"
+    description: A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
+    digest: c82c6dfc370c6ebe69b91ff7b83cf5ed340f1bd4f427bede712072020af25f19
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: arbitrum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/arbitrum-0.0.2/arbitrum-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: v2.0.14
     created: "2023-05-16T13:09:16.161076083Z"
     description: A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
     digest: 3a62e176e0bba067bc77fd8c041614ea44384dde9f29af40672a2ee0a08b03d7
@@ -78,6 +93,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.1/beacons-0.0.1.tgz
     version: 0.0.1
   ethereum:
+  - apiVersion: v2
+    appVersion: v1.11.6
+    created: "2023-05-18T15:05:39.92975959Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: 611943e5d122b7393dfcb6f93340adf14e76f9b6e8fd602180cb3f29d33a7a35
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.1.4/ethereum-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: v1.11.5
     created: "2023-05-01T12:10:09.162973906Z"
@@ -474,4 +502,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-16T13:09:16.161115183Z"
+generated: "2023-05-18T15:05:39.929945591Z"
