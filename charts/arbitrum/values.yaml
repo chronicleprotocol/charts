@@ -1,4 +1,4 @@
-# Default values for ethereum.
+# Default values for arbitrum.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -8,16 +8,28 @@ network: goerli
 ## can be goerli, mainnet, sepolia etc
 
 data:
-  path: /ethereum-data
+  path: /home/user/.arbitrum
 
-# -- JWT secret used by client as a secret. Change this value.
-jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
+nitro:
+  httpApi: ["net", "web3", "eth", "debug"]
+  l1RpcUrl: https://ethereum-goerli-rpc.allthatnode.com
+  l2ChainId: 421613
+  httpCorsDomain: {}
+  httpAddr: {}
+  httpVhosts: {}
+  extraArgs: {}
+    # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
+  metrics:
+    enabled: true
+    serverAddr: {}
+    serverPort: {}
+    serverUpdateInterval: {}
 
 image:
-  repository: ethereum/client-go
+  repository: offchainlabs/nitro-node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v2.0.14-2baa834"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -48,17 +60,18 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    http:
-      port: 8545
+    rpc:
+      port: 8547
       protocol: TCP
     ws:
-      port: 8546
-      protocol: TCP
-    auth:
-      port: 8551
+      port: 8548
       protocol: TCP
     metrics:
-      port: 6060
+      port: 6070
+      protocol: TCP
+    sequencer:
+      port: 9642
+      protocol: TCP
 
 probes:
   enabled: false
@@ -88,7 +101,7 @@ persistence:
   accessModes:
   - ReadWriteOnce
   # -- Requested size for volume claim template
-  size: 20Gi
+  size: 3Ti
   # -- Use a specific storage class
   # E.g 'local-path' for local storage to achieve best performance
   # Read more (https://github.com/rancher/local-path-provisioner)
@@ -99,11 +112,6 @@ persistence:
   selector: {}
   #   matchLabels:
   #     app.kubernetes.io/name: something
-
-metrics:
-  enabled: false
-  address: null
-  expensive: false
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
@@ -147,7 +155,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+tolerations: []
+
 nodeSelector: {}
 
-tolerations: []
 affinity: {}

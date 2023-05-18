@@ -1,14 +1,15 @@
-# ethereum
+# arbitrum
 
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.6](https://img.shields.io/badge/AppVersion-v1.11.6-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.14](https://img.shields.io/badge/AppVersion-v2.0.14-informational?style=flat-square)
 
-A Helm chart for deploying Ethereum nodes on Kubernetes
+A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 
 ## Maintainers
 
 | Name | Email | Url |
 | ---- | ------ | --- |
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
+| chronicleprotocol |  | <https://github.com/chronicleprotocol> |
 
 ## Values
 
@@ -19,11 +20,11 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| data.path | string | `"/ethereum-data"` |  |
+| data.path | string | `"/home/user/.arbitrum"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ethereum/client-go"` |  |
-| image.tag | string | `""` |  |
+| image.repository | string | `"offchainlabs/nitro-node"` |  |
+| image.tag | string | `"v2.0.14-2baa834"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -32,19 +33,29 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
-| metrics.address | string | `nil` |  |
-| metrics.enabled | bool | `false` |  |
-| metrics.expensive | bool | `false` |  |
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
+| nitro.extraArgs | object | `{}` |  |
+| nitro.httpAddr | object | `{}` |  |
+| nitro.httpApi[0] | string | `"net"` |  |
+| nitro.httpApi[1] | string | `"web3"` |  |
+| nitro.httpApi[2] | string | `"eth"` |  |
+| nitro.httpApi[3] | string | `"debug"` |  |
+| nitro.httpCorsDomain | object | `{}` |  |
+| nitro.httpVhosts | object | `{}` |  |
+| nitro.l1RpcUrl | string | `"https://ethereum-goerli-rpc.allthatnode.com"` |  |
+| nitro.l2ChainId | int | `421613` |  |
+| nitro.metrics.enabled | bool | `true` |  |
+| nitro.metrics.serverAddr | object | `{}` |  |
+| nitro.metrics.serverPort | object | `{}` |  |
+| nitro.metrics.serverUpdateInterval | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
 | persistence.enabled | bool | `false` | Uses an EmptyDir when not enabled |
 | persistence.existingClaim | string | `nil` | Use an existing PVC when persistence.enabled |
 | persistence.selector | object | `{}` | Selector for volume claim template |
-| persistence.size | string | `"20Gi"` | Requested size for volume claim template |
+| persistence.size | string | `"3Ti"` | Requested size for volume claim template |
 | persistence.storageClassName | string | `nil` | Use a specific storage class E.g 'local-path' for local storage to achieve best performance Read more (https://github.com/rancher/local-path-provisioner) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
@@ -52,12 +63,13 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.ports.auth.port | int | `8551` |  |
-| service.ports.auth.protocol | string | `"TCP"` |  |
-| service.ports.http.port | int | `8545` |  |
-| service.ports.http.protocol | string | `"TCP"` |  |
-| service.ports.metrics.port | int | `6060` |  |
-| service.ports.ws.port | int | `8546` |  |
+| service.ports.metrics.port | int | `6070` |  |
+| service.ports.metrics.protocol | string | `"TCP"` |  |
+| service.ports.rpc.port | int | `8547` |  |
+| service.ports.rpc.protocol | string | `"TCP"` |  |
+| service.ports.sequencer.port | int | `9642` |  |
+| service.ports.sequencer.protocol | string | `"TCP"` |  |
+| service.ports.ws.port | int | `8548` |  |
 | service.ports.ws.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
@@ -75,3 +87,5 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tolerations | list | `[]` |  |
 
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
