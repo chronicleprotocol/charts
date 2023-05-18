@@ -1,6 +1,6 @@
 # ethereum
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.5](https://img.shields.io/badge/AppVersion-v1.11.5-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.11.6](https://img.shields.io/badge/AppVersion-v1.11.6-informational?style=flat-square)
 
 A Helm chart for deploying Ethereum nodes on Kubernetes
 
@@ -63,6 +63,16 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| serviceMonitor.annotations | object | `{}` | Additional ServiceMonitor annotations |
+| serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
+| serviceMonitor.interval | string | `"1m"` | ServiceMonitor scrape interval |
+| serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
+| serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
+| serviceMonitor.path | string | `"/debug/metrics"` | Path to scrape |
+| serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
+| serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
+| serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
+| serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

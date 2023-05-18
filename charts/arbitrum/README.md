@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.14](https://img.shields.io/badge/AppVersion-v2.0.14-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.14](https://img.shields.io/badge/AppVersion-v2.0.14-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 
@@ -33,7 +33,6 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| metrics.enabled | bool | `true` |  |
 | nameOverride | string | `""` |  |
 | network | string | `"goerli"` |  |
 | nitro.extraArgs | object | `{}` |  |
@@ -46,6 +45,10 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | nitro.httpVhosts | object | `{}` |  |
 | nitro.l1RpcUrl | string | `"https://ethereum-goerli-rpc.allthatnode.com"` |  |
 | nitro.l2ChainId | int | `421613` |  |
+| nitro.metrics.enabled | bool | `true` |  |
+| nitro.metrics.serverAddr | object | `{}` |  |
+| nitro.metrics.serverPort | object | `{}` |  |
+| nitro.metrics.serverUpdateInterval | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
@@ -72,6 +75,16 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| serviceMonitor.annotations | object | `{}` | Additional ServiceMonitor annotations |
+| serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
+| serviceMonitor.interval | string | `"1m"` | ServiceMonitor scrape interval |
+| serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
+| serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
+| serviceMonitor.path | string | `"/debug/metrics"` | Path to scrape |
+| serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
+| serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
+| serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
+| serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
