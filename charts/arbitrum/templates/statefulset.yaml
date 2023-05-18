@@ -42,8 +42,11 @@ spec:
             - --http.addr={{ .Values.nitro.httpAddr | default "0.0.0.0" }}
             - --http.vhosts={{ .Values.nitro.httpVhosts | default "*" }}
             - --l2.chain-id={{ .Values.nitro.l2ChainId }}
-          {{- if .Values.metrics.enabled }}
+          {{- if .Values.nitro.metrics.enabled }}
             - --metrics
+            - --metrics-server.addr={{ .Values.nitro.metrics.serverAddr | default "0.0.0.0"}}
+            - --metrics-server.port={{ .Values.nitro.metrics.serverPort | default "6070"}}
+            - --metrics-server.update-interval={{ .Values.nitro.metrics.serverUpdateInterval | default "5s"}}
           {{- end }}
           {{- range $arg := .Values.nitro.extraArgs }}
             {{- $arg | nindent 12 }}
@@ -67,6 +70,12 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.data.path }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
       volumes:
       {{- if .Values.extraVolumes }}
         {{ toYaml .Values.extraVolumes | nindent 8}}

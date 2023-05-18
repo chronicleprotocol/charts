@@ -19,6 +19,11 @@ nitro:
   httpVhosts: {}
   extraArgs: {}
     # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
+  metrics:
+    enabled: true
+    serverAddr: {}
+    serverPort: {}
+    serverUpdateInterval: {}
 
 image:
   repository: offchainlabs/nitro-node
@@ -108,8 +113,28 @@ persistence:
   #   matchLabels:
   #     app.kubernetes.io/name: something
 
-metrics:
-  enabled: true
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- Path to scrape
+  path: /debug/metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -130,8 +155,8 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
-
 tolerations: []
+
+nodeSelector: {}
 
 affinity: {}
