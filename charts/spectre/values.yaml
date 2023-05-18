@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spectre
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "sha-e38aaab"
+  tag: "sha-b8d8ea1"
 
 imagePullSecrets: []
 nameOverride: ""

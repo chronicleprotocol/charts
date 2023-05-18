@@ -10,13 +10,18 @@ spec:
   containers:
   {{- $serviceName := include "spectre.fullname" . }}
   {{- range $name, $config := .Values.service.ports }}
-    - name: nc-{{ $name }}
+    #- name: nc-{{ $name }}
+    #  image: busybox
+    #  command: ['nc']
+    #  args:
+    #    - '-zv'
+    #    - '-v'
+    #    - '{{ $serviceName }}'
+    #    - '{{ $config.port }}'
+    - name: faux-{{ $name }}
       image: busybox
-      command: ['nc']
+      command: ['echo']
       args:
-        - '-zv'
-        - '-v'
-        - '{{ $serviceName }}'
-        - '{{ $config.port }}'
+        - '!!!!We need to test something!!!!'
   {{- end }}
   restartPolicy: Never
