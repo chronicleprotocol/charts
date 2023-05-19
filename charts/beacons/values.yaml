@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: gcr.io/prysmaticlabs/prysm/beacon-chain
   pullPolicy: IfNotPresent
-  tag: v3.2.2
+  tag: ""
 
 network: goerli
 # can be mainnet or goerli
