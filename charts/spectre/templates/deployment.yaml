@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,8 +14,12 @@ spec:
       {{- include "spectre.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+      {{- if .Values.keystore.enabled }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
+      {{- end }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -33,20 +38,59 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.configHcl }}
+          args: [ "-c", "/config/spectre.hcl", "run", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- else }}
+          args: ["run", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          {{- end }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- .Values.livenessProbe.probeSpec | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- .Values.readinessProbe.probeSpec | toYaml | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+          volumeMounts:
+          {{- if .Values.configHcl }}
+          - name: config
+            mountPath: /config/spectre.hcl
+            subPath: spectre.hcl
+          {{- end }}
+          {{- if .Values.keystore.enabled }}
+          - name: keystore
+            mountPath: /keystore/
+          - name: password
+            mountPath: /password/
+          {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "spectre.fullname" . }}-config
+      {{- if .Values.keystore.enabled }}
+      - name: keystore
+        configMap:
+          name: {{ include "spectre.fullname" . }}-keystore
+          items:
+          - key: keystore.json
+            path: keystore.json
+      - name: password
+        configMap:
+          name: {{ include "spectre.fullname" . }}-keystore
+          items:
+          - key: password.txt
+            path: password.txt
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
