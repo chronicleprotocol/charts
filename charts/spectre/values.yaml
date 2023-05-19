@@ -63,7 +63,7 @@ ingress:
   #      - chart-example.local
 
 livenessProbe:
-  enabled: true
+  enabled: false
   probeSpec:
     httpGet:
       path: /healthz
@@ -75,7 +75,7 @@ livenessProbe:
     successThreshold: 1
 
 readinessProbe:
-  enabled: true
+  enabled: false
   probeSpec:
     httpGet:
       path: /healthz

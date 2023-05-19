@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.3](https://img.shields.io/badge/AppVersion-v0.10.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.3](https://img.shields.io/badge/AppVersion-v0.10.3-informational?style=flat-square)
 
 A Helm chart for deploying spectre to  Kubernetes
 
@@ -44,7 +44,7 @@ A Helm chart for deploying spectre to  Kubernetes
 | keystore.ethFromAddress | string | `"0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"` |  |
 | keystore.keyStoreFile | string | `"{\"address\":\"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6\",\"id\":\"073dd01b-1b87-46b4-b52f-ca243bcf4b7b\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"},\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"}}"` |  |
 | keystore.password | string | `"ilikeapples"` |  |
-| livenessProbe.enabled | bool | `true` |  |
+| livenessProbe.enabled | bool | `false` |  |
 | livenessProbe.probeSpec.failureThreshold | int | `3` |  |
 | livenessProbe.probeSpec.httpGet.path | string | `"/healthz"` |  |
 | livenessProbe.probeSpec.httpGet.port | string | `"listen"` |  |
@@ -57,7 +57,7 @@ A Helm chart for deploying spectre to  Kubernetes
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe.enabled | bool | `true` |  |
+| readinessProbe.enabled | bool | `false` |  |
 | readinessProbe.probeSpec.failureThreshold | int | `3` |  |
 | readinessProbe.probeSpec.httpGet.path | string | `"/healthz"` |  |
 | readinessProbe.probeSpec.httpGet.port | string | `"listen"` |  |
