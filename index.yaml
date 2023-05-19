@@ -436,6 +436,26 @@ entries:
     version: 0.0.1
   spectre:
   - apiVersion: v2
+    appVersion: v0.10.3
+    created: "2023-05-19T11:52:00.612675197Z"
+    dependencies:
+    - condition: torProxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.2
+    description: A Helm chart for deploying spectre to  Kubernetes
+    digest: 40c98df00443727f21c66edcf3328d8267d5a0bc0481fd3de79442e6ce3a06de
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.3/spectre-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-07T15:48:15.445842775Z"
     description: A Helm chart for Kubernetes
@@ -530,4 +550,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-18T15:38:10.028476611Z"
+generated: "2023-05-19T11:52:00.612720997Z"
