@@ -49,6 +49,21 @@ entries:
   beacons:
   - apiVersion: v2
     appVersion: v4.0.4
+    created: "2023-05-19T17:12:57.566548536Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: ba5dc16378340a43d45faf4504db995a95a0a7f4a634f62060d28ebb74421657
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.6/beacons-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
+    appVersion: v4.0.4
     created: "2023-05-19T12:08:27.461071146Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
     digest: f8a6b8f01883736753f8a08472431badd4377dc36abdf26f130aab8ce03a28ac
@@ -585,4 +600,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-19T14:06:35.841379975Z"
+generated: "2023-05-19T17:12:57.566644737Z"
