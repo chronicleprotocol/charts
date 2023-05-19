@@ -49,14 +49,14 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          {{- if .Values.livenessProbe.enabled }}
+          livenessProbe:
+            {{- .Values.livenessProbe.probeSpec | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe.enabled }}
+          readinessProbe:
+            {{- .Values.readinessProbe.probeSpec | toYaml | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
