@@ -8,8 +8,20 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: wget
+  {{- $serviceName := include "spectre.fullname" . }}
+  {{- range $name, $config := .Values.service.ports }}
+    #- name: nc-{{ $name }}
+    #  image: busybox
+    #  command: ['nc']
+    #  args:
+    #    - '-zv'
+    #    - '-v'
+    #    - '{{ $serviceName }}'
+    #    - '{{ $config.port }}'
+    - name: faux-{{ $name }}
       image: busybox
-      command: ['wget']
-      args: ['{{ include "spectre.fullname" . }}:{{ .Values.service.port }}']
+      command: ['echo']
+      args:
+        - '!!!!We need to test something!!!!'
+  {{- end }}
   restartPolicy: Never

@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spectre
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "develop"
+  tag: "sha-b8d8ea1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -38,7 +38,13 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  ports:
+    listen:
+      port: 8080
+      protocol: TCP
+    rpc:
+      port: 9100
+      protocol: TCP
 
 ingress:
   enabled: false
@@ -55,6 +61,30 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+livenessProbe:
+  enabled: true
+  probeSpec:
+    httpGet:
+      path: /healthz
+      port: listen
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+
+readinessProbe:
+  enabled: true
+  probeSpec:
+    httpGet:
+      path: /healthz
+      port: listen
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -80,3 +110,27 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+logLevel: "debug"
+
+keystore:
+  enabled: false
+  keyStoreFile: |-
+    {"address":"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6","id":"073dd01b-1b87-46b4-b52f-ca243bcf4b7b","version":3,"Crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"},"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"}}
+  password: "ilikeapples"
+  ethFromAddress: "0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
+
+torProxy:
+  enabled: true
+
+# Environment variable listing
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spectre#environment-variables
+  # normal:
+  #   CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
+
+# This is a config file for spectre. it can override the default config if supplied
+# It is in HCL format.
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+configHcl: {}
