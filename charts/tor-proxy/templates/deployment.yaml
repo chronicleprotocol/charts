@@ -27,6 +27,17 @@ spec:
       serviceAccountName: {{ include "tor-proxy.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.torConfig }}
+      initContainers:
+      - name: copy-tor-keys
+        image: busybox
+        command: ['sh', '-c', 'cp /keys/* /var/lib/tor/hidden_services/']
+        volumeMounts:
+        - name: tor-hidden-services
+          mountPath: /var/lib/tor/hidden_services
+        - name: tor-keys
+          mountPath: /keys
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -38,15 +49,46 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          #   exec:
+          #     command:
+          #     - /bin/sh
+          #     - -c
+          #     - "echo authenticate '""' | nc 127.0.0.1 {{ .Values.service.port }} && echo signal NEWNYM | nc 127.0.0.1 {{ .Values.service.port }}"
+          #   initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          #   periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
           # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          #   exec:
+          #     command:
+          #     - /bin/sh
+          #     - -c
+          #     - "echo authenticate '""' | nc 127.0.0.1 {{ .Values.service.port }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+          volumeMounts:
+            - name: tor-hidden-services
+              mountPath: /var/lib/tor/hidden_services
+      volumes:
+        {{- if .Values.torConfig }}
+        - name: tor-keys
+          secret:
+          {{- if .Values.torConfig.existingSecret }}
+            secretName: {{ .Values.torConfig.existingSecret}}
+          {{- else }}
+            secretName: {{ include "tor-proxy.fullname" . }}-key
+            items:
+            - key: hs_ed25519_secret_key
+              path: hs_ed25519_secret_key
+            - key: hs_ed25519_public_key
+              path: hs_ed25519_public_key
+            - key: hostname
+              path: hostname
+          {{- end }}
+        {{- end }}
+        - name: tor-hidden-services
+          emptyDir: {}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
