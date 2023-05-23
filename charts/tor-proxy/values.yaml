@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: dperson/torproxy
+  repository: btcpayserver/tor
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -68,6 +68,13 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 5
+
 autoscaling:
   enabled: false
   minReplicas: 1
@@ -80,3 +87,31 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Environment variable listing
+env:
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  normal:
+    TOR_EXTRA_ARGS: |
+      AutomapHostsOnResolve 1
+      ControlSocketsGroupWritable 1
+      CookieAuthentication 1
+      CookieAuthFileGroupReadable 1
+      DNSPort 5353
+      ExitPolicy reject *:*
+      Log notice stderr
+      RunAsDaemon 0
+      ControlSocket /home/tor/.tor/control_socket
+      CookieAuthFile /home/tor/.tor/control_socket.authcookie
+      DataDirectory /home/tor/.tor
+      HiddenServiceDir /var/lib/tor/hidden_services
+      HiddenServicePort 8888 127.0.0.1:8800
+      HiddenServiceVersion 3
+torConfig: {}
+  # existingSecret: "existingSecret"
+  ## OR specify a private key
+  # torKeys:
+  #   secret_key: "PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAADwEVrvkvcxlOrvwn5lt6ivT/J6Igf7/HifiBj3SfXXVrAwP6N3CGEvC+VOPoPWxjaZsiq90o0wWqk2A7vW14IK"
+  #   public_key: "PT0gZWQyNTUxOXYxLXB1YmxpYzogdHlwZTAgPT0AAAAUJDqkDD+qfoWAqavjjD2MTpgaE4Zx4RTBZmB33LF7wg=="
+  #   hostname: "cqsdvjamh6vh5bmavgv6hdb5rrhjqgqtqzy6cfgbmzqhpxfrppblupqd.onion"
