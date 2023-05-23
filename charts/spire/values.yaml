@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spire
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "sha-7375716"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -105,7 +105,6 @@ env:
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
   normal:
     CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
-
 
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.
