@@ -112,6 +112,6 @@ torConfig: {}
   # existingSecret: "existingSecret"
   ## OR specify a private key
   # torKeys:
-  #   secret_key: "PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAADwEVrvkvcxlOrvwn5lt6ivT/J6Igf7/HifiBj3SfXXVrAwP6N3CGEvC+VOPoPWxjaZsiq90o0wWqk2A7vW14IK"
-  #   public_key: "PT0gZWQyNTUxOXYxLXB1YmxpYzogdHlwZTAgPT0AAAAUJDqkDD+qfoWAqavjjD2MTpgaE4Zx4RTBZmB33LF7wg=="
-  #   hostname: "cqsdvjamh6vh5bmavgv6hdb5rrhjqgqtqzy6cfgbmzqhpxfrppblupqd.onion"
+  #   secret_key: "<base64encoded_secret_key>"
+  #   public_key: "<base64encoded_public_key"
+  #   hostname: "<onionhostname>"
