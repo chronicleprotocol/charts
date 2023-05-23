@@ -572,6 +572,21 @@ entries:
   tor-proxy:
   - apiVersion: v2
     appVersion: 0.4.7.10
+    created: "2023-05-23T15:00:56.554374918Z"
+    description: A Helm chart for deploying tor-proxy to Kubernetes
+    digest: d24383bf5be603c7e0491bd85be989e63383e59cb19e790ad8f6f1077aec5d2a
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: tor-proxy
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.4/tor-proxy-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.4.7.10
     created: "2023-05-23T13:25:58.041197658Z"
     description: A Helm chart for deploying tor-proxy to Kubernetes
     digest: 45fd7f0550fc90f498f6918cad4d6f0ebdf231f1434d6124bab2df124242f746
@@ -615,4 +630,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-23T13:25:58.041256358Z"
+generated: "2023-05-23T15:00:56.554434722Z"
