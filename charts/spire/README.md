@@ -28,7 +28,7 @@ A Helm chart for deploying spire to  Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
 | env | object | `{}` |  |
-| fullnameOverride | string | `"spire"` |  |
+| fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |
 | image.tag | string | `""` |  |
