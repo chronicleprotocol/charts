@@ -49,14 +49,10 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -74,9 +70,11 @@ spec:
             mountPath: /password/
           {{- end }}
       volumes:
+      {{- if .Values.configHcl }}
       - name: config
         configMap:
           name: {{ include "spire.fullname" . }}-config
+      {{- end }}
       {{- if .Values.keystore.enabled }}
       - name: keystore
         configMap:
