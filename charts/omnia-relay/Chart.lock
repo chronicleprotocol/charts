@@ -1,0 +1,6 @@
+dependencies:
+- name: spire
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.0.6
+digest: sha256:6f4dd7c831a88d6c8882bf3dc1d0a5b59aa8449635ebccdb7776757bca638650
+generated: "2023-05-25T15:16:04.739426092+02:00"
