@@ -13,7 +13,10 @@ data:
         "keystore": "/keystore/",
         "password": "/password/password.txt",
         "network": "{{ .Values.ethereum.ethRpc }}",
-        "type": "{{ .Values.ethereum.networkType }}"
+        "gasPrice": {
+          "multiplier": 1,
+          "source": "node"
+        }
       },
       {{- end }}
       "options": {
