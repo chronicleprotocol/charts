@@ -135,7 +135,7 @@ data:
     {
       "spire": {
         "rpc": {
-          "address": "{{ include "omnia-relay.fullname" . }}-spire:9100"
+          "address": "relay-spire:9100"
         },
       }
     }

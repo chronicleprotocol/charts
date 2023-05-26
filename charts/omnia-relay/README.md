@@ -66,7 +66,8 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 | spire.enabled | bool | `true` |  |
 | spire.env.normal.CFG_LIBP2P_ENABLE | bool | `true` |  |
 | spire.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `"0.0.0.0:8080"` |  |
-| spire.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"omnia-relay-tor-proxy:9050"` |  |
+| spire.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"relay-tor-proxy:9050"` |  |
+| spire.fullnameOverride | string | `"relay-spire"` |  |
 | spire.logLevel | string | `"debug"` |  |
 | spire.service.ports.libp2p.port | int | `8000` |  |
 | spire.service.ports.libp2p.protocol | string | `"TCP"` |  |
@@ -75,7 +76,8 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 | spire.service.ports.webapi.port | int | `8080` |  |
 | spire.service.ports.webapi.protocol | string | `"TCP"` |  |
 | spire.tor-proxy.enabled | bool | `true` |  |
-| spire.tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 omnia-relay-spire:8080\nHiddenServiceVersion\n"` |  |
+| spire.tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 relay-spire:8080\nHiddenServiceVersion\n"` |  |
+| spire.tor-proxy.fullnameOverride | string | `"relay-tor-proxy"` |  |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

@@ -116,6 +116,7 @@ omniaConfig:
 # spire subchart configuration
 spire:
   enabled: true
+  fullnameOverride: relay-spire
   logLevel: "debug"
   service:
     ports:
@@ -132,11 +133,12 @@ spire:
     normal:
       CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
       CFG_LIBP2P_ENABLE: true
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "omnia-relay-tor-proxy:9050"
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "relay-tor-proxy:9050"
   configHcl: {}
 
   tor-proxy:
     enabled: true
+    fullnameOverride: relay-tor-proxy
     env:
       normal:
         TOR_EXTRA_ARGS: |
@@ -152,5 +154,5 @@ spire:
           CookieAuthFile /home/tor/.tor/control_socket.authcookie
           DataDirectory /home/tor/.tor
           HiddenServiceDir /var/lib/tor/hidden_services
-          HiddenServicePort 8888 omnia-relay-spire:8080
+          HiddenServicePort 8888 relay-spire:8080
           HiddenServiceVersion
