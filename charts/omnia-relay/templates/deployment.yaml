@@ -14,7 +14,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -34,7 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["sleep", "infinity"]
+          # command: ["sleep", "infinity"]
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -52,10 +51,8 @@ spec:
           env:
           - name: OMNIA_CONFIG
             value: /config/omnia/omnia.json
-          {{- if .Values.spire.configHcl }}
           - name: SPIRE_CONFIG
-            value: /config/spire/config.hcl
-          {{- end }}
+            value: /config/omnia/spire.json
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -63,10 +60,6 @@ spec:
             mountPath: /home/omnia/
           - name: config
             mountPath: /config/omnia/
-          {{- if .Values.spire.configHcl }}
-          - name: spire
-            mountPath: /config/spire/
-          {{- end }}
           {{- if .Values.keystore.enabled }}
           - name: keystore
             mountPath: /keystore/
@@ -79,14 +72,6 @@ spec:
           name: {{ include "omnia-relay.fullname" . }}-config
       - name: omnia
         emptyDir: {}
-      {{- if .Values.spire.configHcl }}
-      - name: spire
-        configMap:
-          name: {{ .Release.Name }}-spire-config
-          items:
-          - key: spire.hcl
-            path: spire.hcl
-      {{- end }}
       {{- if .Values.keystore.enabled }}
       - name: keystore
         configMap:

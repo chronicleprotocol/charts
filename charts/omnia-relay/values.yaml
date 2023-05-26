@@ -97,40 +97,24 @@ keystore:
   ethFromAddress: "0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
 
 ethereum:
-  ethRpc: "https://eth.public-rpc.com"
+  ethRpc: "https://eth-goerli.blastapi.io"
   networkType: "ethereum"
 
-omniaConfig: |
-    "mode": "relay",
-    "options": {
-      "interval": 60,
-      "msgLimit": 35,
-      "srcTimeout": 10,
-      "setzerTimeout": 10,
-      "setzerCacheExpiry": 120,
-      "setzerMinMedian": 3,
-      "setzerEthRpcUrl": "https://eth.public-rpc.com"
-    },
-    "transports":["spire"],
-    "feeds": [
-      "0x1bb90cde8a032cb4963813a5b4db4981afa5b9c6",
-      "0xfadad77b3a7e5a84a1f7ded081e785585d4ffaf3"
-    ],
-    "pairs": {
-      "BTC/USD": {
-        "oracle": "0x9b637fDF5482340C823930366464c146f318b896",
-        "oracleSpread": 0.5,
-        "oracleExpiration": 15500,
-        "msgExpiration": 1800
-      },
-      "ETH/USD": {
-        "oracle": "0x659D4343c656bEafb2441C50a0fb3d513374fe66",
-        "oracleSpread": 0.5,
-        "oracleExpiration": 15500,
-        "msgExpiration": 1800
-      }
-    }
+omniaConfig:
+  ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L35
+  pairs: []
+  #   BTC/USD: "0x586409bb88cF89BBAB0e106b0620241a0e4005c9"
+  #   ETH/BTC: "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7"
+  #   ETH/USD: "0xD81834Aa83504F6614caE3592fb033e4b8130380"
+  ### Can be used to override the default scuttlebotIdMap found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L29
+  scuttlebotIdMap: []
+  #   0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
+  #   0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
+  #   0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
+  #   0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
 
+
+# spire subchart configuration
 spire:
   enabled: true
   logLevel: "debug"

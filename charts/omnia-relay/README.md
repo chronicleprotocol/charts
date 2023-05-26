@@ -26,7 +26,7 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| ethereum.ethRpc | string | `"https://eth.public-rpc.com"` |  |
+| ethereum.ethRpc | string | `"https://eth-goerli.blastapi.io"` |  |
 | ethereum.networkType | string | `"ethereum"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -46,7 +46,8 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 | keystore.password | string | `"ilikeapples"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
-| omniaConfig | string | `"\"mode\": \"relay\",\n\"options\": {\n  \"interval\": 60,\n  \"msgLimit\": 35,\n  \"srcTimeout\": 10,\n  \"setzerTimeout\": 10,\n  \"setzerCacheExpiry\": 120,\n  \"setzerMinMedian\": 3,\n  \"setzerEthRpcUrl\": \"https://eth.public-rpc.com\"\n},\n\"transports\":[\"spire\"],\n\"feeds\": [\n  \"0x1bb90cde8a032cb4963813a5b4db4981afa5b9c6\",\n  \"0xfadad77b3a7e5a84a1f7ded081e785585d4ffaf3\"\n],\n\"pairs\": {\n  \"BTC/USD\": {\n    \"oracle\": \"0x9b637fDF5482340C823930366464c146f318b896\",\n    \"oracleSpread\": 0.5,\n    \"oracleExpiration\": 15500,\n    \"msgExpiration\": 1800\n  },\n  \"ETH/USD\": {\n    \"oracle\": \"0x659D4343c656bEafb2441C50a0fb3d513374fe66\",\n    \"oracleSpread\": 0.5,\n    \"oracleExpiration\": 15500,\n    \"msgExpiration\": 1800\n  }\n}\n"` |  |
+| omniaConfig.pairs | list | `[]` |  |
+| omniaConfig.scuttlebotIdMap | list | `[]` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
