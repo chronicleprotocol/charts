@@ -1,0 +1,7 @@
+1. Get the application pods by running these commands:
+
+  kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "omnia-relay.name" . }},app.kubernetes.io/instance={{ .Release.Name }}
+
+2. Get omnia-relay logs:
+
+  kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{ include "omnia-relay.name" . }}' -o jsonpath='{.items[0].metadata.name}')

@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "omnia-relay.fullname" . }}
+  labels:
+    {{- include "omnia-relay.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "omnia-relay.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "omnia-relay.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "omnia-relay.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: ["sleep", "infinity"]
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          env:
+          - name: OMNIA_CONFIG
+            value: /config/omnia/omnia.json
+          - name: SPIRE_CONFIG
+            value: /config/omnia/spire.json
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: omnia
+            mountPath: /home/omnia/
+          - name: config
+            mountPath: /config/omnia/
+          {{- if .Values.keystore.enabled }}
+          - name: keystore
+            mountPath: /keystore/
+          - name: password
+            mountPath: /password/
+          {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ include "omnia-relay.fullname" . }}-config
+      - name: omnia
+        emptyDir: {}
+      {{- if .Values.keystore.enabled }}
+      {{- if .Values.keystore.existingSecret }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: keystoreFile
+            path: keystore.json
+      - name: password
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: password
+            path: password.txt
+      {{- else }}
+      - name: keystore
+        configMap:
+          name: {{ include "omnia-relay.fullname" . }}-keystore
+          items:
+          - key: keystore.json
+            path: keystore.json
+      - name: password
+        configMap:
+          name: {{ include "omnia-relay.fullname" . }}-keystore
+          items:
+          - key: password.txt
+            path: password.txt
+      {{- end }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
