@@ -62,7 +62,7 @@ affinity: {}
 
 keystore:
   enabled: true
-  existingSecret: "my-secret"
+  existingSecret: ""
   keyStoreFile: ""
   password: ""
   ethFromAddress: "0x0000000000000000000000000000000000000000"

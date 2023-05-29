@@ -19,54 +19,433 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 
 ## Values
 
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| ethereum.ethRpc | string | `"https://ethereum-goerli-rpc.allthatnode.com"` |  |
-| fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/chronicleprotocol/omnia_relay"` |  |
-| image.tag | string | `""` |  |
-| imagePullSecrets | list | `[]` |  |
-| keystore.enabled | bool | `true` |  |
-| keystore.ethFromAddress | string | `"0x0000000000000000000000000000000000000000"` |  |
-| keystore.existingSecret | string | `"my-secret"` |  |
-| keystore.keyStoreFile | string | `""` |  |
-| keystore.password | string | `""` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| omniaConfig.pairs | list | `[]` |  |
-| omniaConfig.scuttlebotIdMap | list | `[]` |  |
-| omniaConfig.spireJson | string | `"{\n  \"spire\": {\n    \"rpc\": {\n      \"address\": \"relay-spire:9100\"\n    },\n  }\n}"` |  |
-| podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `""` |  |
-| spire.configHcl | object | `{}` |  |
-| spire.enabled | bool | `true` |  |
-| spire.env.normal.CFG_LIBP2P_ENABLE | bool | `true` |  |
-| spire.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `"0.0.0.0:8080"` |  |
-| spire.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"relay-tor-proxy:9050"` |  |
-| spire.fullnameOverride | string | `"relay-spire"` |  |
-| spire.logLevel | string | `"debug"` |  |
-| spire.service.ports.libp2p.port | int | `8000` |  |
-| spire.service.ports.libp2p.protocol | string | `"TCP"` |  |
-| spire.service.ports.rpc.port | int | `9100` |  |
-| spire.service.ports.rpc.protocol | string | `"TCP"` |  |
-| spire.service.ports.webapi.port | int | `8080` |  |
-| spire.service.ports.webapi.protocol | string | `"TCP"` |  |
-| spire.tor-proxy.enabled | bool | `true` |  |
-| spire.tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 relay-spire:8080\nHiddenServiceVersion\n"` |  |
-| spire.tor-proxy.fullnameOverride | string | `"relay-tor-proxy"` |  |
-| tolerations | list | `[]` |  |
+<table>
+	<thead>
+		<th>Key</th>
+		<th>Type</th>
+		<th>Default</th>
+		<th>Description</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>affinity</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>autoscaling.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+false
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>autoscaling.maxReplicas</td>
+			<td>int</td>
+			<td><pre lang="json">
+100
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>autoscaling.minReplicas</td>
+			<td>int</td>
+			<td><pre lang="json">
+1
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>autoscaling.targetCPUUtilizationPercentage</td>
+			<td>int</td>
+			<td><pre lang="json">
+80
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ethereum.ethRpc</td>
+			<td>string</td>
+			<td><pre lang="json">
+"https://ethereum-goerli-rpc.allthatnode.com"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>fullnameOverride</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.pullPolicy</td>
+			<td>string</td>
+			<td><pre lang="json">
+"IfNotPresent"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.repository</td>
+			<td>string</td>
+			<td><pre lang="json">
+"ghcr.io/chronicleprotocol/omnia_relay"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>image.tag</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>imagePullSecrets</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>keystore.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>keystore.ethFromAddress</td>
+			<td>string</td>
+			<td><pre lang="json">
+"0x0000000000000000000000000000000000000000"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>keystore.existingSecret</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>keystore.keyStoreFile</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>keystore.password</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>nameOverride</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>nodeSelector</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.spireJson</td>
+			<td>string</td>
+			<td><pre lang="json">
+"{\n  \"spire\": {\n    \"rpc\": {\n      \"address\": \"relay-spire:9100\"\n    },\n  }\n}"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>podAnnotations</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>podSecurityContext</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>replicaCount</td>
+			<td>int</td>
+			<td><pre lang="json">
+1
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>resources</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>securityContext</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>serviceAccount.annotations</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>serviceAccount.create</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>serviceAccount.name</td>
+			<td>string</td>
+			<td><pre lang="json">
+""
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.configHcl</td>
+			<td>object</td>
+			<td><pre lang="json">
+{}
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.env.normal.CFG_LIBP2P_ENABLE</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.env.normal.CFG_WEBAPI_LISTEN_ADDR</td>
+			<td>string</td>
+			<td><pre lang="json">
+"0.0.0.0:8080"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR</td>
+			<td>string</td>
+			<td><pre lang="json">
+"relay-tor-proxy:9050"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.fullnameOverride</td>
+			<td>string</td>
+			<td><pre lang="json">
+"relay-spire"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.logLevel</td>
+			<td>string</td>
+			<td><pre lang="json">
+"debug"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.libp2p.port</td>
+			<td>int</td>
+			<td><pre lang="json">
+8000
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.libp2p.protocol</td>
+			<td>string</td>
+			<td><pre lang="json">
+"TCP"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.rpc.port</td>
+			<td>int</td>
+			<td><pre lang="json">
+9100
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.rpc.protocol</td>
+			<td>string</td>
+			<td><pre lang="json">
+"TCP"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.webapi.port</td>
+			<td>int</td>
+			<td><pre lang="json">
+8080
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.service.ports.webapi.protocol</td>
+			<td>string</td>
+			<td><pre lang="json">
+"TCP"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.tor-proxy.enabled</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.tor-proxy.env.normal.TOR_EXTRA_ARGS</td>
+			<td>string</td>
+			<td><pre lang="json">
+"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 relay-spire:8080\nHiddenServiceVersion\n"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>spire.tor-proxy.fullnameOverride</td>
+			<td>string</td>
+			<td><pre lang="json">
+"relay-tor-proxy"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>tolerations</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
 
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+> **Tip**: If you are providing a secret for `.Values.keystore.existingSecret`, use the following command:
+
+```bash
+kubectl create secret generic my-secret --from-file=keystoreFile=/path/to/keystore.json --from-file=password=/path/to/password.txt
+```
