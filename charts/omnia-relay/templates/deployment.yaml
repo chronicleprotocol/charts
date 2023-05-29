@@ -35,12 +35,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           # command: ["sleep", "infinity"]
-          ports:
-          {{- range $key, $val := .Values.service.ports }}
-            - name: {{ $key }}
-              containerPort: {{ $val.port }}
-              protocol: {{ $val.protocol }}
-          {{- end }}
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -74,6 +68,20 @@ spec:
       - name: omnia
         emptyDir: {}
       {{- if .Values.keystore.enabled }}
+      {{- if .Values.keystore.existingSecret }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: keystoreFile
+            path: keystore.json
+      - name: password
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: password
+            path: password.txt
+      {{- else }}
       - name: keystore
         configMap:
           name: {{ include "omnia-relay.fullname" . }}-keystore
@@ -86,6 +94,7 @@ spec:
           items:
           - key: password.txt
             path: password.txt
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
