@@ -34,9 +34,11 @@ data:
         "ethGas": 200000,
         "chainType": "ethereum"
       },
-      "transports": [
-        "spire"
-      ],
+      {{- if .Values.omniaConfig.transports }}
+      "transports": {{ toJson .Values.omniaConfig.transports }},
+      {{ else }}
+      "transports": ["spire"],
+      {{- end }}
       {{- if .Values.omniaConfig.scuttlebotIdMap }}
       "scuttlebotIdMap": {
         {{- $keys := .Values.omniaConfig.scuttlebotIdMap | keys | sortAlpha }}
@@ -132,6 +134,9 @@ data:
       }
     }
   spire.json: |-
+    {{- if .Values.omniaConfig.spireJson }}
+    {{ .Values.omniaConfig.spireJson | nindent 4 }}
+    {{ else }}
     {
       "spire": {
         "rpc": {
@@ -139,3 +144,4 @@ data:
         },
       }
     }
+    {{- end }}

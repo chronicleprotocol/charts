@@ -61,12 +61,17 @@ spec:
           - name: password
             mountPath: /password/
           {{- end }}
+          - name: ssb-config
+            mountPath: /home/omnia/.ssb/
       volumes:
       - name: config
         configMap:
           name: {{ include "omnia-relay.fullname" . }}-config
       - name: omnia
         emptyDir: {}
+      - name: ssb-config
+        configMap:
+          name: {{ .Release.Name }}-ssb-server-config
       {{- if .Values.keystore.enabled }}
       {{- if .Values.keystore.existingSecret }}
       - name: keystore
