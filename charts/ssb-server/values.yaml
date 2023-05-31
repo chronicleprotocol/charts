@@ -1,0 +1,130 @@
+# Default values for ssb-server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/chronicleprotocol/ssb_server
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    net:
+      port: 8007
+      protocol: TCP
+    # rpc:
+    #   port: 8988
+    #   protocol: TCP
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
+  # normal:
+  #   CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
+
+## SSB Server Config
+ssbConfig:
+  config: |
+    {
+      "connections": {
+        "incoming": {
+          "net": [
+            {"port": 8007, "transform": "shs", "scope": "public"}
+          ]
+        },
+        "outgoing": {
+          "net": [{ "transform": "shs" }],
+          "onion": [{ "transform": "shs" }]
+        }
+      },
+      "caps": {
+        "shs": "BRsTikbASMIC6jAvsIbZy24Wd6IpLQ5FbEx1oyooGb8=",
+        "sign": "HOGP1DI4ZybjiHYv7SvaadeSLSnt1MQ2bDo2v7aszh0="
+      },
+      "logging":{"level": "info"}
+    }
+
+  secret: |
+    {
+      "curve": "ed25519",
+      "public": "YSa2zbx07RNKQrrFX1vS5mFN+Pbnul61hd9GGymao1o=.ed25519",
+      "private": "XhEkyFWb0TkhRU5t/yDTCI6Q9gwhsJM/SpL02UUwVtZhJrbNvHTtE0pCusVfW9LmYU349ue6XrWF30YbKZqjWg==.ed25519",
+      "id": "@YSa2zbx07RNKQrrFX1vS5mFN+Pbnul61hd9GGymao1o=.ed25519"
+    }
+
+  ### OR from an existing secret
+  # existingSecret:
+  #   secretName: "fooSecret"
+  #   configSecretKey: "fooSecretKey"
+  #   secretSecretKey: "fooSecretKey"
