@@ -1,0 +1,11 @@
+{{- if and .Values.ssbConfig (not .Values.ssbConfig.existingSecret) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ssb-server.fullname" . }}-config
+data:
+  config: |
+    {{- .Values.ssbConfig.config | nindent 4 }}
+  secret: |
+    {{- .Values.ssbConfig.secret | nindent 4 }}
+{{- end }}
