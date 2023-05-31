@@ -650,6 +650,22 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/spire-0.0.1/spire-0.0.1.tgz
     version: 0.0.1
+  ssb-server:
+  - apiVersion: v2
+    appVersion: 1.13.1
+    created: "2023-05-31T09:03:43.106835915Z"
+    description: A Helm chart for deploying an ssb-server in Kubernetes
+    digest: ca761d4eedee7116b28de4ab2d093a364e650a116b477f34085c1afb2c725efb
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: ssb-server
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ssb-server-0.0.1/ssb-server-0.0.1.tgz
+    version: 0.0.1
   tor-proxy:
   - apiVersion: v2
     appVersion: 0.4.7.10
@@ -711,4 +727,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-05-29T11:39:07.792691822Z"
+generated: "2023-05-31T09:03:43.106908416Z"
