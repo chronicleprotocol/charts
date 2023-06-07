@@ -39,7 +39,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.configHcl }}
-          args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}, "--log.format", "{{ .Values.logFormat | default "text" }}"]
           {{- else }}
           args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}", "--log.format", "{{ .Values.logFormat | default "text" }}"]
           {{- end }}
