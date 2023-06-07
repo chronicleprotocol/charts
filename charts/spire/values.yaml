@@ -105,8 +105,11 @@ tolerations: []
 
 affinity: {}
 
+## logLevel is the log level for the spire server (debug,info,trace,etc)
 logLevel: "debug"
-logFormat: "json"
+
+## logFormat is the log format for the spire server (json, or text)
+logFormat: null
 
 keystore:
   enabled: false
