@@ -41,7 +41,7 @@ spec:
           {{- if .Values.configHcl }}
           args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- else }}
-          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}", "--log.format", "{{ .Values.logFormat | default "text" }}"]
           {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}

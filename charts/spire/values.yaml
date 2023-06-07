@@ -106,6 +106,7 @@ tolerations: []
 affinity: {}
 
 logLevel: "debug"
+logFormat: "json"
 
 keystore:
   enabled: false
