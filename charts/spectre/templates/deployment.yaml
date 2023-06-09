@@ -78,18 +78,33 @@ spec:
         configMap:
           name: {{ include "spectre.fullname" . }}-config
       {{- if .Values.keystore.enabled }}
+      {{- if .Values.keystore.existingSecret }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: keystoreFile
+            path: keystore.json
+      - name: password
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: password
+            path: password.txt
+      {{- else }}
       - name: keystore
         configMap:
-          name: {{ include "spectre.fullname" . }}-keystore
+          name: {{ include "omnia-relay.fullname" . }}-keystore
           items:
           - key: keystore.json
             path: keystore.json
       - name: password
         configMap:
-          name: {{ include "spectre.fullname" . }}-keystore
+          name: {{ include "omnia-relay.fullname" . }}-keystore
           items:
           - key: password.txt
             path: password.txt
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

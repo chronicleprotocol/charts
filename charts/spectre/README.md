@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.3](https://img.shields.io/badge/AppVersion-v0.10.3-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.3](https://img.shields.io/badge/AppVersion-v0.10.3-informational?style=flat-square)
 
 A Helm chart for deploying spectre to  Kubernetes
 
@@ -15,7 +15,7 @@ A Helm chart for deploying spectre to  Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.2 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.4 |
 
 ## Values
 
@@ -28,6 +28,7 @@ A Helm chart for deploying spectre to  Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
 | env | object | `{}` |  |
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spectre"` |  |
@@ -40,10 +41,11 @@ A Helm chart for deploying spectre to  Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| keystore.enabled | bool | `false` |  |
-| keystore.ethFromAddress | string | `"0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"` |  |
-| keystore.keyStoreFile | string | `"{\"address\":\"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6\",\"id\":\"073dd01b-1b87-46b4-b52f-ca243bcf4b7b\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"},\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"}}"` |  |
-| keystore.password | string | `"ilikeapples"` |  |
+| keystore.enabled | bool | `true` |  |
+| keystore.ethFromAddress | string | `"0x0000000000000000000000000000000000000000"` |  |
+| keystore.existingSecret | string | `""` |  |
+| keystore.keyStoreFile | string | `""` |  |
+| keystore.password | string | `""` |  |
 | livenessProbe.enabled | bool | `false` |  |
 | livenessProbe.probeSpec.failureThreshold | int | `3` |  |
 | livenessProbe.probeSpec.httpGet.path | string | `"/healthz"` |  |

@@ -150,3 +150,15 @@ tor-proxy:
   #       HiddenServiceDir /var/lib/tor/hidden_services
   #       HiddenServicePort 8888 spire:8080
   #       HiddenServiceVersion 3
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: promtail-secrets
+  #   spec:
+  #     backendType: gcpSecretsManager
+  #     data:
+  #       - key: promtail-oauth2-creds
+  #         name: client_secret

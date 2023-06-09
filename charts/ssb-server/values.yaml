@@ -128,3 +128,15 @@ ssbConfig:
   #   secretName: "fooSecret"
   #   configSecretKey: "fooSecretKey"
   #   secretSecretKey: "fooSecretKey"
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: promtail-secrets
+  #   spec:
+  #     backendType: gcpSecretsManager
+  #     data:
+  #       - key: promtail-oauth2-creds
+  #         name: client_secret

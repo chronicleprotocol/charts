@@ -83,6 +83,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>extraObjects</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td>Extra K8s manifests to deploy</td>
+		</tr>
+		<tr>
 			<td>fullnameOverride</td>
 			<td>string</td>
 			<td><pre lang="json">
