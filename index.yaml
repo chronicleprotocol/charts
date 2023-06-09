@@ -493,6 +493,23 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.1/omnia-relay-0.0.1.tgz
     version: 0.0.1
+  rpc-router:
+  - apiVersion: v2
+    appVersion: 0.33.0
+    created: "2023-06-09T20:57:49.986995655Z"
+    description: A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load
+      Balancer for Blockchain API, to Kubernetes,
+    digest: 475f1c1127c4e68f755ce19103b7ba3c8dab0bfdb963449b871c1fc01ea94c7c
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: rpc-router
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.1.0/rpc-router-0.1.0.tgz
+    version: 0.1.0
   rpc-splitter:
   - apiVersion: v2
     appVersion: 0.9.0
@@ -791,4 +808,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-06-07T14:15:32.176051204Z"
+generated: "2023-06-09T20:57:49.987286057Z"
