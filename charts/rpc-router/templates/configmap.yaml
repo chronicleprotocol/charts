@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "rpc-router.fullname" . }}-config
+data:
+  dshackle.yaml: |-
+    version: v1
+    port: {{ .Values.service.ports.grpc.port }}
+    host: 0.0.0.0
+
+    compression:
+      grpc:
+        server:
+          enabled: false
+
+    proxy:
+      host: 0.0.0.0
+      port: {{ .Values.service.ports.proxy.port }}
+      routes:
+     {{- range .Values.dshackle.routes }}
+        - id: {{ .id }}
+          blockchain: {{ .blockchain }}
+     {{- end }}
+    cluster:
+      upstreams:
+    {{- .Values.dshackle.upstreams | nindent 8 }}
+    signed-response:
+      enabled: false
