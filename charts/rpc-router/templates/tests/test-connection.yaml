@@ -15,9 +15,6 @@ spec:
       command: ['nc']
       args:
         - '-zv'
-        - '-v'
-        - '-w'
-        - '15'
         - '{{ $serviceName }}'
         - '{{ $config.port }}'
   {{- end }}
