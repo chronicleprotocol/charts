@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "rpc-router.labels" . | nindent 4 }}
   annotations:
+    "helm.sh/hook-weight": "5"
     "helm.sh/hook": test
 spec:
   containers:
@@ -15,6 +16,7 @@ spec:
       command: ['nc']
       args:
         - '-zv'
+        - '-v'
         - '{{ $serviceName }}'
         - '{{ $config.port }}'
   {{- end }}
