@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -15,7 +15,7 @@ A Helm chart for deploying an Omnia relay in Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | spire | 0.0.9 |
+| https://chronicleprotocol.github.io/charts/ | spire | 0.1.0 |
 | https://chronicleprotocol.github.io/charts/ | ssb-server | 0.0.2 |
 
 ## Values

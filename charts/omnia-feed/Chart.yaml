@@ -21,7 +21,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.4
+version: 0.0.5
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -31,11 +31,11 @@ appVersion: "1.15.2-rc.0"
 
 dependencies:
   - name: spire
-    version: 0.0.8
+    version: 0.1.0
     repository: https://chronicleprotocol.github.io/charts/
     condition: spire.enabled
   - name: ssb-server
-    version: 0.0.1
+    version: 0.0.2
     repository: https://chronicleprotocol.github.io/charts/
     condition: ssb-server.enabled
   - name: gofer

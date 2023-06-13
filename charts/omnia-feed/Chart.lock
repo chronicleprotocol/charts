@@ -1,12 +1,12 @@
 dependencies:
 - name: spire
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.8
+  version: 0.1.0
 - name: ssb-server
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.1
+  version: 0.0.2
 - name: gofer
   repository: https://chronicleprotocol.github.io/charts/
   version: 0.0.3
-digest: sha256:d9ec2c0c6b1fb97aa81e0b1ad8bd0152882c63ed7623c9b08b6d01083f353c8b
-generated: "2023-06-13T15:20:32.843588+02:00"
+digest: sha256:a47604fe10b17f64d579fe19ad90b55164f3e19bc02c32d3341536c339dd2167
+generated: "2023-06-13T22:56:11.251195+02:00"
