@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "rpc-router.fullname" . }}-test-connection"
+  labels:
+    {{- include "rpc-router.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook": test
+spec:
+  containers:
+  {{- $serviceName := include "rpc-router.fullname" . }}
+  {{- range $name, $config := .Values.service.ports }}
+    - name: nc-{{ $name }}
+      image: busybox
+      command: ['nc']
+      args:
+        - '-zv'
+        - '-v'
+        - '{{ $serviceName }}'
+        - '{{ $config.port }}'
+  {{- end }}
+  restartPolicy: Never
