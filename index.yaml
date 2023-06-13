@@ -479,6 +479,30 @@ entries:
   omnia-relay:
   - apiVersion: v2
     appVersion: 1.16.1
+    created: "2023-06-13T20:35:57.337494596Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.9
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.2
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 1e61c6f2e354660d3394dd7d8f937e1042815cfe3052b987da5781e5e5c3184d
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: omnia-relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.4/omnia-relay-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 1.16.1
     created: "2023-06-13T20:21:05.329129056Z"
     dependencies:
     - condition: spire.enabled
@@ -930,4 +954,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-06-13T20:21:05.878420371Z"
+generated: "2023-06-13T20:35:57.337576997Z"
