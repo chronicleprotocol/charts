@@ -1,9 +1,9 @@
 dependencies:
 - name: spire
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.6
+  version: 0.0.9
 - name: ssb-server
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.1
-digest: sha256:607a057e271d5324bfd499fea89b3435ad485ab68d19988d2bcb74908e4e2f4d
-generated: "2023-05-31T11:15:14.765637021+02:00"
+  version: 0.0.2
+digest: sha256:f039bf34ed7a96dffdffb8757b746567d0ac53fc396c8fc896af753ef40678a6
+generated: "2023-06-13T22:28:48.014427+02:00"
