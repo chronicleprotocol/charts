@@ -76,9 +76,9 @@ false
 		</tr>
 		<tr>
 			<td>ethereum.ethGas</td>
-			<td>int</td>
+			<td>string</td>
 			<td><pre lang="json">
-7000000
+"7000000"
 </pre>
 </td>
 			<td></td>
@@ -115,6 +115,24 @@ false
 			<td>bool</td>
 			<td><pre lang="json">
 true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>gofer.env.normal.CFG_ETH_RPC_URLS</td>
+			<td>string</td>
+			<td><pre lang="json">
+"https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>gofer.image.tag</td>
+			<td>string</td>
+			<td><pre lang="json">
+"0.11.0-dev.5"
 </pre>
 </td>
 			<td></td>
@@ -304,6 +322,15 @@ true
 			<td>list</td>
 			<td><pre lang="json">
 []
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.sources[0]</td>
+			<td>string</td>
+			<td><pre lang="json">
+"gofer"
 </pre>
 </td>
 			<td></td>

@@ -69,7 +69,7 @@ keystore:
 
 ethereum:
   ethRpc: "https://ethereum-goerli-rpc.allthatnode.com"
-  ethGas: 7000000
+  ethGas: "7000000"
 
 omniaConfig:
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L35
@@ -84,6 +84,7 @@ omniaConfig:
       expiration: 1800
       spread: 0.5
 
+  sources: ["gofer"]
   transports: ["ssb", "spire"]
 
   ### Can be used to override the default scuttlebotIdMap found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L29
@@ -149,7 +150,14 @@ ssb-server:
 
 gofer:
   enabled: true
+  image:
+    tag: 0.11.0-dev.5
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/gofer/values.yaml
+  env:
+    # non sensitive variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
+    normal:
+      CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
 
 # -- Extra K8s manifests to deploy
 extraObjects: []
