@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.10.3](https://img.shields.io/badge/AppVersion-v0.10.3-informational?style=flat-square)
+![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.11.0-dev.5](https://img.shields.io/badge/AppVersion-0.11.0--dev.5-informational?style=flat-square)
 
 A Helm chart for deploying spectre to  Kubernetes
 
@@ -15,7 +15,7 @@ A Helm chart for deploying spectre to  Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.4 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.5 |
 
 ## Values
 
