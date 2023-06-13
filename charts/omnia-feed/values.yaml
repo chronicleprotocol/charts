@@ -4,7 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/chronicleprotocol/omnia_relay
+  repository: ghcr.io/chronicleprotocol/omnia_feed
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -69,22 +69,29 @@ keystore:
 
 ethereum:
   ethRpc: "https://ethereum-goerli-rpc.allthatnode.com"
+  ethGas: 7000000
 
 omniaConfig:
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L35
-  pairs: []
-  #   BTC/USD: "0x586409bb88cF89BBAB0e106b0620241a0e4005c9"
-  #   ETH/BTC: "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7"
-  #   ETH/USD: "0xD81834Aa83504F6614caE3592fb033e4b8130380"
+  pairs:
+    - name: BTC/USD
+      expiration: 1800
+      spread: 0.5
+    - name: GNO/USD
+      expiration: 1800
+      spread: 0.5
+    - name: MKR/USD
+      expiration: 1800
+      spread: 0.5
 
   transports: ["ssb", "spire"]
 
   ### Can be used to override the default scuttlebotIdMap found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L29
-  scuttlebotIdMap:
-    0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
-    0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
-    0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
-    0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
+  scuttlebotIdMap: []
+    # 0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
+    # 0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
+    # 0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
+    # 0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
 
   ## configure the omnia-feed spire.json if the default wont work for you
   spireJson: {}
@@ -93,7 +100,7 @@ omniaConfig:
 ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/spire/values.yaml
 spire:
   enabled: true
-  fullnameOverride: relay-spire
+  fullnameOverride: feed-spire
   logLevel: "debug"
   service:
     ports:
@@ -110,13 +117,13 @@ spire:
     normal:
       CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
       CFG_LIBP2P_ENABLE: true
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "relay-tor-proxy:9050"
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "feed-tor-proxy:9050"
   configHcl: {}
   ## tor-proxy is a subchart of spire
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml
   tor-proxy:
     enabled: true
-    fullnameOverride: relay-tor-proxy
+    fullnameOverride: feed-tor-proxy
     env:
       normal:
         TOR_EXTRA_ARGS: |
@@ -132,7 +139,7 @@ spire:
           CookieAuthFile /home/tor/.tor/control_socket.authcookie
           DataDirectory /home/tor/.tor
           HiddenServiceDir /var/lib/tor/hidden_services
-          HiddenServicePort 8888 relay-spire:8080
+          HiddenServicePort 8888 feed-spire:8080
           HiddenServiceVersion
 
 ## ssb subchart configuration
@@ -143,14 +150,15 @@ ssb-server:
 gofer:
   enabled: true
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/gofer/values.yaml
+
 # -- Extra K8s manifests to deploy
 extraObjects: []
-  # - apiVersion: "kubernetes-client.io/v1"
+  # - apiVersion: "apiVersion: external-secrets.io/v1beta1"
   #   kind: ExternalSecret
   #   metadata:
-  #     name: promtail-secrets
+  #     name: "{{ .Release.Name }}-ext-secret"
   #   spec:
-  #     backendType: gcpSecretsManager
+  #     backendType: vault
   #     data:
   #       - key: promtail-oauth2-creds
   #         name: client_secret

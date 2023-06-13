@@ -75,6 +75,15 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>ethereum.ethGas</td>
+			<td>int</td>
+			<td><pre lang="json">
+7000000
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>ethereum.ethRpc</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -123,7 +132,7 @@ true
 			<td>image.repository</td>
 			<td>string</td>
 			<td><pre lang="json">
-"ghcr.io/chronicleprotocol/omnia_relay"
+"ghcr.io/chronicleprotocol/omnia_feed"
 </pre>
 </td>
 			<td></td>
@@ -210,46 +219,91 @@ true
 			<td></td>
 		</tr>
 		<tr>
-			<td>omniaConfig.pairs</td>
+			<td>omniaConfig.pairs[0].expiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+1800
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[0].name</td>
+			<td>string</td>
+			<td><pre lang="json">
+"BTC/USD"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[0].spread</td>
+			<td>float</td>
+			<td><pre lang="json">
+0.5
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].expiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+1800
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].name</td>
+			<td>string</td>
+			<td><pre lang="json">
+"GNO/USD"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].spread</td>
+			<td>float</td>
+			<td><pre lang="json">
+0.5
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[2].expiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+1800
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[2].name</td>
+			<td>string</td>
+			<td><pre lang="json">
+"MKR/USD"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[2].spread</td>
+			<td>float</td>
+			<td><pre lang="json">
+0.5
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap</td>
 			<td>list</td>
 			<td><pre lang="json">
 []
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>omniaConfig.scuttlebotIdMap.0x0c4FC7D66b7b6c684488c1F218caA18D4082da18</td>
-			<td>string</td>
-			<td><pre lang="json">
-"@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>omniaConfig.scuttlebotIdMap.0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD</td>
-			<td>string</td>
-			<td><pre lang="json">
-"@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>omniaConfig.scuttlebotIdMap.0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9</td>
-			<td>string</td>
-			<td><pre lang="json">
-"@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>omniaConfig.scuttlebotIdMap.0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4</td>
-			<td>string</td>
-			<td><pre lang="json">
-"@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
 </pre>
 </td>
 			<td></td>
@@ -393,7 +447,7 @@ true
 			<td>spire.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR</td>
 			<td>string</td>
 			<td><pre lang="json">
-"relay-tor-proxy:9050"
+"feed-tor-proxy:9050"
 </pre>
 </td>
 			<td></td>
@@ -402,7 +456,7 @@ true
 			<td>spire.fullnameOverride</td>
 			<td>string</td>
 			<td><pre lang="json">
-"relay-spire"
+"feed-spire"
 </pre>
 </td>
 			<td></td>
@@ -483,7 +537,7 @@ true
 			<td>spire.tor-proxy.env.normal.TOR_EXTRA_ARGS</td>
 			<td>string</td>
 			<td><pre lang="json">
-"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 relay-spire:8080\nHiddenServiceVersion\n"
+"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 feed-spire:8080\nHiddenServiceVersion\n"
 </pre>
 </td>
 			<td></td>
@@ -492,7 +546,7 @@ true
 			<td>spire.tor-proxy.fullnameOverride</td>
 			<td>string</td>
 			<td><pre lang="json">
-"relay-tor-proxy"
+"feed-tor-proxy"
 </pre>
 </td>
 			<td></td>

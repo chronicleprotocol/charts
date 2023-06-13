@@ -48,6 +48,10 @@ spec:
             value: /config/omnia/omnia.json
           - name: SPIRE_CONFIG
             value: /config/omnia/spire.json
+          - name: ETH_RPC_URL
+            value: "{{ .Values.ethereum.ethRpc }}"
+          - name: ETH_GAS
+            value: "{{ .Values.ethereum.ethGas }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
