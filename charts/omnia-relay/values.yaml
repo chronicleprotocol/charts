@@ -139,3 +139,15 @@ spire:
 ssb-server:
   enabled: true
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/ssb-server/values.yaml
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: promtail-secrets
+  #   spec:
+  #     backendType: gcpSecretsManager
+  #     data:
+  #       - key: promtail-oauth2-creds
+  #         name: client_secret

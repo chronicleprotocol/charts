@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.11.0-dev.3](https://img.shields.io/badge/AppVersion-0.11.0--dev.3-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.11.0-dev.3](https://img.shields.io/badge/AppVersion-0.11.0--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying spire to  Kubernetes
 
@@ -28,6 +28,7 @@ A Helm chart for deploying spire to  Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
 | env | object | `{}` |  |
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |

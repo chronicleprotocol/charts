@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -81,6 +81,15 @@ false
 </pre>
 </td>
 			<td></td>
+		</tr>
+		<tr>
+			<td>extraObjects</td>
+			<td>list</td>
+			<td><pre lang="json">
+[]
+</pre>
+</td>
+			<td>Extra K8s manifests to deploy</td>
 		</tr>
 		<tr>
 			<td>fullnameOverride</td>

@@ -115,3 +115,15 @@ torConfig: {}
   #   secret_key: "<base64encoded_secret_key>"
   #   public_key: "<base64encoded_public_key"
   #   hostname: "<onionhostname>"
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: promtail-secrets
+  #   spec:
+  #     backendType: gcpSecretsManager
+  #     data:
+  #       - key: promtail-oauth2-creds
+  #         name: client_secret
