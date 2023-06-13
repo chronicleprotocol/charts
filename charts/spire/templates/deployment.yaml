@@ -76,6 +76,20 @@ spec:
           name: {{ include "spire.fullname" . }}-config
       {{- end }}
       {{- if .Values.keystore.enabled }}
+      {{- if .Values.keystore.existingSecret }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: keystoreFile
+            path: keystore.json
+      - name: password
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: password
+            path: password.txt
+      {{- else }}
       - name: keystore
         configMap:
           name: {{ include "spire.fullname" . }}-keystore
@@ -88,6 +102,7 @@ spec:
           items:
           - key: password.txt
             path: password.txt
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
