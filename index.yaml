@@ -401,6 +401,34 @@ entries:
     version: 0.0.1
   omnia-feed:
   - apiVersion: v2
+    appVersion: 1.15.2-rc.0
+    created: "2023-06-13T20:21:05.175830234Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.1
+    - condition: gofer.enabled
+      name: gofer
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.3
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 3bf0477e8ae34e50b0bf9a67ec569dd10e3e5bc3fe76d473628b8244f793cfc4
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: omnia-feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-feed-0.0.4/omnia-feed-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     appVersion: 1.15.1
     created: "2023-05-02T13:40:58.480788979Z"
     dependencies:
@@ -449,6 +477,30 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-feed-0.0.2/omnia-feed-0.0.2.tgz
     version: 0.0.2
   omnia-relay:
+  - apiVersion: v2
+    appVersion: 1.16.1
+    created: "2023-06-13T20:21:05.329129056Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.6
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.1
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 0609f880fabe96066f0ff926d9fd4b43b52d8346833d38953c63d374633580d6
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: omnia-relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.3/omnia-relay-0.0.3.tgz
+    version: 0.0.3
   - apiVersion: v2
     appVersion: 1.16.1
     created: "2023-05-31T11:17:19.560212794Z"
@@ -529,6 +581,26 @@ entries:
   spectre:
   - apiVersion: v2
     appVersion: v0.10.3
+    created: "2023-06-13T20:21:05.457321523Z"
+    dependencies:
+    - condition: torProxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.4
+    description: A Helm chart for deploying spectre to  Kubernetes
+    digest: 92628c994f9e1c6c7b2e0cc78be6a600fd73c9a868384b75e9ab0d49c6a7b876
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.5/spectre-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: v0.10.3
     created: "2023-05-19T14:06:35.841316774Z"
     dependencies:
     - condition: torProxy.enabled
@@ -581,6 +653,26 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.1/spectre-0.1.1.tgz
     version: 0.1.1
   spire:
+  - apiVersion: v2
+    appVersion: 0.11.0-dev.3
+    created: "2023-06-13T20:21:05.611766147Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.4
+    description: A Helm chart for deploying spire to  Kubernetes
+    digest: a3ea58ed0236cbabb1ac8542196da4a5a51a5cd072ceccf157c2b8209dc7dea8
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.0.9/spire-0.0.9.tgz
+    version: 0.0.9
   - apiVersion: v2
     appVersion: 0.11.0-dev.3
     created: "2023-06-07T14:15:32.175977529Z"
@@ -734,6 +826,21 @@ entries:
   ssb-server:
   - apiVersion: v2
     appVersion: 1.13.1
+    created: "2023-06-13T20:21:05.748500008Z"
+    description: A Helm chart for deploying an ssb-server in Kubernetes
+    digest: 793029d286541a7e1303d9e098deba13641f0562ceb87927a3018c16efb77544
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: ssb-server
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ssb-server-0.0.2/ssb-server-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.13.1
     created: "2023-05-31T09:03:43.106835915Z"
     description: A Helm chart for deploying an ssb-server in Kubernetes
     digest: ca761d4eedee7116b28de4ab2d093a364e650a116b477f34085c1afb2c725efb
@@ -748,6 +855,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/ssb-server-0.0.1/ssb-server-0.0.1.tgz
     version: 0.0.1
   tor-proxy:
+  - apiVersion: v2
+    appVersion: 0.4.7.10
+    created: "2023-06-13T20:21:05.878083871Z"
+    description: A Helm chart for deploying tor-proxy to Kubernetes
+    digest: 675852acf80493598158aa6a85c4414ecfd8d570c202315d051694f0232f97a5
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: tor-proxy
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.5/tor-proxy-0.0.5.tgz
+    version: 0.0.5
   - apiVersion: v2
     appVersion: 0.4.7.10
     created: "2023-05-23T15:00:56.554374918Z"
@@ -808,4 +930,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-06-09T20:57:49.987286057Z"
+generated: "2023-06-13T20:21:05.878420371Z"
