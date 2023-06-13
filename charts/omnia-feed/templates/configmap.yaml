@@ -3,16 +3,145 @@ kind: ConfigMap
 metadata:
   name: {{ include "omnia-feed.fullname" . }}-config
 data:
+  ### note this config is only suitable for eth goerli as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json
   omnia.json: |-
     {
+      "mode": "feed",
       {{- if .Values.keystore.enabled }}
       "ethereum": {
         "from": "{{ .Values.keystore.ethFromAddress }}",
         "keystore": "/keystore/",
         "password": "/password/password.txt",
-        "network": "",
-        "type": "ethereum"
+        "network": "{{ .Values.ethereum.ethRpc }}",
+        "gasPrice": {
+          "multiplier": 1,
+          "source": "node"
+        }
       },
       {{- end }}
-      {{- .Values.omniaConfig | nindent 6 }}
+      "options": {
+        "debug": true,
+        "goferConfig": "",
+        "interval": 60,
+        "logFormat": "text",
+        "msgLimit": 35,
+        "setzerCacheExpiry": 120,
+        "setzerMinMedian": 3,
+        "setzerTimeout": 10,
+        "spireConfig": "",
+        "srcTimeout": 10,
+        "verbose": true,
+        "ethGas": 200000,
+        "chainType": "ethereum"
+      },
+      {{- if .Values.omniaConfig.transports }}
+      "transports": {{ toJson .Values.omniaConfig.transports }},
+      {{ else }}
+      "transports": ["spire"],
+      {{- end }}
+      {{- if .Values.omniaConfig.scuttlebotIdMap }}
+      "scuttlebotIdMap": {
+        {{- $keys := .Values.omniaConfig.scuttlebotIdMap | keys | sortAlpha }}
+        {{- range $i, $key := $keys }}
+        "{{ $key }}": "{{ index $.Values.omniaConfig.scuttlebotIdMap $key }}"{{ if not (eq $i (sub (len $keys) 1)) }},{{ end }}
+        {{- end }}
+      },
+      {{- end }}
+      "pairs": {
+        {{- if .Values.omniaConfig.pairs }}
+        {{- $keys := .Values.omniaConfig.pairs | keys | sortAlpha }}
+        {{- range $i, $key := $keys }}
+        "{{ $key }}": {
+          "msgExpiration": 1800,
+          "oracle": "{{ index $.Values.omniaConfig.pairs $key }}",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        }{{ if not (eq $i (sub (len $keys) 1)) }},{{ end }}
+        {{- end }}
+        {{ else }}
+        "BTC/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x586409bb88cF89BBAB0e106b0620241a0e4005c9",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "ETH/BTC": {
+          "msgExpiration": 1800,
+          "oracle": "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "ETH/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0xD81834Aa83504F6614caE3592fb033e4b8130380",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "GNO/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x0cd01b018C355a60B2Cc68A1e3d53853f05A7280",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "IBTA/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x0Aca91081B180Ad76a848788FC76A089fB5ADA72",
+          "oracleExpiration": 14400,
+          "oracleSpread": 10
+        },
+        "LINK/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0xe4919256D404968566cbdc5E5415c769D5EeBcb0",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "MANA/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0xCCce898497e139831523cc9D23c948138dDF67f6",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "MATIC/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x4b4e2A0b7a560290280F083c8b5174FB706D7926",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "MKR/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x496C851B2A9567DfEeE0ACBf04365F3ba00Eb8dC",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "RETH/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x7eEE7e44055B6ddB65c6C970B061EC03365FADB3",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "WSTETH/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x9466e1ffA153a8BdBB5972a7217945eb2E28721f",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        },
+        "YFI/USD": {
+          "msgExpiration": 1800,
+          "oracle": "0x38D27Ba21E1B2995d0ff9C1C070c5c93dd07cB31",
+          "oracleExpiration": 14400,
+          "oracleSpread": 3
+        }{{- end }}
+      }
     }
+  spire.json: |-
+    {{- if .Values.omniaConfig.spireJson }}
+    {{ .Values.omniaConfig.spireJson | nindent 4 }}
+    {{ else }}
+    {
+      "spire": {
+        "rpc": {
+          "address": "relay-spire:9100"
+        },
+      }
+    }
+    {{- end }}

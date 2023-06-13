@@ -4,7 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/chronicleprotocol/omnia_feed
+  repository: ghcr.io/chronicleprotocol/omnia_relay
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -35,35 +35,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  ports:
-    webapi:
-      port: 8800
-      protocol: TCP
-    listener:
-      port: 8100
-      protocol: TCP
-    rpc:
-      port: 9100
-      protocol: TCP
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -91,21 +62,87 @@ affinity: {}
 
 keystore:
   enabled: true
-  keyStoreFile: |-
-    {"address":"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6","id":"073dd01b-1b87-46b4-b52f-ca243bcf4b7b","version":3,"Crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"},"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"8491d0eb057afca54a339c25163a6928"},"ciphertext":"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d","kdf":"scrypt","kdfparams":{"salt":"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f","n":131072,"dklen":32,"p":1,"r":8},"mac":"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674"}}
-  password: "ilikeapples"
-  ethFromAddress: "0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
+  existingSecret: ""
+  keyStoreFile: ""
+  password: ""
+  ethFromAddress: "0x0000000000000000000000000000000000000000"
 
-omniaConfig: {}
+ethereum:
+  ethRpc: "https://ethereum-goerli-rpc.allthatnode.com"
+
+omniaConfig:
+  ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L35
+  pairs: []
+  #   BTC/USD: "0x586409bb88cF89BBAB0e106b0620241a0e4005c9"
+  #   ETH/BTC: "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7"
+  #   ETH/USD: "0xD81834Aa83504F6614caE3592fb033e4b8130380"
+
+  transports: ["ssb", "spire"]
+
+  ### Can be used to override the default scuttlebotIdMap found as per https://github.com/chronicleprotocol/omnia-feed/blob/master/omnia/config/relay-ethereum-goerli.json#L29
+  scuttlebotIdMap:
+    0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
+    0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
+    0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
+    0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
+
+  ## configure the omnia-feed spire.json if the default wont work for you
+  spireJson: {}
+
+# spire subchart configuration
+## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/spire/values.yaml
+spire:
+  enabled: true
+  fullnameOverride: relay-spire
+  logLevel: "debug"
+  service:
+    ports:
+      webapi:
+        port: 8080
+        protocol: TCP
+      libp2p:
+        port: 8000
+        protocol: TCP
+      rpc:
+        port: 9100
+        protocol: TCP
+  env:
+    normal:
+      CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
+      CFG_LIBP2P_ENABLE: true
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "relay-tor-proxy:9050"
+  configHcl: {}
+  ## tor-proxy is a subchart of spire
+  ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml
+  tor-proxy:
+    enabled: true
+    fullnameOverride: relay-tor-proxy
+    env:
+      normal:
+        TOR_EXTRA_ARGS: |
+          AutomapHostsOnResolve 1
+          ControlSocketsGroupWritable 1
+          CookieAuthentication 1
+          CookieAuthFileGroupReadable 1
+          DNSPort 5353
+          ExitPolicy reject *:*
+          Log notice stderr
+          RunAsDaemon 0
+          ControlSocket /home/tor/.tor/control_socket
+          CookieAuthFile /home/tor/.tor/control_socket.authcookie
+          DataDirectory /home/tor/.tor
+          HiddenServiceDir /var/lib/tor/hidden_services
+          HiddenServicePort 8888 relay-spire:8080
+          HiddenServiceVersion
+
+## ssb subchart configuration
+ssb-server:
+  enabled: true
+  ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/ssb-server/values.yaml
 
 gofer:
   enabled: true
-  configHcl: {}
-
-spire:
-  enabled: true
-  configHcl: {}
-
+  ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/gofer/values.yaml
 # -- Extra K8s manifests to deploy
 extraObjects: []
   # - apiVersion: "kubernetes-client.io/v1"

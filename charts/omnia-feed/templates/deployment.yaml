@@ -35,12 +35,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           # command: ["sleep", "infinity"]
-          ports:
-          {{- range $key, $val := .Values.service.ports }}
-            - name: {{ $key }}
-              containerPort: {{ $val.port }}
-              protocol: {{ $val.protocol }}
-          {{- end }}
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -53,9 +47,7 @@ spec:
           - name: OMNIA_CONFIG
             value: /config/omnia/omnia.json
           - name: SPIRE_CONFIG
-            value: /config/spire/config.hcl
-          - name: GOFER_CONFIG
-            value: /config/gofer/gofer.hcl
+            value: /config/omnia/spire.json
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -63,35 +55,38 @@ spec:
             mountPath: /home/omnia/
           - name: config
             mountPath: /config/omnia/
-          - name: gofer
-            mountPath: /config/gofer/
-          - name: spire
-            mountPath: /config/spire/
           {{- if .Values.keystore.enabled }}
           - name: keystore
             mountPath: /keystore/
           - name: password
             mountPath: /password/
           {{- end }}
+          - name: ssb-config
+            mountPath: /home/omnia/.ssb/
       volumes:
       - name: config
         configMap:
           name: {{ include "omnia-feed.fullname" . }}-config
       - name: omnia
         emptyDir: {}
-      - name: spire
+      - name: ssb-config
         configMap:
-          name: {{ .Release.Name }}-gofer-config
-          items:
-          - key: gofer.hcl
-            path: gofer.hcl
-      - name: gofer
-        configMap:
-          name: {{ .Release.Name }}-spire-config
-          items:
-          - key: spire.hcl
-            path: spire.hcl
+          name: {{ .Release.Name }}-ssb-server-config
       {{- if .Values.keystore.enabled }}
+      {{- if .Values.keystore.existingSecret }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: keystoreFile
+            path: keystore.json
+      - name: password
+        secret:
+          secretName: {{ .Values.keystore.existingSecret }}
+          items:
+          - key: password
+            path: password.txt
+      {{- else }}
       - name: keystore
         configMap:
           name: {{ include "omnia-feed.fullname" . }}-keystore
@@ -104,6 +99,7 @@ spec:
           items:
           - key: password.txt
             path: password.txt
+      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

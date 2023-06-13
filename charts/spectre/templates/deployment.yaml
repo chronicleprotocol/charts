@@ -94,13 +94,13 @@ spec:
       {{- else }}
       - name: keystore
         configMap:
-          name: {{ include "omnia-relay.fullname" . }}-keystore
+          name: {{ include "spectre.fullname" . }}-keystore
           items:
           - key: keystore.json
             path: keystore.json
       - name: password
         configMap:
-          name: {{ include "omnia-relay.fullname" . }}-keystore
+          name: {{ include "spectre.fullname" . }}-keystore
           items:
           - key: password.txt
             path: password.txt
