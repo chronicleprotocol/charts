@@ -402,6 +402,34 @@ entries:
   omnia-feed:
   - apiVersion: v2
     appVersion: 1.15.2-rc.0
+    created: "2023-06-13T20:59:46.139432747Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.0
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.2
+    - condition: gofer.enabled
+      name: gofer
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.3
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 53d21bc7cf6c16745f61e703c9bd1b40a44d8740db3881f3d97e9c1a832d0d08
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: omnia-feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-feed-0.0.5/omnia-feed-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: 1.15.2-rc.0
     created: "2023-06-13T20:21:05.175830234Z"
     dependencies:
     - condition: spire.enabled
@@ -477,6 +505,30 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-feed-0.0.2/omnia-feed-0.0.2.tgz
     version: 0.0.2
   omnia-relay:
+  - apiVersion: v2
+    appVersion: 1.16.1
+    created: "2023-06-13T20:59:46.388993043Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.0
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.2
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 3ab208aa01420b57ff1d8924e251ab305370fa23cf179dd071b3a5c005a817bf
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: omnia-relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.5/omnia-relay-0.0.5.tgz
+    version: 0.0.5
   - apiVersion: v2
     appVersion: 1.16.1
     created: "2023-06-13T20:35:57.337494596Z"
@@ -994,4 +1046,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-06-13T20:53:27.104348768Z"
+generated: "2023-06-13T20:59:46.389252745Z"
