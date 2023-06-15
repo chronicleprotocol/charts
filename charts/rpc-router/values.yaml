@@ -24,7 +24,7 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
-
+  # configmap.reloader.stakater.com/reload: "rpc-router-config"
 podSecurityContext: {}
   # fsGroup: 2000
 
