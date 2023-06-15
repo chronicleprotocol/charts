@@ -623,6 +623,22 @@ entries:
     version: 0.0.1
   rpc-router:
   - apiVersion: v2
+    appVersion: 0.33.1
+    created: "2023-06-15T10:37:07.07893555Z"
+    description: A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load
+      Balancer for Blockchain API, to Kubernetes,
+    digest: 4b13e06c4582cec8354f224c6bea118449b41955c2d65737855c3a62091c01a7
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: rpc-router
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.1.1/rpc-router-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.33.0
     created: "2023-06-09T20:57:49.986995655Z"
     description: A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load
@@ -1046,4 +1062,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-06-13T20:59:46.389252745Z"
+generated: "2023-06-15T10:37:07.07948415Z"
