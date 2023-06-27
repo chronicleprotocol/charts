@@ -49,14 +49,13 @@ data:
       {{- end }}
       "pairs": {
         {{- if .Values.omniaConfig.pairs }}
-        {{- $keys := .Values.omniaConfig.pairs | keys | sortAlpha }}
-        {{- range $i, $key := $keys }}
-        "{{ $key }}": {
-          "msgExpiration": 1800,
-          "oracle": "{{ index $.Values.omniaConfig.pairs $key }}",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        }{{ if not (eq $i (sub (len $keys) 1)) }},{{ end }}
+        {{- range .Values.omniaConfig.pairs }}
+        "{{ .name }}": {
+          "msgExpiration": {{ .msgExpiration }},
+          "oracle": "{{ .oracle }}",
+          "oracleExpiration": {{ .oracleExpiration }},
+          "oracleSpread": {{ .oracleSpread }}
+        }{{ if not (eq .name (index (last $.Values.omniaConfig.pairs) "name")) }},{{ end }}
         {{- end }}
         {{ else }}
         "BTC/USD": {

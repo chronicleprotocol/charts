@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -228,15 +228,6 @@ true
 		</tr>
 		<tr>
 			<td>omniaConfig.transports[0]</td>
-			<td>string</td>
-			<td><pre lang="json">
-"ssb"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>omniaConfig.transports[1]</td>
 			<td>string</td>
 			<td><pre lang="json">
 "spire"

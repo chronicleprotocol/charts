@@ -73,18 +73,30 @@ ethereum:
 omniaConfig:
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L35
   pairs: []
-  #   BTC/USD: "0x586409bb88cF89BBAB0e106b0620241a0e4005c9"
-  #   ETH/BTC: "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7"
-  #   ETH/USD: "0xD81834Aa83504F6614caE3592fb033e4b8130380"
+    # - name: BTC/USD
+    #   msgExpiration: 1800
+    #   oracle: "0x586409bb88cF89BBAB0e106b0620241a0e4005c9"
+    #   oracleExpiration: 14400
+    #   oracleSpread: 3
+    # - name: ETH/BTC
+    #   msgExpiration: 1800
+    #   oracle: "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7"
+    #   oracleExpiration: 14400
+    #   oracleSpread: 3
+    # - name: ETH/USD
+    #   msgExpiration: 1800
+    #   oracle: "0xD81834Aa83504F6614caE3592fb033e4b8130380"
+    #   oracleExpiration: 14400
+    #   oracleSpread: 3
 
-  transports: ["ssb", "spire"]
+  transports: ["spire"]
 
   ### Can be used to override the default scuttlebotIdMap found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L29
   scuttlebotIdMap: []
-  #   0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
-  #   0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
-  #   0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
-  #   0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
+    # 0x5C01f0F08E54B85f4CaB8C6a03c9425196fe66DD: "@uqOcvBdpBXWNCm5WhjALbtyR8szWpihH/CVyNdycncQ=.ed25519"
+    # 0x75FBD0aaCe74Fb05ef0F6C0AC63d26071Eb750c9: "@wrrCKd56pV5CNSVh+fkVh6iaRUG6VA5I5VDEo8XOn5E=.ed25519"
+    # 0x0c4FC7D66b7b6c684488c1F218caA18D4082da18: "@4ltZDRGFi4eHGGlXmLC8olcEs8XNZCXfvx+3V3S2HgY=.ed25519"
+    # 0xC50DF8b5dcb701aBc0D6d1C7C99E6602171Abbc4: "@gt/2QK1AdSCLX3zRJQV6wRRsoxgohChCpjmNOOLUAA4=.ed25519"
 
   ## configure the omnia-relay spire.json if the default wont work for you
   spireJson: {}
@@ -111,6 +123,7 @@ spire:
       CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
       CFG_LIBP2P_ENABLE: true
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "relay-tor-proxy:9050"
+
   configHcl: {}
   ## tor-proxy is a subchart of spire
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml
