@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1](https://img.shields.io/badge/AppVersion-1.16.1-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -78,6 +78,42 @@ false
 			<td>string</td>
 			<td><pre lang="json">
 "https://ethereum-goerli-rpc.allthatnode.com"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ethereum.gasPrice.maxPriceMultiplier</td>
+			<td>int</td>
+			<td><pre lang="json">
+2
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ethereum.gasPrice.priority</td>
+			<td>string</td>
+			<td><pre lang="json">
+"fast"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ethereum.gasPrice.source</td>
+			<td>string</td>
+			<td><pre lang="json">
+"node"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>ethereum.gasPrice.tipMultiplier</td>
+			<td>int</td>
+			<td><pre lang="json">
+1
 </pre>
 </td>
 			<td></td>
@@ -200,6 +236,33 @@ true
 			<td></td>
 		</tr>
 		<tr>
+			<td>omniaConfig.chainType</td>
+			<td>string</td>
+			<td><pre lang="json">
+"ethereum"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.debug</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.logFile</td>
+			<td>string</td>
+			<td><pre lang="json">
+"json"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>omniaConfig.pairs</td>
 			<td>list</td>
 			<td><pre lang="json">
@@ -218,6 +281,15 @@ true
 			<td></td>
 		</tr>
 		<tr>
+			<td>omniaConfig.sleep</td>
+			<td>string</td>
+			<td><pre lang="json">
+null
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>omniaConfig.spireJson</td>
 			<td>object</td>
 			<td><pre lang="json">
@@ -231,6 +303,15 @@ true
 			<td>string</td>
 			<td><pre lang="json">
 "spire"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.verbose</td>
+			<td>bool</td>
+			<td><pre lang="json">
+true
 </pre>
 </td>
 			<td></td>
@@ -455,7 +536,7 @@ true
 			<td>ssb-server.enabled</td>
 			<td>bool</td>
 			<td><pre lang="json">
-true
+false
 </pre>
 </td>
 			<td></td>

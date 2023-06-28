@@ -34,7 +34,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # command: ["sleep", "infinity"]
+          {{ if .Values.omniaConfig.sleep }}
+          command: ["sleep", "infinity"]
+          {{ end }}
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -61,17 +63,21 @@ spec:
           - name: password
             mountPath: /password/
           {{- end }}
+          {{- if index .Values "ssb-server" "enabled"}}
           - name: ssb-config
             mountPath: /home/omnia/.ssb/
+          {{- end }}
       volumes:
       - name: config
         configMap:
           name: {{ include "omnia-relay.fullname" . }}-config
       - name: omnia
         emptyDir: {}
+      {{- if index .Values "ssb-server" "enabled"}}
       - name: ssb-config
         configMap:
           name: {{ .Release.Name }}-ssb-server-config
+      {{- end }}
       {{- if .Values.keystore.enabled }}
       {{- if .Values.keystore.existingSecret }}
       - name: keystore
