@@ -69,8 +69,20 @@ keystore:
 
 ethereum:
   ethRpc: "https://ethereum-goerli-rpc.allthatnode.com"
+  gasPrice:
+    source: "node"
+    maxPriceMultiplier: 2
+    tipMultiplier: 1
+    priority: "fast"
 
 omniaConfig:
+  ## starts omnia in sleep mode, useful for debugging
+  sleep: null
+  debug: true
+  verbose: true
+  logFile: "json"
+  ## must be one of "ethereum", "arbitrum" or "optimism"
+  chainType: "ethereum"
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L35
   pairs: []
     # - name: BTC/USD
@@ -150,7 +162,7 @@ spire:
 
 ## ssb subchart configuration
 ssb-server:
-  enabled: true
+  enabled: false
   ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/ssb-server/values.yaml
 
 # -- Extra K8s manifests to deploy

@@ -14,25 +14,27 @@ data:
         "password": "/password/password.txt",
         "network": "{{ .Values.ethereum.ethRpc }}",
         "gasPrice": {
-          "multiplier": 1,
-          "source": "node"
+          "source": "{{ .Values.ethereum.gasPrice.source }}",
+          "maxPriceMultiplier": {{ .Values.ethereum.gasPrice.maxPriceMultiplier | default 2 }},
+          "tipMultiplier": {{ .Values.ethereum.gasPrice.tipMultiplier | default 1 }},
+          "priority": "{{ .Values.ethereum.gasPrice.priority }}"
         }
       },
       {{- end }}
       "options": {
-        "debug": true,
+        "debug": "{{ .Values.omniaConfig.debug | default true }}",
         "goferConfig": "",
         "interval": 60,
-        "logFormat": "json",
+        "logFormat": "{{ .Values.omniaConfig.logFormat | default "json" }}",
         "msgLimit": 35,
         "setzerCacheExpiry": 120,
         "setzerMinMedian": 3,
         "setzerTimeout": 10,
         "spireConfig": "",
         "srcTimeout": 10,
-        "verbose": true,
+        "verbose": {{ .Values.omniaConfig.verbose | default true }},
         "ethGas": 200000,
-        "chainType": "ethereum"
+        "chainType": "{{ .Values.omniaConfig.chainType }}"
       },
       {{- if .Values.omniaConfig.transports }}
       "transports": {{ toJson .Values.omniaConfig.transports }},
@@ -64,12 +66,6 @@ data:
           "oracleExpiration": 14400,
           "oracleSpread": 3
         },
-        "ETH/BTC": {
-          "msgExpiration": 1800,
-          "oracle": "0xaF495008d177a2E2AD95125b78ace62ef61Ed1f7",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
         "ETH/USD": {
           "msgExpiration": 1800,
           "oracle": "0xD81834Aa83504F6614caE3592fb033e4b8130380",
@@ -82,30 +78,6 @@ data:
           "oracleExpiration": 14400,
           "oracleSpread": 3
         },
-        "IBTA/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x0Aca91081B180Ad76a848788FC76A089fB5ADA72",
-          "oracleExpiration": 14400,
-          "oracleSpread": 10
-        },
-        "LINK/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0xe4919256D404968566cbdc5E5415c769D5EeBcb0",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "MANA/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0xCCce898497e139831523cc9D23c948138dDF67f6",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "MATIC/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x4b4e2A0b7a560290280F083c8b5174FB706D7926",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
         "MKR/USD": {
           "msgExpiration": 1800,
           "oracle": "0x496C851B2A9567DfEeE0ACBf04365F3ba00Eb8dC",
@@ -115,18 +87,6 @@ data:
         "RETH/USD": {
           "msgExpiration": 1800,
           "oracle": "0x7eEE7e44055B6ddB65c6C970B061EC03365FADB3",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "WSTETH/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x9466e1ffA153a8BdBB5972a7217945eb2E28721f",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "YFI/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x38D27Ba21E1B2995d0ff9C1C070c5c93dd07cB31",
           "oracleExpiration": 14400,
           "oracleSpread": 3
         }{{- end }}
