@@ -46,15 +46,10 @@ spec:
           #     path: /
           #     port: http
           env:
-          - name: OMNIA_CONFIG
-            value: /config/omnia/omnia.json
-          - name: SPIRE_CONFIG
-            value: /config/omnia/spire.json
+          {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: omnia
-            mountPath: /home/omnia/
           - name: config
             mountPath: /config/omnia/
           {{- if .Values.keystore.enabled }}
@@ -71,8 +66,6 @@ spec:
       - name: config
         configMap:
           name: {{ include "omnia-relay.fullname" . }}-config
-      - name: omnia
-        emptyDir: {}
       {{- if index .Values "ssb-server" "enabled"}}
       - name: ssb-config
         configMap:
