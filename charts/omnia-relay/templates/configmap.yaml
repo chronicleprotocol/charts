@@ -11,7 +11,7 @@ data:
       "ethereum": {
         "from": "{{ .Values.keystore.ethFromAddress }}",
         "keystore": "/keystore/",
-        "password": "/password/password.txt",
+        "password": "/keystore/password.txt",
         "network": "{{ .Values.ethereum.ethRpc }}",
         "gasPrice": {
           "source": "{{ .Values.ethereum.gasPrice.source }}",
@@ -50,7 +50,6 @@ data:
       },
       {{- end }}
       "pairs": {
-        {{- if .Values.omniaConfig.pairs }}
         {{- range .Values.omniaConfig.pairs }}
         "{{ .name }}": {
           "msgExpiration": {{ .msgExpiration }},
@@ -59,48 +58,5 @@ data:
           "oracleSpread": {{ .oracleSpread }}
         }{{ if not (eq .name (index (last $.Values.omniaConfig.pairs) "name")) }},{{ end }}
         {{- end }}
-        {{ else }}
-        "BTC/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x586409bb88cF89BBAB0e106b0620241a0e4005c9",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "ETH/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0xD81834Aa83504F6614caE3592fb033e4b8130380",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "GNO/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x0cd01b018C355a60B2Cc68A1e3d53853f05A7280",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "MKR/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x496C851B2A9567DfEeE0ACBf04365F3ba00Eb8dC",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        },
-        "RETH/USD": {
-          "msgExpiration": 1800,
-          "oracle": "0x7eEE7e44055B6ddB65c6C970B061EC03365FADB3",
-          "oracleExpiration": 14400,
-          "oracleSpread": 3
-        }{{- end }}
       }
     }
-  spire.json: |-
-    {{- if .Values.omniaConfig.spireJson }}
-    {{ .Values.omniaConfig.spireJson | nindent 4 }}
-    {{ else }}
-    {
-      "spire": {
-        "rpc": {
-          "address": "relay-spire:9100"
-        },
-      }
-    }
-    {{- end }}

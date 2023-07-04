@@ -28,6 +28,15 @@ spec:
       serviceAccountName: {{ include "omnia-relay.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: init-container
+          image: busybox
+          command: ['sh', '-c', 'cp /getkeys/* /keystore']
+          volumeMounts:
+          - name: keystore
+            mountPath: /getkeys
+          - name: ethkeys
+            mountPath: /keystore
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -46,33 +55,24 @@ spec:
           #     path: /
           #     port: http
           env:
-          - name: OMNIA_CONFIG
-            value: /config/omnia/omnia.json
-          - name: SPIRE_CONFIG
-            value: /config/omnia/spire.json
+          {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: omnia
-            mountPath: /home/omnia/
           - name: config
             mountPath: /config/omnia/
-          {{- if .Values.keystore.enabled }}
-          - name: keystore
+          - name: ethkeys
             mountPath: /keystore/
-          - name: password
-            mountPath: /password/
-          {{- end }}
           {{- if index .Values "ssb-server" "enabled"}}
           - name: ssb-config
             mountPath: /home/omnia/.ssb/
           {{- end }}
       volumes:
+      - name: ethkeys
+        emptyDir: {}
       - name: config
         configMap:
           name: {{ include "omnia-relay.fullname" . }}-config
-      - name: omnia
-        emptyDir: {}
       {{- if index .Values "ssb-server" "enabled"}}
       - name: ssb-config
         configMap:
@@ -86,12 +86,9 @@ spec:
           items:
           - key: keystoreFile
             path: keystore.json
-      - name: password
-        secret:
-          secretName: {{ .Values.keystore.existingSecret }}
-          items:
           - key: password
             path: password.txt
+          defaultMode: 0777
       {{- else }}
       - name: keystore
         configMap:
@@ -99,12 +96,9 @@ spec:
           items:
           - key: keystore.json
             path: keystore.json
-      - name: password
-        configMap:
-          name: {{ include "omnia-relay.fullname" . }}-keystore
-          items:
           - key: password.txt
             path: password.txt
+          defaultMode: 0777
       {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
