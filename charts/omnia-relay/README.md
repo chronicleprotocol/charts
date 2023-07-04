@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1-dev.2](https://img.shields.io/badge/AppVersion-1.16.1--dev.2-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1-dev.3](https://img.shields.io/badge/AppVersion-1.16.1--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -74,10 +74,28 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>env.normal.CFG_FEEDS</td>
+			<td>string</td>
+			<td><pre lang="json">
+"prod"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>env.normal.CFG_SPIRE_RPC_ADDR</td>
 			<td>string</td>
 			<td><pre lang="json">
 "relay-spire:9100"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>env.normal.ETH_RPC_URL</td>
+			<td>string</td>
+			<td><pre lang="json">
+"https://rpc.chroniclelabs.io/opt"
 </pre>
 </td>
 			<td></td>
@@ -92,10 +110,28 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>env.normal.OMNIA_DEBUG</td>
+			<td>int</td>
+			<td><pre lang="json">
+1
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>env.normal.OMNIA_LOG_FORMAT</td>
+			<td>string</td>
+			<td><pre lang="json">
+"text"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>ethereum.ethRpc</td>
 			<td>string</td>
 			<td><pre lang="json">
-"https://eth.public-rpc.com"
+"https://rpc.chroniclelabs.io/opt"
 </pre>
 </td>
 			<td></td>
@@ -158,7 +194,7 @@ false
 			<td>image.pullPolicy</td>
 			<td>string</td>
 			<td><pre lang="json">
-"IfNotPresent"
+"Always"
 </pre>
 </td>
 			<td></td>
@@ -257,7 +293,7 @@ true
 			<td>omniaConfig.chainType</td>
 			<td>string</td>
 			<td><pre lang="json">
-"ethereum"
+"optimism"
 </pre>
 </td>
 			<td></td>
@@ -281,19 +317,298 @@ true
 			<td></td>
 		</tr>
 		<tr>
-			<td>omniaConfig.pairs</td>
-			<td>list</td>
+			<td>omniaConfig.pairs[0].msgExpiration</td>
+			<td>int</td>
 			<td><pre lang="json">
-[]
+1800
 </pre>
 </td>
 			<td></td>
 		</tr>
 		<tr>
-			<td>omniaConfig.scuttlebotIdMap</td>
-			<td>object</td>
+			<td>omniaConfig.pairs[0].name</td>
+			<td>string</td>
 			<td><pre lang="json">
-{}
+"BTC/USD"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[0].oracle</td>
+			<td>string</td>
+			<td><pre lang="json">
+"0xdc65E49016ced01FC5aBEbB5161206B0f8063672"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[0].oracleExpiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+86400
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[0].oracleSpread</td>
+			<td>float</td>
+			<td><pre lang="json">
+0.1
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].msgExpiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+1800
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].name</td>
+			<td>string</td>
+			<td><pre lang="json">
+"ETH/USD"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].oracle</td>
+			<td>string</td>
+			<td><pre lang="json">
+"0x1aBBA7EA800f9023Fa4D1F8F840000bE7e3469a1"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].oracleExpiration</td>
+			<td>int</td>
+			<td><pre lang="json">
+86400
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.pairs[1].oracleSpread</td>
+			<td>float</td>
+			<td><pre lang="json">
+0.1
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x130431b4560Cd1d74A990AE86C337a33171FF3c6</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@kqg/A1m9pdbGSylkUwnZJw7o7AtFBN8sFmXJ4xgwqcM=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x16655369Eb59F3e1cAFBCfAC6D3Dd4001328f747</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@q4XL6KymSI1WHuR+ZBgjCSj6N+dO8vuZuGCgQZq67Gw=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x3CB645a8f10Fb7B0721eaBaE958F77a878441Cb9</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@K5GMWYcMDFf7vJ14fU7GsydkeY5o3NQX0b+oui3DkEs=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x4b0E327C08e23dD08cb87Ec994915a5375619aa2</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@E7B3opUWe14hpOsPgOzW8YzZv46uus0vVVZtcZ3TQBo=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x4f95d9B4D842B2E2B1d1AC3f2Cf548B93Fd77c67</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@NmlE5G9XxgRfC8dxFY49t1iaB5O2i0VDLw7lhDWcmVo=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x60da93D9903cb7d3eD450D4F81D402f7C4F71dd9</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@+MXygz7HXiDdjXsQDbEkIFD8MOcWr+0Cn1529iwEVCI=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x71eCFF5261bAA115dcB1D9335c88678324b8A987</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@7y4tZnczYjjqXzMC32srHsCVMCaMs/mpkVgaDGdXOgM=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x75ef8432566A79C86BBF207A47df3963B8Cf0753</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@1eJfb61Dwk4Q4alBdjJPireI6sdtz4UtuJZ6qolbfo0=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x77EB6CF8d732fe4D92c427fCdd83142DB3B742f7</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@DY7va7XHwh7XTdA7x9Pnu0GS/O4beWsUQrVObikqclE=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x83e23C207a67a9f9cB680ce84869B91473403e7d</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@OWP0AueLTTGXKT2VikDUPdmd8oqAeN85iF1Tt+nz52U=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x8aFBD9c3D794eD8DF903b3468f4c4Ea85be953FB</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@amqs7YOREwqVSt+kVYcNNt6jHKrxFrIsSlUK1pTnqgo=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x8de9c5F1AC1D4d02bbfC25fD178f5DAA4D5B26dC</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@RaGo37sm5OZtxr16An3n0Lg7QUTp7TYroH8Kfl1DHRo=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0x8ff6a38A1CD6a42cAac45F08eB0c802253f68dfD</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@8zMLDDmm3zsrFhkX6Rum3uWZ3DoWAb6cGAO2CYnEi7I=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xA8EB82456ed9bAE55841529888cDE9152468635A</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@rgvhqaiHOxOCnnCFPFRv0REkcnQn8Xe9+AZs3sVL4+g=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xC9508E9E3Ccf319F5333A5B8c825418ABeC688BA</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@N2Yz4d5vzO882cfA9Ze9oVIsIzV+N6eU6uTe61gMfGk=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xD27Fa2361bC2CfB9A591fb289244C538E190684B</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@92ohB9a3bIScXuTRhzWqDiTUjk3CzEBpImSNilttIdQ=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xDA1d2961Da837891f43235FddF66BAD26f41368b</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@aGtbCUrDyGt+EcH0ppaqaC+L9XDUzwcbM2O1aK9nT84=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xE6367a7Da2b20ecB94A25Ef06F3b551baB2682e6</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@u9wofEvklVwnJdAmezxvLMwRp4xuSjahBzB0EL/Y8dg=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xFbaF3a7eB4Ec2962bd1847687E56aAEE855F5D00</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@549y65IgZK/KzcRM6KqYJlEJrqZeX1+XGIrPUGlXHHA=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xa580BBCB1Cee2BCec4De2Ea870D20a12A964819e</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@NkNJzUcy3dlO4V6QsyaQzs3eAbfd9jLKpOdIMyGHBcI=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xaC8519b3495d8A3E3E44c041521cF7aC3f8F63B3</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@DhbPmnvAEqXOCSYga4tD2wYBQ9nMb0uYJm8HDAPg/no=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xd72BA9402E9f3Ff01959D6c841DDD13615FFff42</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@4BW2SNFDeUeS5gVxk1QZRtoCpg5SSr+JKhx9/q6uAEw=.ed25519"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.scuttlebotIdMap.0xd94BBe83b4a68940839cD151478852d16B3eF891</td>
+			<td>string</td>
+			<td><pre lang="json">
+"@sbW7YaJfV+Cgu1BNafSbJ4LMRkUMdRjJoOal+iBp8fo=.ed25519"
 </pre>
 </td>
 			<td></td>
