@@ -24,16 +24,16 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  fsGroup: 1000
 
-securityContext: {}
+securityContext:
+  runAsGroup: 1000
+  runAsUser: 1000
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -68,7 +68,7 @@ keystore:
   ethFromAddress: "0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
 
 ethereum:
-  ethRpc: "https://rpc.chroniclelabs.io/opt"
+  ethRpc: "https://eth-goerli.public.blastapi.io"
   gasPrice:
     source: "node"
     maxPriceMultiplier: 2
@@ -82,29 +82,31 @@ env:
   normal:
     OMNIA_CONFIG: /config/omnia/omnia.json
     OMNIA_LOG_FORMAT: "text"
-    OMNIA_DEBUG: 1
-    CFG_SPIRE_RPC_ADDR: "relay-spire:9100"
-    CFG_FEEDS: "prod"
-    ETH_RPC_URL: "https://rpc.chroniclelabs.io/opt"
+    # OMNIA_DEBUG: 1
+    CFG_SPIRE_RPC_ADDR: relay-spire:9100
+    CFG_FEEDS: prod
+    ETH_RPC_URL: https://eth-mainnet.public.blastapi.io
+    ETH_CHAIN_TYPE: optimism
+    OMNIA_MODE: relay
 
 omniaConfig:
   ## starts omnia in sleep mode, useful for debugging
   sleep: false
-  debug: true
+  debug: false
   verbose: true
   logFile: "json"
   ## must be one of "ethereum", "arbitrum" or "optimism"
-  chainType: "optimism"
+  chainType: "ethereum"
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L35
   pairs:
     - name: BTC/USD
       msgExpiration: 1800
-      oracle: "0xdc65E49016ced01FC5aBEbB5161206B0f8063672"
+      oracle: "0xe0F30cb149fAADC7247E953746Be9BbBB6B5751f"
       oracleExpiration: 86400
       oracleSpread: 0.1
     - name: ETH/USD
       msgExpiration: 1800
-      oracle: "0x1aBBA7EA800f9023Fa4D1F8F840000bE7e3469a1"
+      oracle: "0x64DE91F5A373Cd4c28de3600cB34C7C6cE410C85"
       oracleExpiration: 86400
       oracleSpread: 0.1
 
@@ -141,9 +143,6 @@ omniaConfig:
     0xDA1d2961Da837891f43235FddF66BAD26f41368b: "@aGtbCUrDyGt+EcH0ppaqaC+L9XDUzwcbM2O1aK9nT84=.ed25519"
     0xE6367a7Da2b20ecB94A25Ef06F3b551baB2682e6: "@u9wofEvklVwnJdAmezxvLMwRp4xuSjahBzB0EL/Y8dg=.ed25519"
     0xFbaF3a7eB4Ec2962bd1847687E56aAEE855F5D00: "@549y65IgZK/KzcRM6KqYJlEJrqZeX1+XGIrPUGlXHHA=.ed25519"
-
-  ## configure the omnia-relay spire.json if the default wont work for you
-  spireJson: {}
 
 # spire subchart configuration
 ## add values from https://github.com/chronicleprotocol/charts/blob/main/charts/spire/values.yaml

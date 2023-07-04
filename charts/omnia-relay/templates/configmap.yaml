@@ -11,7 +11,7 @@ data:
       "ethereum": {
         "from": "{{ .Values.keystore.ethFromAddress }}",
         "keystore": "/keystore/",
-        "password": "/password/password.txt",
+        "password": "/keystore/password.txt",
         "network": "{{ .Values.ethereum.ethRpc }}",
         "gasPrice": {
           "source": "{{ .Values.ethereum.gasPrice.source }}",
@@ -60,15 +60,3 @@ data:
         {{- end }}
       }
     }
-  spire.json: |-
-    {{- if .Values.omniaConfig.spireJson }}
-    {{ .Values.omniaConfig.spireJson | nindent 4 }}
-    {{ else }}
-    {
-      "spire": {
-        "rpc": {
-          "address": "relay-spire:9100"
-        },
-      }
-    }
-    {{- end }}

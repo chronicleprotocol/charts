@@ -27,7 +27,7 @@ version: 0.0.8
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.1-dev.3"
+appVersion: "1.16.2"
 
 dependencies:
   - name: spire

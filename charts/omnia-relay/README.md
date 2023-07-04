@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.1-dev.3](https://img.shields.io/badge/AppVersion-1.16.1--dev.3-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -92,10 +92,19 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>env.normal.ETH_CHAIN_TYPE</td>
+			<td>string</td>
+			<td><pre lang="json">
+"optimism"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>env.normal.ETH_RPC_URL</td>
 			<td>string</td>
 			<td><pre lang="json">
-"https://rpc.chroniclelabs.io/opt"
+"https://eth-mainnet.public.blastapi.io"
 </pre>
 </td>
 			<td></td>
@@ -110,15 +119,6 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>env.normal.OMNIA_DEBUG</td>
-			<td>int</td>
-			<td><pre lang="json">
-1
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
 			<td>env.normal.OMNIA_LOG_FORMAT</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -128,10 +128,19 @@ false
 			<td></td>
 		</tr>
 		<tr>
+			<td>env.normal.OMNIA_MODE</td>
+			<td>string</td>
+			<td><pre lang="json">
+"relay"
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>ethereum.ethRpc</td>
 			<td>string</td>
 			<td><pre lang="json">
-"https://rpc.chroniclelabs.io/opt"
+"https://eth-goerli.public.blastapi.io"
 </pre>
 </td>
 			<td></td>
@@ -293,7 +302,7 @@ true
 			<td>omniaConfig.chainType</td>
 			<td>string</td>
 			<td><pre lang="json">
-"optimism"
+"ethereum"
 </pre>
 </td>
 			<td></td>
@@ -302,7 +311,7 @@ true
 			<td>omniaConfig.debug</td>
 			<td>bool</td>
 			<td><pre lang="json">
-true
+false
 </pre>
 </td>
 			<td></td>
@@ -338,7 +347,7 @@ true
 			<td>omniaConfig.pairs[0].oracle</td>
 			<td>string</td>
 			<td><pre lang="json">
-"0xdc65E49016ced01FC5aBEbB5161206B0f8063672"
+"0xe0F30cb149fAADC7247E953746Be9BbBB6B5751f"
 </pre>
 </td>
 			<td></td>
@@ -383,7 +392,7 @@ true
 			<td>omniaConfig.pairs[1].oracle</td>
 			<td>string</td>
 			<td><pre lang="json">
-"0x1aBBA7EA800f9023Fa4D1F8F840000bE7e3469a1"
+"0x64DE91F5A373Cd4c28de3600cB34C7C6cE410C85"
 </pre>
 </td>
 			<td></td>
@@ -623,15 +632,6 @@ false
 			<td></td>
 		</tr>
 		<tr>
-			<td>omniaConfig.spireJson</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
 			<td>omniaConfig.transports[0]</td>
 			<td>string</td>
 			<td><pre lang="json">
@@ -659,10 +659,10 @@ true
 			<td></td>
 		</tr>
 		<tr>
-			<td>podSecurityContext</td>
-			<td>object</td>
+			<td>podSecurityContext.fsGroup</td>
+			<td>int</td>
 			<td><pre lang="json">
-{}
+1000
 </pre>
 </td>
 			<td></td>
@@ -686,10 +686,19 @@ true
 			<td></td>
 		</tr>
 		<tr>
-			<td>securityContext</td>
-			<td>object</td>
+			<td>securityContext.runAsGroup</td>
+			<td>int</td>
 			<td><pre lang="json">
-{}
+1000
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>securityContext.runAsUser</td>
+			<td>int</td>
+			<td><pre lang="json">
+1000
 </pre>
 </td>
 			<td></td>
