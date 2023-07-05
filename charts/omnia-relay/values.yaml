@@ -103,12 +103,12 @@ omniaConfig:
       msgExpiration: 1800
       oracle: "0xe0F30cb149fAADC7247E953746Be9BbBB6B5751f"
       oracleExpiration: 86400
-      oracleSpread: 0.1
+      oracleSpread: 1
     - name: ETH/USD
       msgExpiration: 1800
       oracle: "0x64DE91F5A373Cd4c28de3600cB34C7C6cE410C85"
       oracleExpiration: 86400
-      oracleSpread: 0.1
+      oracleSpread: 1
 
   transports: ["spire"]
 
