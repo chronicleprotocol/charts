@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -363,9 +363,9 @@ false
 		</tr>
 		<tr>
 			<td>omniaConfig.pairs[0].oracleSpread</td>
-			<td>float</td>
+			<td>int</td>
 			<td><pre lang="json">
-0.1
+1
 </pre>
 </td>
 			<td></td>
@@ -408,9 +408,9 @@ false
 		</tr>
 		<tr>
 			<td>omniaConfig.pairs[1].oracleSpread</td>
-			<td>float</td>
+			<td>int</td>
 			<td><pre lang="json">
-0.1
+1
 </pre>
 </td>
 			<td></td>
