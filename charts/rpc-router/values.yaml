@@ -106,13 +106,6 @@ dshackle:
           execution:
             rpc:
               url: "https://eth-mainnet.public.blastapi.io"
-    - id: allthat-eth
-      chain: ethereum
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://ethereum-mainnet-rpc.allthatnode.com"
 
     ### eth goerli
     - id: blastapi-eth
@@ -122,22 +115,8 @@ dshackle:
           execution:
             rpc:
               url: "https://eth-goerli.public.blastapi.io"
-    - id: allthat-eth
-      chain: ethereum
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://ethereum-goerli-rpc.allthatnode.com"
 
     ### arbitrum mainnet
-    - id: allthat-arb
-      chain: arbitrum
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-one-rpc.allthatnode.com"
     - id: blastapi-arb
       chain: arbitrum
       connection:
@@ -147,13 +126,6 @@ dshackle:
               url: "https://arbitrum-one.public.blastapi.io"
 
     ### arbitrum goerli
-    - id: allthat-arb-goerli
-      chain: arbitrum-testnet
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-goerli-rpc.allthatnode.com"
     - id: blastapi-arb-goerli
       chain: arbitrum-testnet
       connection:
