@@ -95,7 +95,7 @@ omniaConfig:
   debug: false
   verbose: true
   logFile: "json"
-  ethGas: 700000
+  ethGas: 200000
   ## must be one of "ethereum", "arbitrum" or "optimism"
   chainType: "ethereum"
   ### Can be used to over the default pairs mapping found as per https://github.com/chronicleprotocol/omnia-relay/blob/master/omnia/config/relay-ethereum-goerli.json#L35

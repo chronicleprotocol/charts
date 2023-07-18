@@ -320,7 +320,7 @@ false
 			<td>omniaConfig.ethGas</td>
 			<td>int</td>
 			<td><pre lang="json">
-700000
+200000
 </pre>
 </td>
 			<td></td>
