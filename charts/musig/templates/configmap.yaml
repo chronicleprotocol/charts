@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "musig.fullname" . }}-config
+data:
+  ### note this config is only suitable for eth goerli as per https://github.com/chronicleprotocol/musig/blob/master/omnia/config/relay-ethereum-goerli.json
+  foo.conf: |-
+    {"foo":{"somekey":"someval"}}
