@@ -38,10 +38,20 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.configHcl }}
-          args: [ "-c", "/config/spire.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}, "--log.format", "{{ .Values.logFormat | default "text" }}"]
+          {{- if .Values.bootstrap }}
+          args: ["bootstrap", "-v", "debug"]
           {{- else }}
-          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}", "--log.format", "{{ .Values.logFormat | default "text" }}"]
+          args:
+            - {{- if .Values.configHcl }} "-c" {{- end }}
+            - {{- if .Values.configHcl }} "/config/spire.hcl" {{- end }}
+            - "agent"
+            - "-v"
+            - "{{ .Values.logLevel | default "debug" }}"
+            - "--log.format"
+            - "{{ .Values.logFormat | default "text" }}"
+            {{- if .Values.customArgs }}
+            - "{{ .Values.customArgs }}"
+            {{- end }}
           {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}

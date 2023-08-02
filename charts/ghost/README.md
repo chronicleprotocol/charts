@@ -1,6 +1,6 @@
 # ghost
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -19,10 +19,18 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| env.normal.CFG_ETH_FROM | string | `""` |  |
+| env.normal.CFG_ETH_KEYS | string | `""` |  |
+| env.normal.CFG_ETH_PASS | string | `""` |  |
+| env.normal.CFG_FEEDS | string | `""` |  |
+| env.normal.CFG_GOFER_OPENEXCHANGERATES_API_KEY | string | `nil` |  |
+| env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire/tcp/8000/p2p/"` |  |
+| env.normal.CFG_WEBAPI_ENABLE | int | `0` |  |
+| ethConfig | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/ghost"` |  |
-| image.tag | string | `"develop"` |  |
+| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -31,6 +39,8 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| logFormat | string | `nil` |  |
+| logLevel | string | `nil` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

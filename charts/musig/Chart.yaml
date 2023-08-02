@@ -1,7 +1,6 @@
 apiVersion: v2
 name: musig
-description: A Helm chart for deploying an ChronoCluster Musig in Kubernetes
-
+description: A Helm chart for deploying Chronicle Ghost on Kubernetes
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake
@@ -27,4 +26,4 @@ version: 0.0.1
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "1.16.2"
+appVersion: "0.12.0-dev.3"

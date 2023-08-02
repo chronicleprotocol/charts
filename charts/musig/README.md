@@ -1,8 +1,8 @@
 # musig
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
-A Helm chart for deploying an ChronoCluster Musig in Kubernetes
+A Helm chart for deploying Chronicle Ghost on Kubernetes
 
 ## Maintainers
 
@@ -13,343 +13,48 @@ A Helm chart for deploying an ChronoCluster Musig in Kubernetes
 
 ## Values
 
-<table>
-	<thead>
-		<th>Key</th>
-		<th>Type</th>
-		<th>Default</th>
-		<th>Description</th>
-	</thead>
-	<tbody>
-		<tr>
-			<td>affinity</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.enabled</td>
-			<td>bool</td>
-			<td><pre lang="json">
-false
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.maxReplicas</td>
-			<td>int</td>
-			<td><pre lang="json">
-100
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.minReplicas</td>
-			<td>int</td>
-			<td><pre lang="json">
-1
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>autoscaling.targetCPUUtilizationPercentage</td>
-			<td>int</td>
-			<td><pre lang="json">
-80
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.CFG_FEEDS</td>
-			<td>string</td>
-			<td><pre lang="json">
-"stage"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.CFG_SPIRE_RPC_ADDR</td>
-			<td>string</td>
-			<td><pre lang="json">
-"rspire:9100"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.ETH_CHAIN_TYPE</td>
-			<td>string</td>
-			<td><pre lang="json">
-"ethereum"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.ETH_RPC_URL</td>
-			<td>string</td>
-			<td><pre lang="json">
-"https://eth-testnet.public.blastapi.io"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.OMNIA_CONFIG</td>
-			<td>string</td>
-			<td><pre lang="json">
-"/config/omnia/omnia.json"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.OMNIA_LOG_FORMAT</td>
-			<td>string</td>
-			<td><pre lang="json">
-"text"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>env.normal.OMNIA_MODE</td>
-			<td>string</td>
-			<td><pre lang="json">
-"relay"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>extraObjects</td>
-			<td>list</td>
-			<td><pre lang="json">
-[]
-</pre>
-</td>
-			<td>Extra K8s manifests to deploy</td>
-		</tr>
-		<tr>
-			<td>feedInstances</td>
-			<td>int</td>
-			<td><pre lang="json">
-1
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>fullnameOverride</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>image.pullPolicy</td>
-			<td>string</td>
-			<td><pre lang="json">
-"Always"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>image.repository</td>
-			<td>string</td>
-			<td><pre lang="json">
-"ghcr.io/chronicleprotocol/musig"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>image.tag</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>imagePullSecrets</td>
-			<td>list</td>
-			<td><pre lang="json">
-[]
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>keystore.enabled</td>
-			<td>bool</td>
-			<td><pre lang="json">
-true
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>keystore.ethFromAddress</td>
-			<td>string</td>
-			<td><pre lang="json">
-"0xA23184c1Ac6F51c4b1b462c108E4652Dc9B4f5A6"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>keystore.existingSecret</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>keystore.keyStoreFile</td>
-			<td>string</td>
-			<td><pre lang="json">
-"{\"address\":\"a23184c1ac6f51c4b1b462c108e4652dc9b4f5a6\",\"id\":\"073dd01b-1b87-46b4-b52f-ca243bcf4b7b\",\"version\":3,\"Crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"},\"crypto\":{\"cipher\":\"aes-128-ctr\",\"cipherparams\":{\"iv\":\"8491d0eb057afca54a339c25163a6928\"},\"ciphertext\":\"006b10186ff3f4b9b1638ad176a83cd02eb8b6d687e651bad2e38fb91060e68d\",\"kdf\":\"scrypt\",\"kdfparams\":{\"salt\":\"1010801fe1140932f9a078010236292a481dc065b5bacb1aca8d7178d164340f\",\"n\":131072,\"dklen\":32,\"p\":1,\"r\":8},\"mac\":\"d91389bec6bcded7d67fd587b8c08a1136612eda15de88bf881d61ad46827674\"}}"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>keystore.password</td>
-			<td>string</td>
-			<td><pre lang="json">
-"ilikeapples"
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>nameOverride</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>nodeSelector</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>podAnnotations</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>podSecurityContext.fsGroup</td>
-			<td>int</td>
-			<td><pre lang="json">
-1000
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>replicaCount</td>
-			<td>int</td>
-			<td><pre lang="json">
-1
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>resources</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>securityContext.runAsGroup</td>
-			<td>int</td>
-			<td><pre lang="json">
-1000
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>securityContext.runAsUser</td>
-			<td>int</td>
-			<td><pre lang="json">
-1000
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>serviceAccount.annotations</td>
-			<td>object</td>
-			<td><pre lang="json">
-{}
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>serviceAccount.create</td>
-			<td>bool</td>
-			<td><pre lang="json">
-true
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>serviceAccount.name</td>
-			<td>string</td>
-			<td><pre lang="json">
-""
-</pre>
-</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>tolerations</td>
-			<td>list</td>
-			<td><pre lang="json">
-[]
-</pre>
-</td>
-			<td></td>
-		</tr>
-	</tbody>
-</table>
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` |  |
+| autoscaling.enabled | bool | `false` |  |
+| autoscaling.maxReplicas | int | `100` |  |
+| autoscaling.minReplicas | int | `1` |  |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| command | list | `[]` |  |
+| env.normal.CFG_ETH_FROM | string | `""` |  |
+| env.normal.CFG_ETH_KEYS | string | `""` |  |
+| env.normal.CFG_ETH_PASS | string | `""` |  |
+| env.normal.CFG_FEEDS | string | `""` |  |
+| env.normal.CFG_GOFER_OPENEXCHANGERATES_API_KEY | string | `nil` |  |
+| env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/bootstrap.local/tcp/8000/p2p/"` |  |
+| env.normal.CFG_MUSIG_SIGNERS_COUNT | int | `3` |  |
+| env.normal.CFG_WEBAPI_ENABLE | int | `0` |  |
+| ethConfig | object | `{}` |  |
+| fullnameOverride | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.repository | string | `"ghcr.io/chronicleprotocol/adria"` |  |
+| image.tag | string | `""` |  |
+| imagePullSecrets[0].name | string | `"ghcr-login-secret"` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.className | string | `""` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.tls | list | `[]` |  |
+| nameOverride | string | `""` |  |
+| nodeSelector | object | `{}` |  |
+| podAnnotations | object | `{}` |  |
+| podSecurityContext | object | `{}` |  |
+| replicaCount | int | `1` |  |
+| resources | object | `{}` |  |
+| securityContext | object | `{}` |  |
+| service.port | int | `80` |  |
+| service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| tolerations | list | `[]` |  |
 
-> **Tip**: If you are providing a secret for `.Values.keystore.existingSecret`, use the following command:
-
-```bash
-kubectl create secret generic my-secret --from-file=keystoreFile=/path/to/keystore.json --from-file=password=/path/to/password.txt
-```
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
