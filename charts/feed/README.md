@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -10,14 +10,6 @@ A Helm chart for Kubernetes
 | ---- | ------ | --- |
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://github.com/chronicleprotocol> |
-
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.3 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.1 |
-| https://chronicleprotocol.github.io/charts/ | spire | 0.1.1 |
 
 ## Values
 
