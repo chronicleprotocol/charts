@@ -261,7 +261,36 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/ethereum-metrics-exporter-0.1.3/ethereum-metrics-exporter-0.1.3.tgz
     version: 0.1.3
+  feed:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-08-03T14:56:58.144045519Z"
+    description: A Helm chart for Kubernetes
+    digest: 498d1f37f65a84f9694b58a3e992622f89b6264d0b69e51ad31de9e14daa40f3
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/feed-0.0.0/feed-0.0.0.tgz
+    version: 0.0.0
   ghost:
+  - apiVersion: v2
+    appVersion: 0.12.0-dev.3
+    created: "2023-08-03T14:56:58.378906549Z"
+    description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+    digest: e8aa426c8218f1569c0432ad61116eca734194a44ed99bcf85afc2cb2e33f3d8
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: ghost
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ghost-0.1.3/ghost-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-07T17:25:37.271053877Z"
@@ -410,6 +439,22 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/monitor-0.1.1/monitor-0.1.1.tgz
     version: 0.1.1
+  musig:
+  - apiVersion: v2
+    appVersion: 0.12.0-dev.3
+    created: "2023-08-03T14:56:58.572360336Z"
+    description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+    digest: 9c33bbdcd4c46e77928edd3ce93e2e9874b22040f1b7f0f25cb00b4a197057a7
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: musig
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/musig-0.0.1/musig-0.0.1.tgz
+    version: 0.0.1
   omnia:
   - apiVersion: v2
     appVersion: 1.13.2
@@ -930,6 +975,26 @@ entries:
     version: 0.1.1
   spire:
   - apiVersion: v2
+    appVersion: 0.12.0-dev.3
+    created: "2023-08-03T14:56:58.78384913Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.5
+    description: A Helm chart for deploying spire to  Kubernetes
+    digest: 2820213370f394a6bf854eab1d5a73db6509a6bc9c2219aa19a72879d9683dd0
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.1.1/spire-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.11.0-dev.5
     created: "2023-06-13T20:49:43.028525642Z"
     dependencies:
@@ -1226,4 +1291,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-08-03T11:19:54.955603248Z"
+generated: "2023-08-03T14:56:58.784027541Z"
