@@ -42,13 +42,17 @@ spec:
           args: ["bootstrap", "-v", "debug"]
           {{- else }}
           args:
-            - {{- if .Values.configHcl }} "-c" {{- end }}
-            - {{- if .Values.configHcl }} "/config/spire.hcl" {{- end }}
             - "agent"
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
+            {{- if .Values.configHcl }}
+            - "-c"
+            {{- end }}
+            {{- if .Values.configHcl }}
+            - "/config/spire.hcl"
+            {{- end }}
             {{- if .Values.customArgs }}
             - "{{ .Values.customArgs }}"
             {{- end }}

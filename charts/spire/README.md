@@ -26,11 +26,10 @@ A Helm chart for deploying spire to  Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| bootstrap | bool | `true` |  |
+| bootstrap | bool | `false` |  |
 | configHcl | object | `{}` |  |
 | customArgs | list | `[]` |  |
-| env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `""` |  |
-| env.normal.CFG_LIBP2P_PK_SEED | string | `""` |  |
+| env | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -54,8 +53,6 @@ A Helm chart for deploying spire to  Kubernetes
 | securityContext | object | `{}` |  |
 | service.ports.libp2p.port | int | `8000` |  |
 | service.ports.libp2p.protocol | string | `"TCP"` |  |
-| service.ports.rpc.port | int | `9100` |  |
-| service.ports.rpc.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
