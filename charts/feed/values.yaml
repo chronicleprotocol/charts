@@ -1,6 +1,16 @@
 spire:
   enabled: true
   bootstrap: true
+  service:
+    type: ClusterIP
+    ports:
+      libp2p:
+        port: 8000
+        protocol: TCP
+  env:
+    normal:
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: ""
+      CFG_LIBP2P_PK_SEED: ""
 
 ghost:
   enabled: true
@@ -9,7 +19,7 @@ ghost:
     # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
       CFG_FEEDS: ""
-      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/localfeed-spire/tcp/8000/p2p/"
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/<bootstrap-hostname>/tcp/8000/p2p/<libp2p-pub-key>"
       CFG_GOFER_OPENEXCHANGERATES_API_KEY:
       CFG_WEBAPI_ENABLE: 0
       # Provide ETH keys as env vars
@@ -28,7 +38,7 @@ musig:
       CFG_ETH_KEYS: ''
       CFG_ETH_PASS: ""
       CFG_FEEDS: ""
-      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/localfeed-spire/tcp/8000/p2p/"
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/<bootstrap-hostname>/tcp/8000/p2p/<libp2p-pub-key>"
       CFG_GOFER_OPENEXCHANGERATES_API_KEY:
       CFG_WEBAPI_ENABLE: 0
       CFG_MUSIG_SIGNERS_COUNT: 3
