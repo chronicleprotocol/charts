@@ -42,27 +42,27 @@ service:
     libp2p:
       port: 8000
       protocol: TCP
-    rpc:
-      port: 9100
-      protocol: TCP
     ### to add more listeners for webapi, add them here
+    # rpc:
+    #   port: 9100
+    #   protocol: TCP
     # webapi:
     #   port: 8080
     #   protocol: TCP
 
 # -- Liveness probe
-livenessProbe:
-  tcpSocket:
-    port: libp2p
-  initialDelaySeconds: 10
-  periodSeconds: 10
+# livenessProbe:
+#   tcpSocket:
+#     port: libp2p
+#   initialDelaySeconds: 10
+#   periodSeconds: 10
 
 # -- Readiness probe
-readinessProbe:
-  tcpSocket:
-    port: rpc
-  initialDelaySeconds: 10
-  periodSeconds: 10
+# readinessProbe:
+#   tcpSocket:
+#     port: rpc
+#   initialDelaySeconds: 10
+#   periodSeconds: 10
 
 ingress:
   enabled: false
@@ -105,6 +105,14 @@ tolerations: []
 
 affinity: {}
 
+# Configurations for spire
+# if true, runs bootstrap mode
+bootstrap: false
+
+# custom Args that may be added to the agent
+customArgs: []
+  # - "--some-arg"
+
 ## logLevel is the log level for the spire server (debug,info,trace,etc)
 logLevel: "debug"
 
@@ -114,7 +122,7 @@ logFormat: null
 keystore:
   enabled: true
   existingSecret: ""
-  keyStoreFile: ""
+  keyStoreFile: ''
   password: ""
   ethFromAddress: "0x0000000000000000000000000000000000000000"
 
@@ -125,6 +133,8 @@ env: {}
   # normal:
   #   CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
   #   CFG_WEBAPI_ETH_ADDR_BOOK: "0xd51Fd30C873356b432F766eB55fc599586734a95"
+  #   CFG_LIBP2P_BOOTSTRAP_ADDRS: ""
+  #   CFG_LIBP2P_PK_SEED: ""
 
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.

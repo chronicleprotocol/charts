@@ -1,0 +1,34 @@
+spire:
+  enabled: true
+  bootstrap: true
+
+ghost:
+  enabled: true
+  env:
+    # non sensitive variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+    normal:
+      CFG_FEEDS: ""
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/localfeed-spire/tcp/8000/p2p/"
+      CFG_GOFER_OPENEXCHANGERATES_API_KEY:
+      CFG_WEBAPI_ENABLE: 0
+      # Provide ETH keys as env vars
+      CFG_ETH_FROM: ""
+      CFG_ETH_PASS: ""
+      CFG_ETH_KEYS: ''
+
+
+musig:
+  enabled: true
+  env:
+    # non sensitive variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+    normal:
+      CFG_ETH_FROM: ""
+      CFG_ETH_KEYS: ''
+      CFG_ETH_PASS: ""
+      CFG_FEEDS: ""
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/localfeed-spire/tcp/8000/p2p/"
+      CFG_GOFER_OPENEXCHANGERATES_API_KEY:
+      CFG_WEBAPI_ENABLE: 0
+      CFG_MUSIG_SIGNERS_COUNT: 3
