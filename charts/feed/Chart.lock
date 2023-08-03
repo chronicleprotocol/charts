@@ -1,0 +1,12 @@
+dependencies:
+- name: spire
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.1.1
+- name: ghost
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.1.3
+- name: musig
+  repository: https://chronicleprotocol.github.io/charts/
+  version: 0.0.1
+digest: sha256:2f227172a20891ab6fa44a72d3a6be1dd48d24ee68f71d14f6ad6c4128942e2a
+generated: "2023-08-03T16:58:27.966315853+02:00"
