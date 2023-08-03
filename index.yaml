@@ -48,6 +48,21 @@ entries:
     version: 0.0.1
   beacons:
   - apiVersion: v2
+    appVersion: v4.0.7
+    created: "2023-08-03T11:19:54.758587234Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: 2761fb347fbafb9318832fa2bc6fb8956fdb57409777249d009db82dcdb610fd
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.7/beacons-0.0.7.tgz
+    version: 0.0.7
+  - apiVersion: v2
     appVersion: v4.0.4
     created: "2023-05-19T17:12:57.566548536Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
@@ -138,6 +153,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.1/beacons-0.0.1.tgz
     version: 0.0.1
   ethereum:
+  - apiVersion: v2
+    appVersion: v1.12.0
+    created: "2023-08-03T11:19:54.955466137Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: 4da9aeb648a70558d1054fb95d9b0f86fd7c0760e650e35642dceeb7b11ecc39
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.1.6/ethereum-0.1.6.tgz
+    version: 0.1.6
   - apiVersion: v2
     appVersion: v1.11.6
     created: "2023-05-18T15:38:10.028325711Z"
@@ -1198,4 +1226,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-07-18T10:56:26.406452174Z"
+generated: "2023-08-03T11:19:54.955603248Z"
