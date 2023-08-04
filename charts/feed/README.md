@@ -1,8 +1,8 @@
 # feed
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 ## Maintainers
 
@@ -15,31 +15,21 @@ A Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.3 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.1 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.4 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.0.2 |
 | https://chronicleprotocol.github.io/charts/ | spire | 0.1.1 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | ghost.enabled | bool | `true` |  |
-| ghost.env.normal.CFG_ETH_FROM | string | `""` |  |
-| ghost.env.normal.CFG_ETH_KEYS | string | `""` |  |
-| ghost.env.normal.CFG_ETH_PASS | string | `""` |  |
-| ghost.env.normal.CFG_FEEDS | string | `""` |  |
-| ghost.env.normal.CFG_GOFER_OPENEXCHANGERATES_API_KEY | string | `nil` |  |
-| ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/<bootstrap-hostname>/tcp/8000/p2p/<libp2p-pub-key>"` |  |
-| ghost.env.normal.CFG_WEBAPI_ENABLE | int | `0` |  |
+| ghost.env | object | `{}` |  |
+| ghost.ethConfig | object | `{}` |  |
 | musig.enabled | bool | `true` |  |
-| musig.env.normal.CFG_ETH_FROM | string | `""` |  |
-| musig.env.normal.CFG_ETH_KEYS | string | `""` |  |
-| musig.env.normal.CFG_ETH_PASS | string | `""` |  |
-| musig.env.normal.CFG_FEEDS | string | `""` |  |
-| musig.env.normal.CFG_GOFER_OPENEXCHANGERATES_API_KEY | string | `nil` |  |
-| musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/<bootstrap-hostname>/tcp/8000/p2p/<libp2p-pub-key>"` |  |
-| musig.env.normal.CFG_MUSIG_SIGNERS_COUNT | int | `3` |  |
-| musig.env.normal.CFG_WEBAPI_ENABLE | int | `0` |  |
+| musig.env | object | `{}` |  |
+| musig.ethConfig | object | `{}` |  |
 | spire.bootstrap | bool | `true` |  |
 | spire.enabled | bool | `true` |  |
 | spire.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `""` |  |
