@@ -23,18 +23,18 @@ ethConfig: {}
   #   existingSecret: ""
   #   key: ""
 # Environment variable listing
-env:
+env: {}
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
-  normal:
-    CFG_FEEDS: ""
-    CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire/tcp/8000/p2p/"
-    CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    CFG_WEBAPI_ENABLE: 0
-    # Provide ETH keys as env vars
-    CFG_ETH_FROM: ""
-    CFG_ETH_PASS: ""
-    CFG_ETH_KEYS: ''
+  # normal:
+  #   CFG_FEEDS: ""
+  #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire/tcp/8000/p2p/"
+  #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
+  #   CFG_WEBAPI_ENABLE: 0
+  #   # Provide ETH keys as env vars
+  #   CFG_ETH_FROM: ""
+  #   CFG_ETH_PASS: ""
+  #   CFG_ETH_KEYS: ''
 
 logLevel: null
 logFormat: null
@@ -109,3 +109,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: some-secrets
+  #   spec:
+  #     backendType: someBackend
+  #     data:
+  #       - key: some-creds
+  #         name: client_secret
