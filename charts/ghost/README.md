@@ -1,6 +1,6 @@
 # ghost
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -19,14 +19,9 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env.normal.CFG_ETH_FROM | string | `""` |  |
-| env.normal.CFG_ETH_KEYS | string | `""` |  |
-| env.normal.CFG_ETH_PASS | string | `""` |  |
-| env.normal.CFG_FEEDS | string | `""` |  |
-| env.normal.CFG_GOFER_OPENEXCHANGERATES_API_KEY | string | `nil` |  |
-| env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire/tcp/8000/p2p/"` |  |
-| env.normal.CFG_WEBAPI_ENABLE | int | `0` |  |
+| env | object | `{}` |  |
 | ethConfig | object | `{}` |  |
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/ghost"` |  |
