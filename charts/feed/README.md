@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -27,13 +27,16 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.enabled | bool | `true` |  |
 | ghost.env | object | `{}` |  |
 | ghost.ethConfig | object | `{}` |  |
+| ghost.image.tag | string | `"0.12.0-dev.3"` |  |
 | musig.enabled | bool | `true` |  |
 | musig.env | object | `{}` |  |
 | musig.ethConfig | object | `{}` |  |
+| musig.image.tag | string | `"0.1.1"` |  |
 | spire.bootstrap | bool | `true` |  |
 | spire.enabled | bool | `true` |  |
 | spire.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `""` |  |
 | spire.env.normal.CFG_LIBP2P_PK_SEED | string | `""` |  |
+| spire.image.tag | string | `"0.12.0-dev.3"` |  |
 | spire.service.ports.libp2p.port | int | `8000` |  |
 | spire.service.ports.libp2p.protocol | string | `"TCP"` |  |
 | spire.service.type | string | `"ClusterIP"` |  |
