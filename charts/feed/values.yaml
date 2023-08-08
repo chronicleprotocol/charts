@@ -1,5 +1,7 @@
 spire:
   enabled: true
+  image:
+    tag: "0.12.0-dev.3"
   bootstrap: true
   service:
     type: ClusterIP
@@ -14,6 +16,8 @@ spire:
 
 ghost:
   enabled: true
+  image:
+    tag: "0.12.0-dev.3"
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
@@ -39,6 +43,8 @@ ghost:
 
 musig:
   enabled: true
+  image:
+    tag: "0.1.1"
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
