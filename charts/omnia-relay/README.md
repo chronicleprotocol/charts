@@ -1,6 +1,6 @@
 # omnia-relay
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.2](https://img.shields.io/badge/AppVersion-1.16.2-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
 
@@ -95,7 +95,7 @@ false
 			<td>env.normal.ETH_CHAIN_TYPE</td>
 			<td>string</td>
 			<td><pre lang="json">
-"optimism"
+"ethereum"
 </pre>
 </td>
 			<td></td>
@@ -312,6 +312,15 @@ true
 			<td>bool</td>
 			<td><pre lang="json">
 false
+</pre>
+</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>omniaConfig.ethGas</td>
+			<td>int</td>
+			<td><pre lang="json">
+200000
 </pre>
 </td>
 			<td></td>

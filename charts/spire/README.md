@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.11.0-dev.5](https://img.shields.io/badge/AppVersion-0.11.0--dev.5-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying spire to  Kubernetes
 
@@ -26,7 +26,9 @@ A Helm chart for deploying spire to  Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| bootstrap | bool | `false` |  |
 | configHcl | object | `{}` |  |
+| customArgs | list | `[]` |  |
 | env | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
@@ -34,33 +36,23 @@ A Helm chart for deploying spire to  Kubernetes
 | image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.tls | list | `[]` |  |
+| ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Readiness probe readinessProbe:   tcpSocket:     port: rpc   initialDelaySeconds: 10   periodSeconds: 10 |
 | keystore.enabled | bool | `true` |  |
 | keystore.ethFromAddress | string | `"0x0000000000000000000000000000000000000000"` |  |
 | keystore.existingSecret | string | `""` |  |
 | keystore.keyStoreFile | string | `""` |  |
 | keystore.password | string | `""` |  |
-| livenessProbe | object | `{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}` | Liveness probe |
 | logFormat | string | `nil` |  |
 | logLevel | string | `"debug"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe | object | `{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"rpc"}}` | Readiness probe |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | service.ports.libp2p.port | int | `8000` |  |
 | service.ports.libp2p.protocol | string | `"TCP"` |  |
-| service.ports.rpc.port | int | `9100` |  |
-| service.ports.rpc.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

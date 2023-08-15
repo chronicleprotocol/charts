@@ -33,7 +33,7 @@ data:
         "spireConfig": "",
         "srcTimeout": 10,
         "verbose": {{ .Values.omniaConfig.verbose | default true }},
-        "ethGas": 200000,
+        "ethGas": {{ .Values.omniaConfig.ethGas | default 200000 }},
         "chainType": "{{ .Values.omniaConfig.chainType }}"
       },
       {{- if .Values.omniaConfig.transports }}

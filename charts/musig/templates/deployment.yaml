@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ghost.fullname" . }}
+  name: {{ include "musig.fullname" . }}
   labels:
-    {{- include "ghost.labels" . | nindent 4 }}
+    {{- include "musig.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ghost.selectorLabels" . | nindent 6 }}
+      {{- include "musig.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ghost.selectorLabels" . | nindent 8 }}
+        {{- include "musig.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ghost.serviceAccountName" . }}
+      serviceAccountName: {{ include "musig.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -32,12 +32,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          args:
-            - "run"
-            - "-v"
-            - "{{ .Values.logLevel | default "debug" }}"
-            - "--log.format"
-            - "{{ .Values.logFormat | default "text" }}"
+          args: {{ .Values.command }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

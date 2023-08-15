@@ -1,6 +1,6 @@
-# ghost
+# musig
 
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -8,7 +8,8 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake/> |
+| WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
+| chronicleprotocol |  | <https://github.com/chronicleprotocol> |
 
 ## Values
 
@@ -19,14 +20,15 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| command | list | `[]` |  |
 | env | object | `{}` |  |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/chronicleprotocol/ghost"` |  |
+| image.repository | string | `"ghcr.io/chronicleprotocol/adria"` |  |
 | image.tag | string | `""` |  |
-| imagePullSecrets | list | `[]` |  |
+| imagePullSecrets[0].name | string | `"ghcr-login-secret"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
@@ -34,8 +36,6 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| logFormat | string | `nil` |  |
-| logLevel | string | `nil` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
