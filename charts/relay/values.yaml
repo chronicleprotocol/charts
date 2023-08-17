@@ -12,7 +12,7 @@ spectre:
     #   key: "ethPass"
   env:
     # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spectre#environment-variables
     normal: {}
       # CFG_ETH_FROM: ${ETH_FROM_D}
       # CFG_ETH_KEYS: ${ETH_KEYS_D}
