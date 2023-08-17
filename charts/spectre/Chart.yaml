@@ -1,9 +1,11 @@
 apiVersion: v2
 name: spectre
-description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake/
+  - name: chronicleprotocol
+    url: https://github.com/chronicleprotocol
 
 # A chart can be either an 'application' or a 'library' chart.
 #
