@@ -1049,6 +1049,21 @@ entries:
     version: 0.0.1
   spectre:
   - apiVersion: v2
+    appVersion: 0.11.5
+    created: "2023-08-17T11:44:59.360779151Z"
+    description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
+    digest: 77f58002d302e12f8c83ebfb5c243375ad81edd121573598c39e02ca906ba3b0
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.7/spectre-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
     appVersion: 0.11.0-dev.5
     created: "2023-06-13T20:53:27.104273568Z"
     dependencies:
@@ -1494,4 +1509,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-08-16T13:08:51.772130266Z"
+generated: "2023-08-17T11:44:59.360934954Z"
