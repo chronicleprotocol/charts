@@ -8,7 +8,41 @@ image:
   repository: ghcr.io/chronicleprotocol/spectre
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "sha-b8d8ea1"
+  tag: ""
+
+# Provide ETH keys from existing secrets
+# use only existing secret OR env vars, do not provide both
+ethConfig: {}
+  # ethFrom:
+  #   existingSecret: ""
+  #   key: ""
+  # ethKeys:
+  #   existingSecret: ""
+  #   key: ""
+  # ethPass:
+  #   existingSecret: ""
+  #   key: ""
+# Environment variable listing
+env: {}
+  # non sensitive variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # normal:
+  #    CFG_ETH_FROM: ${ETH_FROM_D}
+  #    CFG_ETH_KEYS: ${ETH_KEYS_D}
+  #    CFG_ETH_PASS: ""
+  #    CFG_FEEDS: "${ETH_FROM_A},${ETH_FROM_B},${ETH_FROM_C}"
+  #    CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/bootstrap.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
+  #    CFG_GOFER_OPENEXCHANGERATES_API_KEY:
+  #    CFG_WEBAPI_ENABLE: 0
+  #    CFG_ETH_RPC_URLS: ${ETH_RPCS} # comma separated list of ethereum rpc urls
+  #    CFG_ETH_CHAIN_ID: ${ETH_CHID} # ethereum chain id
+  #    CFG_ARB_RPC_URLS: ${ARB_RPCS} # comma separated list of arbitrum rpc urls
+  #    CFG_ARB_CHAIN_ID: ${ARB_CHID} # arbitrum chain id
+  #    CFG_OPT_RPC_URLS: ${OPT_RPCS} # comma separated list of optimism rpc urls
+  #    CFG_OPT_CHAIN_ID: ${OPT_CHID} # optimism chain id
+
+logLevel: null
+logFormat: null
 
 imagePullSecrets: []
 nameOverride: ""
@@ -42,9 +76,10 @@ service:
     listen:
       port: 8080
       protocol: TCP
-    rpc:
-      port: 9100
-      protocol: TCP
+    # rpc:
+    #   port: 9100
+    #   protocol: TCP
+
 
 ingress:
   enabled: false
@@ -61,7 +96,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
 livenessProbe:
   enabled: false
   probeSpec:
@@ -85,7 +119,6 @@ readinessProbe:
     timeoutSeconds: 5
     failureThreshold: 3
     successThreshold: 1
-
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
@@ -111,38 +144,14 @@ tolerations: []
 
 affinity: {}
 
-logLevel: "debug"
-
-keystore:
-  enabled: true
-  existingSecret: ""
-  keyStoreFile: ""
-  password: ""
-  ethFromAddress: "0x0000000000000000000000000000000000000000"
-
-torProxy:
-  enabled: true
-
-# Environment variable listing
-env: {}
-  # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spectre#environment-variables
-  # normal:
-  #   CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
-
-# This is a config file for spectre. it can override the default config if supplied
-# It is in HCL format.
-# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
-configHcl: {}
-
 # -- Extra K8s manifests to deploy
 extraObjects: []
   # - apiVersion: "kubernetes-client.io/v1"
   #   kind: ExternalSecret
   #   metadata:
-  #     name: promtail-secrets
+  #     name: some-secrets
   #   spec:
-  #     backendType: gcpSecretsManager
+  #     backendType: someBackend
   #     data:
-  #       - key: promtail-oauth2-creds
+  #       - key: some-creds
   #         name: client_secret
