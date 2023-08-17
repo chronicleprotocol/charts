@@ -982,6 +982,31 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.1/omnia-relay-0.0.1.tgz
     version: 0.0.1
+  relay:
+  - apiVersion: v2
+    appVersion: 0.0.1
+    created: "2023-08-17T13:46:36.655262473Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.6
+    - condition: spectre.enabled
+      name: spectre
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.7
+    description: A Helm chart for deploying Chronicle Relays on Kubernetes
+    digest: d02f4a732ed62c82d549a138fa7e5a42e28c3c46c5eb3ebe49e1464898551bd0
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/relay-0.0.1/relay-0.0.1.tgz
+    version: 0.0.1
   rpc-router:
   - apiVersion: v2
     appVersion: 0.35.2
@@ -1509,4 +1534,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-08-17T11:44:59.360934954Z"
+generated: "2023-08-17T13:46:36.655383373Z"
