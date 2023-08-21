@@ -1,5 +1,7 @@
 spectre:
   enabled: true
+  image:
+    tag: "sha-5e277a6"
   fullnameOverride: "spectre"
   ethConfig: {}
     # ethFrom:
@@ -28,7 +30,6 @@ spectre:
       # CFG_ARB_CHAIN_ID: ${ARB_CHID} # arbitrum chain id
       # CFG_OPT_RPC_URLS: ${OPT_RPCS} # comma separated list of optimism rpc urls
       # CFG_OPT_CHAIN_ID: ${OPT_CHID} # optimism chain id
-
 
 tor-proxy:
   enabled: true

@@ -27,6 +27,7 @@ A Helm chart for deploying Chronicle Relays on Kubernetes
 | spectre.env.normal | object | `{}` |  |
 | spectre.ethConfig | object | `{}` |  |
 | spectre.fullnameOverride | string | `"spectre"` |  |
+| spectre.image.tag | string | `"sha-5e277a6"` |  |
 | tor-proxy.enabled | bool | `true` |  |
 | tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 spectre:8080\nHiddenServiceVersion 3\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
