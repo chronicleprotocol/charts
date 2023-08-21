@@ -1,5 +1,8 @@
 spectre:
   enabled: true
+  image:
+    tag: "sha-5e277a6"
+  fullnameOverride: "spectre"
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
@@ -28,7 +31,6 @@ spectre:
       # CFG_OPT_RPC_URLS: ${OPT_RPCS} # comma separated list of optimism rpc urls
       # CFG_OPT_CHAIN_ID: ${OPT_CHID} # optimism chain id
 
-
 tor-proxy:
   enabled: true
   fullnameOverride: "tor-proxy"
@@ -49,7 +51,7 @@ tor-proxy:
         CookieAuthFile /home/tor/.tor/control_socket.authcookie
         DataDirectory /home/tor/.tor
         HiddenServiceDir /var/lib/tor/hidden_services
-        HiddenServicePort 8888 127.0.0.1:8080
+        HiddenServicePort 8888 spectre:8080
         HiddenServiceVersion 3
   torConfig: {}
     # existingSecret: ""
