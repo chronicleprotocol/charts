@@ -1,5 +1,6 @@
 spectre:
   enabled: true
+  fullnameOverride: "spectre"
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
@@ -49,7 +50,7 @@ tor-proxy:
         CookieAuthFile /home/tor/.tor/control_socket.authcookie
         DataDirectory /home/tor/.tor
         HiddenServiceDir /var/lib/tor/hidden_services
-        HiddenServicePort 8888 127.0.0.1:8080
+        HiddenServicePort 8888 spectre:8080
         HiddenServiceVersion 3
   torConfig: {}
     # existingSecret: ""
