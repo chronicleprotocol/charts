@@ -34,6 +34,6 @@ dependencies:
     repository: https://chronicleprotocol.github.io/charts/
     condition: tor-proxy.enabled
   - name: spectre
-    version: 0.1.7
+    version: 0.1.8
     repository: https://chronicleprotocol.github.io/charts/
     condition: spectre.enabled

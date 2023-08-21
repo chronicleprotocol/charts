@@ -15,7 +15,7 @@ A Helm chart for deploying Chronicle Relays on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | spectre | 0.1.7 |
+| https://chronicleprotocol.github.io/charts/ | spectre | 0.1.8 |
 | https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.6 |
 
 ## Values
