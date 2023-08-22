@@ -109,7 +109,7 @@ affinity: {}
 # if true, runs bootstrap mode
 bootstrap: false
 # if true, runs stream mode
-stream: true
+stream: false
 
 # custom Args that may be added to the agent
 customArgs: []

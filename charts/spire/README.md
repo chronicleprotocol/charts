@@ -2,7 +2,7 @@
 
 ![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
-A Helm chart for deploying spire to  Kubernetes
+A Helm chart for deploying Chronicle spire to  Kubernetes
 
 ## Maintainers
 
@@ -52,7 +52,7 @@ A Helm chart for deploying spire to  Kubernetes
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| stream | bool | `true` |  |
+| stream | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | tor-proxy.enabled | bool | `false` |  |
 

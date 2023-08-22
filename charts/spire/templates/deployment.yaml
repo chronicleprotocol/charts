@@ -34,13 +34,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.bootstrap }}
-          args: ["bootstrap", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- else  if .Values.stream }}
-          args: ["stream", "prices", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- else }}
           args:
+          {{- if .Values.bootstrap }}
+            - "bootstrap"
+          {{- else  if .Values.stream }}
+            - "stream"
+            - "prices"
+          {{- else }}
             - "agent"
+          {{- end }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
@@ -54,7 +56,7 @@ spec:
             {{- if .Values.customArgs }}
             - "{{ .Values.customArgs }}"
             {{- end }}
-          {{- end }}
+
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}

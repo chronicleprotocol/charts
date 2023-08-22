@@ -1,6 +1,6 @@
 apiVersion: v2
 name: spire
-description: A Helm chart for deploying spire to  Kubernetes
+description: A Helm chart for deploying Chronicle spire to  Kubernetes
 
 maintainers:
   - name: WesleyCharlesBlake
