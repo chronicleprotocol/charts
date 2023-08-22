@@ -105,9 +105,11 @@ tolerations: []
 
 affinity: {}
 
-# Configurations for spire
+# Configurations for spire : default mode is to run as agent
 # if true, runs bootstrap mode
 bootstrap: false
+# if true, runs stream mode
+stream: false
 
 # custom Args that may be added to the agent
 customArgs: []
@@ -118,13 +120,6 @@ logLevel: "debug"
 
 ## logFormat is the log format for the spire server (json, or text)
 logFormat: null
-
-keystore:
-  enabled: true
-  existingSecret: ""
-  keyStoreFile: ''
-  password: ""
-  ethFromAddress: "0x0000000000000000000000000000000000000000"
 
 # Environment variable listing
 env: {}

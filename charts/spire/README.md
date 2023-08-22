@@ -1,8 +1,8 @@
 # spire
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
 
-A Helm chart for deploying spire to  Kubernetes
+A Helm chart for deploying Chronicle spire to  Kubernetes
 
 ## Maintainers
 
@@ -15,7 +15,7 @@ A Helm chart for deploying spire to  Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.5 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.6 |
 
 ## Values
 
@@ -37,11 +37,6 @@ A Helm chart for deploying spire to  Kubernetes
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Readiness probe readinessProbe:   tcpSocket:     port: rpc   initialDelaySeconds: 10   periodSeconds: 10 |
-| keystore.enabled | bool | `true` |  |
-| keystore.ethFromAddress | string | `"0x0000000000000000000000000000000000000000"` |  |
-| keystore.existingSecret | string | `""` |  |
-| keystore.keyStoreFile | string | `""` |  |
-| keystore.password | string | `""` |  |
 | logFormat | string | `nil` |  |
 | logLevel | string | `"debug"` |  |
 | nameOverride | string | `""` |  |
@@ -57,6 +52,7 @@ A Helm chart for deploying spire to  Kubernetes
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| stream | bool | `false` |  |
 | tolerations | list | `[]` |  |
 | tor-proxy.enabled | bool | `false` |  |
 
