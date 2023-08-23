@@ -25,11 +25,14 @@ ethConfig: {}
   #   existingSecret: ""
   #   key: ""
 # Environment variable listing
+
+# exposes CFG_ETH_CHAIN_ID as env var
+ethChainId: null
+
+# non encrypted variables
 env: {}
-  # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # refer to https://github.com/chronicleprotocol/musig/blob/master/docker-compose.yaml
   # normal:
-  #   CFG_ETH_FROM: ""
   #   CFG_ETH_KEYS: ''
   #   CFG_ETH_PASS: ""
   #   CFG_FEEDS: ""
@@ -68,7 +71,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false

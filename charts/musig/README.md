@@ -1,8 +1,8 @@
 # musig
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.2](https://img.shields.io/badge/AppVersion-0.13.2-informational?style=flat-square)
 
-A Helm chart for deploying Chronicle Ghost on Kubernetes
+A Helm chart for deploying Chronicle Musig on Kubernetes
 
 ## Maintainers
 
@@ -22,6 +22,7 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | command | list | `[]` |  |
 | env | object | `{}` |  |
+| ethChainId | string | `nil` |  |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
@@ -43,7 +44,7 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
+| service.port | int | `8080` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

@@ -47,6 +47,10 @@ spec:
           #     path: /
           #     port: http
           env:
+          {{- if .Values.ethChainId }}
+            - name: CFG_ETH_CHAIN_ID
+              value: "{{ int .Values.ethChainId }}"
+          {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM
               valueFrom:
