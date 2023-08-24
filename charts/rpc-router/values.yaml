@@ -108,7 +108,7 @@ redis:
 dshackle:
   signedResponse: false
 
-  metrics: false
+  metrics: true
 
   accessLog: false
 

@@ -29,7 +29,7 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.accessLog | bool | `false` |  |
 | dshackle.compression.grpc.client.enabled | bool | `false` |  |
 | dshackle.compression.grpc.server.enabled | bool | `false` |  |
-| dshackle.metrics | bool | `false` |  |
+| dshackle.metrics | bool | `true` |  |
 | dshackle.routes[0].blockchain | string | `"goerli"` |  |
 | dshackle.routes[0].id | string | `"geth"` |  |
 | dshackle.routes[1].blockchain | string | `"sepolia"` |  |
