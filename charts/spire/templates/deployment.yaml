@@ -15,10 +15,6 @@ spec:
   template:
     metadata:
       annotations:
-      {{- if .Values.keystore.enabled }}
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
-      {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -38,11 +34,15 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.bootstrap }}
-          args: ["bootstrap", "-v", "debug"]
-          {{- else }}
           args:
+          {{- if .Values.bootstrap }}
+            - "bootstrap"
+          {{- else  if .Values.stream }}
+            - "stream"
+            - "prices"
+          {{- else }}
             - "agent"
+          {{- end }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
@@ -56,7 +56,7 @@ spec:
             {{- if .Values.customArgs }}
             - "{{ .Values.customArgs }}"
             {{- end }}
-          {{- end }}
+
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -77,46 +77,11 @@ spec:
             mountPath: /config/spire.hcl
             subPath: spire.hcl
           {{- end }}
-          {{- if .Values.keystore.enabled }}
-          - name: keystore
-            mountPath: /keystore/
-          - name: password
-            mountPath: /password/
-          {{- end }}
       volumes:
       {{- if .Values.configHcl }}
       - name: config
         configMap:
           name: {{ include "spire.fullname" . }}-config
-      {{- end }}
-      {{- if .Values.keystore.enabled }}
-      {{- if .Values.keystore.existingSecret }}
-      - name: keystore
-        secret:
-          secretName: {{ .Values.keystore.existingSecret }}
-          items:
-          - key: keystoreFile
-            path: keystore.json
-      - name: password
-        secret:
-          secretName: {{ .Values.keystore.existingSecret }}
-          items:
-          - key: password
-            path: password.txt
-      {{- else }}
-      - name: keystore
-        configMap:
-          name: {{ include "spire.fullname" . }}-keystore
-          items:
-          - key: keystore.json
-            path: keystore.json
-      - name: password
-        configMap:
-          name: {{ include "spire.fullname" . }}-keystore
-          items:
-          - key: password.txt
-            path: password.txt
-      {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

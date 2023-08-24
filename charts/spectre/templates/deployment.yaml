@@ -1,4 +1,3 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,12 +13,8 @@ spec:
       {{- include "spectre.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-      {{- if .Values.keystore.enabled }}
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        checksum/config: {{ include (print $.Template.BasePath "/keystore-configmap.yaml") . | sha256sum }}
-      {{- end }}
       {{- with .Values.podAnnotations }}
+      annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -37,12 +32,13 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          args:
+            - "run"
+            - "-v"
+            - "{{ .Values.logLevel | default "debug" }}"
+            - "--log.format"
+            - "{{ .Values.logFormat | default "text" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.configHcl }}
-          args: [ "-c", "/config/spectre.hcl", "run", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- else }}
-          args: ["run", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -57,55 +53,28 @@ spec:
           readinessProbe:
             {{- .Values.readinessProbe.probeSpec | toYaml | nindent 12 }}
           {{- end }}
+          env:
+          {{- if .Values.ethConfig }}
+            - name: CFG_ETH_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ethConfig.ethFrom.existingSecret }}
+                  key: {{ .Values.ethConfig.ethFrom.key }}
+            - name: CFG_ETH_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ethConfig.ethKeys.existingSecret }}
+                  key: {{ .Values.ethConfig.ethKeys.key }}
+            - name: CFG_ETH_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ethConfig.ethPass.existingSecret }}
+                  key: {{ .Values.ethConfig.ethPass.key }}
+          {{- end }}
+          {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-          {{- include "helpers.list-env-variables" . | indent 12 }}
-          volumeMounts:
-          {{- if .Values.configHcl }}
-          - name: config
-            mountPath: /config/spectre.hcl
-            subPath: spectre.hcl
-          {{- end }}
-          {{- if .Values.keystore.enabled }}
-          - name: keystore
-            mountPath: /keystore/
-          - name: password
-            mountPath: /password/
-          {{- end }}
-      volumes:
-      - name: config
-        configMap:
-          name: {{ include "spectre.fullname" . }}-config
-      {{- if .Values.keystore.enabled }}
-      {{- if .Values.keystore.existingSecret }}
-      - name: keystore
-        secret:
-          secretName: {{ .Values.keystore.existingSecret }}
-          items:
-          - key: keystoreFile
-            path: keystore.json
-      - name: password
-        secret:
-          secretName: {{ .Values.keystore.existingSecret }}
-          items:
-          - key: password
-            path: password.txt
-      {{- else }}
-      - name: keystore
-        configMap:
-          name: {{ include "spectre.fullname" . }}-keystore
-          items:
-          - key: keystore.json
-            path: keystore.json
-      - name: password
-        configMap:
-          name: {{ include "spectre.fullname" . }}-keystore
-          items:
-          - key: password.txt
-            path: password.txt
-      {{- end }}
-      {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

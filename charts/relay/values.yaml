@@ -1,6 +1,8 @@
-ghost:
+spectre:
   enabled: true
-  fullnameOverride: "ghost"
+  image:
+    tag: "sha-5e277a6"
+  fullnameOverride: "spectre"
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
@@ -13,46 +15,21 @@ ghost:
     #   key: "ethPass"
   env:
     # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
-    normal:
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
-      CFG_WEBAPI_ENABLE: 1
-    #   CFG_FEEDS: ""
-    #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
-    #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #   # Provide ETH keys as env vars
-    #   CFG_ETH_FROM: ""
-    #   CFG_ETH_PASS: ""
-    #   CFG_ETH_KEYS: ''
-musig:
-  enabled: true
-  fullnameOverride: "musig"
-  service:
-    type: ClusterIP
-    port: 8080
-  ethConfig: {}
-    # ethFrom:
-    #   existingSecret: "eth-keys"
-    #   key: "ethFrom"
-    # ethKeys:
-    #   existingSecret: "eth-keys"
-    #   key: "ethKeyStore"
-    # ethPass:
-    #   existingSecret: "eth-keys"
-    #   key: "ethPass"
-  env:
-    # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/musig#environment-variables
-    normal:
-    #  CFG_ETH_FROM: ""
-    #  CFG_ETH_PASS: ""
-    #  CFG_ETH_KEYS: ''
-    #  CFG_FEEDS: ""
-    #  CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/<>"
-    #  CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #  CFG_MUSIG_SIGNERS_COUNT: 3
-      CFG_WEBAPI_ENABLE: 1
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spectre#environment-variables
+    normal: {}
+      # CFG_ETH_FROM: ${ETH_FROM_D}
+      # CFG_ETH_KEYS: ${ETH_KEYS_D}
+      # CFG_ETH_PASS: ""
+      # CFG_FEEDS: "${ETH_FROM_A},${ETH_FROM_B},${ETH_FROM_C}"
+      # CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/bootstrap.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
+      # CFG_GOFER_OPENEXCHANGERATES_API_KEY:
+      # CFG_WEBAPI_ENABLE: 0
+      # CFG_ETH_RPC_URLS: "${ETH_RPCS}" # comma separated list of ethereum rpc urls
+      # CFG_ETH_CHAIN_ID: ${ETH_CHID} # ethereum chain id
+      # CFG_ARB_RPC_URLS: ${ARB_RPCS} # comma separated list of arbitrum rpc urls
+      # CFG_ARB_CHAIN_ID: ${ARB_CHID} # arbitrum chain id
+      # CFG_OPT_RPC_URLS: ${OPT_RPCS} # comma separated list of optimism rpc urls
+      # CFG_OPT_CHAIN_ID: ${OPT_CHID} # optimism chain id
 
 tor-proxy:
   enabled: true
@@ -74,7 +51,7 @@ tor-proxy:
         CookieAuthFile /home/tor/.tor/control_socket.authcookie
         DataDirectory /home/tor/.tor
         HiddenServiceDir /var/lib/tor/hidden_services
-        HiddenServicePort 8888 musig:8080
+        HiddenServicePort 8888 spectre:8080
         HiddenServiceVersion 3
   torConfig: {}
     # existingSecret: ""
