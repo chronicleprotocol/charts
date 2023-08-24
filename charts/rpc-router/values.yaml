@@ -45,7 +45,9 @@ service:
     grpc:
       port: 12448
       protocol: TCP
-
+    metrics:
+      port: 8081
+      protocol: TCP
 ingress:
   enabled: false
   className: ""
@@ -86,35 +88,70 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+redis:
+  # -- If enabled a redis chart will be deployed as a dependency
+  enabled: false
+  auth:
+    password: yourRedisSecret
+  master:
+    persistence:
+      enabled: true
+      size: 8Gi
+  replica:
+    replicaCount: 3
+    persistence:
+      enabled: false
+      size: 8Gi
+
 ### Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
 dshackle:
+  signedResponse: false
+
+  metrics: false
+
+  accessLog: false
+
+  compression:
+    grpc:
+      server:
+        enabled: false
+      client:
+        enabled: false
+
   routes:
-    - id: eth
-      blockchain: ethereum
+    # - id: eth
+    #   blockchain: ethereum
     - id: geth
       blockchain: goerli
     - id: sep
       blockchain: sepolia
     - id: arb1
       blockchain: arbitrum
-    - id: arb-goerli
+    - id: arbgor
       blockchain: arbitrum-testnet
     - id: oeth
       blockchain: optimism
     - id: ogor
       blockchain: optimism-testnet
-    - id: matic
-      blockchain: polygon
-    - id: maticmum
-      blockchain: polygon-mumbai
     - id: zkevm
       blockchain: polygon-zkevm
-    - id: zkevmtest
-      blockchain: polygon-zkevm-testnet
 
   upstreams: |
-    - id: blastapi-mainnet
-      chain: ethereum
+    # - id: eth-mainnet
+    #   chain: ethereum
+    #   options:
+    #     disable-validation:
+    #   methods:
+    #     enabled:
+    #       - name: eth_maxPriorityFeePerGas
+    #   connection:
+    #     ethereum-pos:
+    #       execution:
+    #         rpc:
+    #           url: "https://eth-mainnet.g.alchemy.com/v2/<alchemy_key>
+    - id: eth-goerli
+      chain: goerli
       options:
         disable-validation: true
       methods:
@@ -124,11 +161,11 @@ dshackle:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://eth-mainnet.blastapi.io/"
-    - id: alchemy-mainnet
-      chain: ethereum
+              url: "https://eth-goerli.public.blastapi.io"
+    - id: eth-sepolia
+      chain: sepolia
       options:
-        disable-validation: false
+        disable-validation: true
       methods:
         enabled:
           - name: eth_maxPriorityFeePerGas
@@ -136,110 +173,74 @@ dshackle:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://eth-mainnet.g.alchemy.com/v2/"
+              url: "https://eth-sepolia.public.blastapi.io"
+    - id: arb-mainnet
+      chain: arbitrum
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://arbitrum-one.public.blastapi.io"
+    - id: arb-goerli
+      chain: arbitrum-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://arbitrum-goerli.public.blastapi.io"
+    - id: opt-mainent
+      chain: optimism
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://optimism-mainnet.public.blastapi.io"
+    - id: opt-goerli
+      chain: optimism-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://optimism-goerli.public.blastapi.io"
+    - id: zkevm
+      chain: polygon-zkevm
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://polygon-zkevm-mainnet.public.blastapi.io"
 
-    - id: blastapi-goerli
-      chain: goerli
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-goerli.blastapi.io/"
-    - id: alchemy-goerli-dev
-      chain: goerli
-      options:
-        disable-validation: false
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-goerli.g.alchemy.com/v2/"
-    - id: alchemy-goerli
-      chain: goerli
-      options:
-        disable-validation: false
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-goerli.g.alchemy.com/v2/"
-    - id: blastapi-arb
-      chain: arbitrum
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-one.blastapi.io/"
-    - id: alchemy-arb
-      chain: arbitrum
-      options:
-        disable-validation: false
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arb-mainnet.g.alchemy.com/v2/"
-    - id: blastapi-arb-goerli
-      chain: arbitrum-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-goerli.blastapi.io/"
-    - id: alchemy-arb-goerli
-      chain: arbitrum-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arb-goerli.g.alchemy.com/v2/"
-    - id: blastapi-opt
-      chain: optimism
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-mainnet.blastapi.io/"
-    - id: alchemy-opt
-      chain: optimism
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://opt-mainnet.g.alchemy.com/v2/"
-    - id: blast-opt-goerli
-      chain: optimism-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-goerli.blastapi.io/"
-    - id: alchemy-opt-goerli
-      chain: optimism-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://opt-goerli.g.alchemy.com/v2/"
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- port to scrape
+  port: metrics
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []

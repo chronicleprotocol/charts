@@ -3,15 +3,31 @@ kind: ConfigMap
 metadata:
   name: {{ include "rpc-router.fullname" . }}-config
 data:
-  dshackle.yaml: |-
+  dshackle.yaml: |
     version: v1
     port: {{ .Values.service.ports.grpc.port }}
     host: 0.0.0.0
 
+    {{- if .Values.dshackle.compression }}
     compression:
-      grpc:
-        server:
-          enabled: false
+    {{- toYaml .Values.dshackle.compression | nindent 6 }}
+    {{- end }}
+
+    monitoring:
+      enabled: {{ .Values.dshackle.metrics }}
+
+    accessLog:
+      enabled: {{ .Values.dshackle.accessLog }}
+
+    {{- if .Values.redis.enabled }}
+    cache:
+      redis:
+        enabled: true
+        host: {{ .Release.Name }}-redis-master
+        port: 6379
+        db: 0
+        password: {{ .Values.redis.auth.password }}
+    {{- end }}
 
     proxy:
       host: 0.0.0.0
@@ -25,4 +41,4 @@ data:
       upstreams:
     {{- .Values.dshackle.upstreams | nindent 8 }}
     signed-response:
-      enabled: false
+      enabled: {{ .Values.dshackle.signedResponse | default false }}
