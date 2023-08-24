@@ -57,8 +57,8 @@ spec:
         configMap:
           name: {{ include "rpc-router.fullname" . }}-config
           items:
-          - key: dshackle.yaml
-            path: dshackle.yaml
+            - key: dshackle.yaml
+              path: dshackle.yaml
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

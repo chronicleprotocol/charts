@@ -91,45 +91,155 @@ dshackle:
   routes:
     - id: eth
       blockchain: ethereum
-    - id: goerli
+    - id: geth
       blockchain: goerli
-    - id: arb
+    - id: sep
+      blockchain: sepolia
+    - id: arb1
       blockchain: arbitrum
-    - id: arbgoerli
+    - id: arb-goerli
       blockchain: arbitrum-testnet
+    - id: oeth
+      blockchain: optimism
+    - id: ogor
+      blockchain: optimism-testnet
+    - id: matic
+      blockchain: polygon
+    - id: maticmum
+      blockchain: polygon-mumbai
+    - id: zkevm
+      blockchain: polygon-zkevm
+    - id: zkevmtest
+      blockchain: polygon-zkevm-testnet
+
   upstreams: |
-    ### eth mainnet
-    - id: blastapi-eth
+    - id: blastapi-mainnet
       chain: ethereum
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://eth-mainnet.public.blastapi.io"
+              url: "https://eth-mainnet.blastapi.io/"
+    - id: alchemy-mainnet
+      chain: ethereum
+      options:
+        disable-validation: false
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://eth-mainnet.g.alchemy.com/v2/"
 
-    ### eth goerli
-    - id: blastapi-eth
+    - id: blastapi-goerli
       chain: goerli
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://eth-goerli.public.blastapi.io"
-
-    ### arbitrum mainnet
+              url: "https://eth-goerli.blastapi.io/"
+    - id: alchemy-goerli-dev
+      chain: goerli
+      options:
+        disable-validation: false
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://eth-goerli.g.alchemy.com/v2/"
+    - id: alchemy-goerli
+      chain: goerli
+      options:
+        disable-validation: false
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://eth-goerli.g.alchemy.com/v2/"
     - id: blastapi-arb
       chain: arbitrum
+      options:
+        disable-validation: true
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://arbitrum-one.public.blastapi.io"
-
-    ### arbitrum goerli
+              url: "https://arbitrum-one.blastapi.io/"
+    - id: alchemy-arb
+      chain: arbitrum
+      options:
+        disable-validation: false
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://arb-mainnet.g.alchemy.com/v2/"
     - id: blastapi-arb-goerli
       chain: arbitrum-testnet
+      options:
+        disable-validation: true
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://arbitrum-goerli.public.blastapi.io"
+              url: "https://arbitrum-goerli.blastapi.io/"
+    - id: alchemy-arb-goerli
+      chain: arbitrum-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://arb-goerli.g.alchemy.com/v2/"
+    - id: blastapi-opt
+      chain: optimism
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://optimism-mainnet.blastapi.io/"
+    - id: alchemy-opt
+      chain: optimism
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://opt-mainnet.g.alchemy.com/v2/"
+    - id: blast-opt-goerli
+      chain: optimism-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://optimism-goerli.blastapi.io/"
+    - id: alchemy-opt-goerli
+      chain: optimism-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://opt-goerli.g.alchemy.com/v2/"
