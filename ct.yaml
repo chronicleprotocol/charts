@@ -3,5 +3,6 @@ target-branch: main
 chart-dirs:
   - charts
 chart-repos:
-  - chroniclelabs=https://chronicleprotocol.github.io/charts
+  - chronicle=https://chronicleprotocol.github.io/charts
+  - bitnami=https://charts.bitnami.com/bitnami
 helm-extra-args: --timeout 600s
