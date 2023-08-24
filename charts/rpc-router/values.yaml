@@ -45,9 +45,9 @@ service:
     grpc:
       port: 12448
       protocol: TCP
-    metrics:
-      port: 8081
-      protocol: TCP
+    # metrics:
+    #   port: 8081
+    #   protocol: TCP
 ingress:
   enabled: false
   className: ""
@@ -108,7 +108,7 @@ redis:
 dshackle:
   signedResponse: false
 
-  metrics: true
+  metrics: false
 
   accessLog: false
 

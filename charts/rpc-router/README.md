@@ -29,7 +29,7 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.accessLog | bool | `false` |  |
 | dshackle.compression.grpc.client.enabled | bool | `false` |  |
 | dshackle.compression.grpc.server.enabled | bool | `false` |  |
-| dshackle.metrics | bool | `true` |  |
+| dshackle.metrics | bool | `false` |  |
 | dshackle.routes[0].blockchain | string | `"goerli"` |  |
 | dshackle.routes[0].id | string | `"geth"` |  |
 | dshackle.routes[1].blockchain | string | `"sepolia"` |  |
@@ -74,8 +74,6 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | securityContext | object | `{}` |  |
 | service.ports.grpc.port | int | `12448` |  |
 | service.ports.grpc.protocol | string | `"TCP"` |  |
-| service.ports.metrics.port | int | `8081` |  |
-| service.ports.metrics.protocol | string | `"TCP"` |  |
 | service.ports.proxy.port | int | `8545` |  |
 | service.ports.proxy.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
