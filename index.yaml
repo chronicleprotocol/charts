@@ -1286,6 +1286,26 @@ entries:
     version: 0.1.1
   spire:
   - apiVersion: v2
+    appVersion: 0.13.3
+    created: "2023-08-25T16:20:40.574534213Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.6
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: ef93018831eeb7a7e7b609ffb5825d220a00da040256c69934ac29365c2e25d1
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.1.4/spire-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
     appVersion: 0.12.0-dev.3
     created: "2023-08-22T08:57:11.276095322Z"
     dependencies:
@@ -1657,4 +1677,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-08-24T17:26:52.656847518Z"
+generated: "2023-08-25T16:20:40.574833015Z"
