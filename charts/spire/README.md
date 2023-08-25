@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.3](https://img.shields.io/badge/AppVersion-0.13.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -38,7 +38,7 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | imagePullSecrets | list | `[]` |  |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Readiness probe readinessProbe:   tcpSocket:     port: rpc   initialDelaySeconds: 10   periodSeconds: 10 |
 | logFormat | string | `nil` |  |
-| logLevel | string | `"debug"` |  |
+| logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

@@ -39,7 +39,6 @@ spec:
             - "bootstrap"
           {{- else  if .Values.stream }}
             - "stream"
-            - "prices"
           {{- else }}
             - "agent"
           {{- end }}
@@ -53,9 +52,9 @@ spec:
             {{- if .Values.configHcl }}
             - "/config/spire.hcl"
             {{- end }}
-            {{- if .Values.customArgs }}
-            - "{{ .Values.customArgs }}"
-            {{- end }}
+          {{- range $arg := .Values.customArgs }}
+            - "{{ $arg }}"
+          {{- end }}
 
           ports:
           {{- range $key, $val := .Values.service.ports }}

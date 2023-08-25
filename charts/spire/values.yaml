@@ -113,10 +113,10 @@ stream: false
 
 # custom Args that may be added to the agent
 customArgs: []
-  # - "--some-arg"
+  # - prices
 
 ## logLevel is the log level for the spire server (debug,info,trace,etc)
-logLevel: "debug"
+logLevel: "info"
 
 ## logFormat is the log format for the spire server (json, or text)
 logFormat: null
