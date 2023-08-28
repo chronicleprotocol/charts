@@ -38,7 +38,17 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 9050
+  ports:
+    socks:
+      port: 9050
+      protocol: TCP
+    ### to add more listeners for webapi, add them here
+    # hidden1:
+    #   port: 8888
+    #   protocol: TCP
+    # webapi:
+    #   port: 8080
+    #   protocol: TCP
 
 ingress:
   enabled: false
@@ -91,9 +101,11 @@ affinity: {}
 # Environment variable listing
 env:
   # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # refer to https://manpages.debian.org/unstable/tor/tor.1.en.html#THE_CONFIGURATION_FILE_FORMAT
   normal:
     TOR_EXTRA_ARGS: |
+      ControlPort 127.0.0.1:9051
+      SOCKSPort 0.0.0.0:9050
       AutomapHostsOnResolve 1
       ControlSocketsGroupWritable 1
       CookieAuthentication 1
@@ -106,7 +118,7 @@ env:
       CookieAuthFile /home/tor/.tor/control_socket.authcookie
       DataDirectory /home/tor/.tor
       HiddenServiceDir /var/lib/tor/hidden_services
-      HiddenServicePort 8888 127.0.0.1:8800
+      HiddenServicePort 8888 127.0.0.1:8080
       HiddenServiceVersion 3
 torConfig: {}
   # existingSecret: "existingSecret"

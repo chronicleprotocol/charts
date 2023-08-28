@@ -44,10 +44,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # command: ["sleep", "3600"]
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
           # livenessProbe:
           #   exec:
           #     command:
@@ -69,7 +72,18 @@ spec:
           volumeMounts:
             - name: tor-hidden-services
               mountPath: /var/lib/tor/hidden_services
+            - name: scripts-volume
+              mountPath: entrypoint.sh
+              subPath: entrypoint.sh
+
       volumes:
+        - name: scripts-volume
+          configMap:
+            name: {{ include "tor-proxy.fullname" . }}-scripts
+            items:
+            - key: entrypoint.sh
+              path: entrypoint.sh
+              mode: 0755
         {{- if .Values.torConfig }}
         - name: tor-keys
           secret:
