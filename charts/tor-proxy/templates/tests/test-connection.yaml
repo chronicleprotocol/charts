@@ -8,11 +8,15 @@ metadata:
     "helm.sh/hook": test
 spec:
   containers:
-    - name: nc
+  {{- $serviceName := include "tor-proxy.fullname" . }}
+  {{- range $name, $config := .Values.service.ports }}
+    - name: nc-{{ $name }}
       image: busybox
       command: ['nc']
       args:
         - '-zv'
-        - '{{ include "tor-proxy.fullname" . }}'
-        - '{{ .Values.service.port }}'
+        - '-v'
+        - '{{ $serviceName }}'
+        - '{{ $config.port }}'
+  {{- end }}
   restartPolicy: Never
