@@ -1,6 +1,6 @@
 # relay
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Relays on Kubernetes
 
@@ -16,7 +16,7 @@ A Helm chart for deploying Chronicle Relays on Kubernetes
 | Repository | Name | Version |
 |------------|------|---------|
 | https://chronicleprotocol.github.io/charts/ | spectre | 0.1.8 |
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.6 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.7 |
 
 ## Values
 
@@ -29,7 +29,7 @@ A Helm chart for deploying Chronicle Relays on Kubernetes
 | spectre.fullnameOverride | string | `"spectre"` |  |
 | spectre.image.tag | string | `"sha-5e277a6"` |  |
 | tor-proxy.enabled | bool | `true` |  |
-| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 spectre:8080\nHiddenServiceVersion 3\n"` |  |
+| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nSOCKSPort 0.0.0.0:9050\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 spectre:8080\nHiddenServiceVersion 3\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
 | tor-proxy.torConfig | object | `{}` |  |
 

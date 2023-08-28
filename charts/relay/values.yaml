@@ -43,6 +43,7 @@ tor-proxy:
         ControlSocketsGroupWritable 1
         CookieAuthentication 1
         CookieAuthFileGroupReadable 1
+        SOCKSPort 0.0.0.0:9050
         DNSPort 5353
         ExitPolicy reject *:*
         Log notice stderr
