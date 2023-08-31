@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -17,7 +17,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 |------------|------|---------|
 | https://chronicleprotocol.github.io/charts/ | ghost | 0.1.4 |
 | https://chronicleprotocol.github.io/charts/ | musig | 0.0.4 |
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.7 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
 
@@ -25,20 +25,48 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | ghost.enabled | bool | `true` |  |
+| ghost.env.normal.CFG_CHAIN_ID | string | `"11155111"` |  |
+| ghost.env.normal.CFG_ENVIRONMENT | string | `"stage"` |  |
+| ghost.env.normal.CFG_ETH_CHAIN_ID | string | `"1"` |  |
+| ghost.env.normal.CFG_ETH_RPC_URLS | string | `"https://eth.llamarpc.com"` |  |
+| ghost.env.normal.CFG_FEEDS | string | `"stage"` |  |
+| ghost.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
+| ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi"` |  |
+| ghost.env.normal.CFG_RPC_URLS | string | `"https://rpc.sepolia.org"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
+| ghost.env.normal.CFG_WEBAPI_ETH_ADDR_BOOK | string | `"0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"` |  |
+| ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
-| ghost.ethConfig | object | `{}` |  |
+| ghost.env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
+| ghost.image.tag | string | `"0.13.7"` |  |
 | musig.enabled | bool | `true` |  |
+| musig.env.normal.CFG_CHAIN_ID | string | `"11155111"` |  |
+| musig.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
+| musig.env.normal.CFG_FEEDS | string | `"prod"` |  |
+| musig.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
+| musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi"` |  |
+| musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"sep"` |  |
+| musig.env.normal.CFG_RPC_URLS | string | `"https://rpc.sepolia.org"` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
+| musig.env.normal.CFG_WEBAPI_ETH_ADDR_BOOK | string | `"0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"` |  |
+| musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
 | musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
+| musig.env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
 | musig.ethConfig | object | `{}` |  |
 | musig.fullnameOverride | string | `"musig"` |  |
+| musig.image.tag | string | `"0.2.11"` |  |
+| musig.imagePullSecrets | list | `[]` |  |
 | musig.service.port | int | `8080` |  |
 | musig.service.type | string | `"ClusterIP"` |  |
 | tor-proxy.enabled | bool | `true` |  |
-| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nSOCKSPort 0.0.0.0:9050\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\nHiddenServiceVersion 3\n"` |  |
+| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
+| tor-proxy.service.ports.musig.port | int | `8888` |  |
+| tor-proxy.service.ports.musig.protocol | string | `"TCP"` |  |
+| tor-proxy.service.ports.socks.port | int | `9050` |  |
+| tor-proxy.service.ports.socks.protocol | string | `"TCP"` |  |
+| tor-proxy.service.type | string | `"ClusterIP"` |  |
 | tor-proxy.torConfig | object | `{}` |  |
 
 ----------------------------------------------

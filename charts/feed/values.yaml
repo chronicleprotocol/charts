@@ -1,32 +1,59 @@
 ghost:
+  # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
+  image:
+    tag: "0.13.7"
   fullnameOverride: "ghost"
-  ethConfig: {}
-    # ethFrom:
-    #   existingSecret: "eth-keys"
-    #   key: "ethFrom"
-    # ethKeys:
-    #   existingSecret: "eth-keys"
-    #   key: "ethKeyStore"
-    # ethPass:
-    #   existingSecret: "eth-keys"
-    #   key: "ethPass"
+  # ethConfig:
+  #   ethFrom:
+  #     existingSecret: ""
+  #     key: "ethFrom"
+  #   ethKeys:
+  #     existingSecret: ""
+  #     key: "ethKeyStore"
+  #   ethPass:
+  #     existingSecret: ""
+  #     key: "ethPass"
   env:
-    # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
+      CFG_ITEM_SEPARATOR: "\n"
+      CFG_ENVIRONMENT: "stage"
+      CFG_FEEDS: "stage"
+
+      # ethereum RPC client
+      CFG_ETH_RPC_URLS: "https://eth.llamarpc.com"
+      CFG_ETH_CHAIN_ID: "1"
+
+      # default RPC client
+      CFG_RPC_URLS: "https://rpc.sepolia.org"
+      CFG_CHAIN_ID: "11155111"
+
+      # libp2p
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
+
+      # webapi - transmit only (Ghost)
       CFG_WEBAPI_ENABLE: 1
-    #   CFG_FEEDS: ""
-    #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
-    #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #   # Provide ETH keys as env vars
-    #   CFG_ETH_FROM: ""
-    #   CFG_ETH_PASS: ""
-    #   CFG_ETH_KEYS: ''
+
+      # receiving
+      CFG_WEBAPI_LISTEN_ADDR: ""
+
+      # sending
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+
+      # on-chain address book Feeds+Relays
+      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
+
+      # local address book
+      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
+
 musig:
+  # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
   enabled: true
   fullnameOverride: "musig"
+  image:
+    tag: "0.2.11"
+  imagePullSecrets: []
   service:
     type: ClusterIP
     port: 8080
@@ -41,49 +68,62 @@ musig:
     #   existingSecret: "eth-keys"
     #   key: "ethPass"
   env:
-    # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/musig#environment-variables
     normal:
-    #  CFG_ETH_FROM: ""
-    #  CFG_ETH_PASS: ""
-    #  CFG_ETH_KEYS: ''
-    #  CFG_FEEDS: ""
-    #  CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/<>"
-    #  CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #  CFG_MUSIG_SIGNERS_COUNT: 3
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "prod"
+
+      CFG_MUSIG_TARGET_NETWORK: "sep"
+
+      CFG_FEEDS: "prod"
+
+      # default RPC client
+      CFG_RPC_URLS: "https://rpc.sepolia.org"
+      CFG_CHAIN_ID: "11155111"
+
+      # libp2p
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
+
+      # webapi - receiving & sending (MuSig)
       CFG_WEBAPI_ENABLE: 1
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
+      # receiving
+      CFG_WEBAPI_LISTEN_ADDR: ":8080"
+      # sending
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+      # on-chain address book Feeds+Relays
+      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
+      # local address book
+      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
 
 tor-proxy:
   enabled: true
   fullnameOverride: "tor-proxy"
+  service:
+    type: ClusterIP
+    ports:
+      socks:
+        port: 9050
+        protocol: TCP
+      musig:
+        port: 8888
+        protocol: TCP
   env:
     # non sensitive variables
     # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
       TOR_EXTRA_ARGS: |
-        AutomapHostsOnResolve 1
-        ControlSocketsGroupWritable 1
-        CookieAuthentication 1
-        SOCKSPort 0.0.0.0:9050
-        CookieAuthFileGroupReadable 1
-        DNSPort 5353
-        ExitPolicy reject *:*
-        Log notice stderr
-        RunAsDaemon 0
-        ControlSocket /home/tor/.tor/control_socket
-        CookieAuthFile /home/tor/.tor/control_socket.authcookie
-        DataDirectory /home/tor/.tor
+        SocksPort 0.0.0.0:9050
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 musig:8080
-        HiddenServiceVersion 3
   torConfig: {}
-    # existingSecret: ""
-    ## OR specify a private key
-    # torKeys:
-    #   secret_key: "PT0g......."
-    #   public_key: "PT....=="
-    #   hostname: "some.onion"
+    # existingSecret: null
+    # OR specify a private key
+    # torKeys: {}
+      # secret_key: null
+      # public_key: null
+      # hostname: null
+
 # -- Extra K8s manifests to deploy
 extraObjects: []
   # - apiVersion: "kubernetes-client.io/v1"
