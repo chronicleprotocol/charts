@@ -104,22 +104,9 @@ env:
   # refer to https://manpages.debian.org/unstable/tor/tor.1.en.html#THE_CONFIGURATION_FILE_FORMAT
   normal:
     TOR_EXTRA_ARGS: |
-      ControlPort 127.0.0.1:9051
-      SOCKSPort 0.0.0.0:9050
-      AutomapHostsOnResolve 1
-      ControlSocketsGroupWritable 1
-      CookieAuthentication 1
-      CookieAuthFileGroupReadable 1
-      DNSPort 5353
-      ExitPolicy reject *:*
-      Log notice stderr
-      RunAsDaemon 0
-      ControlSocket /home/tor/.tor/control_socket
-      CookieAuthFile /home/tor/.tor/control_socket.authcookie
-      DataDirectory /home/tor/.tor
+      SocksPort 0.0.0.0:9050
       HiddenServiceDir /var/lib/tor/hidden_services
       HiddenServicePort 8888 127.0.0.1:8080
-      HiddenServiceVersion 3
 torConfig: {}
   # existingSecret: "existingSecret"
   ## OR specify a private key
