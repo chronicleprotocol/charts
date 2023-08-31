@@ -4,7 +4,7 @@ ghost:
   image:
     tag: "0.13.7"
   fullnameOverride: "ghost"
-  # ethConfig:
+  ethConfig: {}
   #   ethFrom:
   #     existingSecret: ""
   #     key: "ethFrom"
@@ -16,35 +16,28 @@ ghost:
   #     key: "ethPass"
   env:
     normal:
-      CFG_ITEM_SEPARATOR: "\n"
-      CFG_ENVIRONMENT: "stage"
-      CFG_FEEDS: "stage"
+      # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
+      # CFG_ETH_FROM: ""
+      # CFG_ETH_PASS: ""
+      # CFG_ETH_KEYS: ''
 
-      # ethereum RPC client
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "prod"
+      CFG_FEEDS: "prod"
+
       CFG_ETH_RPC_URLS: "https://eth.llamarpc.com"
       CFG_ETH_CHAIN_ID: "1"
 
-      # default RPC client
       CFG_RPC_URLS: "https://rpc.sepolia.org"
       CFG_CHAIN_ID: "11155111"
 
-      # libp2p
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
         /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
 
-      # webapi - transmit only (Ghost)
       CFG_WEBAPI_ENABLE: 1
-
-      # receiving
       CFG_WEBAPI_LISTEN_ADDR: ""
-
-      # sending
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
-
-      # on-chain address book Feeds+Relays
-      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
-
-      # local address book
       CFG_WEBAPI_STATIC_ADDR_BOOK: ""
 
 musig:
@@ -69,32 +62,29 @@ musig:
     #   key: "ethPass"
   env:
     normal:
+      # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
+      # CFG_ETH_FROM: ""
+      # CFG_ETH_PASS: ""
+      # CFG_ETH_KEYS: ''
+
       CFG_ITEM_SEPARATOR: "\n"
 
-      CFG_ENVIRONMENT: "prod"
+      CFG_ENVIRONMENT: "stage"
+      CFG_FEEDS: "stage"
 
       CFG_MUSIG_TARGET_NETWORK: "sep"
+      CFG_MUSIG_INTERVAL: "600"
+      CFG_MUSIG_MAX_AGE: "3600"
 
-      CFG_FEEDS: "prod"
+      CFG_RPC_URLS: "https://eth.llamarpc.com"
+      CFG_CHAIN_ID: "1"
 
-      # default RPC client
-      CFG_RPC_URLS: "https://rpc.sepolia.org"
-      CFG_CHAIN_ID: "11155111"
-
-      # libp2p
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
         /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
 
-      # webapi - receiving & sending (MuSig)
       CFG_WEBAPI_ENABLE: 1
-      # receiving
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
-      # sending
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
-      # on-chain address book Feeds+Relays
-      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
-      # local address book
-      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
 
 tor-proxy:
   enabled: true
