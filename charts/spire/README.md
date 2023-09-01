@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.7](https://img.shields.io/badge/AppVersion-0.13.7-informational?style=flat-square)
+![Version: 0.1.7](https://img.shields.io/badge/Version-0.1.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.7](https://img.shields.io/badge/AppVersion-0.13.7-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -44,14 +44,14 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| livenessProbe | object | `{"enabled":true,"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}` | Liveness probe |
+| liveness | object | `{"enabled":true,"livenessProbe":{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}}` | Liveness probe |
 | logFormat | string | `nil` |  |
 | logLevel | string | `"info"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe | object | `{"enabled":true,"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}` | Readiness probe |
+| readiness | object | `{"enabled":true,"readinessProbe":{"enabled":false,"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}}` | Readiness probe |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |

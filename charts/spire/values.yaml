@@ -53,20 +53,23 @@ service:
     # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 # -- Liveness probe
-livenessProbe:
+liveness:
   enabled: true
-  tcpSocket:
-    port: libp2p
-  initialDelaySeconds: 10
-  periodSeconds: 10
+  livenessProbe:
+    tcpSocket:
+      port: libp2p
+    initialDelaySeconds: 10
+    periodSeconds: 10
 
 # -- Readiness probe
-readinessProbe:
+readiness:
   enabled: true
-  tcpSocket:
-    port: libp2p
-  initialDelaySeconds: 10
-  periodSeconds: 10
+  readinessProbe:
+    enabled: false
+    tcpSocket:
+      port: libp2p
+    initialDelaySeconds: 10
+    periodSeconds: 10
 
 ingress:
   enabled: false
