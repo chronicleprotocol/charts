@@ -65,7 +65,6 @@ liveness:
 readiness:
   enabled: true
   readinessProbe:
-    enabled: false
     tcpSocket:
       port: libp2p
     initialDelaySeconds: 10
