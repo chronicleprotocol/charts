@@ -31,7 +31,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.env.normal.CFG_ETH_RPC_URLS | string | `"https://eth.llamarpc.com"` |  |
 | ghost.env.normal.CFG_FEEDS | string | `"prod"` |  |
 | ghost.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
-| ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi"` |  |
+| ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/ip4/192.168.1.125/tcp/8000/p2p/12D3KooWSkNcmEeDGvPAxTpzeoELVWZpwiKkJ3UEsE15jMr1j4rt"` |  |
 | ghost.env.normal.CFG_RPC_URLS | string | `"https://rpc.sepolia.org"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
@@ -45,7 +45,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.env.normal.CFG_ENVIRONMENT | string | `"stage"` |  |
 | musig.env.normal.CFG_FEEDS | string | `"stage"` |  |
 | musig.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
-| musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi"` |  |
+| musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/ip4/192.168.1.125/tcp/8000/p2p/12D3KooWSkNcmEeDGvPAxTpzeoELVWZpwiKkJ3UEsE15jMr1j4rt"` |  |
 | musig.env.normal.CFG_MUSIG_INTERVAL | string | `"600"` |  |
 | musig.env.normal.CFG_MUSIG_MAX_AGE | string | `"3600"` |  |
 | musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"sep"` |  |

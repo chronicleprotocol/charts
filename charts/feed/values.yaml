@@ -33,7 +33,7 @@ ghost:
       CFG_CHAIN_ID: "11155111"
 
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-        /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
+        /ip4/192.168.1.125/tcp/8000/p2p/12D3KooWSkNcmEeDGvPAxTpzeoELVWZpwiKkJ3UEsE15jMr1j4rt
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
@@ -80,7 +80,7 @@ musig:
       CFG_CHAIN_ID: "1"
 
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-        /dns/spire-bootstrap1.makerops.services/tcp/8000/p2p/12D3KooWRfYU5FaY9SmJcRD5Ku7c1XMBRqV6oM4nsnGQ1QRakSJi
+        /ip4/192.168.1.125/tcp/8000/p2p/12D3KooWSkNcmEeDGvPAxTpzeoELVWZpwiKkJ3UEsE15jMr1j4rt
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
