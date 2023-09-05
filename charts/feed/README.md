@@ -25,14 +25,14 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | ghost.enabled | bool | `true` |  |
-| ghost.env.normal.CFG_CHAIN_ID | string | `"11155111"` |  |
+| ghost.env.normal.CFG_CHAIN_ID | string | `"1"` |  |
 | ghost.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
 | ghost.env.normal.CFG_ETH_CHAIN_ID | string | `"1"` |  |
-| ghost.env.normal.CFG_ETH_RPC_URLS | string | `"https://eth.llamarpc.com"` |  |
+| ghost.env.normal.CFG_ETH_RPC_URLS | string | `"https://rpc.chroniclelabs.io/eth"` |  |
 | ghost.env.normal.CFG_FEEDS | string | `"prod"` |  |
 | ghost.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
 | ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
-| ghost.env.normal.CFG_RPC_URLS | string | `"https://rpc.sepolia.org"` |  |
+| ghost.env.normal.CFG_RPC_URLS | string | `"https://rpc.chroniclelabs.io/eth"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
@@ -42,14 +42,14 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.image.tag | string | `"0.13.7"` |  |
 | musig.enabled | bool | `true` |  |
 | musig.env.normal.CFG_CHAIN_ID | string | `"1"` |  |
-| musig.env.normal.CFG_ENVIRONMENT | string | `"stage"` |  |
-| musig.env.normal.CFG_FEEDS | string | `"stage"` |  |
+| musig.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
+| musig.env.normal.CFG_FEEDS | string | `"prod"` |  |
 | musig.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
 | musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
 | musig.env.normal.CFG_MUSIG_INTERVAL | string | `"600"` |  |
 | musig.env.normal.CFG_MUSIG_MAX_AGE | string | `"3600"` |  |
-| musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"sep"` |  |
-| musig.env.normal.CFG_RPC_URLS | string | `"https://eth.llamarpc.com"` |  |
+| musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"eth"` |  |
+| musig.env.normal.CFG_RPC_URLS | string | `"https://rpc.chroniclelabs.io/eth"` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
 | musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
