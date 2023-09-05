@@ -1,6 +1,6 @@
 # musig
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.2](https://img.shields.io/badge/AppVersion-0.13.2-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.2.11](https://img.shields.io/badge/AppVersion-0.2.11-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Musig on Kubernetes
 
@@ -20,16 +20,16 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| command | list | `[]` |  |
 | env | object | `{}` |  |
 | ethChainId | string | `nil` |  |
 | ethConfig | object | `{}` |  |
+| ethRpcUrl | string | `nil` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/adria"` |  |
 | image.tag | string | `""` |  |
-| imagePullSecrets[0].name | string | `"ghcr-login-secret"` |  |
+| imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` |  |
@@ -37,6 +37,8 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| logFormat | string | `nil` |  |
+| logLevel | string | `nil` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

@@ -1,6 +1,6 @@
 # ghost
 
-![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.12.0-dev.3](https://img.shields.io/badge/AppVersion-0.12.0--dev.3-informational?style=flat-square)
+![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.7](https://img.shields.io/badge/AppVersion-0.13.7-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -19,8 +19,11 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| chainId | string | `nil` |  |
 | env | object | `{}` |  |
+| ethChainId | string | `nil` |  |
 | ethConfig | object | `{}` |  |
+| ethRpcUrl | string | `nil` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -42,6 +45,7 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | podSecurityContext | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| rpcUrl | string | `nil` |  |
 | securityContext | object | `{}` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |

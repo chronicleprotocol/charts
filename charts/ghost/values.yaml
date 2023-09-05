@@ -10,6 +10,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+logLevel: null
+logFormat: null
+
 # Provide ETH keys from existing secrets
 # use only existing secret OR env vars, do not provide both
 ethConfig: {}
@@ -36,8 +39,17 @@ env: {}
   #   CFG_ETH_PASS: ""
   #   CFG_ETH_KEYS: ''
 
-logLevel: null
-logFormat: null
+# Environment variable listing
+
+# ethereum RPC client
+# exposes CFG_ETH_RPC_URLS, CFG_ETH_CHAIN_ID  as env vars
+ethRpcUrl: null
+ethChainId: null
+
+# default RPC client
+# exposes CFG_RPC_URLS, CFG_CHAIN_ID as env vars
+rpcUrl: null
+chainId: null
 
 imagePullSecrets: []
 nameOverride: ""
