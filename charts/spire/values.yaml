@@ -12,7 +12,7 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "spire"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -49,20 +49,26 @@ service:
     # webapi:
     #   port: 8080
     #   protocol: TCP
+  annotations: {}
+    # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 # -- Liveness probe
-# livenessProbe:
-#   tcpSocket:
-#     port: libp2p
-#   initialDelaySeconds: 10
-#   periodSeconds: 10
+liveness:
+  enabled: true
+  livenessProbe:
+    tcpSocket:
+      port: libp2p
+    initialDelaySeconds: 10
+    periodSeconds: 10
 
 # -- Readiness probe
-# readinessProbe:
-#   tcpSocket:
-#     port: rpc
-#   initialDelaySeconds: 10
-#   periodSeconds: 10
+readiness:
+  enabled: true
+  readinessProbe:
+    tcpSocket:
+      port: libp2p
+    initialDelaySeconds: 10
+    periodSeconds: 10
 
 ingress:
   enabled: false
@@ -97,7 +103,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 
@@ -109,7 +115,7 @@ affinity: {}
 # if true, runs bootstrap mode
 bootstrap: false
 # if true, runs stream mode
-stream: false
+stream: true
 
 # custom Args that may be added to the agent
 customArgs: []
@@ -122,14 +128,26 @@ logLevel: "info"
 logFormat: null
 
 # Environment variable listing
-env: {}
+env:
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
-  # normal:
-  #   CFG_WEBAPI_LISTEN_ADDR: "0.0.0.0:8080"
-  #   CFG_WEBAPI_ETH_ADDR_BOOK: "0xd51Fd30C873356b432F766eB55fc599586734a95"
-  #   CFG_LIBP2P_BOOTSTRAP_ADDRS: ""
-  #   CFG_LIBP2P_PK_SEED: ""
+  normal: {}
+    # CFG_ITEM_SEPARATOR: "\n"
+    # CFG_FEEDS: stage
+    # CFG_LIBP2P_PK_SEED: "1234567981234567981234567981234567981234123456798123456798123456" # 64 bytes libp2p for bootstrap only
+    # CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+    #   /dns/bootstrap.some.domain/tcp/8000/p2p/<some_libp2p_pub_key>
+    # # webapi - receive only (Spire Stream)
+    # CFG_WEBAPI_ENABLE: 1
+    # ## receiving
+    # CFG_WEBAPI_LISTEN_ADDR: ":8080"
+    # ## sending
+    # CFG_WEBAPI_SOCKS5_PROXY_ADDR: "" # no proxy
+    # ### on-chain address book
+    # CFG_WEBAPI_ETH_ADDR_BOOK: "" # no addr book contract
+    # ### local address book
+    # CFG_WEBAPI_STATIC_ADDR_BOOK: "" # no addresses
+
 
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.
@@ -138,23 +156,12 @@ configHcl: {}
 
 tor-proxy:
   enabled: false
-  # env:
-  #   normal:
-  #     TOR_EXTRA_ARGS: |
-  #       AutomapHostsOnResolve 1
-  #       ControlSocketsGroupWritable 1
-  #       CookieAuthentication 1
-  #       CookieAuthFileGroupReadable 1
-  #       DNSPort 5353
-  #       ExitPolicy reject *:*
-  #       Log notice stderr
-  #       RunAsDaemon 0
-  #       ControlSocket /home/tor/.tor/control_socket
-  #       CookieAuthFile /home/tor/.tor/control_socket.authcookie
-  #       DataDirectory /home/tor/.tor
-  #       HiddenServiceDir /var/lib/tor/hidden_services
-  #       HiddenServicePort 8888 spire:8080
-  #       HiddenServiceVersion 3
+  env:
+    normal:
+      TOR_EXTRA_ARGS: |
+        SocksPort 0.0.0.0:9050
+        HiddenServiceDir /var/lib/tor/hidden_services
+        HiddenServicePort 8888 spire:8080
 
 # -- Extra K8s manifests to deploy
 extraObjects: []

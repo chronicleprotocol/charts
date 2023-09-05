@@ -32,7 +32,12 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          args: {{ .Values.command }}
+          args:
+            - "run"
+            - "-v"
+            - "{{ .Values.logLevel | default "debug" }}"
+            - "--log.format"
+            - "{{ .Values.logFormat | default "text" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -50,6 +55,10 @@ spec:
           {{- if .Values.ethChainId }}
             - name: CFG_ETH_CHAIN_ID
               value: "{{ int .Values.ethChainId }}"
+          {{- end }}
+          {{- if .Values.ethRpcUrl }}
+            - name: CFG_RPC_URLS
+              value: "{{ .Values.ethRpcUrl }}"
           {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM
