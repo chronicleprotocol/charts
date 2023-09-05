@@ -5,15 +5,24 @@ ghost:
     tag: "0.13.7"
   fullnameOverride: "ghost"
   ethConfig: {}
-  #   ethFrom:
-  #     existingSecret: ""
-  #     key: "ethFrom"
-  #   ethKeys:
-  #     existingSecret: ""
-  #     key: "ethKeyStore"
-  #   ethPass:
-  #     existingSecret: ""
-  #     key: "ethPass"
+    # ethFrom:
+    #   existingSecret: ""
+    #   key: "ethFrom"
+    # ethKeys:
+    #   existingSecret: ""
+    #   key: "ethKeyStore"
+    # ethPass:
+    #   existingSecret: ""
+    #   key: "ethPass"
+
+  logLevel: null
+  logFormat: null
+
+  ethRpcUrl: null
+  ethChainId: null
+  rpcUrl: null
+  chainId: null
+
   env:
     normal:
       # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
@@ -25,12 +34,6 @@ ghost:
 
       CFG_ENVIRONMENT: "prod"
       CFG_FEEDS: "prod"
-
-      CFG_ETH_RPC_URLS: "https://rpc.chroniclelabs.io/eth"
-      CFG_ETH_CHAIN_ID: "1"
-
-      CFG_RPC_URLS: "https://rpc.chroniclelabs.io/eth"
-      CFG_CHAIN_ID: "1"
 
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
         /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
@@ -51,15 +54,22 @@ musig:
   service:
     type: ClusterIP
     port: 8080
+
+  logLevel: null
+  logFormat: null
+
+  ethChainId: null
+  ethRpcUrl: null
+
   ethConfig: {}
     # ethFrom:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethFrom"
     # ethKeys:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethKeyStore"
     # ethPass:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethPass"
   env:
     normal:
@@ -76,9 +86,6 @@ musig:
       CFG_MUSIG_TARGET_NETWORK: "eth"
       CFG_MUSIG_INTERVAL: "600"
       CFG_MUSIG_MAX_AGE: "3600"
-
-      CFG_RPC_URLS: "https://rpc.chroniclelabs.io/eth"
-      CFG_CHAIN_ID: "1"
 
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
         /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
@@ -108,8 +115,8 @@ tor-proxy:
         SocksPort 0.0.0.0:9050
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 musig:8080
-  torConfig: {}
-    # existingSecret: null
+  torConfig:
+    existingSecret: ""
     # OR specify a private key
     # torKeys: {}
       # secret_key: null

@@ -1,2 +1,2 @@
 1. Get the application URL by running these commands:
-  kubectl get pods
+  kubectl get pods -n {{ .Release.Namespace }}
