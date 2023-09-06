@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -15,30 +15,60 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.4 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.4 |
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.7 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.5 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.0.5 |
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
+| ghost.chainId | string | `"nulll"` |  |
 | ghost.enabled | bool | `true` |  |
+| ghost.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
+| ghost.env.normal.CFG_FEEDS | string | `"prod"` |  |
+| ghost.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
+| ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
+| ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
+| ghost.env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
+| ghost.ethChainId | string | `nil` |  |
 | ghost.ethConfig | object | `{}` |  |
+| ghost.ethRpcUrl | string | `nil` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
+| ghost.image.tag | string | `"0.13.9"` |  |
+| ghost.logFormat | string | `nil` |  |
+| ghost.logLevel | string | `nil` |  |
+| ghost.rpcUrl | string | `nil` |  |
 | musig.enabled | bool | `true` |  |
+| musig.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
+| musig.env.normal.CFG_FEEDS | string | `"prod"` |  |
+| musig.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
+| musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
+| musig.env.normal.CFG_MUSIG_INTERVAL | string | `"600"` |  |
+| musig.env.normal.CFG_MUSIG_MAX_AGE | string | `"3600"` |  |
+| musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"eth"` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
+| musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
 | musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
+| musig.ethChainId | int | `1` |  |
 | musig.ethConfig | object | `{}` |  |
+| musig.ethRpcUrl | string | `nil` |  |
 | musig.fullnameOverride | string | `"musig"` |  |
+| musig.image.tag | string | `"0.2.12"` |  |
+| musig.imagePullSecrets | list | `[]` |  |
+| musig.logFormat | string | `nil` |  |
+| musig.logLevel | string | `nil` |  |
 | musig.service.port | int | `8080` |  |
 | musig.service.type | string | `"ClusterIP"` |  |
 | tor-proxy.enabled | bool | `true` |  |
-| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nSOCKSPort 0.0.0.0:9050\nCookieAuthFileGroupReadable 1\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\nHiddenServiceVersion 3\n"` |  |
+| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
+| tor-proxy.service.ports.socks.port | int | `9050` |  |
+| tor-proxy.service.ports.socks.protocol | string | `"TCP"` |  |
+| tor-proxy.service.type | string | `"ClusterIP"` |  |
 | tor-proxy.torConfig | object | `{}` |  |
 
 ----------------------------------------------

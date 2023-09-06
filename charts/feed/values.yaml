@@ -1,89 +1,128 @@
 ghost:
+  # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
+  image:
+    tag: "0.13.9"
   fullnameOverride: "ghost"
   ethConfig: {}
     # ethFrom:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethFrom"
     # ethKeys:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethKeyStore"
     # ethPass:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethPass"
+
+  logLevel: null
+  logFormat: null
+
+  ethRpcUrl: null
+  ethChainId: null
+  rpcUrl: null
+  chainId: nulll
+
   env:
-    # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
+      # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
+      # CFG_ETH_FROM: ""
+      # CFG_ETH_PASS: ""
+      # CFG_ETH_KEYS: ''
+
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "prod"
+      CFG_FEEDS: "prod"
+
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
+        /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
+
       CFG_WEBAPI_ENABLE: 1
-    #   CFG_FEEDS: ""
-    #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
-    #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #   # Provide ETH keys as env vars
-    #   CFG_ETH_FROM: ""
-    #   CFG_ETH_PASS: ""
-    #   CFG_ETH_KEYS: ''
+      CFG_WEBAPI_LISTEN_ADDR: ""
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
+
 musig:
+  # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
   enabled: true
   fullnameOverride: "musig"
+  image:
+    tag: "0.2.12"
+  imagePullSecrets: []
   service:
     type: ClusterIP
     port: 8080
+
+  logLevel: null
+  logFormat: null
+
+  ethChainId: 1
+  ethRpcUrl: null
+
   ethConfig: {}
     # ethFrom:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethFrom"
     # ethKeys:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethKeyStore"
     # ethPass:
-    #   existingSecret: "eth-keys"
+    #   existingSecret: ""
     #   key: "ethPass"
   env:
-    # non sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/musig#environment-variables
     normal:
-    #  CFG_ETH_FROM: ""
-    #  CFG_ETH_PASS: ""
-    #  CFG_ETH_KEYS: ''
-    #  CFG_FEEDS: ""
-    #  CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire-bootstrap.default.svc.local/tcp/8000/p2p/<>"
-    #  CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-    #  CFG_MUSIG_SIGNERS_COUNT: 3
+      # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
+      # CFG_ETH_FROM: ""
+      # CFG_ETH_PASS: ""
+      # CFG_ETH_KEYS: ''
+
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "prod"
+      CFG_FEEDS: "prod"
+
+      CFG_MUSIG_TARGET_NETWORK: "eth"
+      CFG_MUSIG_INTERVAL: "600"
+      CFG_MUSIG_MAX_AGE: "3600"
+
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
+        /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
+
       CFG_WEBAPI_ENABLE: 1
-      CFG_WEBAPI_SOCKS5_PROXY_ADDR: tor-proxy:9050
+      CFG_WEBAPI_LISTEN_ADDR: ":8080"
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
 
 tor-proxy:
   enabled: true
   fullnameOverride: "tor-proxy"
+  service:
+    type: ClusterIP
+    ports:
+      socks:
+        port: 9050
+        protocol: TCP
+      # musig:
+      #   port: 8888
+      #   protocol: TCP
   env:
     # non sensitive variables
     # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
       TOR_EXTRA_ARGS: |
-        AutomapHostsOnResolve 1
-        ControlSocketsGroupWritable 1
-        CookieAuthentication 1
-        SOCKSPort 0.0.0.0:9050
-        CookieAuthFileGroupReadable 1
-        DNSPort 5353
-        ExitPolicy reject *:*
-        Log notice stderr
-        RunAsDaemon 0
-        ControlSocket /home/tor/.tor/control_socket
-        CookieAuthFile /home/tor/.tor/control_socket.authcookie
-        DataDirectory /home/tor/.tor
+        SocksPort 0.0.0.0:9050
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 musig:8080
-        HiddenServiceVersion 3
   torConfig: {}
     # existingSecret: ""
-    ## OR specify a private key
-    # torKeys:
-    #   secret_key: "PT0g......."
-    #   public_key: "PT....=="
-    #   hostname: "some.onion"
+    # OR specify a private key
+    # torKeys: {}
+      # secret_key: null
+      # public_key: null
+      # hostname: null
+
 # -- Extra K8s manifests to deploy
 extraObjects: []
   # - apiVersion: "kubernetes-client.io/v1"

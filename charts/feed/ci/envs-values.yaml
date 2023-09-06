@@ -1,0 +1,74 @@
+ghost:
+  logLevel: debug
+  logFormat: text
+  # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
+  ethRpcUrl: https://eth-mainnet.public.blastapi.io
+  ethChainId: 1
+  rpcUrl: https://eth-sepolia.public.blastapi.io
+  chainId: 11155111
+
+  env:
+    normal:
+      # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
+      CFG_ETH_FROM: "0x1e68967a10a30602EbBa297cffeCC3645cB28D99"
+      CFG_ETH_PASS: ""
+      CFG_ETH_KEYS: '{"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"22ae1be4ab7cd766e05c03e334deb9d2"},"ciphertext":"56439cc948fbecff1c252f5cede620f65821c6446ddb6d4bfa38f17754555a44","kdf":"scrypt","kdfparams":{"dklen":32,"n":8192,"p":1,"r":8,"salt":"7dcaf2f0196aa5c9d05dc15fac39ec15dbd99db2311813fd3d1d98324faf05c5"},"mac":"191ffca516d2c263402bd03e4cf1a6df60ebc833f489346fefdf0fe89138f305"},"id":"aea697d6-94d9-4433-bd69-4808597b0768","version":3}'
+
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "stage"
+      CFG_FEEDS: "stage"
+
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns/spire-bootstrap1.staging.chroniclelabs.io/tcp/8000/p2p/12D3KooWHoSyTgntm77sXShoeX9uNkqKNMhHxKtskaHqnA54SrSG
+
+      CFG_WEBAPI_ENABLE: 1
+      CFG_WEBAPI_LISTEN_ADDR: ""
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
+
+musig:
+  # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
+  logLevel: debug
+  logFormat: text
+
+  ethChainId: 1
+  ethRpcUrl: https://eth-sepolia.public.blastapi.io
+
+  env:
+    normal:
+      # NB!! these ETH keys are for testing purpose only, do not use them or send any funds to them as you will lose them!
+      CFG_ETH_FROM: "0x1e68967a10a30602EbBa297cffeCC3645cB28D99"
+      CFG_ETH_PASS: ""
+      CFG_ETH_KEYS: '{"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"22ae1be4ab7cd766e05c03e334deb9d2"},"ciphertext":"56439cc948fbecff1c252f5cede620f65821c6446ddb6d4bfa38f17754555a44","kdf":"scrypt","kdfparams":{"dklen":32,"n":8192,"p":1,"r":8,"salt":"7dcaf2f0196aa5c9d05dc15fac39ec15dbd99db2311813fd3d1d98324faf05c5"},"mac":"191ffca516d2c263402bd03e4cf1a6df60ebc833f489346fefdf0fe89138f305"},"id":"aea697d6-94d9-4433-bd69-4808597b0768","version":3}'
+
+      CFG_ITEM_SEPARATOR: "\n"
+
+      CFG_ENVIRONMENT: "stage"
+      CFG_FEEDS: "stage"
+
+      CFG_MUSIG_TARGET_NETWORK: "sep"
+      CFG_MUSIG_INTERVAL: "600"
+      CFG_MUSIG_MAX_AGE: "3600"
+
+      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
+        /dns/spire-bootstrap1.staging.chroniclelabs.io/tcp/8000/p2p/12D3KooWHoSyTgntm77sXShoeX9uNkqKNMhHxKtskaHqnA54SrSG
+
+      CFG_WEBAPI_ENABLE: 1
+      CFG_WEBAPI_LISTEN_ADDR: ":8080"
+      CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+
+tor-proxy:
+  env:
+    # non sensitive variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+    normal:
+      TOR_EXTRA_ARGS: |
+        SocksPort 0.0.0.0:9050
+        HiddenServiceDir /var/lib/tor/hidden_services
+        HiddenServicePort 8888 musig:8080
+  torConfig:
+    torKeys:
+      secret_key: "PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAAB48ZoWgg85pG5F3GVsoh1SxulTfa4nR8GVWlzNiFTQRk7LTqzUAmXo7pvB66NaboaZ+p1DqMqJqfv15HJZ4lut"
+      public_key: "PT0gZWQyNTUxOXYxLXB1YmxpYzogdHlwZTAgPT0AAADnAj+VHlFjJWpBg/8BH/YeScZTEcyePFgM4CjM7Q4s+g=="
+      hostname: "44bd7fi6kfrsk2sbqp7qch7wdze4muyrzspdywam4aumz3ioft5pnoad.onion"

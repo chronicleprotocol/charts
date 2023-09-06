@@ -1,12 +1,12 @@
 dependencies:
 - name: tor-proxy
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.7
+  version: 0.0.8
 - name: ghost
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.1.4
+  version: 0.1.5
 - name: musig
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.4
-digest: sha256:010dacb770553d35c9782dc6804a757f01e18986ba3d5da2883245d0da811ec1
-generated: "2023-08-28T15:02:24.74717967+02:00"
+  version: 0.0.5
+digest: sha256:03c17fc067caa7d94df85356d8f391439fa522dd3204fd842dbd42074cbb473b
+generated: "2023-09-05T16:25:55.85729613+02:00"
