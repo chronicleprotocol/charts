@@ -24,7 +24,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost.chainId | int | `1` |  |
+| ghost.chainId | string | `"nulll"` |  |
 | ghost.enabled | bool | `true` |  |
 | ghost.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
 | ghost.env.normal.CFG_FEEDS | string | `"prod"` |  |
@@ -34,7 +34,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
 | ghost.env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
-| ghost.ethChainId | int | `1` |  |
+| ghost.ethChainId | string | `nil` |  |
 | ghost.ethConfig | object | `{}` |  |
 | ghost.ethRpcUrl | string | `nil` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
@@ -66,8 +66,6 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | tor-proxy.enabled | bool | `true` |  |
 | tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
-| tor-proxy.service.ports.musig.port | int | `8888` |  |
-| tor-proxy.service.ports.musig.protocol | string | `"TCP"` |  |
 | tor-proxy.service.ports.socks.port | int | `9050` |  |
 | tor-proxy.service.ports.socks.protocol | string | `"TCP"` |  |
 | tor-proxy.service.type | string | `"ClusterIP"` |  |
