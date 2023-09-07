@@ -26,13 +26,14 @@ ghost:
       CFG_WEBAPI_LISTEN_ADDR: ""
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
       CFG_WEBAPI_STATIC_ADDR_BOOK: ""
+      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
 
 musig:
   # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
   logLevel: debug
   logFormat: text
 
-  ethChainId: 1
+  ethChainId: 11155111
   ethRpcUrl: https://eth-sepolia.public.blastapi.io
 
   env:
@@ -57,6 +58,7 @@ musig:
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
+      CFG_WEBAPI_ETH_ADDR_BOOK: "0x504Fdbc4a9386c2C48A5775a6967beB00dAa9E9a"
 
 tor-proxy:
   env:
