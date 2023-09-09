@@ -21,7 +21,7 @@ ghost:
   ethRpcUrl: null
   ethChainId: null
   rpcUrl: null
-  chainId: nulll
+  chainId: null
 
   env:
     normal:
