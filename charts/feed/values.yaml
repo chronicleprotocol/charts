@@ -2,7 +2,7 @@ ghost:
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
   image:
-    tag: "0.13.9"
+    tag: "0.15.0"
   fullnameOverride: "ghost"
   ethConfig: {}
     # ethFrom:
@@ -48,7 +48,7 @@ musig:
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.2.12"
+    tag: "0.4.0"
   imagePullSecrets: []
   service:
     type: ClusterIP

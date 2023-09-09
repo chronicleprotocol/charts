@@ -38,7 +38,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.ethConfig | object | `{}` |  |
 | ghost.ethRpcUrl | string | `nil` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
-| ghost.image.tag | string | `"0.13.9"` |  |
+| ghost.image.tag | string | `"0.15.0"` |  |
 | ghost.logFormat | string | `nil` |  |
 | ghost.logLevel | string | `nil` |  |
 | ghost.rpcUrl | string | `nil` |  |
@@ -57,7 +57,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.ethConfig | object | `{}` |  |
 | musig.ethRpcUrl | string | `nil` |  |
 | musig.fullnameOverride | string | `"musig"` |  |
-| musig.image.tag | string | `"0.2.12"` |  |
+| musig.image.tag | string | `"0.4.0"` |  |
 | musig.imagePullSecrets | list | `[]` |  |
 | musig.logFormat | string | `nil` |  |
 | musig.logLevel | string | `nil` |  |
