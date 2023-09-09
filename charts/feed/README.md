@@ -24,11 +24,8 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost.chainId | string | `"nulll"` |  |
+| ghost.chainId | string | `nil` |  |
 | ghost.enabled | bool | `true` |  |
-| ghost.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
-| ghost.env.normal.CFG_FEEDS | string | `"prod"` |  |
-| ghost.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
 | ghost.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
@@ -38,14 +35,11 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.ethConfig | object | `{}` |  |
 | ghost.ethRpcUrl | string | `nil` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
-| ghost.image.tag | string | `"0.13.9"` |  |
+| ghost.image.tag | string | `"0.14.2"` |  |
 | ghost.logFormat | string | `nil` |  |
 | ghost.logLevel | string | `nil` |  |
 | ghost.rpcUrl | string | `nil` |  |
 | musig.enabled | bool | `true` |  |
-| musig.env.normal.CFG_ENVIRONMENT | string | `"prod"` |  |
-| musig.env.normal.CFG_FEEDS | string | `"prod"` |  |
-| musig.env.normal.CFG_ITEM_SEPARATOR | string | `"\n"` |  |
 | musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
 | musig.env.normal.CFG_MUSIG_INTERVAL | string | `"600"` |  |
 | musig.env.normal.CFG_MUSIG_MAX_AGE | string | `"3600"` |  |
@@ -57,7 +51,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.ethConfig | object | `{}` |  |
 | musig.ethRpcUrl | string | `nil` |  |
 | musig.fullnameOverride | string | `"musig"` |  |
-| musig.image.tag | string | `"0.2.12"` |  |
+| musig.image.tag | string | `"0.3.1"` |  |
 | musig.imagePullSecrets | list | `[]` |  |
 | musig.logFormat | string | `nil` |  |
 | musig.logLevel | string | `nil` |  |

@@ -2,7 +2,7 @@ ghost:
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
   image:
-    tag: "0.13.9"
+    tag: "0.14.2"
   fullnameOverride: "ghost"
   ethConfig: {}
     # ethFrom:
@@ -21,7 +21,7 @@ ghost:
   ethRpcUrl: null
   ethChainId: null
   rpcUrl: null
-  chainId: nulll
+  chainId: null
 
   env:
     normal:
@@ -30,10 +30,10 @@ ghost:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      CFG_ITEM_SEPARATOR: "\n"
+      # CFG_ITEM_SEPARATOR: "\n"
 
-      CFG_ENVIRONMENT: "prod"
-      CFG_FEEDS: "prod"
+      # CFG_ENVIRONMENT: "prod"
+      # CFG_FEEDS: "prod"
 
       CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
         /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
@@ -49,7 +49,7 @@ musig:
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.2.12"
+    tag: "0.3.1"
   imagePullSecrets: []
   service:
     type: ClusterIP
@@ -78,10 +78,10 @@ musig:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      CFG_ITEM_SEPARATOR: "\n"
+      # CFG_ITEM_SEPARATOR: "\n"
 
-      CFG_ENVIRONMENT: "prod"
-      CFG_FEEDS: "prod"
+      # CFG_ENVIRONMENT: "prod"
+      # CFG_FEEDS: "prod"
 
       CFG_MUSIG_TARGET_NETWORK: "eth"
       CFG_MUSIG_INTERVAL: "600"
