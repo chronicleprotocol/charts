@@ -16,7 +16,7 @@ ghost:
     #   key: "ethPass"
 
   service:
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       libp2p:
         port: 8000
@@ -52,7 +52,7 @@ musig:
     tag: "0.4.0"
   imagePullSecrets: []
   service:
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       libp2p:
         port: 8001

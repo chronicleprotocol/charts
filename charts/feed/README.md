@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -39,7 +39,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.rpcUrl | string | `nil` |  |
 | ghost.service.ports.libp2p.port | int | `8000` |  |
 | ghost.service.ports.libp2p.protocol | string | `"TCP"` |  |
-| ghost.service.type | string | `"LoadBalancer"` |  |
+| ghost.service.type | string | `"ClusterIP"` |  |
 | musig.enabled | bool | `true` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
@@ -56,7 +56,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.service.ports.libp2p.protocol | string | `"TCP"` |  |
 | musig.service.ports.webapi.port | int | `8080` |  |
 | musig.service.ports.webapi.protocol | string | `"TCP"` |  |
-| musig.service.type | string | `"LoadBalancer"` |  |
+| musig.service.type | string | `"ClusterIP"` |  |
 | tor-proxy.enabled | bool | `true` |  |
 | tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
