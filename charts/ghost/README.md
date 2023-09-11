@@ -1,6 +1,6 @@
 # ghost
 
-![Version: 0.1.5](https://img.shields.io/badge/Version-0.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.7](https://img.shields.io/badge/AppVersion-0.13.7-informational?style=flat-square)
+![Version: 0.1.6](https://img.shields.io/badge/Version-0.1.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.15.0](https://img.shields.io/badge/AppVersion-0.15.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -47,7 +47,8 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | resources | object | `{}` |  |
 | rpcUrl | string | `nil` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
+| service.ports.libp2p.port | int | `8000` |  |
+| service.ports.libp2p.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
