@@ -72,7 +72,17 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  ports:
+    libp2p:
+      port: 8001
+      protocol: TCP
+    webapi:
+      port: 8080
+      protocol: TCP
+    ### to add more port-mappings, add them here:
+    # rpc:
+    #   port: 9100
+    #   protocol: TCP
 
 ingress:
   enabled: false
