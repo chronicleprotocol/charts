@@ -33,10 +33,6 @@ ghost:
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
 
-      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-        /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
-        /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
-
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
@@ -75,17 +71,8 @@ musig:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ITEM_SEPARATOR: "\n"
-
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
-
-      CFG_MUSIG_INTERVAL: "600"
-      CFG_MUSIG_MAX_AGE: "3600"
-
-      CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-        /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
-        /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
