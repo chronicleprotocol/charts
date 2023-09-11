@@ -15,6 +15,13 @@ ghost:
     #   existingSecret: ""
     #   key: "ethPass"
 
+  service:
+    type: LoadBalancer
+    ports:
+      libp2p:
+        port: 8000
+        protocol: TCP
+
   logLevel: null
   logFormat: null
 
@@ -30,14 +37,8 @@ ghost:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ITEM_SEPARATOR: "\n"
-
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
-
-      # CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-      #  /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
-      #  /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
@@ -51,8 +52,14 @@ musig:
     tag: "0.4.0"
   imagePullSecrets: []
   service:
-    type: ClusterIP
-    port: 8080
+    type: LoadBalancer
+    ports:
+      libp2p:
+        port: 8001
+        protocol: TCP
+      webapi:
+        port: 8080
+        protocol: TCP
 
   logLevel: null
   logFormat: null
@@ -77,14 +84,8 @@ musig:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ITEM_SEPARATOR: "\n"
-
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
-
-      # CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-      #  /dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG
-      #  /dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
