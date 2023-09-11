@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -30,12 +30,11 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
-| ghost.env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
 | ghost.ethChainId | string | `nil` |  |
 | ghost.ethConfig | object | `{}` |  |
 | ghost.ethRpcUrl | string | `nil` |  |
 | ghost.fullnameOverride | string | `"ghost"` |  |
-| ghost.image.tag | string | `"0.14.2"` |  |
+| ghost.image.tag | string | `"0.15.0"` |  |
 | ghost.logFormat | string | `nil` |  |
 | ghost.logLevel | string | `nil` |  |
 | ghost.rpcUrl | string | `nil` |  |
@@ -43,7 +42,6 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.env.normal.CFG_LIBP2P_BOOTSTRAP_ADDRS | string | `"/dns4/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG\n/dns4/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj"` |  |
 | musig.env.normal.CFG_MUSIG_INTERVAL | string | `"600"` |  |
 | musig.env.normal.CFG_MUSIG_MAX_AGE | string | `"3600"` |  |
-| musig.env.normal.CFG_MUSIG_TARGET_NETWORK | string | `"eth"` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
 | musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
@@ -51,7 +49,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.ethConfig | object | `{}` |  |
 | musig.ethRpcUrl | string | `nil` |  |
 | musig.fullnameOverride | string | `"musig"` |  |
-| musig.image.tag | string | `"0.3.1"` |  |
+| musig.image.tag | string | `"0.4.0"` |  |
 | musig.imagePullSecrets | list | `[]` |  |
 | musig.logFormat | string | `nil` |  |
 | musig.logLevel | string | `nil` |  |

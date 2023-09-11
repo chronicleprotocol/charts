@@ -2,7 +2,7 @@ ghost:
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
   image:
-    tag: "0.14.2"
+    tag: "0.15.0"
   fullnameOverride: "ghost"
   ethConfig: {}
     # ethFrom:
@@ -30,8 +30,6 @@ ghost:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ITEM_SEPARATOR: "\n"
-
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
 
@@ -42,14 +40,13 @@ ghost:
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
-      CFG_WEBAPI_STATIC_ADDR_BOOK: ""
 
 musig:
   # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.3.1"
+    tag: "0.4.0"
   imagePullSecrets: []
   service:
     type: ClusterIP
@@ -83,7 +80,6 @@ musig:
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
 
-      CFG_MUSIG_TARGET_NETWORK: "eth"
       CFG_MUSIG_INTERVAL: "600"
       CFG_MUSIG_MAX_AGE: "3600"
 
