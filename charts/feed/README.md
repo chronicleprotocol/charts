@@ -2,7 +2,6 @@
 
 ![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
-
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 ## Maintainers
@@ -16,8 +15,8 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.5 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.5 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.6 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.0.6 |
 | https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
@@ -38,6 +37,9 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.logFormat | string | `nil` |  |
 | ghost.logLevel | string | `nil` |  |
 | ghost.rpcUrl | string | `nil` |  |
+| ghost.service.ports.libp2p.port | int | `8000` |  |
+| ghost.service.ports.libp2p.protocol | string | `"TCP"` |  |
+| ghost.service.type | string | `"LoadBalancer"` |  |
 | musig.enabled | bool | `true` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
@@ -50,8 +52,11 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | musig.imagePullSecrets | list | `[]` |  |
 | musig.logFormat | string | `nil` |  |
 | musig.logLevel | string | `nil` |  |
-| musig.service.port | int | `8080` |  |
-| musig.service.type | string | `"ClusterIP"` |  |
+| musig.service.ports.libp2p.port | int | `8001` |  |
+| musig.service.ports.libp2p.protocol | string | `"TCP"` |  |
+| musig.service.ports.webapi.port | int | `8080` |  |
+| musig.service.ports.webapi.protocol | string | `"TCP"` |  |
+| musig.service.type | string | `"LoadBalancer"` |  |
 | tor-proxy.enabled | bool | `true` |  |
 | tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
