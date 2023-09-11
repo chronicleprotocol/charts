@@ -104,7 +104,7 @@ tor-proxy:
       #   port: 8888
       #   protocol: TCP
   env:
-    # non sensitive variables
+    # non-sensitive variables
     # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
       TOR_EXTRA_ARGS: |
