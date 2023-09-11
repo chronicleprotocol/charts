@@ -40,9 +40,11 @@ spec:
             - "{{ .Values.logFormat | default "text" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -52,6 +54,8 @@ spec:
           #     path: /
           #     port: http
           env:
+            - name: CFG_LIBP2P_LISTEN_ADDRS
+              value: "/ip4/0.0.0.0/tcp/{{ .Values.service.ports.libp2p.port | default 8000 }}"
           {{- if .Values.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
               value: "{{ .Values.ethRpcUrl }}"
