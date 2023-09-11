@@ -264,6 +264,34 @@ entries:
   feed:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2023-09-11T19:55:31.980476133Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    - condition: ghost.enabled
+      name: ghost
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.6
+    - condition: musig.enabled
+      name: musig
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.6
+    description: A Helm chart for deploying Chronicle Feeds on Kubernetes
+    digest: baf6d14a4872a61fe475711b4ac6fc3dc401b51c71fd2ae73c20fad84f50daba
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/feed-0.1.3/feed-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2023-09-11T18:32:27.832019265Z"
     dependencies:
     - condition: tor-proxy.enabled
@@ -667,6 +695,21 @@ entries:
   gofer:
   - apiVersion: v2
     appVersion: 0.10.0
+    created: "2023-09-11T19:55:32.111789017Z"
+    description: A Helm chart for deploying gofer to Kubernetes
+    digest: 1944a6cab5303faf83499d920bb8489a95f4deb24a76009c52056a8aef3738d4
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: gofer
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.0.4/gofer-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.10.0
     created: "2023-04-13T13:20:40.972245398Z"
     description: A Helm chart for deploying gofer to Kubernetes
     digest: 369e5dbebfc1de9c1da94da4ce0cb0a61af9f94591b6b1be6e23d35dba016e3d
@@ -773,6 +816,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/leeloo-0.1.1/leeloo-0.1.1.tgz
     version: 0.1.1
   monitor:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-09-11T19:55:32.236984411Z"
+    description: A Helm chart for Kubernetes
+    digest: c878642f7f6bb3114e49a79ce7131071d5f403cf9b52efd66cd091451fd29594
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: monitor
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/monitor-0.1.2/monitor-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-03-07T15:48:15.172700595Z"
@@ -2007,4 +2063,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-09-11T18:32:27.832530063Z"
+generated: "2023-09-11T19:55:32.237351145Z"
