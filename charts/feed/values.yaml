@@ -22,7 +22,7 @@ ghost:
         port: 8000
         protocol: TCP
 
-  logLevel: null
+  logLevel: warning
   logFormat: null
 
   ethRpcUrl: null
@@ -61,7 +61,7 @@ musig:
         port: 8080
         protocol: TCP
 
-  logLevel: null
+  logLevel: warning
   logFormat: null
 
   ethChainId: 1
