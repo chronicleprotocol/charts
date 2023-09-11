@@ -35,7 +35,7 @@ spec:
           args:
             - "run"
             - "-v"
-            - "{{ .Values.logLevel | default "debug" }}"
+            - "{{ .Values.logLevel | default "warning" }}"
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
