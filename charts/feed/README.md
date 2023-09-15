@@ -60,8 +60,6 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | tor-proxy.enabled | bool | `true` |  |
 | tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
 | tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
-| tor-proxy.service.ports.musig.port | int | `8888` |  |
-| tor-proxy.service.ports.musig.protocol | string | `"TCP"` |  |
 | tor-proxy.service.ports.socks.port | int | `9050` |  |
 | tor-proxy.service.ports.socks.protocol | string | `"TCP"` |  |
 | tor-proxy.service.type | string | `"ClusterIP"` |  |
