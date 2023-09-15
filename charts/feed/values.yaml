@@ -39,7 +39,7 @@ ghost:
 
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
-      CFG_LIBP2P_LISTEN_ADDRS: "/ip4/0.0.0.0/tcp/8000"
+
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
@@ -86,7 +86,7 @@ musig:
 
       # CFG_ENVIRONMENT: "prod"
       # CFG_FEEDS: "prod"
-      CFG_LIBP2P_LISTEN_ADDRS: "/ip4/0.0.0.0/tcp/8001"
+
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"

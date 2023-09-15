@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -15,8 +15,8 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.8 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.8 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.9 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.0.9 |
 | https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
@@ -26,7 +26,6 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | ghost.chainId | string | `nil` |  |
 | ghost.enabled | bool | `true` |  |
-| ghost.env.normal.CFG_LIBP2P_LISTEN_ADDRS | string | `"/ip4/0.0.0.0/tcp/8000"` |  |
 | ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
 | ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
@@ -42,7 +41,6 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.service.ports.libp2p.protocol | string | `"TCP"` |  |
 | ghost.service.type | string | `"LoadBalancer"` |  |
 | musig.enabled | bool | `true` |  |
-| musig.env.normal.CFG_LIBP2P_LISTEN_ADDRS | string | `"/ip4/0.0.0.0/tcp/8001"` |  |
 | musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
 | musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
 | musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
