@@ -2,7 +2,7 @@ ghost:
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
   enabled: true
   image:
-    tag: "0.16.0"
+    tag: "0.17.0"
   fullnameOverride: "ghost"
   ethConfig: {}
     # ethFrom:
@@ -16,7 +16,7 @@ ghost:
     #   key: "ethPass"
 
   service:
-    type: ClusterIP
+    type: LoadBalancer
     ports:
       libp2p:
         port: 8000
@@ -49,10 +49,10 @@ musig:
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.5.1"
+    tag: "0.7.1"
   imagePullSecrets: []
   service:
-    type: ClusterIP
+    type: LoadBalancer
     ports:
       libp2p:
         port: 8001
