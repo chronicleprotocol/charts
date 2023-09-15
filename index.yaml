@@ -755,6 +755,19 @@ entries:
     version: 0.0.0
   ghost:
   - apiVersion: v2
+    appVersion: "0.17"
+    created: "2023-09-15T11:22:49.242011336Z"
+    description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+    digest: 8312193ddd01a531b4c29b3b70dbdc88cbaebeda67ce6a3fe8e8516feabc568f
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: ghost
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ghost-0.1.8/ghost-0.1.8.tgz
+    version: 0.1.8
+  - apiVersion: v2
     appVersion: 0.15.0
     created: "2023-09-11T23:11:24.864750307Z"
     description: A Helm chart for deploying Chronicle Ghost on Kubernetes
@@ -996,6 +1009,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/monitor-0.1.1/monitor-0.1.1.tgz
     version: 0.1.1
   musig:
+  - apiVersion: v2
+    appVersion: "0.7"
+    created: "2023-09-15T11:22:49.386812576Z"
+    description: A Helm chart for deploying Chronicle Musig on Kubernetes
+    digest: 800b9442636e0d24d9217486a149111f4e0f9a25466e2402ea68ff7f4aed59b0
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: musig
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/musig-0.0.8/musig-0.0.8.tgz
+    version: 0.0.8
   - apiVersion: v2
     appVersion: 0.4.0
     created: "2023-09-11T23:11:25.017541872Z"
@@ -2231,4 +2259,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-09-13T23:07:46.992053346Z"
+generated: "2023-09-15T11:22:49.387363482Z"
