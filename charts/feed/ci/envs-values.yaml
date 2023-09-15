@@ -2,9 +2,9 @@ ghost:
   logLevel: debug
   logFormat: text
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
-  ethRpcUrl: https://eth-mainnet.public.blastapi.io
+  ethRpcUrl: https://eth.llamarpc.com
   ethChainId: 1
-  rpcUrl: https://eth-sepolia.public.blastapi.io
+  rpcUrl: https://rpc.notadegen.com/eth/sepolia
   chainId: 11155111
 
   env:
@@ -33,7 +33,7 @@ musig:
   logFormat: text
 
   ethChainId: 11155111
-  ethRpcUrl: https://eth-sepolia.public.blastapi.io
+  ethRpcUrl: https://rpc.notadegen.com/eth/sepolia
 
   env:
     normal:

@@ -2,9 +2,9 @@ ghost:
   logLevel: debug
   logFormat: text
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
-  ethRpcUrl: https://eth-mainnet.public.blastapi.io
+  ethRpcUrl: https://eth.drpc.org
   ethChainId: 1
-  rpcUrl: https://eth-mainnet.public.blastapi.io
+  rpcUrl: https://eth.drpc.org
   chainId: 1
 
   env:
@@ -30,7 +30,7 @@ musig:
   logFormat: text
 
   ethChainId: 1
-  ethRpcUrl: https://eth-mainnet.public.blastapi.io
+  ethRpcUrl: https://eth.drpc.org
 
   env:
     normal:
