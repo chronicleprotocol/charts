@@ -100,9 +100,9 @@ tor-proxy:
       socks:
         port: 9050
         protocol: TCP
-      # musig:
-      #   port: 8888
-      #   protocol: TCP
+      musig:
+        port: 8888
+        protocol: TCP
   env:
     # non-sensitive variables
     # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
