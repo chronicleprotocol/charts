@@ -54,6 +54,8 @@ spec:
           #     path: /
           #     port: http
           env:
+            - name: CFG_LIBP2P_LISTEN_ADDRS
+              value: "/ip4/0.0.0.0/tcp/{{ .Values.service.ports.libp2p.port | default 8000 }}"
           {{- if eq .Values.service.type "LoadBalancer" }}
             - name: CFG_LIBP2P_EXTERNAL_IP
               valueFrom:
