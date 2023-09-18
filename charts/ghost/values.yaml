@@ -13,6 +13,9 @@ image:
 logLevel: null
 logFormat: null
 
+# used especially in cases of where we want to use hostnetworking for a pod
+hostNetwork: false
+
 # Provide ETH keys from existing secrets
 # use only existing secret OR env vars, do not provide both
 ethConfig: {}
@@ -28,16 +31,37 @@ ethConfig: {}
 # Environment variable listing
 env: {}
   # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # refer to `docker run --rm ghcr.io/chronicleprotocol/ghost:0.18.0 run --config.env` for full list
   # normal:
-  #   CFG_FEEDS: ""
-  #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/spire/tcp/8000/p2p/"
-  #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-  #   CFG_WEBAPI_ENABLE: 0
-  #   # Provide ETH keys as env vars
   #   CFG_ETH_FROM: ""
   #   CFG_ETH_PASS: ""
   #   CFG_ETH_KEYS: ''
+  #   CFG_ENVIRONMENT:
+  #   CFG_FEEDS:
+  #   CFG_ITEM_SEPARATOR:
+  #   CFG_CHAIN_RPC_URLS:
+  #   CFG_CHAIN_NAME:
+  #   CFG_RPC_URLS:
+  #   CFG_ARB_RPC_URLS:
+  #   CFG_OPT_RPC_URLS:
+  #   CFG_LIBP2P_ENABLE:
+  #   CFG_WEBAPI_ENABLE:
+  #   CFG_SPECTRE_PAIRS:
+  #   CFG_SYMBOLS:
+  #   CFG_SPIRE_KEYS:
+  #   CFG_GHOST_PAIRS:
+  #   CFG_ETH_RPC_URLS:
+  #   CFG_ETH_CHAIN_ID:
+  #   CFG_LIBP2P_EXTERNAL_IP:
+  #   CFG_LIBP2P_EXTERNAL_ADDR:
+  #   CFG_LIBP2P_PK_SEED:
+  #   CFG_LIBP2P_BOOTSTRAP_ADDRS:
+  #   CFG_LIBP2P_DIRECT_PEERS_ADDRS:
+  #   CFG_LIBP2P_BLOCKED_ADDRS:
+  #   CFG_LIBP2P_FEEDS_FILTER_DISABLE:
+  #   CFG_LIBP2P_LISTEN_ADDRS:
+  #   CFG_LIBP2P_DISABLE_DISCOVERY:
+  #   CFG_GHOST_INTERVAL:
 
 
 # Environment variable listing
@@ -88,6 +112,8 @@ service:
     # rpc:
     #   port: 9100
     #   protocol: TCP
+  annotations: {}
+    # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 ingress:
   enabled: false
