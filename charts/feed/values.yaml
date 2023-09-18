@@ -1,9 +1,12 @@
+# -- Ghost component of the feed
 ghost:
-  # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml
+  # -- values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart
   enabled: true
   image:
-    tag: "0.17.0"
+    tag: "0.18.0"
   fullnameOverride: "ghost"
+
+  # -- Provide eth keystore, eth from address and eth password from existing secrets
   ethConfig: {}
     # ethFrom:
     #   existingSecret: ""
@@ -21,15 +24,22 @@ ghost:
       libp2p:
         port: 8000
         protocol: TCP
-
+  # -- log level (debug, info, warning, error)
   logLevel: warning
+  # -- log format (json, text)
   logFormat: null
 
+  # -- eth RPC url (always ethereum mainnet)
   ethRpcUrl: null
-  ethChainId: null
+  # -- eth chain id for `ethRpcUrl`
+  ethChainId: 1
+
+  # -- default eth RPC url (can be testnet or mainnet)
   rpcUrl: null
+  # -- default eth chain id for `rpcUrl`
   chainId: null
 
+  # -- non-sensitive variables passed to container as environment variables
   env:
     normal:
       # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
@@ -44,13 +54,15 @@ ghost:
       CFG_WEBAPI_LISTEN_ADDR: ""
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
 
+# -- Musig component of the feed
 musig:
-  # values for musig: https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml
+  # -- values for musig: refer to the [musig](https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml) subchart
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.7.1"
+    tag: "0.8.0"
   imagePullSecrets: []
+
   service:
     type: LoadBalancer
     ports:
@@ -61,12 +73,19 @@ musig:
         port: 8080
         protocol: TCP
 
+  # -- log level (debug, info, warning, error)
   logLevel: warning
+
+  # -- log format (json, text)
   logFormat: null
 
-  ethChainId: 1
+  # -- default eth RPC url (can be testnet or mainnet). Must mach same chain `.Values.ghost.rpcUrl`
   ethRpcUrl: null
 
+  # -- default eth chain id for `ethRpcUrl`
+  ethChainId: 1
+
+  # -- Provide eth keystore, eth from address and eth password from existing secrets
   ethConfig: {}
     # ethFrom:
     #   existingSecret: ""
@@ -77,6 +96,8 @@ musig:
     # ethPass:
     #   existingSecret: ""
     #   key: "ethPass"
+
+  # -- non-sensitive variables passed to container as environment variables
   env:
     normal:
       # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
@@ -91,7 +112,9 @@ musig:
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
       CFG_WEBAPI_SOCKS5_PROXY_ADDR: "tor-proxy:9050"
 
+# -- Tor proxy component of the feed for WEB_API transport.
 tor-proxy:
+  # -- values for tor-proxy: refer to the [tor-proxy](https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml) subchart
   enabled: true
   fullnameOverride: "tor-proxy"
   service:
@@ -103,14 +126,16 @@ tor-proxy:
       # musig:
       #   port: 8888
       #   protocol: TCP
+
+  # -- non-sensitive variables passed to container as environment variables
   env:
-    # non-sensitive variables
-    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
     normal:
       TOR_EXTRA_ARGS: |
         SocksPort 0.0.0.0:9050
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 musig:8080
+
+  # -- provide tor keys from existing secret
   torConfig: {}
     # existingSecret: ""
     # OR specify a private key
