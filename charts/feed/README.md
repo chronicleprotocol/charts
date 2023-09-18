@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -15,8 +15,8 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.9 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.0.9 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.10 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.1.0 |
 | https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
@@ -24,46 +24,28 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost.chainId | string | `nil` |  |
-| ghost.enabled | bool | `true` |  |
-| ghost.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
-| ghost.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `""` |  |
-| ghost.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
-| ghost.ethChainId | string | `nil` |  |
-| ghost.ethConfig | object | `{}` |  |
-| ghost.ethRpcUrl | string | `nil` |  |
-| ghost.fullnameOverride | string | `"ghost"` |  |
-| ghost.image.tag | string | `"0.17.0"` |  |
-| ghost.logFormat | string | `nil` |  |
-| ghost.logLevel | string | `"warning"` |  |
-| ghost.rpcUrl | string | `nil` |  |
-| ghost.service.ports.libp2p.port | int | `8000` |  |
-| ghost.service.ports.libp2p.protocol | string | `"TCP"` |  |
-| ghost.service.type | string | `"LoadBalancer"` |  |
-| musig.enabled | bool | `true` |  |
-| musig.env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
-| musig.env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
-| musig.env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `"tor-proxy:9050"` |  |
-| musig.ethChainId | int | `1` |  |
-| musig.ethConfig | object | `{}` |  |
-| musig.ethRpcUrl | string | `nil` |  |
-| musig.fullnameOverride | string | `"musig"` |  |
-| musig.image.tag | string | `"0.7.1"` |  |
-| musig.imagePullSecrets | list | `[]` |  |
-| musig.logFormat | string | `nil` |  |
-| musig.logLevel | string | `"warning"` |  |
-| musig.service.ports.libp2p.port | int | `8001` |  |
-| musig.service.ports.libp2p.protocol | string | `"TCP"` |  |
-| musig.service.ports.webapi.port | int | `8080` |  |
-| musig.service.ports.webapi.protocol | string | `"TCP"` |  |
-| musig.service.type | string | `"LoadBalancer"` |  |
-| tor-proxy.enabled | bool | `true` |  |
-| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"` |  |
-| tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
-| tor-proxy.service.ports.socks.port | int | `9050` |  |
-| tor-proxy.service.ports.socks.protocol | string | `"TCP"` |  |
-| tor-proxy.service.type | string | `"ClusterIP"` |  |
-| tor-proxy.torConfig | object | `{}` |  |
+| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.18.0"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Ghost component of the feed |
+| ghost.chainId | string | `nil` | default eth chain id for `rpcUrl` |
+| ghost.enabled | bool | `true` | values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart |
+| ghost.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}}` | non-sensitive variables passed to container as environment variables |
+| ghost.ethChainId | int | `1` | eth chain id for `ethRpcUrl` |
+| ghost.ethConfig | object | `{}` | Provide eth keystore, eth from address and eth password from existing secrets |
+| ghost.ethRpcUrl | string | `nil` | eth RPC url (always ethereum mainnet) |
+| ghost.logFormat | string | `nil` | log format (json, text) |
+| ghost.logLevel | string | `"warning"` | log level (debug, info, warning, error) |
+| ghost.rpcUrl | string | `nil` | default eth RPC url (can be testnet or mainnet) |
+| musig | object | `{"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"musig","image":{"tag":"0.8.0"},"imagePullSecrets":[],"logFormat":null,"logLevel":"warning","service":{"ports":{"libp2p":{"port":8001,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Musig component of the feed |
+| musig.enabled | bool | `true` | values for musig: refer to the [musig](https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml) subchart |
+| musig.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}}` | non-sensitive variables passed to container as environment variables |
+| musig.ethChainId | int | `1` | default eth chain id for `ethRpcUrl` |
+| musig.ethConfig | object | `{}` | Provide eth keystore, eth from address and eth password from existing secrets |
+| musig.ethRpcUrl | string | `nil` | default eth RPC url (can be testnet or mainnet). Must mach same chain `.Values.ghost.rpcUrl` |
+| musig.logFormat | string | `nil` | log format (json, text) |
+| musig.logLevel | string | `"warning"` | log level (debug, info, warning, error) |
+| tor-proxy | object | `{"enabled":true,"env":{"normal":{"TOR_EXTRA_ARGS":"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"}},"fullnameOverride":"tor-proxy","service":{"ports":{"socks":{"port":9050,"protocol":"TCP"}},"type":"ClusterIP"},"torConfig":{}}` | Tor proxy component of the feed for WEB_API transport. |
+| tor-proxy.enabled | bool | `true` | values for tor-proxy: refer to the [tor-proxy](https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml) subchart |
+| tor-proxy.env | object | `{"normal":{"TOR_EXTRA_ARGS":"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 musig:8080\n"}}` | non-sensitive variables passed to container as environment variables |
+| tor-proxy.torConfig | object | `{}` | provide tor keys from existing secret |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
