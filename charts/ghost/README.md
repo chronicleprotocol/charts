@@ -1,6 +1,6 @@
 # ghost
 
-![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.17](https://img.shields.io/badge/AppVersion-0.17-informational?style=flat-square)
+![Version: 0.1.10](https://img.shields.io/badge/Version-0.1.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.18](https://img.shields.io/badge/AppVersion-0.18-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Ghost on Kubernetes
 
@@ -26,6 +26,7 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | ethRpcUrl | string | `nil` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
+| hostNetwork | bool | `false` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/ghost"` |  |
 | image.tag | string | `""` |  |
@@ -47,6 +48,7 @@ A Helm chart for deploying Chronicle Ghost on Kubernetes
 | resources | object | `{}` |  |
 | rpcUrl | string | `nil` |  |
 | securityContext | object | `{}` |  |
+| service.annotations | object | `{}` |  |
 | service.ports.libp2p.port | int | `8000` |  |
 | service.ports.libp2p.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |

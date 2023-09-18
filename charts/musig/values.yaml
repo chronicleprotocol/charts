@@ -13,6 +13,9 @@ image:
 logLevel: null
 logFormat: null
 
+# used especially in cases of where we want to use hostnetworking for a pod
+hostNetwork: false
+
 # Provide ETH keys from existing secrets
 # use only existing secret OR env vars, do not provide both
 ethConfig: {}
@@ -33,15 +36,41 @@ ethRpcUrl: null
 
 # non encrypted variables
 env: {}
-  # refer to https://github.com/chronicleprotocol/musig/blob/master/docker-compose.yaml
+  # refer to `docker run --rm ghcr.io/chronicleprotocol/adria:0.8.0 run --config.env | sort` for full list
   # normal:
-  #   CFG_RPC_URLS: 'https://eth.publicrpc.com'
+  #   CFG_ARB_RPC_URLS:
+  #   CFG_CHAIN_NAME:
+  #   CFG_CHAIN_RPC_URLS:
+  #   CFG_ENVIRONMENT:
+  #   CFG_ETH_FROM: ""
+  #   CFG_ETH_KEYS: ''
   #   CFG_ETH_PASS: ""
-  #   CFG_FEEDS: ""
-  #   CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/bootstrap.local/tcp/8000/p2p/"
+  #   CFG_ETH_RPC_URLS:
+  #   CFG_FEEDS:
   #   CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-  #   CFG_WEBAPI_ENABLE: 0
-  #   CFG_MUSIG_SIGNERS_COUNT: 3
+  #   CFG_ITEM_SEPARATOR:
+  #   CFG_LIBP2P_BLOCKED_ADDRS:
+  #   CFG_LIBP2P_BOOTSTRAP_ADDRS:
+  #   CFG_LIBP2P_DIRECT_PEERS_ADDRS:
+  #   CFG_LIBP2P_DISABLE_DISCOVERY:
+  #   CFG_LIBP2P_ENABLE:
+  #   CFG_LIBP2P_EXTERNAL_ADDR:
+  #   CFG_LIBP2P_EXTERNAL_IP:
+  #   CFG_LIBP2P_FEEDS_FILTER_DISABLE:
+  #   CFG_LIBP2P_LISTEN_ADDRS:
+  #   CFG_LIBP2P_PK_SEED:
+  #   CFG_MUSIG_CHAINLOG:
+  #   CFG_MUSIG_INTERVAL:
+  #   CFG_MUSIG_MAX_AGE:
+  #   CFG_MUSIG_PAIRS:
+  #   CFG_MUSIG_SIGNERS_COUNT:
+  #   CFG_MUSIG_WAT_REGISTRY:
+  #   CFG_OPT_RPC_URLS:
+  #   CFG_RPC_URLS:
+  #   CFG_SYMBOLS:
+  #   CFG_WEBAPI_ENABLE:
+  #   ETH_RPC_URL:
+
 
 imagePullSecrets: []
 
@@ -83,6 +112,8 @@ service:
     # rpc:
     #   port: 9100
     #   protocol: TCP
+  annotations: {}
+    # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 ingress:
   enabled: false

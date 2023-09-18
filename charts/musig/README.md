@@ -1,6 +1,6 @@
 # musig
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7](https://img.shields.io/badge/AppVersion-0.7-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.8](https://img.shields.io/badge/AppVersion-0.8-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Musig on Kubernetes
 
@@ -26,6 +26,7 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | ethRpcUrl | string | `nil` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
+| hostNetwork | bool | `false` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/adria"` |  |
 | image.tag | string | `""` |  |
@@ -46,6 +47,7 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
+| service.annotations | object | `{}` |  |
 | service.ports.libp2p.port | int | `8001` |  |
 | service.ports.libp2p.protocol | string | `"TCP"` |  |
 | service.ports.webapi.port | int | `8080` |  |
