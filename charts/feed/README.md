@@ -24,7 +24,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.21.0"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Ghost component of the feed |
+| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.21.0"},"logFormat":null,"logLevel":"info","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Ghost component of the feed |
 | ghost.chainId | string | `nil` | default eth chain id for `rpcUrl` |
 | ghost.enabled | bool | `true` | values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart |
 | ghost.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}}` | non-sensitive variables passed to container as environment variables |
@@ -32,7 +32,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.ethConfig | object | `{}` | Provide eth keystore, eth from address and eth password from existing secrets |
 | ghost.ethRpcUrl | string | `nil` | eth RPC url (always ethereum mainnet) |
 | ghost.logFormat | string | `nil` | log format (json, text) |
-| ghost.logLevel | string | `"warning"` | log level (debug, info, warning, error) |
+| ghost.logLevel | string | `"info"` | log level (debug, info, warning, error) |
 | ghost.rpcUrl | string | `nil` | default eth RPC url (can be testnet or mainnet) |
 | musig | object | `{"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"musig","image":{"tag":"0.12.0"},"imagePullSecrets":[],"logFormat":null,"logLevel":"warning","service":{"ports":{"libp2p":{"port":8001,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Musig component of the feed |
 | musig.enabled | bool | `true` | values for musig: refer to the [musig](https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml) subchart |

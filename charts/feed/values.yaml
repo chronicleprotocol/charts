@@ -25,7 +25,7 @@ ghost:
         port: 8000
         protocol: TCP
   # -- log level (debug, info, warning, error)
-  logLevel: warning
+  logLevel: info
   # -- log format (json, text)
   logFormat: null
 
