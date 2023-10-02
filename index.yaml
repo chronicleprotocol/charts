@@ -264,6 +264,34 @@ entries:
   feed:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2023-10-02T12:53:25.372324578Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    - condition: ghost.enabled
+      name: ghost
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.12
+    - condition: musig.enabled
+      name: musig
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.2
+    description: A Helm chart for deploying Chronicle Feeds on Kubernetes
+    digest: 1691019e26cbc0afd9d9679dda4fb327ae1af2993c8e6563c6c60f0b26bd3baa
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/feed-0.2.4/feed-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2023-09-29T14:25:54.585511403Z"
     dependencies:
     - condition: tor-proxy.enabled
@@ -2483,4 +2511,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-10-02T11:35:51.77857318Z"
+generated: "2023-10-02T12:53:25.372615179Z"
