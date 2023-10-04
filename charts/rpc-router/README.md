@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.39.0](https://img.shields.io/badge/AppVersion-0.39.0-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.41.1](https://img.shields.io/badge/AppVersion-0.41.1-informational?style=flat-square)
 
 A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -29,23 +29,36 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.accessLog | bool | `false` |  |
 | dshackle.compression.grpc.client.enabled | bool | `false` |  |
 | dshackle.compression.grpc.server.enabled | bool | `false` |  |
-| dshackle.metrics | bool | `false` |  |
-| dshackle.routes[0].blockchain | string | `"goerli"` |  |
-| dshackle.routes[0].id | string | `"geth"` |  |
-| dshackle.routes[1].blockchain | string | `"sepolia"` |  |
-| dshackle.routes[1].id | string | `"sep"` |  |
-| dshackle.routes[2].blockchain | string | `"arbitrum"` |  |
-| dshackle.routes[2].id | string | `"arb1"` |  |
-| dshackle.routes[3].blockchain | string | `"arbitrum-testnet"` |  |
-| dshackle.routes[3].id | string | `"arbgor"` |  |
-| dshackle.routes[4].blockchain | string | `"optimism"` |  |
-| dshackle.routes[4].id | string | `"oeth"` |  |
-| dshackle.routes[5].blockchain | string | `"optimism-testnet"` |  |
-| dshackle.routes[5].id | string | `"ogor"` |  |
-| dshackle.routes[6].blockchain | string | `"polygon-zkevm"` |  |
-| dshackle.routes[6].id | string | `"zkevm"` |  |
+| dshackle.health.host | string | `"0.0.0.0"` |  |
+| dshackle.metrics.bind | string | `"0.0.0.0"` |  |
+| dshackle.metrics.enabled | bool | `true` |  |
+| dshackle.metrics.extended | bool | `false` |  |
+| dshackle.metrics.jvm | bool | `false` |  |
+| dshackle.metrics.path | string | `"/metrics"` |  |
+| dshackle.routes[0].blockchain | string | `"arbitrum"` |  |
+| dshackle.routes[0].id | string | `"arb1"` |  |
+| dshackle.routes[10].blockchain | string | `"polygon-zkevm-testnet"` |  |
+| dshackle.routes[10].id | string | `"zkevmtest"` |  |
+| dshackle.routes[1].blockchain | string | `"arbitrum-testnet"` |  |
+| dshackle.routes[1].id | string | `"arb"` |  |
+| dshackle.routes[2].blockchain | string | `"ethereum"` |  |
+| dshackle.routes[2].id | string | `"eth"` |  |
+| dshackle.routes[3].blockchain | string | `"goerli"` |  |
+| dshackle.routes[3].id | string | `"gor"` |  |
+| dshackle.routes[4].blockchain | string | `"gnosis"` |  |
+| dshackle.routes[4].id | string | `"gno"` |  |
+| dshackle.routes[5].blockchain | string | `"gnosis-chiado"` |  |
+| dshackle.routes[5].id | string | `"chi"` |  |
+| dshackle.routes[6].blockchain | string | `"sepolia"` |  |
+| dshackle.routes[6].id | string | `"sep"` |  |
+| dshackle.routes[7].blockchain | string | `"optimism"` |  |
+| dshackle.routes[7].id | string | `"oeth"` |  |
+| dshackle.routes[8].blockchain | string | `"optimism-testnet"` |  |
+| dshackle.routes[8].id | string | `"ogor"` |  |
+| dshackle.routes[9].blockchain | string | `"polygon-zkevm"` |  |
+| dshackle.routes[9].id | string | `"zkevm"` |  |
 | dshackle.signedResponse | bool | `false` |  |
-| dshackle.upstreams | string | `"# - id: eth-mainnet\n#   chain: ethereum\n#   options:\n#     disable-validation:\n#   methods:\n#     enabled:\n#       - name: eth_maxPriorityFeePerGas\n#   connection:\n#     ethereum-pos:\n#       execution:\n#         rpc:\n#           url: \"https://eth-mainnet.g.alchemy.com/v2/<alchemy_key>\n- id: eth-goerli\n  chain: goerli\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth-goerli.public.blastapi.io\"\n- id: eth-sepolia\n  chain: sepolia\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth-sepolia.public.blastapi.io\"\n- id: arb-mainnet\n  chain: arbitrum\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-one.public.blastapi.io\"\n- id: arb-goerli\n  chain: arbitrum-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-goerli.public.blastapi.io\"\n- id: opt-mainent\n  chain: optimism\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-mainnet.public.blastapi.io\"\n- id: opt-goerli\n  chain: optimism-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-goerli.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://polygon-zkevm-mainnet.public.blastapi.io\"\n"` |  |
+| dshackle.upstreams | string | `"- id: arb-mainnet\n  chain: arbitrum\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-one.public.blastapi.io\"\n- id: arb-goerli\n  chain: arbitrum-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-goerli.public.blastapi.io\"\n- id: eth-mainnet\n  chain: ethereum\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth.public-rpc.com\"\n- id: eth-goerli\n  chain: goerli\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://ethereum-goerli.publicnode.com\"\n- id: eth-sepolia\n  chain: sepolia\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth-sepolia.public.blastapi.io\"\n- id: gnosis-mainnet\n  chain: gnosis\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://gnosis-mainnet.public.blastapi.io\"\n- id: gnosis-chiado\n  chain: gnosis-chiado\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://gnosis-chiado.public.blastapi.io\"\n- id: opt-mainent\n  chain: optimism\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-mainnet.public.blastapi.io\"\n- id: opt-goerli\n  chain: optimism-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-goerli.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://polygon-zkevm-mainnet.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://polygon-zkevm-testnet.public.blastapi.io\"\n"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"drpcorg/dshackle"` |  |
@@ -58,10 +71,15 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| livenessProbe | object | See `values.yaml` | Liveness probe |
+| maxSurge | string | `nil` | default is 1 |
+| maxUnavailable | string | `nil` | default is 0 |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| preStopSleepSeconds | string | `nil` | default is 20 seconds |
+| readinessProbe | object | See `values.yaml` | Readiness probe |
 | redis.auth.password | string | `"yourRedisSecret"` |  |
 | redis.enabled | bool | `false` | If enabled a redis chart will be deployed as a dependency |
 | redis.master.persistence.enabled | bool | `true` |  |
@@ -72,8 +90,13 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
+| service.annotations | object | `{}` |  |
 | service.ports.grpc.port | int | `12448` |  |
 | service.ports.grpc.protocol | string | `"TCP"` |  |
+| service.ports.health.port | int | `8082` |  |
+| service.ports.health.protocol | string | `"TCP"` |  |
+| service.ports.metrics.port | int | `8080` |  |
+| service.ports.metrics.protocol | string | `"TCP"` |  |
 | service.ports.proxy.port | int | `8545` |  |
 | service.ports.proxy.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
@@ -92,6 +115,7 @@ A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load Balancer for B
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tolerations | list | `[]` |  |
+| updateStrategy | string | `nil` | default RollingUpdate |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
