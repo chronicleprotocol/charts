@@ -8,6 +8,11 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  strategy:
+    type: {{ .Values.updateStrategy | default "RollingUpdate"}}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.maxUnavailable | default 0 }}
+      maxSurge: {{ .Values.maxSurge | default 1 }}
   selector:
     matchLabels:
       {{- include "rpc-router.selectorLabels" . | nindent 6 }}
@@ -39,19 +44,20 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           volumeMounts:
           - name: dshackle
             mountPath: /etc/dshackle/
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "{{ .Values.preStopSleepSeconds | default 20 }}"]
+
       volumes:
       - name: dshackle
         configMap:

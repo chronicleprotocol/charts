@@ -14,7 +14,24 @@ data:
     {{- end }}
 
     monitoring:
-      enabled: {{ .Values.dshackle.metrics }}
+      enabled: {{ .Values.dshackle.metrics.enabled }}
+      jvm: {{ .Values.dshackle.metrics.jvm | default false }}
+      extended: {{ .Values.dshackle.metrics.extended | default false }}
+      prometheus:
+        enabled: true
+        bind: {{ .Values.dshackle.metrics.bind | default "127.0.0.1" }}
+        port: {{ .Values.service.ports.metrics.port | default 8081 }}
+        path: {{ .Values.dshackle.metrics.path | default "/metrics" }}
+
+    health:
+      port: {{ .Values.service.ports.health.port  | default 8082 }}
+      host: {{ .Values.dshackle.health.host | default "127.0.0.1" }}
+      path: {{ .Values.dshackle.health.path | default "/health" }}
+      blockchains:
+        {{- range .Values.dshackle.routes }}
+        - chain: {{ .blockchain }}
+          min-available: 1
+        {{- end }}
 
     accessLog:
       enabled: {{ .Values.dshackle.accessLog }}
