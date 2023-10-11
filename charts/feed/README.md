@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Feeds on Kubernetes
 
@@ -15,8 +15,8 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.12 |
-| https://chronicleprotocol.github.io/charts/ | musig | 0.1.2 |
+| https://chronicleprotocol.github.io/charts/ | ghost | 0.1.13 |
+| https://chronicleprotocol.github.io/charts/ | musig | 0.1.3 |
 | https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
@@ -24,7 +24,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.21.0"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Ghost component of the feed |
+| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.22.0"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Ghost component of the feed |
 | ghost.chainId | string | `nil` | default eth chain id for `rpcUrl` |
 | ghost.enabled | bool | `true` | values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart |
 | ghost.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}}` | non-sensitive variables passed to container as environment variables |
@@ -34,7 +34,7 @@ A Helm chart for deploying Chronicle Feeds on Kubernetes
 | ghost.logFormat | string | `nil` | log format (json, text) |
 | ghost.logLevel | string | `"warning"` | log level (debug, info, warning, error) |
 | ghost.rpcUrl | string | `nil` | default eth RPC url (can be testnet or mainnet) |
-| musig | object | `{"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"musig","image":{"tag":"0.12.0"},"imagePullSecrets":[],"logFormat":null,"logLevel":"warning","service":{"ports":{"libp2p":{"port":8001,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Musig component of the feed |
+| musig | object | `{"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"musig","image":{"tag":"0.13.0"},"imagePullSecrets":[],"logFormat":null,"logLevel":"warning","service":{"ports":{"libp2p":{"port":8001,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}}` | Musig component of the feed |
 | musig.enabled | bool | `true` | values for musig: refer to the [musig](https://github.com/chronicleprotocol/charts/blob/main/charts/musig/values.yaml) subchart |
 | musig.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":":8080","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050"}}` | non-sensitive variables passed to container as environment variables |
 | musig.ethChainId | int | `1` | default eth chain id for `ethRpcUrl` |

@@ -4,9 +4,9 @@ dependencies:
   version: 0.0.8
 - name: ghost
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.1.12
+  version: 0.1.13
 - name: musig
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.1.2
-digest: sha256:09b80cabdb29f03fd496227bc8020f5ed12e5baf8b3b2fe861fcc2d5d38de21c
-generated: "2023-10-02T14:30:36.995110292+02:00"
+  version: 0.1.3
+digest: sha256:62af822f2585073ce9f67ef99cabbb1f611af720094e7ef46cc555b543d66fa4
+generated: "2023-10-11T18:12:59.892634507+02:00"
