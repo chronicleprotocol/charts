@@ -1,8 +1,8 @@
 # arbitrum
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.14](https://img.shields.io/badge/AppVersion-v2.0.14-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.1.1](https://img.shields.io/badge/AppVersion-v2.1.1-informational?style=flat-square)
 
-A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
+A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
 ## Maintainers
 
@@ -24,7 +24,7 @@ A Helm chart for deploying Arbitrum RPC nodes on Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"offchainlabs/nitro-node"` |  |
-| image.tag | string | `"v2.0.14-2baa834"` |  |
+| image.tag | string | `"v2.1.1-e9d8842"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
