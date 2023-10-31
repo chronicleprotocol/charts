@@ -4,6 +4,15 @@
 
 replicaCount: 1
 
+# -- default is 20 seconds
+preStopSleepSeconds: null
+# -- default RollingUpdate
+updateStrategy: null
+# -- default is 0
+maxUnavailable: null
+# -- default is 1
+maxSurge: null
+
 image:
   repository: drpcorg/dshackle
   pullPolicy: IfNotPresent
@@ -38,6 +47,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  annotations: {}
   ports:
     proxy:
       port: 8545
@@ -45,9 +55,13 @@ service:
     grpc:
       port: 12448
       protocol: TCP
-    # metrics:
-    #   port: 8081
-    #   protocol: TCP
+    metrics:
+      port: 8080
+      protocol: TCP
+    health:
+      port: 8082
+      protocol: TCP
+
 ingress:
   enabled: false
   className: ""
@@ -75,6 +89,22 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+# -- Liveness probe
+# @default -- See `values.yaml`
+livenessProbe:
+  tcpSocket:
+    port: proxy
+  initialDelaySeconds: 60
+  periodSeconds: 30
+
+# -- Readiness probe
+# @default -- See `values.yaml`
+readinessProbe:
+  tcpSocket:
+    port: proxy
+  initialDelaySeconds: 10
+  periodSeconds: 10
 
 autoscaling:
   enabled: false
@@ -108,7 +138,17 @@ redis:
 dshackle:
   signedResponse: false
 
-  metrics: false
+  metrics:
+    enabled: true
+    jvm: false
+    extended: false
+    bind: "0.0.0.0"
+    # default port is 8081, but is setting by .Values.service.ports.metrics.port
+    path: "/metrics"
+
+  health:
+    host: "0.0.0.0"
+    # default port is 8082, but is setting by .Values.service.ports.health.port
 
   accessLog: false
 
@@ -120,60 +160,30 @@ dshackle:
         enabled: false
 
   routes:
-    # - id: eth
-    #   blockchain: ethereum
-    - id: geth
-      blockchain: goerli
-    - id: sep
-      blockchain: sepolia
     - id: arb1
       blockchain: arbitrum
-    - id: arbgor
+    - id: arb
       blockchain: arbitrum-testnet
+    - id: eth
+      blockchain: ethereum
+    - id: gor
+      blockchain: goerli
+    - id: gno
+      blockchain: gnosis
+    - id: chi
+      blockchain: gnosis-chiado
+    - id: sep
+      blockchain: sepolia
     - id: oeth
       blockchain: optimism
     - id: ogor
       blockchain: optimism-testnet
     - id: zkevm
       blockchain: polygon-zkevm
+    - id: zkevmtest
+      blockchain: polygon-zkevm-testnet
 
   upstreams: |
-    # - id: eth-mainnet
-    #   chain: ethereum
-    #   options:
-    #     disable-validation:
-    #   methods:
-    #     enabled:
-    #       - name: eth_maxPriorityFeePerGas
-    #   connection:
-    #     ethereum-pos:
-    #       execution:
-    #         rpc:
-    #           url: "https://eth-mainnet.g.alchemy.com/v2/<alchemy_key>
-    - id: eth-goerli
-      chain: goerli
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-goerli.public.blastapi.io"
-    - id: eth-sepolia
-      chain: sepolia
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-sepolia.public.blastapi.io"
     - id: arb-mainnet
       chain: arbitrum
       options:
@@ -192,6 +202,66 @@ dshackle:
           execution:
             rpc:
               url: "https://arbitrum-goerli.public.blastapi.io"
+    - id: eth-mainnet
+      chain: ethereum
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://eth.public-rpc.com"
+    - id: eth-goerli
+      chain: goerli
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://ethereum-goerli.publicnode.com"
+    - id: eth-sepolia
+      chain: sepolia
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://eth-sepolia.public.blastapi.io"
+    - id: gnosis-mainnet
+      chain: gnosis
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://gnosis-mainnet.public.blastapi.io"
+    - id: gnosis-chiado
+      chain: gnosis-chiado
+      options:
+        disable-validation: true
+      methods:
+        enabled:
+          - name: eth_maxPriorityFeePerGas
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://gnosis-chiado.public.blastapi.io"
     - id: opt-mainent
       chain: optimism
       options:
@@ -219,6 +289,15 @@ dshackle:
           execution:
             rpc:
               url: "https://polygon-zkevm-mainnet.public.blastapi.io"
+    - id: zkevm
+      chain: polygon-zkevm-testnet
+      options:
+        disable-validation: true
+      connection:
+        ethereum-pos:
+          execution:
+            rpc:
+              url: "https://polygon-zkevm-testnet.public.blastapi.io"
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
