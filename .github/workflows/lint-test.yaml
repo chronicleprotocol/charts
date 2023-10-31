@@ -7,7 +7,7 @@ jobs:
   lint-test:
     runs-on: arc-runner-set
     container:
-      image: ubuntu:latest
+      image: ghcr.io/actions/actions-runner:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
