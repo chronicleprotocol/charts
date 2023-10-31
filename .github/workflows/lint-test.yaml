@@ -1,10 +1,13 @@
 name: Lint and Test Charts
 
+
 on: pull_request
 
 jobs:
   lint-test:
     runs-on: arc-runner-set
+    container:
+      image: ubuntu:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
