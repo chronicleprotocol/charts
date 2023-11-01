@@ -7,7 +7,7 @@ jobs:
   lint-test:
     runs-on: arc-runner-set
     container:
-      image: ubuntu:20.04
+      image: summerwind/actions-runner:ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
