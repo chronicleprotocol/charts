@@ -1927,6 +1927,27 @@ entries:
     version: 0.0.1
   rpc-router:
   - apiVersion: v2
+    appVersion: 0.42.4
+    created: "2023-11-03T15:44:16.443004071Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.x.x
+    description: A Helm chart for deploying Emerald Dshackle - Fault Tolerant Load
+      Balancer for Blockchain API, to Kubernetes,
+    digest: 76b44252ecf4ae11f57dd7467269ab663f0fdd0da05dc9694052578f3dd6bb66
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: rpc-router
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.1.5/rpc-router-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     appVersion: 0.41.1
     created: "2023-10-04T13:32:39.267006131Z"
     dependencies:
@@ -2659,4 +2680,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-10-25T08:44:59.157982086Z"
+generated: "2023-11-03T15:44:16.443273374Z"
