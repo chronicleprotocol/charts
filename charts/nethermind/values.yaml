@@ -4,15 +4,24 @@
 
 replicaCount: 1
 
+# -- can be Energy Web,Exosama,Goerli (testnet),Gnosis, Chiado ,Holesky (testnet),Mainnet,Sepolia (testnet),Volta (testnet)
 network: sepolia
-## can be Chiado (testnet),Energy Web,Exosama,Goerli (testnet),Gnosis,Holesky (testnet),Mainnet,Sepolia (testnet),Volta (testnet)
 
-
+# -- Path to store data
 data:
   path: /nethermind-data
 
 # -- JWT secret used by client as a secret. Change this value.
 jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
+
+# -- Log level for the node
+logLevel: 'INFO'
+
+# -- syncMode can be FastSync, SnapSync
+syncMode: 'SnapSync'
+
+# -- If true, the node will sync from a fast sync, supported for gnosis
+fastSync: false
 
 image:
   repository: nethermind/nethermind
@@ -83,7 +92,7 @@ readinessProbe:
   periodSeconds: 10
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -120,9 +129,9 @@ persistence:
   #     app.kubernetes.io/name: something
 
 metrics:
-  enabled: false
-  address: null
-  expensive: false
+  enabled: true
+  # -- add node to ethstat
+  ethStats: true
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator

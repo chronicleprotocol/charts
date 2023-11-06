@@ -40,8 +40,10 @@ spec:
           args:
             - --config={{ .Values.network }}
             - --datadir={{ .Values.data.path }}/data
-            - --log=INFO
-            - --Sync.SnapSync=false
+            - --log={{ .Values.logLevel }}
+            {{ if .Values.syncMode }}
+            - --Sync.{{ .Values.syncMode }}=true
+            {{- end }}
             - --JsonRpc.Enabled=true
             - --JsonRpc.Host=0.0.0.0
             - --JsonRpc.Port={{ .Values.service.ports.httprpc.port | default 8545 }}
@@ -54,12 +56,10 @@ spec:
             - --Pruning.CacheMb=2048
           {{- if .Values.metrics.enabled }}
             - --Metrics.Enabled=true
-            - --Metrics.Enabled=true
             - --Metrics.NodeName=$(POD_NAME)
-            - --Metrics.ExposePort={{ .Values.metricsPort }}
-            - --EthStats.Enabled true
-            {{- if .Values.metrics.expensive }}
-            - --metrics.expensive
+            - --Metrics.ExposePort={{ .Values.service.ports.metrics.port }}
+            {{- if .Values.metrics.ethStats }}
+            - --EthStats.Enabled=true
             {{- end }}
           {{- end }}
           ports:

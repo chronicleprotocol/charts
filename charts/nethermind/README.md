@@ -1,6 +1,6 @@
 # nethermind
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
 
 A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 
@@ -19,7 +19,8 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| data.path | string | `"/nethermind-data"` |  |
+| data | object | `{"path":"/nethermind-data"}` | Path to store data |
+| fastSync | bool | `false` | If true, the node will sync from a fast sync, supported for gnosis |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"nethermind/nethermind"` |  |
@@ -27,7 +28,7 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
+| ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].host | string | `"chart-example.local"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -36,11 +37,11 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `120` |  |
 | livenessProbe.tcpSocket.port | string | `"httprpc"` |  |
-| metrics.address | string | `nil` |  |
-| metrics.enabled | bool | `false` |  |
-| metrics.expensive | bool | `false` |  |
+| logLevel | string | `"INFO"` | Log level for the node |
+| metrics.enabled | bool | `true` |  |
+| metrics.ethStats | bool | `true` | add node to ethstat |
 | nameOverride | string | `""` |  |
-| network | string | `"sepolia"` |  |
+| network | string | `"sepolia"` | can be Energy Web,Exosama,Goerli (testnet),Gnosis, Chiado ,Holesky (testnet),Mainnet,Sepolia (testnet),Volta (testnet) |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
@@ -83,6 +84,7 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
+| syncMode | string | `"SnapSync"` | syncMode can be FastSync, SnapSync |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
