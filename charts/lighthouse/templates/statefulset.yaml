@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "nethermind.fullname" . }}
+  name: {{ include "lighthouse.fullname" . }}
   labels:
-    {{- include "nethermind.labels" . | nindent 4 }}
+    {{- include "lighthouse.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "nethermind.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "nethermind.fullname" . }}
+      {{- include "lighthouse.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "lighthouse.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,71 +19,73 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "nethermind.selectorLabels" . | nindent 8 }}
+        {{- include "lighthouse.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "nethermind.serviceAccountName" . }}
+      serviceAccountName: {{ include "lighthouse.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          # command:
-          #   - nethermind
           args:
-            - --config={{ .Values.network }}
-            - --datadir={{ .Values.data.path }}/data
-            - --KeyStore.KeyStoreDirectory={{ .Values.data.path }}/keystore
-            - --log={{ .Values.logLevel }}
-            {{ if .Values.syncMode }}
-            - --Sync.{{ .Values.syncMode }}=true
-            {{- end }}
-            - --JsonRpc.Enabled=true
-            - --JsonRpc.Host=0.0.0.0
-            - --JsonRpc.Port={{ .Values.service.ports.httprpc.port | default 8545 }}
-            - --JsonRpc.JwtSecretFile=/jwt.hex
-            - --JsonRpc.EngineHost=0.0.0.0
-            - --JsonRpc.EnginePort={{ .Values.service.ports.auth.port | default 8551 }}
-            - --Network.DiscoveryPort={{ .Values.service.ports.p2ptcp.port | default 30303 }}
-            - --HealthChecks.Enabled=false
-            - --Pruning.CacheMb=2048
-          {{- if .Values.metrics.enabled }}
-            - --Metrics.Enabled=true
-            - --Metrics.NodeName=$(POD_NAME)
-            - --Metrics.ExposePort={{ .Values.service.ports.metrics.port }}
-            {{- if .Values.metrics.ethStats }}
-            - --EthStats.Enabled=true
-            {{- end }}
-          {{- end }}
+            - lighthouse
+            - bn
+            - --network={{ .Values.network }}
+            - --datadir=/data
+            - --disable-upnp
+            - --disable-enr-auto-update
+            - --execution-endpoint={{ .Values.executionEndpoint }}
+            - --execution-jwt=/data/jwt.hex
+            - --genesis-state-url={{ .Values.genesisStateUrl }}
+            - --checkpoint-sync-url={{ .Values.checkpointSyncUrl }}
+            - --http
+            - --http-address=0.0.0.0
+            - --http-port={{ .Values.httpPort }}
+            - --disable-deposit-contract-sync
+            - --metrics
+            - --metrics-address={{ .Values.metricsAddress }}
+            - --metrics-port={{ .Values.metricsPort }}
+            - --metrics-allow-origin={{ .Values.metricsAllowOrigin }}
           ports:
-          {{- range $key, $val := .Values.service.ports }}
-            - name: {{ $key }}
-              containerPort: {{ $val.port }}
-              protocol: {{ $val.protocol }}
-          {{- end }}
+            - name: p2p-tcp
+              containerPort: {{ .Values.p2pPort }}
+              protocol: TCP
+            - name: p2p-udp
+              containerPort: {{ .Values.p2pPort }}
+              protocol: UDP
+            - name: http-api
+              containerPort: {{ .Values.httpPort }}
+              protocol: TCP
+            - name: rpc
+              containerPort: {{ .Values.rpcPort }}
+              protocol: TCP
+            - name: metrics
+              containerPort: {{ .Values.metricsPort }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           volumeMounts:
             - name: storage
-              mountPath: {{ .Values.data.path }}
+              mountPath: "/data/"
             - name: jwt
               mountPath: "/data/jwt.hex"
               subPath: jwt.hex
               readOnly: true
-          env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       affinity:
@@ -93,10 +95,7 @@ spec:
       volumes:
         - name: jwt
           secret:
-            secretName: {{ include "nethermind.fullname" . }}-jwt
-      {{- if .Values.extraVolumes }}
-        {{ toYaml .Values.extraVolumes | nindent 8}}
-      {{- end }}
+            secretName: {{ include "lighthouse.fullname" . }}-jwt
   {{- if not .Values.persistence.enabled }}
         - name: storage
           emptyDir: {}
