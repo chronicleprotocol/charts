@@ -1,30 +1,29 @@
-# Default values for nethermind.
+# Default values for lighthouse.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
-# -- can be Energy Web,Exosama,Goerli (testnet),Gnosis, Chiado ,Holesky (testnet),Mainnet,Sepolia (testnet),Volta (testnet)
-network: sepolia
+image:
+  repository: sigp/lighthouse
+  pullPolicy: IfNotPresent
+  tag: "latest"
 
-# -- Path to store data
-data:
-  path: /nethermind-data
+network: sepolia
+# can be mainnet or sepolia, gnosis etc
+
+checkpointSyncUrl: https://sepolia.beaconstate.info
+# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+
+genesisStateUrl: https://sepolia.beaconstate.info
+# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+
+executionEndpoint: https://neth.sepolia.tooling.chroniclelabs.io
+
+# can your own eth instance. eg https://goerli.mydomain.com/v.....
 
 # -- JWT secret used by client as a secret. Change this value.
-jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
-
-# -- Log level for the node
-logLevel: 'INFO'
-
-# -- syncMode can be FastSync, SnapSync
-syncMode: 'SnapSync'
-
-image:
-  repository: nethermind/nethermind
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+jwt: 7992bcce239c6dcfeba3305ce928d061d2ba9a515319ca3ad66752d74fa67a60
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,6 +38,20 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# -- Liveness probe
+livenessProbe:
+  tcpSocket:
+    port: http-api
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# -- Readiness probe
+readinessProbe:
+  tcpSocket:
+    port: http-api
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -52,44 +65,22 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  ports:
-    httprpc:
-      port: 8545
-      protocol: TCP
-    ws:
-      port: 8546
-      protocol: TCP
-    auth:
-      port: 8551
-      protocol: TCP
-    p2ptcp:
-      port: 30303
-      protocol: TCP
-    p2pudp:
-      port: 30303
-      protocol: UDP
-    metrics:
-      port: 9545
-      protocol: TCP
+# -- P2P Port
+p2pPort: 13000
+# -- HTTP Port
+httpPort: 3500
+# -- Metrics Port
+metricsPort: 8080
+# -- Metrics Address
+metricsAddress: 0.0.0.0
 
-# @default -- See `values.yaml`
-livenessProbe:
-  tcpSocket:
-    port: httprpc
-  initialDelaySeconds: 60
-  periodSeconds: 120
-
-# @default -- See `values.yaml`
-readinessProbe:
-  tcpSocket:
-    port: httprpc
-  initialDelaySeconds: 10
-  periodSeconds: 10
+# -- Metrics Allow Origin
+metricsAllowOrigin: "*"
+# -- RPC Port
+rpcPort: 4000
 
 ingress:
-  enabled: true
+  enabled: false
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -103,55 +94,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
-persistence:
-  # -- Uses an EmptyDir when not enabled
-  enabled: false
-  # -- Use an existing PVC when persistence.enabled
-  existingClaim: null
-  # -- Access mode for the volume claim template
-  accessModes:
-  - ReadWriteOnce
-  # -- Requested size for volume claim template
-  size: 20Gi
-  # -- Use a specific storage class
-  # E.g 'local-path' for local storage to achieve best performance
-  # Read more (https://github.com/rancher/local-path-provisioner)
-  storageClassName: null
-  # -- Annotations for volume claim template
-  annotations: {}
-  # -- Selector for volume claim template
-  selector: {}
-  #   matchLabels:
-  #     app.kubernetes.io/name: something
-
-metrics:
-  enabled: true
-  # -- add node to ethstat
-  ethStats: true
-
-serviceMonitor:
-  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
-  # https://github.com/coreos/prometheus-operator
-  enabled: false
-  # -- Path to scrape
-  path: /debug/metrics
-  # -- Alternative namespace for ServiceMonitor
-  namespace: null
-  # -- Additional ServiceMonitor labels
-  labels: {}
-  # -- Additional ServiceMonitor annotations
-  annotations: {}
-  # -- ServiceMonitor scrape interval
-  interval: 1m
-  # -- ServiceMonitor scheme
-  scheme: http
-  # -- ServiceMonitor TLS configuration
-  tlsConfig: {}
-  # -- ServiceMonitor scrape timeout
-  scrapeTimeout: 30s
-  # -- ServiceMonitor relabelings
-  relabelings: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -175,4 +117,49 @@ autoscaling:
 nodeSelector: {}
 
 tolerations: []
+
 affinity: {}
+
+persistence:
+  # -- Uses an EmptyDir when not enabled
+  enabled: false
+  # -- Use an existing PVC when persistence.enabled
+  existingClaim: null
+  # -- Access mode for the volume claim template
+  accessModes:
+  - ReadWriteOnce
+  # -- Requested size for volume claim template
+  size: 20Gi
+  # -- Use a specific storage class
+  # E.g 'local-path' for local storage to achieve best performance
+  # Read more (https://github.com/rancher/local-path-provisioner)
+  storageClassName: null
+  # -- Annotations for volume claim template
+  annotations: {}
+  # -- Selector for volume claim template
+  selector: {}
+  #   matchLabels:
+  #     app.kubernetes.io/name: something
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []
