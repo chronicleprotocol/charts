@@ -1287,6 +1287,22 @@ entries:
     version: 0.1.1
   lighthouse:
   - apiVersion: v2
+    appVersion: v4.5.0
+    created: "2023-11-07T13:07:05.042040463Z"
+    description: A Helm chart for deploying the Lodestar Consensus Layer / beacon
+      on Kubernetes
+    digest: fe70cace93fe59a9528a7ee008e7218df43901007a9cec216c0cba810ddb68ce
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: lighthouse
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.2/lighthouse-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     appVersion: v4.0.8
     created: "2023-11-07T12:22:24.452009065Z"
     description: A Helm chart for deploying the Lodestar Consensus Layer / beacon
@@ -1511,6 +1527,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/musig-0.0.1/musig-0.0.1.tgz
     version: 0.0.1
   nethermind:
+  - apiVersion: v2
+    appVersion: 1.21.1
+    created: "2023-11-07T13:07:05.289319592Z"
+    description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
+    digest: 25938102e309883e9ccce6914628def9aa7762b0d85cb6e30baa6b4bb4d52f47
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: nethermind
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.4/nethermind-0.0.4.tgz
+    version: 0.0.4
   - apiVersion: v2
     appVersion: 1.21.1
     created: "2023-11-07T12:22:24.702376256Z"
@@ -2737,4 +2766,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-11-07T12:22:24.702685661Z"
+generated: "2023-11-07T13:07:05.289930694Z"
