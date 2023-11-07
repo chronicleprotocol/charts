@@ -1,6 +1,6 @@
 # lighthouse
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.0.8](https://img.shields.io/badge/AppVersion-v4.0.8-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.5.0](https://img.shields.io/badge/AppVersion-v4.5.0-informational?style=flat-square)
 
 A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 
@@ -21,13 +21,13 @@ A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | checkpointSyncUrl | string | `"https://sepolia.beaconstate.info"` |  |
-| executionEndpoint | string | `"https://neth.sepolia.tooling.chroniclelabs.io"` |  |
+| executionEndpoint | string | `"http://nethermind:8551"` |  |
 | fullnameOverride | string | `""` |  |
 | genesisStateUrl | string | `"https://sepolia.beaconstate.info"` |  |
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"sigp/lighthouse"` |  |
-| image.tag | string | `"latest"` |  |
+| image.tag | string | `"v4.5.0-modern"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -36,7 +36,7 @@ A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| jwt | string | `"7992bcce239c6dcfeba3305ce928d061d2ba9a515319ca3ad66752d74fa67a60"` | JWT secret used by client as a secret. Change this value. |
+| jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
 | livenessProbe | object | `{"initialDelaySeconds":60,"periodSeconds":120,"tcpSocket":{"port":"http-api"}}` | Liveness probe |
 | metricsAddress | string | `"0.0.0.0"` | Metrics Address |
 | metricsAllowOrigin | string | `"*"` | Metrics Allow Origin |

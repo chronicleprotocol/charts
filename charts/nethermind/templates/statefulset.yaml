@@ -48,9 +48,11 @@ spec:
             - --JsonRpc.Enabled=true
             - --JsonRpc.Host=0.0.0.0
             - --JsonRpc.Port={{ .Values.service.ports.httprpc.port | default 8545 }}
-            - --JsonRpc.JwtSecretFile=/jwt.hex
+            - --JsonRpc.EnabledModules={{ .Values.jsonrpc.modules | join "," }}
+            - --JsonRpc.JwtSecretFile={{ .Values.data.path }}/jwt.hex
             - --JsonRpc.EngineHost=0.0.0.0
             - --JsonRpc.EnginePort={{ .Values.service.ports.auth.port | default 8551 }}
+            - --JsonRpc.EngineEnabledModules={{ .Values.jsonrpc.engine.modules | join "," }}
             - --Network.DiscoveryPort={{ .Values.service.ports.p2ptcp.port | default 30303 }}
             - --HealthChecks.Enabled=false
             - --Pruning.CacheMb=2048
@@ -76,7 +78,7 @@ spec:
             - name: storage
               mountPath: {{ .Values.data.path }}
             - name: jwt
-              mountPath: "/data/jwt.hex"
+              mountPath: "{{ .Values.data.path }}/jwt.hex"
               subPath: jwt.hex
               readOnly: true
           env:

@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: sigp/lighthouse
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "v4.5.0-modern"
 
 network: sepolia
 # can be mainnet or sepolia, gnosis etc
@@ -18,12 +18,12 @@ checkpointSyncUrl: https://sepolia.beaconstate.info
 genesisStateUrl: https://sepolia.beaconstate.info
 # can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
-executionEndpoint: https://neth.sepolia.tooling.chroniclelabs.io
+executionEndpoint: http://nethermind:8551
 
 # can your own eth instance. eg https://goerli.mydomain.com/v.....
 
 # -- JWT secret used by client as a secret. Change this value.
-jwt: 7992bcce239c6dcfeba3305ce928d061d2ba9a515319ca3ad66752d74fa67a60
+jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
 
 imagePullSecrets: []
 nameOverride: ""

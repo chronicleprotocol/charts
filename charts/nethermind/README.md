@@ -1,6 +1,6 @@
 # nethermind
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
 
 A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 
@@ -32,6 +32,23 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| jsonrpc.enabled | bool | `true` |  |
+| jsonrpc.engine.modules[0] | string | `"Net"` |  |
+| jsonrpc.engine.modules[1] | string | `"Eth"` |  |
+| jsonrpc.engine.modules[2] | string | `"Subscribe"` |  |
+| jsonrpc.engine.modules[3] | string | `"Engine"` |  |
+| jsonrpc.engine.modules[4] | string | `"Web3"` |  |
+| jsonrpc.engine.modules[5] | string | `"Client"` |  |
+| jsonrpc.modules[0] | string | `"Eth"` |  |
+| jsonrpc.modules[1] | string | `"Subscribe"` |  |
+| jsonrpc.modules[2] | string | `"Trace"` |  |
+| jsonrpc.modules[3] | string | `"TxPool"` |  |
+| jsonrpc.modules[4] | string | `"Web3"` |  |
+| jsonrpc.modules[5] | string | `"Personal"` |  |
+| jsonrpc.modules[6] | string | `"Proof"` |  |
+| jsonrpc.modules[7] | string | `"Net"` |  |
+| jsonrpc.modules[8] | string | `"Parity"` |  |
+| jsonrpc.modules[9] | string | `"Health"` |  |
 | jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `120` |  |

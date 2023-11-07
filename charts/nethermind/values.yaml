@@ -20,6 +20,28 @@ logLevel: 'INFO'
 # -- syncMode can be FastSync, SnapSync
 syncMode: 'SnapSync'
 
+jsonrpc:
+  enabled: true
+  modules:
+    - Eth
+    - Subscribe
+    - Trace
+    - TxPool
+    - Web3
+    - Personal
+    - Proof
+    - Net
+    - Parity
+    - Health
+
+  engine:
+    modules:
+      - Net
+      - Eth
+      - Subscribe
+      - Engine
+      - Web3
+      - Client
 image:
   repository: nethermind/nethermind
   pullPolicy: IfNotPresent
