@@ -1529,6 +1529,19 @@ entries:
   nethermind:
   - apiVersion: v2
     appVersion: 1.21.1
+    created: "2023-11-10T09:59:01.110578506Z"
+    description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
+    digest: a23c75e0f781d067c9f39c57f74e308746d51777f5727fe683f31f223d8053e6
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: nethermind
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.5/nethermind-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
+    appVersion: 1.21.1
     created: "2023-11-07T13:07:05.289319592Z"
     description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
     digest: 25938102e309883e9ccce6914628def9aa7762b0d85cb6e30baa6b4bb4d52f47
@@ -2787,4 +2800,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-11-09T10:38:02.787156235Z"
+generated: "2023-11-10T09:59:01.110794707Z"
