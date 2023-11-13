@@ -42,6 +42,7 @@ spec:
             {{ end }}
             - --jwt-secret=/data/jwt.hex
             - --accept-terms-of-use
+            - --datadir=/data
             - --execution-endpoint={{ .Values.executionEndpoint }}
             - --checkpoint-sync-url={{ .Values.checkpointSyncUrl }}
             - --genesis-beacon-api-url={{ .Values.genesisBeaconApiUrl }}
