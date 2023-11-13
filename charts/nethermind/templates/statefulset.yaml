@@ -54,7 +54,10 @@ spec:
             - --JsonRpc.EnginePort={{ .Values.service.ports.auth.port | default 8551 }}
             - --JsonRpc.EngineEnabledModules={{ .Values.jsonrpc.engine.modules | join "," }}
             - --Network.DiscoveryPort={{ .Values.service.ports.p2ptcp.port | default 30303 }}
-            - --HealthChecks.Enabled=false
+            - --HealthChecks.Enabled={{ .Values.healthChecks.enabled }}
+            {{- if .Values.healthChecks.enabled }}
+            - --HealthChecks.UIEnabled={{ .Values.healthChecks.ui.enabled }}
+            {{- end }}
             - --Pruning.CacheMb=2048
           {{- if .Values.metrics.enabled }}
             - --Metrics.Enabled=true

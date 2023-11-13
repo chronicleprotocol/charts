@@ -152,6 +152,11 @@ metrics:
   # -- add node to ethstat
   ethStats: true
 
+healthChecks:
+  enabled: true
+  ui:
+    enabled: true
+
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
   # https://github.com/coreos/prometheus-operator

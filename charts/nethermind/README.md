@@ -1,6 +1,6 @@
 # nethermind
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square)
 
 A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 
@@ -21,6 +21,8 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | data | object | `{"path":"/nethermind-data"}` | Path to store data |
 | fullnameOverride | string | `""` |  |
+| healthChecks.enabled | bool | `true` |  |
+| healthChecks.ui.enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"nethermind/nethermind"` |  |
 | image.tag | string | `""` |  |
