@@ -1,0 +1,81 @@
+# Default values for mantle.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# -- Download from snapshot. will run snapshot sync before starting node in an initContainer.
+snapShotSync:
+  enabled: false
+  snapShotUrl: 'https://s3.ap-southeast-1.amazonaws.com/static.testnet.mantle.xyz'
+  tarballName: '20231119-testnet-chaindata.tar'
+
+# -- Path to store data
+data:
+  path: /mantle-data
+
+env:
+  - name: ETH1_HTTP
+    value: "https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  - name: ETH1_CTC_DEPLOYMENT_HEIGHT
+    value: 8
+  - name: ETH1_SYNC_SERVICE_ENABLE
+    value: true
+  - name: ETH1_CONFIRMATION_DEPTH
+    value: 0
+  - name: ROLLUP_CLIENT_HTTP
+    value:
+  - name: ROLLUP_POLL_INTERVAL_FLAG
+    value: 500ms
+  - name: ROLLUP_ENABLE_L2_GAS_POLLING
+    value: true
+  - name: ROLLUP_FEE_THRESHOLD_DOWN
+    value: 1
+  - name: ROLLUP_FEE_THRESHOLD_UP
+    value: 4000
+  - name: RPC_ENABLE
+    value: true
+  - name: RPC_ADDR
+    value: "0.0.0.0"
+  - name: RPC_PORT
+    value: 8545
+  - name: RPC_API
+    value: "eth,net,rollup,web3,debug"
+  - name: RPC_CORS_DOMAIN
+    value: "*"
+  - name: RPC_VHOSTS
+    value: "*"
+  - name: WS
+    value: true
+  - name: WS_ADDR
+    value: "0.0.0.0"
+  - name: WS_PORT
+    value: 8546
+  - name: WS_API
+    value: "eth,net,rollup,web3"
+  - name: WS_ORIGINS
+    value: "*"
+  - name: CHAIN_ID
+    value: 5001
+  - name: GASPRICE
+    value: 0
+  - name: GCMODE
+    value: "archive"
+  - name: IPC_DISABLE
+    value: true
+  - name: NETWORK_ID
+    value: 5001
+  - name: NO_USB
+    value: true
+  - name: NO_DISCOVER
+    value: true
+  - name: TARGET_GAS_LIMIT
+    value: 30000000
+  - name: USING_BVM
+    value: true
+  - name: BLOCK_SIGNER_KEY
+    value: "22c7fa2d2cf5c0ccc21ff32a210d7dfea7bbc7d16c3ba0a75302a7b51c16c4f7"
+  - name: BLOCK_SIGNER_ADDRESS
+    value: "0xa9eC80835800a59Fd022f53e3E75AA4552F22ccB"
+  - name: L2_BLOCK_GAS_LIMIT
+    value: 15000000
