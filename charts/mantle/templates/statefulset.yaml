@@ -34,10 +34,9 @@ spec:
           image: alpine:latest
           command: ["/bin/sh", "-c"]
           args:
-            - |
-                wget {{ .Values.snapShotSync.snapShotUrl}}/{{ .Values.snapShotSync.tarballName}}
-                tar xf {{ .Values.snapShotSync.tarballName}} -C {{ .Values.data.path}}
-              fi
+            - >
+              wget {{ .Values.snapShotSync.snapShotUrl}}/{{ .Values.snapShotSync.tarballName}} &&
+              tar xf {{ .Values.snapShotSync.tarballName}} -C {{ .Values.data.path}}
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.data.path}}
@@ -49,8 +48,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          command:
-            - sh ./geth.sh
+          # command:
+          #   - sh ./geth.sh
           args:
           {{- if .Values.args }}
             {{- toYaml .Values.args | nindent 12 }}
@@ -71,6 +70,8 @@ spec:
           env:
             - name: DATADIR
               value: "{{ .Values.data.path }}"
+            - name: ETH1_HTTP
+              value: "{{ .Values.ethL1 }}"
           {{- if .Values.env }}
             {{- toYaml .Values.env | nindent 12 }}
           {{- end }}

@@ -14,6 +14,8 @@ snapShotSync:
 data:
   path: /mantle-data
 
+# -- ETH l1 node
+ethL1: "https://rpc.ankr.com/eth"
 env:
   - name: BLOCK_SIGNER_KEY
     value: "22c7fa2d2cf5c0ccc21ff32a210d7dfea7bbc7d16c3ba0a75302a7b51c16c4f7"
@@ -21,8 +23,6 @@ env:
     value: "0xa9eC80835800a59Fd022f53e3E75AA4552F22ccB"
   - name: CHAIN_ID
     value: 5000
-  - name: ETH1_HTTP
-    value: "https://rpc.ankr.com/eth"
   - name: ETH1_SYNC_SERVICE_ENABLE
     value: true
   - name: ETH1_CONFIRMATION_DEPTH
