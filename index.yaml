@@ -1348,6 +1348,20 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.1/lighthouse-0.0.1.tgz
     version: 0.0.1
+  mantle:
+  - apiVersion: v2
+    appVersion: v0.4.3
+    created: "2024-01-03T15:43:01.372535816Z"
+    description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
+    digest: e03cbf200e11c20b9a098282086433c376959b2fba2bf77a2c033f83ca10531f
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: mantle
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/mantle-0.0.1/mantle-0.0.1.tgz
+    version: 0.0.1
   monitor:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -2851,4 +2865,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2023-12-15T15:24:18.227455623Z"
+generated: "2024-01-03T15:43:01.372779429Z"
