@@ -9,7 +9,7 @@ jobs:
   release:
     runs-on: arc-runner-set
     container:
-      image: ubuntu:latest
+      image: ubuntu-latest
     permissions:
       contents: write
 
