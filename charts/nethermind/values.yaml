@@ -1,35 +1,52 @@
-# Default values for arbitrum.
+# Default values for nethermind.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
-network: goerli
-## can be goerli, mainnet, sepolia etc
+# -- can be Energy Web,Exosama,Goerli (testnet),Gnosis, Chiado ,Holesky (testnet),Mainnet,Sepolia (testnet),Volta (testnet)
+network: sepolia
 
+# -- Path to store data
 data:
-  path: /home/user/.arbitrum
+  path: /nethermind-data
 
-nitro:
-  httpApi: ["net", "web3", "eth", "debug"]
-  l1RpcUrl: https://ethereum-goerli-rpc.allthatnode.com
-  l2ChainId: 421613
-  httpCorsDomain: {}
-  httpAddr: {}
-  httpVhosts: {}
-  extraArgs: {}
-    # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
-  metrics:
-    enabled: true
-    serverAddr: {}
-    serverPort: {}
-    serverUpdateInterval: {}
+# -- JWT secret used by client as a secret. Change this value.
+jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
 
+# -- Log level for the node
+logLevel: 'INFO'
+
+# -- syncMode can be FastSync, SnapSync
+syncMode: 'SnapSync'
+
+jsonrpc:
+  enabled: true
+  modules:
+    - Eth
+    - Subscribe
+    - Trace
+    - TxPool
+    - Web3
+    - Personal
+    - Proof
+    - Net
+    - Parity
+    - Health
+
+  engine:
+    modules:
+      - Net
+      - Eth
+      - Subscribe
+      - Engine
+      - Web3
+      - Client
 image:
-  repository: offchainlabs/nitro-node
+  repository: nethermind/nethermind
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v2.1.3-e815395"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -60,24 +77,41 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
-    rpc:
-      port: 8547
+    httprpc:
+      port: 8545
       protocol: TCP
     ws:
-      port: 8548
+      port: 8546
       protocol: TCP
+    auth:
+      port: 8551
+      protocol: TCP
+    p2ptcp:
+      port: 30303
+      protocol: TCP
+    p2pudp:
+      port: 30303
+      protocol: UDP
     metrics:
-      port: 6070
-      protocol: TCP
-    sequencer:
-      port: 9642
+      port: 9545
       protocol: TCP
 
-probes:
-  enabled: false
+# @default -- See `values.yaml`
+livenessProbe:
+  tcpSocket:
+    port: httprpc
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# @default -- See `values.yaml`
+readinessProbe:
+  tcpSocket:
+    port: httprpc
+  initialDelaySeconds: 10
+  periodSeconds: 10
 
 ingress:
-  enabled: false
+  enabled: true
   className: ""
   annotations: {}
     # kubernetes.io/ingress.class: nginx
@@ -101,7 +135,7 @@ persistence:
   accessModes:
   - ReadWriteOnce
   # -- Requested size for volume claim template
-  size: 3Ti
+  size: 20Gi
   # -- Use a specific storage class
   # E.g 'local-path' for local storage to achieve best performance
   # Read more (https://github.com/rancher/local-path-provisioner)
@@ -112,6 +146,16 @@ persistence:
   selector: {}
   #   matchLabels:
   #     app.kubernetes.io/name: something
+
+metrics:
+  enabled: true
+  # -- add node to ethstat
+  ethStats: true
+
+healthChecks:
+  enabled: true
+  ui:
+    enabled: true
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
@@ -155,8 +199,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-tolerations: []
-
 nodeSelector: {}
 
+tolerations: []
 affinity: {}

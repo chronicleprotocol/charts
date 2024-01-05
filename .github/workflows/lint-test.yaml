@@ -7,7 +7,7 @@ jobs:
   lint-test:
     runs-on: arc-runner-set
     container:
-      image: summerwind/actions-runner:ubuntu-22.04
+      image: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
           check-latest: true
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.0
+        uses: helm/chart-testing-action@v2.6.1
 
       - name: Run chart-testing (list-changed)
         id: list-changed

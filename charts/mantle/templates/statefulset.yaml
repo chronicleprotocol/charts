@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "beacons.fullname" . }}
+  name: {{ include "mantle.fullname" . }}
   labels:
-    {{- include "beacons.labels" . | nindent 4 }}
+    {{- include "mantle.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "beacons.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "beacons.fullname" . }}
+      {{- include "mantle.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "mantle.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,67 +19,62 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "beacons.selectorLabels" . | nindent 8 }}
+        {{- include "mantle.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "beacons.serviceAccountName" . }}
+      serviceAccountName: {{ include "mantle.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.snapShotSync.enabled }}
+      initContainers:
+        - name: init-download-snapshot
+          image: alpine:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              wget {{ .Values.snapShotSync.snapShotUrl}}/{{ .Values.snapShotSync.tarballName}} &&
+              tar xf {{ .Values.snapShotSync.tarballName}} -C {{ .Values.data.path}}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.data.path}}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          # command:
+          #   - sh ./geth.sh
           args:
-            {{ if ne .Values.network "mainnet" }}
-            - --{{ .Values.network }}
-            {{ end }}
-            - --jwt-secret=/data/jwt.hex
-            - --accept-terms-of-use
-            - --datadir=/data
-            - --execution-endpoint={{ .Values.executionEndpoint }}
-            - --checkpoint-sync-url={{ .Values.checkpointSyncUrl }}
-            - --genesis-beacon-api-url={{ .Values.genesisBeaconApiUrl }}
-            - --rpc-host=0.0.0.0
-            - --rpc-port={{ .Values.rpcPort }}
-            - --grpc-gateway-host=0.0.0.0
+          {{- if .Values.args }}
+            {{- toYaml .Values.args | nindent 12 }}
+          {{- end }}
           ports:
-            - name: p2p-tcp
-              containerPort: {{ .Values.p2pPort }}
-              protocol: TCP
-            - name: p2p-udp
-              containerPort: {{ .Values.p2pPort }}
-              protocol: UDP
-            - name: http-api
-              containerPort: {{ .Values.httpPort }}
-              protocol: TCP
-            - name: rpc
-              containerPort: {{ .Values.rpcPort }}
-              protocol: TCP
-            - name: metrics
-              containerPort: {{ .Values.metricsPort }}
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
-          env:
-            - name: POD_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
           volumeMounts:
             - name: storage
-              mountPath: "/data/"
-            - name: jwt
-              mountPath: "/data/jwt.hex"
-              subPath: jwt.hex
-              readOnly: true
+              mountPath: {{ .Values.data.path }}
+          env:
+            - name: DATADIR
+              value: "{{ .Values.data.path }}"
+            - name: ETH1_HTTP
+              value: "{{ .Values.ethL1 }}"
+          {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- end }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
       affinity:
@@ -87,9 +82,9 @@ spec:
       tolerations:
         {{- toYaml .Values.tolerations | nindent 8 }}
       volumes:
-        - name: jwt
-          secret:
-            secretName: {{ include "beacons.fullname" . }}-jwt
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8}}
+      {{- end }}
   {{- if not .Values.persistence.enabled }}
         - name: storage
           emptyDir: {}

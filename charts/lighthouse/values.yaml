@@ -1,35 +1,29 @@
-# Default values for arbitrum.
+# Default values for lighthouse.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
-network: goerli
-## can be goerli, mainnet, sepolia etc
-
-data:
-  path: /home/user/.arbitrum
-
-nitro:
-  httpApi: ["net", "web3", "eth", "debug"]
-  l1RpcUrl: https://ethereum-goerli-rpc.allthatnode.com
-  l2ChainId: 421613
-  httpCorsDomain: {}
-  httpAddr: {}
-  httpVhosts: {}
-  extraArgs: {}
-    # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
-  metrics:
-    enabled: true
-    serverAddr: {}
-    serverPort: {}
-    serverUpdateInterval: {}
-
 image:
-  repository: offchainlabs/nitro-node
+  repository: sigp/lighthouse
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "v2.1.3-e815395"
+  tag: "v4.5.0-modern"
+
+network: sepolia
+# can be mainnet or sepolia, gnosis etc
+
+checkpointSyncUrl: https://sepolia.beaconstate.info
+# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+
+genesisStateUrl: https://sepolia.beaconstate.info
+# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+
+executionEndpoint: http://nethermind:8551
+
+# can your own eth instance. eg https://goerli.mydomain.com/v.....
+
+# -- JWT secret used by client as a secret. Change this value.
+jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
 
 imagePullSecrets: []
 nameOverride: ""
@@ -44,6 +38,20 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# -- Liveness probe
+livenessProbe:
+  tcpSocket:
+    port: http-api
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# -- Readiness probe
+readinessProbe:
+  tcpSocket:
+    port: http-api
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -57,24 +65,19 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  ports:
-    rpc:
-      port: 8547
-      protocol: TCP
-    ws:
-      port: 8548
-      protocol: TCP
-    metrics:
-      port: 6070
-      protocol: TCP
-    sequencer:
-      port: 9642
-      protocol: TCP
+# -- P2P Port
+p2pPort: 13000
+# -- HTTP Port
+httpPort: 3500
+# -- Metrics Port
+metricsPort: 8080
+# -- Metrics Address
+metricsAddress: 0.0.0.0
 
-probes:
-  enabled: false
+# -- Metrics Allow Origin
+metricsAllowOrigin: "*"
+# -- RPC Port
+rpcPort: 4000
 
 ingress:
   enabled: false
@@ -91,50 +94,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
-persistence:
-  # -- Uses an EmptyDir when not enabled
-  enabled: false
-  # -- Use an existing PVC when persistence.enabled
-  existingClaim: null
-  # -- Access mode for the volume claim template
-  accessModes:
-  - ReadWriteOnce
-  # -- Requested size for volume claim template
-  size: 3Ti
-  # -- Use a specific storage class
-  # E.g 'local-path' for local storage to achieve best performance
-  # Read more (https://github.com/rancher/local-path-provisioner)
-  storageClassName: null
-  # -- Annotations for volume claim template
-  annotations: {}
-  # -- Selector for volume claim template
-  selector: {}
-  #   matchLabels:
-  #     app.kubernetes.io/name: something
-
-serviceMonitor:
-  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
-  # https://github.com/coreos/prometheus-operator
-  enabled: false
-  # -- Path to scrape
-  path: /debug/metrics
-  # -- Alternative namespace for ServiceMonitor
-  namespace: null
-  # -- Additional ServiceMonitor labels
-  labels: {}
-  # -- Additional ServiceMonitor annotations
-  annotations: {}
-  # -- ServiceMonitor scrape interval
-  interval: 1m
-  # -- ServiceMonitor scheme
-  scheme: http
-  # -- ServiceMonitor TLS configuration
-  tlsConfig: {}
-  # -- ServiceMonitor scrape timeout
-  scrapeTimeout: 30s
-  # -- ServiceMonitor relabelings
-  relabelings: []
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -155,8 +114,52 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-tolerations: []
-
 nodeSelector: {}
 
+tolerations: []
+
 affinity: {}
+
+persistence:
+  # -- Uses an EmptyDir when not enabled
+  enabled: false
+  # -- Use an existing PVC when persistence.enabled
+  existingClaim: null
+  # -- Access mode for the volume claim template
+  accessModes:
+  - ReadWriteOnce
+  # -- Requested size for volume claim template
+  size: 20Gi
+  # -- Use a specific storage class
+  # E.g 'local-path' for local storage to achieve best performance
+  # Read more (https://github.com/rancher/local-path-provisioner)
+  storageClassName: null
+  # -- Annotations for volume claim template
+  annotations: {}
+  # -- Selector for volume claim template
+  selector: {}
+  #   matchLabels:
+  #     app.kubernetes.io/name: something
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []

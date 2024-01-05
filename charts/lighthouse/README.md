@@ -1,8 +1,8 @@
-# beacons
+# lighthouse
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.1.1](https://img.shields.io/badge/AppVersion-v4.1.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.5.0](https://img.shields.io/badge/AppVersion-v4.5.0-informational?style=flat-square)
 
-A Helm chart for deploying a beacon node to Kubernetes
+A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 
 ## Maintainers
 
@@ -20,14 +20,14 @@ A Helm chart for deploying a beacon node to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| checkpointSyncUrl | string | `"https://goerli.checkpoint-sync.ethpandaops.io"` |  |
-| executionEndpoint | string | `"http://eth-rpc-ethereum:8551"` |  |
+| checkpointSyncUrl | string | `"https://sepolia.beaconstate.info"` |  |
+| executionEndpoint | string | `"http://nethermind:8551"` |  |
 | fullnameOverride | string | `""` |  |
-| genesisBeaconApiUrl | string | `"https://goerli.checkpoint-sync.ethpandaops.io"` |  |
+| genesisStateUrl | string | `"https://sepolia.beaconstate.info"` |  |
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"gcr.io/prysmaticlabs/prysm/beacon-chain"` |  |
-| image.tag | string | `""` |  |
+| image.repository | string | `"sigp/lighthouse"` |  |
+| image.tag | string | `"v4.5.0-modern"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -38,9 +38,11 @@ A Helm chart for deploying a beacon node to Kubernetes
 | ingress.tls | list | `[]` |  |
 | jwt | string | `"ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a"` | JWT secret used by client as a secret. Change this value. |
 | livenessProbe | object | `{"initialDelaySeconds":60,"periodSeconds":120,"tcpSocket":{"port":"http-api"}}` | Liveness probe |
+| metricsAddress | string | `"0.0.0.0"` | Metrics Address |
+| metricsAllowOrigin | string | `"*"` | Metrics Allow Origin |
 | metricsPort | int | `8080` | Metrics Port |
 | nameOverride | string | `""` |  |
-| network | string | `"goerli"` |  |
+| network | string | `"sepolia"` |  |
 | nodeSelector | object | `{}` |  |
 | p2pPort | int | `13000` | P2P Port |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |

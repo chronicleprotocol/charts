@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "beacons.fullname" . }}
+  name: {{ include "lighthouse.fullname" . }}
   labels:
-    {{- include "beacons.labels" . | nindent 4 }}
+    {{- include "lighthouse.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "beacons.selectorLabels" . | nindent 6 }}
-  serviceName: {{ include "beacons.fullname" . }}
+      {{- include "lighthouse.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "lighthouse.fullname" . }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "beacons.selectorLabels" . | nindent 8 }}
+        {{- include "lighthouse.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "beacons.serviceAccountName" . }}
+      serviceAccountName: {{ include "lighthouse.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -37,18 +37,24 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           args:
-            {{ if ne .Values.network "mainnet" }}
-            - --{{ .Values.network }}
-            {{ end }}
-            - --jwt-secret=/data/jwt.hex
-            - --accept-terms-of-use
+            - lighthouse
+            - bn
+            - --network={{ .Values.network }}
             - --datadir=/data
+            - --disable-upnp
+            - --disable-enr-auto-update
             - --execution-endpoint={{ .Values.executionEndpoint }}
+            - --execution-jwt=/data/jwt.hex
+            - --genesis-state-url={{ .Values.genesisStateUrl }}
             - --checkpoint-sync-url={{ .Values.checkpointSyncUrl }}
-            - --genesis-beacon-api-url={{ .Values.genesisBeaconApiUrl }}
-            - --rpc-host=0.0.0.0
-            - --rpc-port={{ .Values.rpcPort }}
-            - --grpc-gateway-host=0.0.0.0
+            - --http
+            - --http-address=0.0.0.0
+            - --http-port={{ .Values.httpPort }}
+            - --disable-deposit-contract-sync
+            - --metrics
+            - --metrics-address={{ .Values.metricsAddress }}
+            - --metrics-port={{ .Values.metricsPort }}
+            - --metrics-allow-origin={{ .Values.metricsAllowOrigin }}
           ports:
             - name: p2p-tcp
               containerPort: {{ .Values.p2pPort }}
@@ -89,7 +95,7 @@ spec:
       volumes:
         - name: jwt
           secret:
-            secretName: {{ include "beacons.fullname" . }}-jwt
+            secretName: {{ include "lighthouse.fullname" . }}-jwt
   {{- if not .Values.persistence.enabled }}
         - name: storage
           emptyDir: {}

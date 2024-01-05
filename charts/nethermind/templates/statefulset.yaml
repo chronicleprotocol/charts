@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "nethermind.fullname" . }}
+  labels:
+    {{- include "nethermind.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nethermind.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "nethermind.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nethermind.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nethermind.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          # command:
+          #   - nethermind
+          args:
+            - --config={{ .Values.network }}
+            - --datadir={{ .Values.data.path }}/data
+            - --KeyStore.KeyStoreDirectory={{ .Values.data.path }}/keystore
+            - --log={{ .Values.logLevel }}
+            {{ if .Values.syncMode }}
+            - --Sync.{{ .Values.syncMode }}=true
+            {{- end }}
+            - --JsonRpc.Enabled=true
+            - --JsonRpc.Host=0.0.0.0
+            - --JsonRpc.Port={{ .Values.service.ports.httprpc.port | default 8545 }}
+            - --JsonRpc.EnabledModules={{ .Values.jsonrpc.modules | join "," }}
+            - --JsonRpc.JwtSecretFile={{ .Values.data.path }}/jwt.hex
+            - --JsonRpc.EngineHost=0.0.0.0
+            - --JsonRpc.EnginePort={{ .Values.service.ports.auth.port | default 8551 }}
+            - --JsonRpc.EngineEnabledModules={{ .Values.jsonrpc.engine.modules | join "," }}
+            - --Network.DiscoveryPort={{ .Values.service.ports.p2ptcp.port | default 30303 }}
+            - --HealthChecks.Enabled={{ .Values.healthChecks.enabled }}
+            {{- if .Values.healthChecks.enabled }}
+            - --HealthChecks.UIEnabled={{ .Values.healthChecks.ui.enabled }}
+            {{- end }}
+            - --Pruning.CacheMb=2048
+          {{- if .Values.metrics.enabled }}
+            - --Metrics.Enabled=true
+            - --Metrics.NodeName=$(POD_NAME)
+            - --Metrics.ExposePort={{ .Values.service.ports.metrics.port }}
+            {{- if .Values.metrics.ethStats }}
+            - --EthStats.Enabled=true
+            {{- end }}
+          {{- end }}
+          ports:
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.data.path }}
+            - name: jwt
+              mountPath: "{{ .Values.data.path }}/jwt.hex"
+              subPath: jwt.hex
+              readOnly: true
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      volumes:
+        - name: jwt
+          secret:
+            secretName: {{ include "nethermind.fullname" . }}-jwt
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8}}
+      {{- end }}
+  {{- if not .Values.persistence.enabled }}
+        - name: storage
+          emptyDir: {}
+  {{- else if .Values.persistence.existingClaim }}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+  {{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+      annotations:
+        {{- toYaml .Values.persistence.annotations | nindent 8 }}
+    spec:
+      accessModes:
+        {{- toYaml .Values.persistence.accessModes | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+      storageClassName: {{ .Values.persistence.storageClassName }}
+      {{- if .Values.persistence.selector }}
+      selector:
+        {{- toYaml .Values.persistence.selector | nindent 8 }}
+      {{- end }}
+  {{- end }}

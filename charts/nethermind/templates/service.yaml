@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nethermind.fullname" . }}
+  labels:
+    {{- include "nethermind.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    {{- range $key, $val := .Values.service.ports }}
+    - port: {{ $val.port }}
+      targetPort: {{ $val.port }}
+      protocol: {{ $val.protocol }}
+      name: {{ $key }}
+    {{- end }}
+  selector:
+    {{- include "nethermind.selectorLabels" . | nindent 4 }}

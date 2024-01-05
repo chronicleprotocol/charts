@@ -1,12 +1,10 @@
 apiVersion: v2
-name: arbitrum
-description: A Helm chart for deploying Arbitrum Nitro on Kubernetes
+name: nethermind
+description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake
-  - name: chronicleprotocol
-    url: https://github.com/chronicleprotocol
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -27,4 +25,4 @@ version: 0.0.5
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "v2.1.3-e815395"
+appVersion: "1.21.1"
