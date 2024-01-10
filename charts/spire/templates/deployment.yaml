@@ -38,7 +38,7 @@ spec:
           {{- if .Values.bootstrap }}
             - "bootstrap"
           {{- else  if .Values.stream }}
-            - "stream"
+            - "kafka"
           {{- else }}
             - "agent"
           {{- end }}

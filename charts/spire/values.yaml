@@ -25,10 +25,12 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -49,7 +51,8 @@ service:
     # webapi:
     #   port: 8080
     #   protocol: TCP
-  annotations: {}
+  annotations:
+    {}
     # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 # -- Liveness probe
@@ -73,7 +76,8 @@ readiness:
 ingress:
   enabled: false
   className: ""
-  annotations: {}
+  annotations:
+    {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
@@ -86,7 +90,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -119,7 +124,6 @@ stream: true
 
 # custom Args that may be added to the agent
 customArgs: []
-  # - prices
 
 ## logLevel is the log level for the spire server (debug,info,trace,etc)
 logLevel: "info"
@@ -131,7 +135,8 @@ logFormat: null
 env:
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
-  normal: {}
+  normal:
+    {}
     # CFG_ITEM_SEPARATOR: "\n"
     # CFG_FEEDS: stage
     # CFG_LIBP2P_PK_SEED: "1234567981234567981234567981234567981234123456798123456798123456" # 64 bytes libp2p for bootstrap only
@@ -148,7 +153,6 @@ env:
     # ### local address book
     # CFG_WEBAPI_STATIC_ADDR_BOOK: "" # no addresses
 
-
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.
 # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
@@ -164,7 +168,8 @@ tor-proxy:
         HiddenServicePort 8888 spire:8080
 
 # -- Extra K8s manifests to deploy
-extraObjects: []
+extraObjects:
+  []
   # - apiVersion: "kubernetes-client.io/v1"
   #   kind: ExternalSecret
   #   metadata:
