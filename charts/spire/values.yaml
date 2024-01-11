@@ -119,14 +119,24 @@ affinity: {}
 # Configurations for spire : default mode is to run as agent
 # if true, runs bootstrap mode
 bootstrap: false
+
 # if true, runs stream mode
 stream: true
+
+# if true, runs spire in kafka made
+kafka:
+  enabled: false
+  kafkaEnpoint: kafka.default.svc.cluster.local:9092
+  kafkaTopics: {}
+    # - "--topic"
+    # - "data-point-v1"
+    # - "data_point/v1"
 
 # custom Args that may be added to the agent
 customArgs: []
 
 ## logLevel is the log level for the spire server (debug,info,trace,etc)
-logLevel: "info"
+logLevel: null
 
 ## logFormat is the log format for the spire server (json, or text)
 logFormat: null
@@ -135,8 +145,7 @@ logFormat: null
 env:
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
-  normal:
-    {}
+  normal: {}
     # CFG_ITEM_SEPARATOR: "\n"
     # CFG_FEEDS: stage
     # CFG_LIBP2P_PK_SEED: "1234567981234567981234567981234567981234123456798123456798123456" # 64 bytes libp2p for bootstrap only

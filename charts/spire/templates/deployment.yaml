@@ -38,14 +38,23 @@ spec:
           {{- if .Values.bootstrap }}
             - "bootstrap"
           {{- else  if .Values.stream }}
+            - "stream"
+          {{- else  if .Values.kafka.enabled }}
             - "kafka"
+            {{- range $arg := .Values.kafka.kafkaTopics }}
+            - "{{ $arg }}"
+            {{- end }}
           {{- else }}
             - "agent"
           {{- end }}
+          {{- if .Values.logLevel }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
+          {{- end }}
+          {{- if .Values.logFormat }}
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
+          {{- end }}
             {{- if .Values.configHcl }}
             - "-c"
             {{- end }}
@@ -73,6 +82,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+          {{- if .Values.kafka.enabled }}
+            - name: CFG_KAFKA_BROKERS
+              value: "{{ .Values.kafka.kafkaEnpoint }}"
+          {{- end }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
           volumeMounts:
           {{- if .Values.configHcl }}
