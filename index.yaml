@@ -2259,6 +2259,23 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/rpc-splitter-0.0.1/rpc-splitter-0.0.1.tgz
     version: 0.0.1
+  sith-exporters:
+  - apiVersion: v2
+    appVersion: 0.0.2
+    created: "2024-01-12T14:42:07.552256935Z"
+    description: A Helm chart for deploying prometheus exporters for Chronicle Oracles
+      to Kubernetes
+    digest: 1698ff2212b84dd8ec9470055bc420ba953d0187107428d1276352428a358621
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: sith-exporters
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/sith-exporters-0.1.0/sith-exporters-0.1.0.tgz
+    version: 0.1.0
   spectre:
   - apiVersion: v2
     appVersion: 0.11.5
@@ -2906,4 +2923,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-01-12T10:30:54.083480164Z"
+generated: "2024-01-12T14:42:07.552632996Z"
