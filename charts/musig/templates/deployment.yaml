@@ -73,13 +73,13 @@ spec:
             - name: CFG_RPC_URLS
               value: "{{ .Values.ethRpcUrl }}"
           {{- end }}
-          {{- if .Values.watchogConfigReg }}
+          {{- if .Values.watchdogConfigReg }}
             - name: WATCHDOG_CONFIG_REGISTRY
-              value: "{{ .Values.watchogConfigReg }}"
+              value: "{{ .Values.watchdogConfigReg }}"
           {{- end }}
-          {{- if .Values.watchogInterval }}
+          {{- if .Values.watchdogInterval }}
             - name: WATCHDOG_INTERVAL
-              value: "{{ .Values.watchogInterval | default "900s" }}"
+              value: "{{ .Values.watchdogInterval | default "900s" }}"
           {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM
