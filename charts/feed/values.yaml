@@ -3,7 +3,7 @@ ghost:
   # -- values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart
   enabled: true
   image:
-    tag: "0.22.0"
+    tag: "0.29.1"
   fullnameOverride: "ghost"
 
   # -- Provide eth keystore, eth from address and eth password from existing secrets
@@ -28,7 +28,10 @@ ghost:
   logLevel: warning
   # -- log format (json, text)
   logFormat: null
-
+  # -- WATCHDOG onchain registry address
+  watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  # -- WATCHDOG interval (in seconds)
+  watchdogInterval: "900s"
   # -- eth RPC url (always ethereum mainnet)
   ethRpcUrl: null
   # -- eth chain id for `ethRpcUrl`
@@ -47,8 +50,7 @@ ghost:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ENVIRONMENT: "prod"
-      # CFG_FEEDS: "prod"
+      WATCHDOG_ETH_FROM: "0x00000000000000000000000000000000000000000000000"
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ""
@@ -60,7 +62,7 @@ musig:
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "sha-775ab43"
+    tag: "0.29.1"
   imagePullSecrets: []
 
   service:
@@ -78,6 +80,11 @@ musig:
 
   # -- log format (json, text)
   logFormat: null
+
+  # -- WATCHDOG onchain registry address
+  watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  # -- WATCHDOG interval (in seconds)
+  watchdogInterval: "900s"
 
   # -- default eth RPC url (can be testnet or mainnet). Must mach same chain `.Values.ghost.rpcUrl`
   ethRpcUrl: null
@@ -105,8 +112,7 @@ musig:
       # CFG_ETH_PASS: ""
       # CFG_ETH_KEYS: ''
 
-      # CFG_ENVIRONMENT: "prod"
-      # CFG_FEEDS: "prod"
+      WATCHDOG_ETH_FROM: "0x00000000000000000000000000000000000000000000000"
 
       CFG_WEBAPI_ENABLE: 1
       CFG_WEBAPI_LISTEN_ADDR: ":8080"
