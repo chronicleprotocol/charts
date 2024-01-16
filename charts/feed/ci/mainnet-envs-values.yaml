@@ -8,6 +8,7 @@ ghost:
   chainId: 1
 
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  watchdogInterval: "5s"
 
   env:
     normal:
@@ -30,6 +31,9 @@ musig:
 
   ethChainId: 1
   ethRpcUrl: https://eth.drpc.org
+
+  watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  watchdogInterval: "5s"
 
   env:
     normal:
