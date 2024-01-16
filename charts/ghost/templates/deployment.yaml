@@ -65,6 +65,10 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
           {{- end }}
+          {{- if .Values.cfgItemSeperator }}
+            - name: CFG_ITEM_SEPARATOR
+              value:  "{{ .Values.cfgItemSeperator }}"
+          {{- end }}
           {{- if .Values.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
               value: "{{ .Values.ethRpcUrl }}"
@@ -74,12 +78,20 @@ spec:
               value: "{{ .Values.ethChainId }}"
           {{- end }}
           {{- if .Values.rpcUrl }}
-            - name: CFG_RPC_URLS
+            - name: CFG_CHAIN_RPC_URLS
               value: "{{ .Values.rpcUrl }}"
           {{- end }}
           {{- if .Values.chainId }}
             - name: CFG_CHAIN_ID
               value: "{{ .Values.chainId }}"
+          {{- end }}
+          {{- if .Values.watchdogConfigReg }}
+            - name: WATCHDOG_CONFIG_REGISTRY
+              value: "{{ .Values.watchdogConfigReg }}"
+          {{- end }}
+          {{- if .Values.watchdogInterval }}
+            - name: WATCHDOG_INTERVAL
+              value: "{{ .Values.watchdogInterval | default "900s" }}"
           {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM

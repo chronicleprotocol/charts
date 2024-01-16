@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sith-exporters.fullname" . }}
+  labels:
+    {{- include "sith-exporters.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: {{ .Values.service.portProtocol }}
+      name: {{ .Values.service.portName }}
+  selector:
+    {{- include "sith-exporters.selectorLabels" . | nindent 4 }}

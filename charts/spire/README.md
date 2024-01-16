@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.13.7](https://img.shields.io/badge/AppVersion-0.13.7-informational?style=flat-square)
+![Version: 0.1.9](https://img.shields.io/badge/Version-0.1.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.28.2](https://img.shields.io/badge/AppVersion-0.28.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -44,9 +44,12 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| kafka.enabled | bool | `false` |  |
+| kafka.kafkaEnpoint | string | `"kafka.default.svc.cluster.local:9092"` |  |
+| kafka.kafkaTopics | object | `{}` |  |
 | liveness | object | `{"enabled":true,"livenessProbe":{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}}` | Liveness probe |
 | logFormat | string | `nil` |  |
-| logLevel | string | `"info"` |  |
+| logLevel | string | `nil` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
