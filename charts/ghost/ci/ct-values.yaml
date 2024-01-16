@@ -21,7 +21,4 @@ env:
     CFG_FEEDS: "stage"
     CFG_CHAIN_NAME: sep
 
-    CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
-      /dns/spire-bootstrap1.staging.chroniclelabs.io/tcp/8000/p2p/12D3KooWHoSyTgntm77sXShoeX9uNkqKNMhHxKtskaHqnA54SrSG
-
     CFG_WEBAPI_ENABLE: 0

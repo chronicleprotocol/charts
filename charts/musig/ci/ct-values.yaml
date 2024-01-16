@@ -23,4 +23,6 @@ env:
     CFG_MUSIG_INTERVAL: "600"
     CFG_MUSIG_MAX_AGE: "3600"
 
+    CFG_CHAIN_RPC_URLS: "https://eth-sepolia.public.blastapi.io,https://ethereum-sepolia.publicnode.com"
+
     CFG_WEBAPI_ENABLE: 0
