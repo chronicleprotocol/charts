@@ -16,5 +16,5 @@ spec:
         - -c
         - |
           echo 'Running tests';
-          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{ include "musig.name" . }}' -o jsonpath='{.items[0].metadata.name}') | grep 'Starting tag=MUSIG'
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{ include "musig.name" . }}' -o jsonpath='{.items[0].metadata.name}') | grep 'msg="Connected to a peer"'
   restartPolicy: Never
