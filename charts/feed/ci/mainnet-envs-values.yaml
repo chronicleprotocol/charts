@@ -12,6 +12,7 @@ ghost:
 
   env:
     normal:
+      GOLOG_LOG_LEVEL: pubsub=debug
       # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
       CFG_ETH_FROM: "0x1e68967a10a30602EbBa297cffeCC3645cB28D99"
       CFG_ETH_PASS: ""
@@ -37,6 +38,7 @@ musig:
 
   env:
     normal:
+      GOLOG_LOG_LEVEL: pubsub=debug
       # NB!! these ETH keys are for testing purpose only, do not use them or send any funds to them as you will lose them!
       CFG_ETH_FROM: "0x1e68967a10a30602EbBa297cffeCC3645cB28D99"
       CFG_ETH_PASS: ""

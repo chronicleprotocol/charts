@@ -3,7 +3,7 @@ ghost:
   # -- values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart
   enabled: true
   image:
-    tag: "0.29.0"
+    tag: "0.29.1"
   fullnameOverride: "ghost"
 
   # -- Provide eth keystore, eth from address and eth password from existing secrets
@@ -62,7 +62,7 @@ musig:
   enabled: true
   fullnameOverride: "musig"
   image:
-    tag: "0.29.0"
+    tag: "0.29.1"
   imagePullSecrets: []
 
   service:
