@@ -77,6 +77,10 @@ spec:
             - name: CFG_RPC_URLS
               value: "{{ .Values.rpcUrl }}"
           {{- end }}
+          {{- if .Values.rpcUrl }}
+            - name: CFG_CHAIN_RPC_URLS
+              value: "{{ .Values.rpcUrl }}"
+          {{- end }}
           {{- if .Values.chainId }}
             - name: CFG_CHAIN_ID
               value: "{{ .Values.chainId }}"

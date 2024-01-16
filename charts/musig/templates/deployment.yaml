@@ -73,6 +73,10 @@ spec:
             - name: CFG_RPC_URLS
               value: "{{ .Values.ethRpcUrl }}"
           {{- end }}
+          {{- if .Values.ethRpcUrl }}
+            - name: CFG_CHAIN_RPC_URLS
+              value: "{{ .Values.ethRpcUrl }}"
+          {{- end }}
           {{- if .Values.watchdogConfigReg }}
             - name: WATCHDOG_CONFIG_REGISTRY
               value: "{{ .Values.watchdogConfigReg }}"
