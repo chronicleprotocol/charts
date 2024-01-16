@@ -67,7 +67,7 @@ spec:
           {{- end }}
           {{- if .Values.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
-              value: "{{ .Values.ethRpcUrl }}"
+              value: "[{{ .Values.ethRpcUrl }}]"
           {{- end }}
           {{- if .Values.ethChainId }}
             - name: CFG_ETH_CHAIN_ID
@@ -75,11 +75,19 @@ spec:
           {{- end }}
           {{- if .Values.rpcUrl }}
             - name: CFG_RPC_URLS
-              value: "{{ .Values.rpcUrl }}"
+              value: "[{{ .Values.rpcUrl }}]"
           {{- end }}
           {{- if .Values.chainId }}
             - name: CFG_CHAIN_ID
               value: "{{ .Values.chainId }}"
+          {{- end }}
+          {{- if .Values.watchogConfigReg }}
+            - name: WATCHDOG_CONFIG_REGISTRY
+              value: "{{ .Values.watchogConfigReg }}"
+          {{- end }}
+          {{- if .Values.watchogInterval }}
+            - name: WATCHDOG_INTERVAL
+              value: "{{ .Values.watchogInterval | default "900s" }}"
           {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM

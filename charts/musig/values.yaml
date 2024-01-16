@@ -32,7 +32,12 @@ ethConfig: {}
 # Environment variable listing
 # exposes CFG_ETH_CHAIN_ID, CFG_RPC_URLS  as env vars
 ethChainId: null
+# can set multiple rpc endpoints seperated by a comma; eg "https://eth.public-rpc.com,https://eth.public-rpc.com"
 ethRpcUrl: null
+
+# exposes WATCHDOG_CONFIG_REGISTRY, WATCHDOG_INTERVAL as env vars
+watchdogConfigReg: null
+watchdogInterval: null
 
 # non encrypted variables
 env: {}
@@ -70,7 +75,31 @@ env: {}
   #   CFG_SYMBOLS:
   #   CFG_WEBAPI_ENABLE:
   #   ETH_RPC_URL:
-
+  #   WATCHDOG_ITEM_SEPARATOR
+  #   CFG_WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
+  #   WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
+  #   CFG_WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
+  #   WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
+  #   CFG_WATCHDOG_CHAIN_ID 1
+  #   WATCHDOG_CHAIN_ID 1
+  #   CFG_WATCHDOG_CONFIG_ARG_NAME --config
+  #   WATCHDOG_CONFIG_ARG_NAME --config
+  #   CFG_WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
+  #   WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
+  #   CFG_WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
+  #   WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
+  #   CFG_WATCHDOG_INTERVAL 1h0m0s
+  #   WATCHDOG_INTERVAL 1h0m0s
+  #   CFG_WATCHDOG_EXIT_DELAY 8s
+  #   WATCHDOG_EXIT_DELAY 8s
+  #   CFG_WATCHDOG_KILL_DELAY 32s
+  #   WATCHDOG_KILL_DELAY 32s
+  #   CFG_WATCHDOG_MAX_RETRIES 24
+  #   WATCHDOG_MAX_RETRIES 24
+  #   CFG_WATCHDOG_RETRY_DELAY 5s
+  #   WATCHDOG_RETRY_DELAY 5s
+  #   CFG_WATCHDOG_HEALTHY_DELAY 1m4s
+  #   WATCHDOG_HEALTHY_DELAY 1m4s
 
 imagePullSecrets: []
 
