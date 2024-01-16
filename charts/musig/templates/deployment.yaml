@@ -65,13 +65,13 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
           {{- end }}
+          {{- if .Values.cfgItemSeperator }}
+            - name: CFG_ITEM_SEPARATOR
+              value:  "{{ .Values.cfgItemSeperator }}"
+          {{- end }}
           {{- if .Values.ethChainId }}
             - name: CFG_ETH_CHAIN_ID
               value: "{{ int .Values.ethChainId }}"
-          {{- end }}
-          {{- if .Values.ethRpcUrl }}
-            - name: CFG_RPC_URLS
-              value: "{{ .Values.ethRpcUrl }}"
           {{- end }}
           {{- if .Values.ethRpcUrl }}
             - name: CFG_CHAIN_RPC_URLS

@@ -20,14 +20,15 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env | object | `{}` |  |
-| ethChainId | string | `nil` |  |
-| ethConfig | object | `{}` |  |
-| ethRpcUrl | string | `nil` |  |
+| cfgItemSeperator | string | `","` | used in cases where we want to seperate a config list by a different seperator |
+| env | object | `{}` | non encrypted variables |
+| ethChainId | string | `nil` | exposes CFG_ETH_CHAIN_ID, CFG_CHAIN_RPC_URLS  as env vars |
+| ethConfig | object | `{}` | use only existing secret OR env vars, do not provide both |
+| ethRpcUrl | string | `nil` | can set multiple rpc endpoints seperated by a comma; eg "[https://eth.public-rpc.com,https://eth.public-rpc.com]" |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
-| hostNetwork | bool | `false` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
+| hostNetwork | bool | `false` | used especially in cases of where we want to use hostnetworking for a pod |
+| image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/adria"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
@@ -57,7 +58,7 @@ A Helm chart for deploying Chronicle Musig on Kubernetes
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
-| watchdogConfigReg | string | `nil` |  |
+| watchdogConfigReg | string | `nil` | exposes WATCHDOG_CONFIG_REGISTRY, WATCHDOG_INTERVAL as env vars |
 | watchdogInterval | string | `nil` |  |
 
 ----------------------------------------------

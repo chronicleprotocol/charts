@@ -4,11 +4,11 @@ logFormat: text
 watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
 watchdogInterval: "500s"
 
-ethRpcUrl: https://eth-mainnet.public.blastapi.io
+ethRpcUrl: "https://eth-mainnet.public.blastapi.io,https://eth.llamarpc.com"
 ethChainId: 1
 
-rpcUrl: https://eth-sepolia.public.blastapi.io
-chainId: 11155111
+rpcUrl: "https://eth-sepolia.public.blastapi.io,https://ethereum-sepolia.publicnode.com"
+chainId: "11155111"
 
 env:
   normal:

@@ -6,18 +6,21 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/chronicleprotocol/ghost
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 logLevel: null
 logFormat: null
 
-# used especially in cases of where we want to use hostnetworking for a pod
+# -- used especially in cases of where we want to use hostnetworking for a pod
 hostNetwork: false
 
+# -- used in cases where we want to seperate a config list by a different seperator
+cfgItemSeperator: ","
+
 # Provide ETH keys from existing secrets
-# use only existing secret OR env vars, do not provide both
+# -- use only existing secret OR env vars, do not provide both
 ethConfig: {}
   # ethFrom:
   #   existingSecret: ""
@@ -28,7 +31,8 @@ ethConfig: {}
   # ethPass:
   #   existingSecret: ""
   #   key: ""
-# Environment variable listing
+
+# --Environment variable listing
 env: {}
   # non sensitive variables
   # refer to `docker run --rm ghcr.io/chronicleprotocol/ghost:0.18.0 run --config.env` for full list
@@ -62,49 +66,46 @@ env: {}
   #   CFG_LIBP2P_LISTEN_ADDRS:
   #   CFG_LIBP2P_DISABLE_DISCOVERY:
   #   CFG_GHOST_INTERVAL:
-
-  # WATCHDOG_ITEM_SEPARATOR
-  # CFG_WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
-  # WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
-  # CFG_WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
-  # WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
-  # CFG_WATCHDOG_CHAIN_ID 1
-  # WATCHDOG_CHAIN_ID 1
-  # CFG_WATCHDOG_CONFIG_ARG_NAME --config
-  # WATCHDOG_CONFIG_ARG_NAME --config
-  # CFG_WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
-  # WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
-  # CFG_WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
-  # WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
-  # CFG_WATCHDOG_INTERVAL 1h0m0s
-  # WATCHDOG_INTERVAL 1h0m0s
-  # CFG_WATCHDOG_EXIT_DELAY 8s
-  # WATCHDOG_EXIT_DELAY 8s
-  # CFG_WATCHDOG_KILL_DELAY 32s
-  # WATCHDOG_KILL_DELAY 32s
-  # CFG_WATCHDOG_MAX_RETRIES 24
-  # WATCHDOG_MAX_RETRIES 24
-  # CFG_WATCHDOG_RETRY_DELAY 5s
-  # WATCHDOG_RETRY_DELAY 5s
-  # CFG_WATCHDOG_HEALTHY_DELAY 1m4s
-  # WATCHDOG_HEALTHY_DELAY 1m4s
+  #   WATCHDOG_ITEM_SEPARATOR
+  #   CFG_WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
+  #   WATCHDOG_ETH_FROM 0x0000000000000000000000000000000000000000
+  #   CFG_WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
+  #   WATCHDOG_CHAIN_RPC_URLS [https://eth.public-rpc.com]
+  #   CFG_WATCHDOG_CHAIN_ID 1
+  #   WATCHDOG_CHAIN_ID 1
+  #   CFG_WATCHDOG_CONFIG_ARG_NAME --config
+  #   WATCHDOG_CONFIG_ARG_NAME --config
+  #   CFG_WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
+  #   WATCHDOG_CONFIG_FILE_NAME ./config-from-the-net.hcl
+  #   CFG_WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
+  #   WATCHDOG_CONFIG_REGISTRY 0x0000000000000000000000000000000000000000
+  #   CFG_WATCHDOG_INTERVAL 1h0m0s
+  #   WATCHDOG_INTERVAL 1h0m0s
+  #   CFG_WATCHDOG_EXIT_DELAY 8s
+  #   WATCHDOG_EXIT_DELAY 8s
+  #   CFG_WATCHDOG_KILL_DELAY 32s
+  #   WATCHDOG_KILL_DELAY 32s
+  #   CFG_WATCHDOG_MAX_RETRIES 24
+  #   WATCHDOG_MAX_RETRIES 24
+  #   CFG_WATCHDOG_RETRY_DELAY 5s
+  #   WATCHDOG_RETRY_DELAY 5s
+  #   CFG_WATCHDOG_HEALTHY_DELAY 1m4s
+  #   WATCHDOG_HEALTHY_DELAY 1m4s
 
 
 # Environment variable listing
 
 # ethereum RPC client
-# exposes CFG_ETH_RPC_URLS, CFG_ETH_CHAIN_ID  as env vars
-# can set multiple rpc endpoints seperated by a comma; eg "[https://eth.public-rpc.com,https://eth.public-rpc.com]"
+# -- can set multiple rpc endpoints seperated by a comma; eg "https://eth.public-rpc.com,https://eth.public-rpc.com"
 ethRpcUrl: null
 ethChainId: null
 
-# exposes WATCHDOG_CONFIG_REGISTRY, WATCHDOG_INTERVAL as env vars
+# -- exposes WATCHDOG_CONFIG_REGISTRY, WATCHDOG_INTERVAL as env vars
 watchdogConfigReg: null
 watchdogInterval: null
 
 # default RPC client
-# exposes CFG_RPC_URLS, CFG_CHAIN_ID as env vars
-# can set multiple rpc endpoints seperated by a comma; eg "[https://eth.public-rpc.com,https://eth.public-rpc.com]"
+# -- can set multiple rpc endpoints seperated by a comma; eg "https://eth.public-rpc.com,https://eth.public-rpc.com"
 rpcUrl: null
 chainId: null
 
