@@ -94,7 +94,7 @@ env: {}
 
 # ethereum RPC client
 # exposes CFG_ETH_RPC_URLS, CFG_ETH_CHAIN_ID  as env vars
-# can set multiple rpc endpoints seperated by a comma; eg "https://eth.public-rpc.com,https://eth.public-rpc.com"
+# can set multiple rpc endpoints seperated by a comma; eg "[https://eth.public-rpc.com,https://eth.public-rpc.com]"
 ethRpcUrl: null
 ethChainId: null
 
@@ -104,7 +104,7 @@ watchdogInterval: null
 
 # default RPC client
 # exposes CFG_RPC_URLS, CFG_CHAIN_ID as env vars
-# can set multiple rpc endpoints seperated by a comma; eg "https://eth.public-rpc.com,https://eth.public-rpc.com"
+# can set multiple rpc endpoints seperated by a comma; eg "[https://eth.public-rpc.com,https://eth.public-rpc.com]"
 rpcUrl: null
 chainId: null
 

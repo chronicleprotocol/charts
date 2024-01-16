@@ -67,7 +67,7 @@ spec:
           {{- end }}
           {{- if .Values.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
-              value: "[{{ .Values.ethRpcUrl }}]"
+              value: "{{ .Values.ethRpcUrl }}"
           {{- end }}
           {{- if .Values.ethChainId }}
             - name: CFG_ETH_CHAIN_ID
@@ -75,7 +75,7 @@ spec:
           {{- end }}
           {{- if .Values.rpcUrl }}
             - name: CFG_RPC_URLS
-              value: "[{{ .Values.rpcUrl }}]"
+              value: "{{ .Values.rpcUrl }}"
           {{- end }}
           {{- if .Values.chainId }}
             - name: CFG_CHAIN_ID
