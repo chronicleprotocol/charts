@@ -42,9 +42,11 @@ spec:
           args: ["{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- end }}
           ports:
-            - name: listener
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:

@@ -26,7 +26,7 @@ A Helm chart for deploying gofer to Kubernetes
 | goferMode | string | `"agent"` | can be "agent" or "watch" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"sha-f2a5f01"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |

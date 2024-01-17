@@ -1,6 +1,5 @@
 goferMode: "watch"
-image:
-  tag: "sha-f2a5f01"
+
 env:
   normal:
     WATCHDOG_CHAIN_RPC_URLS: "https://rpc.testnet.chroniclelabs.io/sep"
