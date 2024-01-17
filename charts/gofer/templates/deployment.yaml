@@ -37,24 +37,18 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.configHcl }}
-          args: [ "-c", "/config/gofer.hcl", "agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args: [ "-c", "/config/gofer.hcl", "{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- else }}
-          args: ["agent", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args: ["{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- end }}
           ports:
             - name: listener
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          # readinessProbe:
-          #   tcpSocket:
-          #     port: {{ .Values.service.port }}
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
-          # livenessProbe:
-          #   tcpSocket:
-          #     port: {{ .Values.service.port }}
-          #   initialDelaySeconds: 15
-          #   periodSeconds: 20
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -67,9 +61,11 @@ spec:
           {{- include "helpers.list-env-variables" . | indent 12 }}
 
       volumes:
+      {{- if .Values.configHcl }}
       - name: config
         configMap:
           name: {{ include "gofer.fullname" . -}}-config
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
