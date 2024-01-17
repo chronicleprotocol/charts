@@ -5,8 +5,10 @@
 replicaCount: 1
 
 logLevel: "debug"
+# -- can be "agent" or "watch"
+goferMode: "agent"
 
-# Environment variable listing
+# -- Environment variable listing
 env: {}
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
@@ -17,7 +19,7 @@ image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "sha-7375716"
+  tag: "sha-f2a5f01"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -47,7 +49,10 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 9200
+  ports:
+    gofer:
+      port: 9090
+      protocol: TCP
 
 ingress:
   enabled: false
@@ -65,6 +70,19 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+# @default -- See `values.yaml`
+livenessProbe:
+  tcpSocket:
+    port: gofer
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# @default -- See `values.yaml`
+readinessProbe:
+  tcpSocket:
+    port: gofer
+  initialDelaySeconds: 10
+  periodSeconds: 10
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
