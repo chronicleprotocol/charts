@@ -20,7 +20,14 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| env | object | `{}` |  |
+| chainId | int | `1442` | must match target chain |
+| chainType | string | `nil` | can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia` |
+| env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
+| env.normal.CFG_WEBAPI_ETH_ADDR_BOOK | string | `""` |  |
+| env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
+| env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `""` |  |
+| env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
+| environment | string | `"stage"` | CFG_ENVIRONMENT can be one of `stage` or `prod` |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
@@ -52,6 +59,7 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | readinessProbe.probeSpec.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| rpcUrl | string | `nil` | rpcUrl for the target chain |
 | securityContext | object | `{}` |  |
 | service.ports.listen.port | int | `8080` |  |
 | service.ports.listen.protocol | string | `"TCP"` |  |
@@ -60,6 +68,8 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
+| txType | string | `nil` | can be one of `legacy`or `eip1559` |
+| watchdogChainRpcUrls | string | `nil` | WATCHDOG_CHAIN_RPC_URLS comma separated list of ethereum rpc urls |
 | watchdogConfigReg | string | `"0xE1CcD31f46F30A764DbACB4759E69d8799126941"` | `WATCHDOG_CONFIG_REGISTRY` onchain registry address, use staging `0xE1CcD31f46F30A764DbACB4759E69d8799126941` or prod `0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3` |
 | watchdogEthFrom | string | `"0x0000000000000000000000000000000000000000"` | `WATCHDOG_ETH_FROM` address (in seconds) |
 | watchdogInterval | string | `"300s"` | `WATCHDOG_INTERVAL` interval (in seconds) |

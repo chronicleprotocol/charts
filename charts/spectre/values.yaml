@@ -10,6 +10,16 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+# -- CFG_ENVIRONMENT can be one of `stage` or `prod`
+environment: stage
+# -- rpcUrl for the target chain
+rpcUrl: null
+# -- must match target chain
+chainId: 1442
+# -- can be one of `legacy`or `eip1559`
+txType: null
+# -- can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia`
+chainType: null
 # Provide ETH keys from existing secrets
 # use only existing secret OR env vars, do not provide both
 ethConfig: {}
@@ -23,7 +33,18 @@ ethConfig: {}
   #   existingSecret: ""
   #   key: ""
 # Environment variable listing
-env: {}
+env:
+  normal:
+    # webapi - receive only (Spectre)
+    CFG_WEBAPI_ENABLE: 1
+    # receiving
+    CFG_WEBAPI_LISTEN_ADDR: ":8080"
+    # sending (disabled)
+    CFG_WEBAPI_SOCKS5_PROXY_ADDR: ""
+    # on-chain address book
+    CFG_WEBAPI_ETH_ADDR_BOOK: ""
+    # local address book
+    CFG_WEBAPI_STATIC_ADDR_BOOK: ""
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
   # normal:
@@ -50,6 +71,8 @@ watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
 watchdogInterval: "300s"
 # -- `WATCHDOG_ETH_FROM` address (in seconds)
 watchdogEthFrom: '0x0000000000000000000000000000000000000000'
+# -- WATCHDOG_CHAIN_RPC_URLS comma separated list of ethereum rpc urls
+watchdogChainRpcUrls: null
 
 imagePullSecrets: []
 nameOverride: ""
