@@ -1,6 +1,6 @@
 # feed
 
-![Version: 0.2.7](https://img.shields.io/badge/Version-0.2.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.29.1](https://img.shields.io/badge/AppVersion-0.29.1-informational?style=flat-square)
+![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.29.2](https://img.shields.io/badge/AppVersion-0.29.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validators   on Kubernetes
 
@@ -24,7 +24,7 @@ A Helm chart for deploying Chronicle Validators   on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050","WATCHDOG_ETH_FROM":"0x00000000000000000000000000000000000000000000000"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.29.1"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s"}` | Ghost component of the feed |
+| ghost | object | `{"chainId":null,"enabled":true,"env":{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050","WATCHDOG_ETH_FROM":"0x00000000000000000000000000000000000000000000000"}},"ethChainId":1,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","image":{"tag":"0.29.2"},"logFormat":null,"logLevel":"warning","rpcUrl":null,"service":{"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s"}` | Ghost component of the feed |
 | ghost.chainId | string | `nil` | default eth chain id for `rpcUrl` |
 | ghost.enabled | bool | `true` | values for musig: refer to the [ghost](https://github.com/chronicleprotocol/charts/blob/main/charts/ghost/values.yaml) subchart |
 | ghost.env | object | `{"normal":{"CFG_WEBAPI_ENABLE":1,"CFG_WEBAPI_LISTEN_ADDR":"","CFG_WEBAPI_SOCKS5_PROXY_ADDR":"tor-proxy:9050","WATCHDOG_ETH_FROM":"0x00000000000000000000000000000000000000000000000"}}` | non-sensitive variables passed to container as environment variables |
