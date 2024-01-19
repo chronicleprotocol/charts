@@ -1,9 +1,9 @@
 dependencies:
 - name: tor-proxy
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.7
+  version: 0.0.8
 - name: spectre
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.1.8
-digest: sha256:8949ae1fc2648131793fb5f4ee0c8bd2f731805b7882aef59df45c8fd6c005c9
-generated: "2023-08-28T15:02:38.944239924+02:00"
+  version: 0.2.0
+digest: sha256:cf03b5ce590f8fc3d4faf26e62c85be2e7cf6af63f09009adacfe9cac295671f
+generated: "2024-01-19T11:30:13.695139+02:00"
