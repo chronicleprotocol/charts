@@ -54,6 +54,18 @@ spec:
             {{- .Values.readinessProbe.probeSpec | toYaml | nindent 12 }}
           {{- end }}
           env:
+          {{- if .Values.watchdogConfigReg }}
+            - name: WATCHDOG_CONFIG_REGISTRY
+              value: "{{ .Values.watchdogConfigReg }}"
+          {{- end }}
+          {{- if .Values.watchdogInterval }}
+            - name: WATCHDOG_INTERVAL
+              value: "{{ .Values.watchdogInterval | default "900s" }}"
+          {{- end }}
+          {{- if .Values.watchdogEthFrom }}
+            - name: WATCHDOG_ETH_FROM
+              value: "{{ .Values.watchdogEthFrom }}"
+          {{- end }}
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM
               valueFrom:

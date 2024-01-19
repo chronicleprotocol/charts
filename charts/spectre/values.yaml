@@ -44,6 +44,13 @@ env: {}
 logLevel: null
 logFormat: null
 
+# -- `WATCHDOG_CONFIG_REGISTRY` onchain registry address, use staging `0xE1CcD31f46F30A764DbACB4759E69d8799126941` or prod `0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3`
+watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
+# -- `WATCHDOG_INTERVAL` interval (in seconds)
+watchdogInterval: "300s"
+# -- `WATCHDOG_ETH_FROM` address (in seconds)
+watchdogEthFrom: '0x0000000000000000000000000000000000000000'
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -80,22 +87,6 @@ service:
     #   port: 9100
     #   protocol: TCP
 
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 livenessProbe:
   enabled: false
   probeSpec:
@@ -119,6 +110,7 @@ readinessProbe:
     timeoutSeconds: 5
     failureThreshold: 3
     successThreshold: 1
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
