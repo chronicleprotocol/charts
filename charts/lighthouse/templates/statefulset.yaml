@@ -55,6 +55,9 @@ spec:
             - --metrics-address={{ .Values.metricsAddress }}
             - --metrics-port={{ .Values.metricsPort }}
             - --metrics-allow-origin={{ .Values.metricsAllowOrigin }}
+            {{- if .Values.purgeDb }}
+            - --purge-db
+            {{- end }}
           ports:
             - name: p2p-tcp
               containerPort: {{ .Values.p2pPort }}

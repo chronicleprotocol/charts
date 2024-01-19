@@ -1,6 +1,6 @@
 # lighthouse
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.5.0](https://img.shields.io/badge/AppVersion-v4.5.0-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v4.5.0](https://img.shields.io/badge/AppVersion-v4.5.0-informational?style=flat-square)
 
 A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 
@@ -54,6 +54,7 @@ A Helm chart for deploying the Lodestar Consensus Layer / beacon on Kubernetes
 | persistence.storageClassName | string | `nil` | Use a specific storage class E.g 'local-path' for local storage to achieve best performance Read more (https://github.com/rancher/local-path-provisioner) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| purgeDb | bool | `false` |  |
 | readinessProbe | object | `{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"http-api"}}` | Readiness probe |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |

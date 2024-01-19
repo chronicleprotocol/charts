@@ -11,7 +11,7 @@ image:
 
 network: sepolia
 # can be mainnet or sepolia, gnosis etc
-
+purgeDb: false
 checkpointSyncUrl: https://sepolia.beaconstate.info
 # can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
