@@ -2097,6 +2097,30 @@ entries:
   relay:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2024-01-19T09:42:34.850620623Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    - condition: spectre.enabled
+      name: spectre
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.2.0
+    description: A Helm chart for deploying Chronicle Relays on Kubernetes
+    digest: ef44f399ea44e67d576db435deb807ef348f5ae360ff66bc13b3193c5992ad21
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/relay-0.1.0/relay-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2023-08-28T13:31:46.865206054Z"
     dependencies:
     - condition: tor-proxy.enabled
@@ -3058,4 +3082,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-01-19T09:15:57.411599698Z"
+generated: "2024-01-19T09:42:34.851668885Z"
