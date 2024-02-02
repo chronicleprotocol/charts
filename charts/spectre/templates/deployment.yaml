@@ -32,6 +32,14 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          {{- if .Values.entryPointOverride }}
+          command:
+            {{- range .Values.entryPointOverride }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- else }}
+          command: ["/usr/local/bin/chronicle-app"]
+          {{- end }}
           args:
             - "run"
             - "-v"
@@ -56,22 +64,6 @@ spec:
           env:
             - name: CFG_ENVIRONMENT
               value: "{{ .Values.environment | default "prod" }}"
-          {{- if .Values.watchdogConfigReg }}
-            - name: WATCHDOG_CONFIG_REGISTRY
-              value: "{{ .Values.watchdogConfigReg }}"
-          {{- end }}
-          {{- if .Values.watchdogInterval }}
-            - name: WATCHDOG_INTERVAL
-              value: "{{ .Values.watchdogInterval | default "900s" }}"
-          {{- end }}
-          {{- if .Values.watchdogEthFrom }}
-            - name: WATCHDOG_ETH_FROM
-              value: "{{ .Values.watchdogEthFrom }}"
-          {{- end }}
-          {{- if .Values.watchdogChainRpcUrls }}
-            - name: WATCHDOG_CHAIN_RPC_URLS
-              value: "{{ .Values.watchdogChainRpcUrls }}"
-          {{- end }}
             - name: CFG_CHAIN_RPC_URLS
               value: "{{ .Values.rpcUrl }}"
             - name: CFG_CHAIN_ID

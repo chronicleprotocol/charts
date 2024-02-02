@@ -15,7 +15,7 @@ environment: stage
 # -- rpcUrl for the target chain
 rpcUrl: null
 # -- must match target chain
-chainId: 1442
+chainId: null
 # -- can be one of `legacy`or `eip1559`
 txType: null
 # -- can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia`
@@ -33,10 +33,19 @@ ethConfig: {}
   #   existingSecret: ""
   #   key: ""
 # Environment variable listing
+
+entryPointOverride: []
+  # - "/usr/local/bin/watchdog"
+  # - "/usr/local/bin/chronicle-appp"
+
 env:
   normal:
     # webapi - receive only (Spectre)
     CFG_WEBAPI_ENABLE: 1
+    # CFG_MODELS: |-
+    #   "LIDO_LST/1DAY"
+    #   "ETH/BTC"
+    # CFG_SPECTRE_PAIRS:  "MKR/USD"
     # receiving
     CFG_WEBAPI_LISTEN_ADDR: ":8080"
     # sending (disabled)
@@ -64,15 +73,6 @@ env:
 
 logLevel: null
 logFormat: null
-
-# -- `WATCHDOG_CONFIG_REGISTRY` onchain registry address, use staging `0xE1CcD31f46F30A764DbACB4759E69d8799126941` or prod `0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3`
-watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
-# -- `WATCHDOG_INTERVAL` interval (in seconds)
-watchdogInterval: "300s"
-# -- `WATCHDOG_ETH_FROM` address (in seconds)
-watchdogEthFrom: '0x0000000000000000000000000000000000000000'
-# -- WATCHDOG_CHAIN_RPC_URLS comma separated list of ethereum rpc urls
-watchdogChainRpcUrls: null
 
 imagePullSecrets: []
 nameOverride: ""
