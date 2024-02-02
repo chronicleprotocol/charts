@@ -4,6 +4,6 @@ dependencies:
   version: 0.0.8
 - name: spectre
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.2.0
-digest: sha256:cf03b5ce590f8fc3d4faf26e62c85be2e7cf6af63f09009adacfe9cac295671f
-generated: "2024-01-19T11:30:13.695139+02:00"
+  version: 0.2.1
+digest: sha256:f66e7af406dd0666e9668772c37982c9ed92168e2199e4b6d792c6d9db393006
+generated: "2024-02-02T13:37:24.254211+02:00"
