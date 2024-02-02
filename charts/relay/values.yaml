@@ -14,15 +14,6 @@ spectre:
   # -- can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia`
   chainType: null
 
-  # -- `WATCHDOG_CONFIG_REGISTRY` onchain registry address, use staging `0xE1CcD31f46F30A764DbACB4759E69d8799126941` or prod `0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3`
-  watchdogConfigReg: null
-  # -- `WATCHDOG_INTERVAL` interval (in seconds)
-  watchdogInterval: null
-  # -- `WATCHDOG_ETH_FROM` address (in seconds)
-  watchdogEthFrom: '0x0000000000000000000000000000000000000000'
-  # -- WATCHDOG_CHAIN_RPC_URLS comma separated list of ethereum rpc urls
-  watchdogChainRpcUrls: null
-
   ethConfig: {}
     # ethFrom:
     #   existingSecret: "eth-keys"
