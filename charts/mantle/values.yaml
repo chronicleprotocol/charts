@@ -8,7 +8,7 @@ replicaCount: 1
 snapShotSync:
   enabled: false
   snapShotUrl: 'https://s3.ap-southeast-1.amazonaws.com/snapshot.mantle.xyz'
-  tarballName: '20231119-mainnet-chaindata.tar'
+  tarballName: '20240117-mainnet-chaindata.tar'
 
 # -- Path to store data
 data:
@@ -18,13 +18,13 @@ data:
 ethL1: "https://rpc.ankr.com/eth"
 env:
   - name: BLOCK_SIGNER_KEY
-    value: "22c7fa2d2cf5c0ccc21ff32a210d7dfea7bbc7d16c3ba0a75302a7b51c16c4f7"
+    value: "9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"
   - name: BLOCK_SIGNER_ADDRESS
-    value: "0xa9eC80835800a59Fd022f53e3E75AA4552F22ccB"
+    value: "0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"
   - name: CHAIN_ID
-    value: 5000
+    value: "5000"
   - name: ETH1_SYNC_SERVICE_ENABLE
-    value: true
+    value: "true"
   - name: ETH1_CONFIRMATION_DEPTH
     value: "0"
   - name: ETH1_CTC_DEPLOYMENT_HEIGHT
@@ -34,41 +34,41 @@ env:
   - name: GCMODE
     value: "archive"
   - name: IPC_DISABLE
-    value: true
+    value: "true"
   - name: NETWORK_ID
-    value: 5000
+    value: "5000"
   - name: NO_USB
-    value: true
+    value: "true"
   - name: NO_DISCOVER
-    value: true
+    value: "true"
   - name: ROLLUP_TIMESTAMP_REFRESH
     value: "5s"
   - name: ROLLUP_STATE_DUMP_PATH
     value: "https://mantlenetworkio.github.io/networks/mainnet/genesis.json"
   - name: ROLLUP_CLIENT_HTTP
-    value: "https://dtl.mantle.xyz"
+    value: "https://dtl-eu.mantle.xyz/"
   - name: ROLLUP_ENFORCE_FEES
-    value: true
+    value: "true"
   - name: ROLLUP_FEE_THRESHOLD_DOWN
-    value: 1
+    value: "1"
   - name: ROLLUP_FEE_THRESHOLD_UP
-    value: 4000
+    value: "4000"
   - name: RETRIES
-    value: 60
+    value: "60"
   - name: ROLLUP_POLL_INTERVAL_FLAG
     value: "500ms"
   - name: ROLLUP_ENABLE_L2_GAS_POLLING
-    value: true
+    value: "true"
   - name: ROLLUP_BACKEND
     value: "l2"
   - name: ROLLUP_VERIFIER_ENABLE
-    value: true
+    value: "true"
   - name: RPC_ENABLE
-    value: true
+    value: "true"
   - name: RPC_ADDR
     value: "0.0.0.0"
   - name: RPC_PORT
-    value: 8545
+    value: "8545"
   - name: RPC_API
     value: "eth,net,rollup,web3"
   - name: RPC_CORS_DOMAIN
@@ -78,21 +78,21 @@ env:
   - name: SEQUENCER_CLIENT_HTTP
     value: "https://rpc.mantle.xyz"
   - name: TARGET_GAS_LIMIT
-    value: 30000000
+    value: "30000000"
   - name: WS
-    value: true
+    value: "true"
   - name: WS_ADDR
     value: "0.0.0.0"
   - name: WS_PORT
-    value: 8546
+    value: "8546"
   - name: WS_API
     value: "eth,net,rollup,web3"
   - name: WS_ORIGINS
     value: "*"
   - name: USING_BVM
-    value: true
+    value: "true"
   - name: VERBOSITY
-    value: 3
+    value: "3"
 
 image:
   repository: mantlenetworkio/l2geth
