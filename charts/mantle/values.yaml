@@ -8,7 +8,7 @@ replicaCount: 1
 snapShotSync:
   enabled: false
   snapShotUrl: 'https://s3.ap-southeast-1.amazonaws.com/snapshot.mantle.xyz'
-  tarballName: '20231119-mainnet-chaindata.tar'
+  tarballName: '20240117-mainnet-chaindata.tar'
 
 # -- Path to store data
 data:
@@ -18,9 +18,9 @@ data:
 ethL1: "https://rpc.ankr.com/eth"
 env:
   - name: BLOCK_SIGNER_KEY
-    value: "22c7fa2d2cf5c0ccc21ff32a210d7dfea7bbc7d16c3ba0a75302a7b51c16c4f7"
+    value: "9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"
   - name: BLOCK_SIGNER_ADDRESS
-    value: "0xa9eC80835800a59Fd022f53e3E75AA4552F22ccB"
+    value: "0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"
   - name: CHAIN_ID
     value: 5000
   - name: ETH1_SYNC_SERVICE_ENABLE
@@ -46,7 +46,7 @@ env:
   - name: ROLLUP_STATE_DUMP_PATH
     value: "https://mantlenetworkio.github.io/networks/mainnet/genesis.json"
   - name: ROLLUP_CLIENT_HTTP
-    value: "https://dtl.mantle.xyz"
+    value: "https://dtl-eu.mantle.xyz/"
   - name: ROLLUP_ENFORCE_FEES
     value: true
   - name: ROLLUP_FEE_THRESHOLD_DOWN

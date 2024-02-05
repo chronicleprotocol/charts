@@ -6,9 +6,9 @@ replicaCount: 1
 
 # -- Download from snapshot. will run snapshot sync before starting node in an initContainer.
 snapShotSync:
-  enabled: true
+  enabled: false
   snapShotUrl: 'https://s3.ap-southeast-1.amazonaws.com/static.testnet.mantle.xyz'
-  tarballName: '20231119-testnet-chaindata.tar'
+  tarballName: '20240117-testnet-chaindata.tar'
 
 # -- Path to store data
 data:
@@ -23,7 +23,7 @@ env:
   - name: ETH1_CONFIRMATION_DEPTH
     value: "0"
   - name: ROLLUP_CLIENT_HTTP
-    value: "https://dtl-tob.testnet.mantle.xyz"
+    value: "https://dtl.testnet.mantle.xyz"
   - name: ROLLUP_POLL_INTERVAL_FLAG
     value: 500ms
   - name: ROLLUP_ENABLE_L2_GAS_POLLING
