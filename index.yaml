@@ -1263,6 +1263,21 @@ entries:
     version: 0.1.1
   gofer:
   - apiVersion: v2
+    appVersion: "0.30"
+    created: "2024-02-15T07:35:05.783222069Z"
+    description: A Helm chart for deploying gofer to Kubernetes
+    digest: 73185b7239bf4e168533b3710dd09fe519c188fea5e09f49e37644323f75c528
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: gofer
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.2.1/gofer-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: "0.29"
     created: "2024-01-17T15:26:44.387522896Z"
     description: A Helm chart for deploying gofer to Kubernetes
@@ -2650,6 +2665,26 @@ entries:
     version: 0.1.1
   spire:
   - apiVersion: v2
+    appVersion: "0.30"
+    created: "2024-02-15T07:35:05.991872481Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: fb8b69adab22c51f5bc13e81cde55c8b0d1fadf8354b29ef756e2f8b3fc54d6c
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.2.0/spire-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.28.2
     created: "2024-01-11T15:51:17.127114652Z"
     dependencies:
@@ -3171,4 +3206,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-02-15T06:59:02.425186349Z"
+generated: "2024-02-15T07:35:05.994873167Z"
