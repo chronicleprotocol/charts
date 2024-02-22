@@ -80,8 +80,6 @@ env:
     value: "*"
   - name: RPC_ADDR
     value: "0.0.0.0"
-  - name: ETH1_HTTP
-    value: "https://rpc.chroniclelabs.io/eth"
   - name: ROLLUP_VERIFIER_ENABLE
     value: "true"
   - name: ROLLUP_FEE_THRESHOLD_UP

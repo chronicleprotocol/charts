@@ -1,6 +1,6 @@
 # mantle
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
 
 A Helm chart for deploying Mantle RPC nodes on Kubernetes
 
@@ -58,14 +58,12 @@ A Helm chart for deploying Mantle RPC nodes on Kubernetes
 | env[24].value | string | `"*"` |  |
 | env[25].name | string | `"RPC_ADDR"` |  |
 | env[25].value | string | `"0.0.0.0"` |  |
-| env[26].name | string | `"ETH1_HTTP"` |  |
-| env[26].value | string | `"https://rpc.chroniclelabs.io/eth"` |  |
-| env[27].name | string | `"ROLLUP_VERIFIER_ENABLE"` |  |
-| env[27].value | string | `"true"` |  |
-| env[28].name | string | `"ROLLUP_FEE_THRESHOLD_UP"` |  |
-| env[28].value | string | `"4000"` |  |
-| env[29].name | string | `"WS_API"` |  |
-| env[29].value | string | `"eth,net,rollup,web3"` |  |
+| env[26].name | string | `"ROLLUP_VERIFIER_ENABLE"` |  |
+| env[26].value | string | `"true"` |  |
+| env[27].name | string | `"ROLLUP_FEE_THRESHOLD_UP"` |  |
+| env[27].value | string | `"4000"` |  |
+| env[28].name | string | `"WS_API"` |  |
+| env[28].value | string | `"eth,net,rollup,web3"` |  |
 | env[2].name | string | `"RPC_ENABLE"` |  |
 | env[2].value | string | `"true"` |  |
 | env[3].name | string | `"IPC_DISABLE"` |  |
