@@ -35,8 +35,15 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - >
-              wget {{ .Values.snapShotSync.snapShotUrl}}/{{ .Values.snapShotSync.tarballName}} &&
-              tar xf {{ .Values.snapShotSync.tarballName}} -C {{ .Values.data.path}}
+              set -euxo pipefail && # Enable strict error handling
+              cd {{ .Values.data.path }} && # Change to the target directory
+              echo "Downloading snapshot tarball..." &&
+              wget -O {{ .Values.snapShotSync.tarballName }} {{ .Values.snapShotSync.snapShotUrl }}/{{ .Values.snapShotSync.tarballName }} &&
+              echo "Extracting snapshot tarball..." &&
+              tar xf {{ .Values.snapShotSync.tarballName }} &&
+              echo "Deleting tarball archive..." &&
+              rm -f {{ .Values.snapShotSync.tarballName }} &&
+              echo "Snapshot download and extraction complete."
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.data.path}}
@@ -72,6 +79,25 @@ spec:
               value: "{{ .Values.data.path }}"
             - name: ETH1_HTTP
               value: "{{ .Values.ethL1 }}"
+            - name: ROLLUP_CLIENT_HTTP
+              value: "{{ .Values.rollupClientHttp }}"
+            - name: SEQUENCER_CLIENT_HTTP
+              value: "{{ .Values.sequencerClientHttp }}"
+            - name: BLOCK_SIGNER_ADDRESS
+              value: "{{ .Values.blockSignerAddress }}"
+            - name: BLOCK_SIGNER_KEY
+              value: "{{ .Values.blockSignerKey }}"
+            - name: NETWORK_ID
+              value: "{{ .Values.networkId }}"
+            - name: CHAIN_ID
+              value: "{{ .Values.networkId }}"
+            - name: ROLLUP_STATE_DUMP_PATH
+              value: "{{ .Values.rollupStateDumpPath }}"
+            - name: WS_ADDR
+              value: "{{ .Values.service.ports.wsrpc.port }}"
+            - name: RPC_PORT
+              value: "{{ .Values.service.ports.httprpc.port }}"
+
           {{- if .Values.env }}
             {{- toYaml .Values.env | nindent 12 }}
           {{- end }}

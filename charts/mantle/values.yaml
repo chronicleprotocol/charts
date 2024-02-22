@@ -4,7 +4,7 @@
 
 replicaCount: 1
 
-# -- Download from snapshot. will run snapshot sync before starting node in an initContainer.
+# -- Download from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://github.com/mantlenetworkio/networks/blob/main/run-node-mainnet.md#download-latest-snapshot-from-mantle
 snapShotSync:
   enabled: false
   snapShotUrl: 'https://s3.ap-southeast-1.amazonaws.com/snapshot.mantle.xyz'
@@ -16,83 +16,78 @@ data:
 
 # -- ETH l1 node
 ethL1: "https://rpc.ankr.com/eth"
+# -- DLT service url refer to https://docs.mantle.xyz/network/for-validators/deploy-a-node/deploying-a-rollup-verifier-replica-node#network-dtl-url
+rollUpClientHttp: "https://dtl.mantle.xyz"
+rollUpStateDumpPath: "https://mantlenetworkio.github.io/networks/mainnet/genesis.json"
+
+sequencerClientHttp: "https://rpc.mantle.xyz"
+blockSignerAddress: "0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"
+blockSignerKey: "9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"
+
+# -- Network id
+networkId: 5000
+
 env:
-  - name: BLOCK_SIGNER_KEY
-    value: "9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"
-  - name: BLOCK_SIGNER_ADDRESS
-    value: "0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"
-  - name: CHAIN_ID
-    value: "5000"
   - name: ETH1_SYNC_SERVICE_ENABLE
     value: "true"
-  - name: ETH1_CONFIRMATION_DEPTH
-    value: "0"
-  - name: ETH1_CTC_DEPLOYMENT_HEIGHT
-    value: "17577586"
   - name: GASPRICE
     value: "0"
-  - name: GCMODE
-    value: "archive"
+  - name: RPC_ENABLE
+    value: "true"
   - name: IPC_DISABLE
-    value: "true"
-  - name: NETWORK_ID
-    value: "5000"
-  - name: NO_USB
-    value: "true"
-  - name: NO_DISCOVER
-    value: "true"
-  - name: ROLLUP_TIMESTAMP_REFRESH
-    value: "5s"
-  - name: ROLLUP_STATE_DUMP_PATH
-    value: "https://mantlenetworkio.github.io/networks/mainnet/genesis.json"
-  - name: ROLLUP_CLIENT_HTTP
-    value: "https://dtl-eu.mantle.xyz/"
-  - name: ROLLUP_ENFORCE_FEES
-    value: "true"
-  - name: ROLLUP_FEE_THRESHOLD_DOWN
-    value: "1"
-  - name: ROLLUP_FEE_THRESHOLD_UP
-    value: "4000"
-  - name: RETRIES
-    value: "60"
-  - name: ROLLUP_POLL_INTERVAL_FLAG
-    value: "500ms"
-  - name: ROLLUP_ENABLE_L2_GAS_POLLING
     value: "true"
   - name: ROLLUP_BACKEND
     value: "l2"
-  - name: ROLLUP_VERIFIER_ENABLE
+  - name: ROLLUP_ENABLE_L2_GAS_POLLING
     value: "true"
-  - name: RPC_ENABLE
+  - name: ROLLUP_ENFORCE_FEES
     value: "true"
-  - name: RPC_ADDR
-    value: "0.0.0.0"
-  - name: RPC_PORT
-    value: "8545"
   - name: RPC_API
     value: "eth,net,rollup,web3"
   - name: RPC_CORS_DOMAIN
     value: "*"
-  - name: RPC_VHOSTS
-    value: "*"
-  - name: SEQUENCER_CLIENT_HTTP
-    value: "https://rpc.mantle.xyz"
   - name: TARGET_GAS_LIMIT
     value: "30000000"
-  - name: WS
+  - name: ROLLUP_FEE_THRESHOLD_DOWN
+    value: "1"
+  - name: ROLLUP_TIMESTAMP_REFRESH
+    value: "5s"
+  - name: ETH1_CTC_DEPLOYMENT_HEIGHT
+    value: "8"
+  - name: RETRIES
+    value: "60"
+  - name: NO_DISCOVER
     value: "true"
-  - name: WS_ADDR
-    value: "0.0.0.0"
-  - name: WS_PORT
-    value: "8546"
-  - name: WS_API
-    value: "eth,net,rollup,web3"
-  - name: WS_ORIGINS
+  - name: NO_USB
+    value: "true"
+  - name: GCMODE
+    value: "archive"
+  - name: RPC_VHOSTS
     value: "*"
+  - name: ETH1_CONFIRMATION_DEPTH
+    value: "0"
   - name: USING_BVM
     value: "true"
+  - name: ROLLUP_POLL_INTERVAL_FLAG
+    value: "500ms"
   - name: VERBOSITY
     value: "3"
+  - name: WS_PORT
+    value: "8546"
+  - name: WS
+    value: "true"
+  - name: WS_ORIGINS
+    value: "*"
+  - name: RPC_ADDR
+    value: "0.0.0.0"
+  - name: ETH1_HTTP
+    value: "https://rpc.chroniclelabs.io/eth"
+  - name: ROLLUP_VERIFIER_ENABLE
+    value: "true"
+  - name: ROLLUP_FEE_THRESHOLD_UP
+    value: "4000"
+  - name: WS_API
+    value: "eth,net,rollup,web3"
 
 image:
   repository: mantlenetworkio/l2geth
@@ -176,7 +171,7 @@ persistence:
   accessModes:
   - ReadWriteOnce
   # -- Requested size for volume claim template
-  size: 20Gi
+  size: 1600Gi
   # -- Use a specific storage class
   # E.g 'local-path' for local storage to achieve best performance
   # Read more (https://github.com/rancher/local-path-provisioner)
