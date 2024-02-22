@@ -35,15 +35,15 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - >
-              set -euxo pipefail && # Enable strict error handling
-              cd {{ .Values.data.path }} && # Change to the target directory
-              echo "Downloading snapshot tarball..." &&
-              wget -O {{ .Values.snapShotSync.tarballName }} {{ .Values.snapShotSync.snapShotUrl }}/{{ .Values.snapShotSync.tarballName }} &&
-              echo "Extracting snapshot tarball..." &&
-              tar xf {{ .Values.snapShotSync.tarballName }} &&
+              set -euxo pipefail;
+              cd {{ .Values.data.path }};
+              echo "Downloading snapshot tarball..." ;
+              wget -O {{ .Values.snapShotSync.tarballName }} {{ .Values.snapShotSync.snapShotUrl }}/{{ .Values.snapShotSync.tarballName }};
+              echo "Extracting snapshot tarball...";
+              tar xf {{ .Values.snapShotSync.tarballName }};
               echo "Deleting tarball archive..." &&
-              rm -f {{ .Values.snapShotSync.tarballName }} &&
-              echo "Snapshot download and extraction complete."
+              rm -f {{ .Values.snapShotSync.tarballName }};
+              echo "Snapshot download and extraction complete.";
           volumeMounts:
             - name: storage
               mountPath: {{ .Values.data.path}}
