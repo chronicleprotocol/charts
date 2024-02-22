@@ -1,6 +1,6 @@
 # mantle
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
 
 A Helm chart for deploying Mantle RPC nodes on Kubernetes
 
@@ -21,6 +21,7 @@ A Helm chart for deploying Mantle RPC nodes on Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | blockSignerAddress | string | `"0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"` |  |
 | blockSignerKey | string | `"9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"` |  |
+| chainId | int | `5000` | Chain Id |
 | data | object | `{"path":"/mantle-data"}` | Path to store data |
 | env[0].name | string | `"ETH1_SYNC_SERVICE_ENABLE"` |  |
 | env[0].value | string | `"true"` |  |

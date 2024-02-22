@@ -80,7 +80,7 @@ spec:
             - name: ETH1_HTTP
               value: "{{ .Values.ethL1 }}"
             - name: ROLLUP_CLIENT_HTTP
-              value: "{{ .Values.rollupClientHttp }}"
+              value: "{{ .Values.rollUpClientHttp }}"
             - name: SEQUENCER_CLIENT_HTTP
               value: "{{ .Values.sequencerClientHttp }}"
             - name: BLOCK_SIGNER_ADDRESS
@@ -90,7 +90,7 @@ spec:
             - name: NETWORK_ID
               value: "{{ .Values.networkId }}"
             - name: CHAIN_ID
-              value: "{{ .Values.networkId }}"
+              value: "{{ .Values.chainId }}"
             - name: ROLLUP_STATE_DUMP_PATH
               value: "{{ .Values.rollupStateDumpPath }}"
             - name: WS_ADDR

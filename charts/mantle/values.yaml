@@ -26,6 +26,8 @@ blockSignerKey: "9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2
 
 # -- Network id
 networkId: 5000
+# -- Chain Id
+chainId: 5000
 
 env:
   - name: ETH1_SYNC_SERVICE_ENABLE
