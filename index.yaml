@@ -1466,6 +1466,19 @@ entries:
   mantle:
   - apiVersion: v2
     appVersion: v0.4.3
+    created: "2024-03-07T12:11:33.913141478Z"
+    description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
+    digest: 51b2a09a87f4e0999bce47c806e7c553ea7d19e75ad46c4bd87cce4cf33c3fe1
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: mantle
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/mantle-0.0.8/mantle-0.0.8.tgz
+    version: 0.0.8
+  - apiVersion: v2
+    appVersion: v0.4.3
     created: "2024-03-07T11:43:55.374369374Z"
     description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
     digest: 300bc1a55ed4af07cfebb4cc6afaa25a60e6dc3962bef7d8e44cf2dd48ee700a
@@ -3271,4 +3284,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-03-07T11:43:55.375750961Z"
+generated: "2024-03-07T12:11:33.926164638Z"
