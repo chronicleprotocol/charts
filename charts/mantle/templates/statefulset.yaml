@@ -92,7 +92,7 @@ spec:
             - name: CHAIN_ID
               value: "{{ .Values.chainId }}"
             - name: ROLLUP_STATE_DUMP_PATH
-              value: "{{ .Values.rollupStateDumpPath }}"
+              value: "{{ .Values.rollUpStateDumpPath }}"
             - name: WS_ADDR
               value: "{{ .Values.service.ports.wsrpc.port }}"
             - name: RPC_PORT
