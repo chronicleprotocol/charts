@@ -55,8 +55,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          command:
-            - sh /usr/local/bin/geth.sh
+          command: ["/bin/sh", "-c", "/usr/local/bin/geth.sh"]
           args:
           {{- if .Values.args }}
             {{- toYaml .Values.args | nindent 12 }}
