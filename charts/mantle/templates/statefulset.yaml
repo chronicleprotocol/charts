@@ -75,7 +75,7 @@ spec:
               mountPath: {{ .Values.data.path }}
           env:
             - name: DATADIR
-              value: "{{ .Values.data.path }}"
+              value: "/root/.ethereum"
             - name: ETH1_HTTP
               value: "{{ .Values.ethL1 }}"
             - name: ROLLUP_CLIENT_HTTP
@@ -92,7 +92,7 @@ spec:
               value: "{{ .Values.chainId }}"
             - name: ROLLUP_STATE_DUMP_PATH
               value: "{{ .Values.rollUpStateDumpPath }}"
-            - name: WS_ADDR
+            - name: WS_PORT
               value: "{{ .Values.service.ports.wsrpc.port }}"
             - name: RPC_PORT
               value: "{{ .Values.service.ports.httprpc.port }}"
