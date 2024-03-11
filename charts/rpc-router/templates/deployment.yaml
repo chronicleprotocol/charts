@@ -65,6 +65,8 @@ spec:
           items:
             - key: dshackle.yaml
               path: dshackle.yaml
+            - key: upstreams.yaml
+              path: upstreams.yaml
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

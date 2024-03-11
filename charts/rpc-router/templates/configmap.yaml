@@ -55,7 +55,8 @@ data:
           blockchain: {{ .blockchain }}
      {{- end }}
     cluster:
-      upstreams:
-    {{- .Values.dshackle.upstreams | nindent 8 }}
+      include: "upstreams.yaml"
     signed-response:
       enabled: {{ .Values.dshackle.signedResponse | default false }}
+  upstreams.yaml: |
+    {{- .Values.dshackle.upstreams | nindent 4 }}
