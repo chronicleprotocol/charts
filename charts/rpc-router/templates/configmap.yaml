@@ -59,4 +59,8 @@ data:
     signed-response:
       enabled: {{ .Values.dshackle.signedResponse | default false }}
   upstreams.yaml: |
-    {{- .Values.dshackle.upstreams | nindent 4 }}
+    version: v1
+
+    cluster:
+      upstreams:
+    {{- .Values.dshackle.upstreams | nindent 8 }}
