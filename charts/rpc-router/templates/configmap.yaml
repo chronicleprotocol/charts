@@ -54,12 +54,9 @@ data:
         - id: {{ .id }}
           blockchain: {{ .blockchain }}
      {{- end }}
-    cluster:
-      include: "upstreams.yaml"
+
     signed-response:
       enabled: {{ .Values.dshackle.signedResponse | default false }}
-  upstreams.yaml: |
-    version: v1
 
     cluster:
       upstreams:

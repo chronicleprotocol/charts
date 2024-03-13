@@ -195,19 +195,17 @@ dshackle:
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-one.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://arbitrum-one.public.blastapi.io"
     - id: arb-sepolia
       chain: arbitrum-sepolia
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-sepolia.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://arbitrum-sepolia.public.blastapi.io"
     - id: eth-mainnet
       chain: ethereum
       options:
@@ -216,10 +214,9 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth.public-rpc.com"
+        generic:
+          rpc:
+            url: "https://eth.public-rpc.com"
     - id: eth-sepolia
       chain: sepolia
       options:
@@ -228,10 +225,9 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-sepolia.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://eth-sepolia.public.blastapi.io"
     - id: gnosis-mainnet
       chain: gnosis
       options:
@@ -240,8 +236,7 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
+        generic:
             rpc:
               url: "https://gnosis-mainnet.public.blastapi.io"
     - id: gnosis-chiado
@@ -252,10 +247,9 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://gnosis-chiado.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://gnosis-chiado.public.blastapi.io"
     - id: mantle
       chain: mantle
       options:
@@ -264,10 +258,9 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://mantle-mainnet.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://mantle-mainnet.public.blastapi.io"
     - id: mantle-gor
       chain: mantle-testnet
       options:
@@ -276,64 +269,57 @@ dshackle:
         enabled:
           - name: eth_maxPriorityFeePerGas
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://mantle-goerli.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://mantle-goerli.public.blastapi.io"
     - id: opt-mainent
       chain: optimism
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-mainnet.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://optimism-mainnet.public.blastapi.io"
     - id: opt-sepolia
       chain: optimism-sepolia
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-sepolia.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://optimism-sepolia.public.blastapi.io"
     - id: zkevm
       chain: polygon-zkevm
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://polygon-zkevm-mainnet.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://polygon-zkevm-mainnet.public.blastapi.io"
     - id: zkevm
       chain: polygon-zkevm-testnet
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://polygon-zkevm-testnet.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://polygon-zkevm-testnet.public.blastapi.io"
     - id: zksync
       chain: zksync
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://zksync-mainnet.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://zksync-mainnet.public.blastapi.io"
     - id: zkevm
       chain: zksync-sepolia
       options:
         disable-validation: true
       connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://zksync-sepolia.public.blastapi.io"
+        generic:
+          rpc:
+            url: "https://zksync-sepolia.public.blastapi.io"
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
