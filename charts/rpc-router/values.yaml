@@ -162,12 +162,10 @@ dshackle:
   routes:
     - id: arb1
       blockchain: arbitrum
-    - id: arb
-      blockchain: arbitrum-testnet
+    - id: arbsep
+      blockchain: arbitrum-sepolia
     - id: eth
       blockchain: ethereum
-    - id: gor
-      blockchain: goerli
     - id: gno
       blockchain: gnosis
     - id: chi
@@ -180,8 +178,8 @@ dshackle:
       blockchain: mantle-testnet
     - id: oeth
       blockchain: optimism
-    - id: ogor
-      blockchain: optimism-testnet
+    - id: opsep
+      blockchain: optimism-sepolia
     - id: zkevm
       blockchain: polygon-zkevm
     - id: zkevmtest
@@ -201,15 +199,15 @@ dshackle:
           execution:
             rpc:
               url: "https://arbitrum-one.public.blastapi.io"
-    - id: arb-goerli
-      chain: arbitrum-testnet
+    - id: arb-sepolia
+      chain: arbitrum-sepolia
       options:
         disable-validation: true
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://arbitrum-goerli.public.blastapi.io"
+              url: "https://arbitrum-sepolia.public.blastapi.io"
     - id: eth-mainnet
       chain: ethereum
       options:
@@ -222,18 +220,6 @@ dshackle:
           execution:
             rpc:
               url: "https://eth.public-rpc.com"
-    - id: eth-goerli
-      chain: goerli
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://ethereum-goerli.publicnode.com"
     - id: eth-sepolia
       chain: sepolia
       options:
@@ -303,15 +289,15 @@ dshackle:
           execution:
             rpc:
               url: "https://optimism-mainnet.public.blastapi.io"
-    - id: opt-goerli
-      chain: optimism-testnet
+    - id: opt-sepolia
+      chain: optimism-sepolia
       options:
         disable-validation: true
       connection:
         ethereum-pos:
           execution:
             rpc:
-              url: "https://optimism-goerli.public.blastapi.io"
+              url: "https://optimism-sepolia.public.blastapi.io"
     - id: zkevm
       chain: polygon-zkevm
       options:
