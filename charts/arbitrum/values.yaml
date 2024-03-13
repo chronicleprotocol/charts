@@ -13,7 +13,7 @@ data:
 nitro:
   httpApi: ["net", "web3", "eth", "debug"]
   l1RpcUrl: https://ethereum-sepolia-rpc.publicnode.com
-  l2ChainId: 421613
+  l2ChainId: 11155111
   httpCorsDomain: {}
   httpAddr: {}
   httpVhosts: {}
