@@ -4,8 +4,8 @@
 
 replicaCount: 1
 
-network: goerli
-## can be goerli, mainnet, sepolia etc
+network: sepolia
+## can be mainnet, sepolia etc
 
 data:
   path: /ethereum-data
