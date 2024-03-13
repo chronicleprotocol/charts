@@ -44,7 +44,7 @@ A Helm chart for deploying Arbitrum Nitro on Kubernetes
 | nitro.httpCorsDomain | object | `{}` |  |
 | nitro.httpVhosts | object | `{}` |  |
 | nitro.l1RpcUrl | string | `"https://ethereum-sepolia-rpc.publicnode.com"` |  |
-| nitro.l2ChainId | string | `"11155111"` |  |
+| nitro.l2ChainId | int | `421614` |  |
 | nitro.metrics.enabled | bool | `true` |  |
 | nitro.metrics.serverAddr | object | `{}` |  |
 | nitro.metrics.serverPort | object | `{}` |  |
