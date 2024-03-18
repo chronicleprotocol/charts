@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.51.0](https://img.shields.io/badge/AppVersion-0.51.0-informational?style=flat-square)
+![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.51.0](https://img.shields.io/badge/AppVersion-0.51.0-informational?style=flat-square)
 
 A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -35,36 +35,16 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.metrics.extended | bool | `false` |  |
 | dshackle.metrics.jvm | bool | `false` |  |
 | dshackle.metrics.path | string | `"/metrics"` |  |
-| dshackle.routes[0].blockchain | string | `"arbitrum"` |  |
-| dshackle.routes[0].id | string | `"arb1"` |  |
-| dshackle.routes[10].blockchain | string | `"polygon-zkevm"` |  |
-| dshackle.routes[10].id | string | `"zkevm"` |  |
-| dshackle.routes[11].blockchain | string | `"polygon-zkevm-testnet"` |  |
-| dshackle.routes[11].id | string | `"zkevmtest"` |  |
-| dshackle.routes[12].blockchain | string | `"zksync"` |  |
-| dshackle.routes[12].id | string | `"zksync"` |  |
-| dshackle.routes[13].blockchain | string | `"zksync-sepolia"` |  |
-| dshackle.routes[13].id | string | `"zksyncsep"` |  |
-| dshackle.routes[1].blockchain | string | `"arbitrum-sepolia"` |  |
-| dshackle.routes[1].id | string | `"arbsep"` |  |
-| dshackle.routes[2].blockchain | string | `"ethereum"` |  |
-| dshackle.routes[2].id | string | `"eth"` |  |
-| dshackle.routes[3].blockchain | string | `"gnosis"` |  |
-| dshackle.routes[3].id | string | `"gno"` |  |
-| dshackle.routes[4].blockchain | string | `"gnosis-chiado"` |  |
-| dshackle.routes[4].id | string | `"chi"` |  |
-| dshackle.routes[5].blockchain | string | `"sepolia"` |  |
-| dshackle.routes[5].id | string | `"sep"` |  |
-| dshackle.routes[6].blockchain | string | `"mantle"` |  |
-| dshackle.routes[6].id | string | `"mantle"` |  |
-| dshackle.routes[7].blockchain | string | `"mantle-testnet"` |  |
-| dshackle.routes[7].id | string | `"mantletest"` |  |
-| dshackle.routes[8].blockchain | string | `"optimism"` |  |
-| dshackle.routes[8].id | string | `"oeth"` |  |
-| dshackle.routes[9].blockchain | string | `"optimism-sepolia"` |  |
-| dshackle.routes[9].id | string | `"opsep"` |  |
+| dshackle.routes[0] | object | `{"blockchain":"arbitrum","id":"arb1","method_whitelist":[],"upstreams":[{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"},{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}]}` | the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase |
+| dshackle.routes[0].blockchain | string | `"arbitrum"` | the blockchain name Ref `short-names` @ https://github.com/p2p-org/dshackle/blob/master/foundation/src/main/resources/chains.yaml |
+| dshackle.routes[0].method_whitelist | Optional | `[]` | Addition methods to whitelist per chain. Ref https://github.com/p2p-org/dshackle/blob/master/docs/04-upstream-config.adoc#ethereum-methods |
+| dshackle.routes[0].upstreams | list | `[{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"},{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}]` | upstreams are the RPC providers |
+| dshackle.routes[0].upstreams[0] | object | `{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"}` | id is the unique name of the upstream |
+| dshackle.routes[0].upstreams[0].disableValidation | bool | `true` | disableValidation is used to disable the validation of the RPC provider |
+| dshackle.routes[0].upstreams[0].url | string | `"https://arb1.arbitrum.io/rpc"` | url is the RPC provider endpoint |
+| dshackle.routes[0].upstreams[1] | object | `{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}` | another upstream for the same chain |
 | dshackle.signedResponse | bool | `false` |  |
-| dshackle.upstreams | string | `"- id: arb-mainnet\n  chain: arbitrum\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://arbitrum-one.public.blastapi.io\"\n- id: arb-sepolia\n  chain: arbitrum-sepolia\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://arbitrum-sepolia.public.blastapi.io\"\n- id: eth-mainnet\n  chain: ethereum\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n      rpc:\n        url: \"https://eth.public-rpc.com\"\n- id: eth-sepolia\n  chain: sepolia\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n      rpc:\n        url: \"https://eth-sepolia.public.blastapi.io\"\n- id: gnosis-mainnet\n  chain: gnosis\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n        rpc:\n          url: \"https://gnosis-mainnet.public.blastapi.io\"\n- id: gnosis-chiado\n  chain: gnosis-chiado\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n      rpc:\n        url: \"https://gnosis-chiado.public.blastapi.io\"\n- id: mantle\n  chain: mantle\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n      rpc:\n        url: \"https://mantle-mainnet.public.blastapi.io\"\n- id: mantle-gor\n  chain: mantle-testnet\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    generic:\n      rpc:\n        url: \"https://mantle-goerli.public.blastapi.io\"\n- id: opt-mainent\n  chain: optimism\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://optimism-mainnet.public.blastapi.io\"\n- id: opt-sepolia\n  chain: optimism-sepolia\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://optimism-sepolia.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://polygon-zkevm-mainnet.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm-testnet\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://polygon-zkevm-testnet.public.blastapi.io\"\n- id: zksync\n  chain: zksync\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://zksync-mainnet.public.blastapi.io\"\n- id: zkevm\n  chain: zksync-sepolia\n  options:\n    disable-validation: true\n  connection:\n    generic:\n      rpc:\n        url: \"https://zksync-sepolia.public.blastapi.io\"\n"` |  |
+| env | list | `[{"name":"HEAP_DUMP_ENABLE","value":"true"},{"name":"HEAP_DUMP_PATH","value":"/tmp"}]` | create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. ) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"drpcorg/dshackle"` |  |
@@ -80,6 +60,7 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | livenessProbe | object | See `values.yaml` | Liveness probe |
 | maxSurge | string | `nil` | default is 1 |
 | maxUnavailable | string | `nil` | default is 0 |
+| method_whitelist[0] | string | `"eth_maxPriorityFeePerGas"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

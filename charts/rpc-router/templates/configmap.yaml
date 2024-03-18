@@ -60,4 +60,22 @@ data:
 
     cluster:
       upstreams:
-    {{- .Values.dshackle.upstreams | nindent 8 }}
+        {{- range $route := .Values.dshackle.routes }}
+        {{- range $upstream := $route.upstreams }}
+        - id: {{ $upstream.id }}
+          chain: {{ $route.blockchain }}
+          options:
+            disable-validation: {{ if $upstream.disableValidation }} true {{ else }} false {{ end }}
+          {{- if $route.method_whitelist }}
+          methods:
+            enabled:
+              {{- range $route.method_whitelist }}
+              - name: {{ . }}
+              {{- end }}
+          {{- end }}
+          connection:
+            generic:
+              rpc:
+                url: {{ $upstream.url | quote }}
+        {{- end }}
+        {{- end }}
