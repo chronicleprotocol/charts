@@ -46,10 +46,9 @@ spec:
               protocol: {{ $val.protocol }}
           {{- end }}
           env:
-            - name: HEAP_DUMP_ENABLE
-              value: "true"
-            - name: HEAP_DUMP_PATH
-              value: "/tmp"
+          {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- end }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
