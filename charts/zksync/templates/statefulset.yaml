@@ -1,0 +1,218 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "zksync.fullname" . }}
+  labels:
+    {{- include "zksync.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "zksync.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "zksync.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "zksync.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "zksync.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        {{- if not .Values.restoreDump.enabled }}
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: node-storage
+              mountPath: /db
+          env:
+            - name: ZKSYNC_HOME # docs states that this is not used but must be set and not changed.
+              value: /
+            - name: DATABASE_URL
+              value: "{{ .Values.database.url }}"
+            - name: DATABASE_POOL_SIZE
+              value: "{{ .Values.database.poolSize }}"
+            - name: EN_STATE_CACHE_PATH
+              value: "{{ .Values.storage.stateCachePath }}"
+            - name: EN_MERKLE_TREE_PATH
+              value: "{{ .Values.storage.merkleTreePath }}"
+            - name: EN_ETH_CLIENT_URL
+              value: "{{ .Values.ethClientUrl }}"
+            - name: EN_HTTP_PORT
+              value: "{{ .Values.httpPort }}"
+            - name: EN_WS_PORT
+              value: "{{ .Values.wsPort }}"
+            {{- with .Values.prometheus }}
+            - name: EN_PROMETHEUS_PORT
+              value: "{{ .port }}"
+            {{- end }}
+            - name: EN_HEALTHCHECK_PORT
+              value: "{{ .Values.healthcheckPort }}"
+            - name: EN_REQ_ENTITIES_LIMIT
+              value: "{{ .Values.reqEntitiesLimit }}"
+            - name: EN_FILTERS_LIMIT
+              value: "{{ .Values.filtersLimit }}"
+            - name: EN_SUBSCRIPTIONS_LIMIT
+              value: "{{ .Values.subscriptionsLimit }}"
+            - name: EN_PUBSUB_POLLING_INTERVAL
+              value: "{{ .Values.pubsubPollingInterval }}"
+            - name: EN_MAX_NONCE_AHEAD
+              value: "{{ .Values.maxNonceAhead }}"
+            - name: EN_GAS_PRICE_SCALE_FACTOR
+              value: "{{ .Values.gasPriceScaleFactor }}"
+            - name: EN_ESTIMATE_GAS_SCALE_FACTOR
+              value: "{{ .Values.estimateGasScaleFactor }}"
+            - name: EN_ESTIMATE_GAS_ACCEPTABLE_OVERESTIMATION
+              value: "{{ .Values.estimateGasAcceptableOverestimation }}"
+            - name: EN_MAX_TX_SIZE
+              value: "{{ .Values.maxTxSize }}"
+            - name: EN_API_NAMESPACES
+              value: "{{ .Values.apiNamespaces }}"
+            - name: MISC_LOG_FORMAT
+              value: "{{ .logFormat }}"
+            {{- if .Values.sentry.enabled }}
+            - name: MISC_SENTRY_URL
+              value: "{{ .Values.sentry.url }}"
+            - name: MISC_SENTRY_PANIC_INTERVAL
+              value: "{{ .Values.sentry.panicInterval }}"
+            - name: MISC_SENTRY_ERROR_INTERVAL
+              value: "{{ .Values.sentry.errorInterval }}"
+            - name: EN_SENTRY_ENVIRONMENT
+              value: "{{ .Values.sentry.environment }}"
+            {{- end }}
+            {{- if .Values.otlp.enabled }}
+            - name: MISC_OTLP_URL
+              value: "{{ .Values.otlp.url }}"
+            {{- end }}
+            - name: RUST_LOG
+              value: "{{ .Values.rustLog }}"
+            - name: RUST_BACKTRACE
+              value: "{{ .Values.rustBacktrace }}"
+            - name: RUST_LIB_BACKTRACE
+              value: "{{ .Values.rustLibBacktrace }}"
+            - name: EN_MAIN_NODE_URL
+              value: "{{ .Values.mainNodeUrl }}"
+            - name: EN_L2_CHAIN_ID
+              value: "{{ .Values.l2ChainId }}"
+            - name: EN_L1_CHAIN_ID
+              value: "{{ .Values.l1ChainId }}"
+          {{- end }}
+        {{- with .Values.postgres }}
+        - name: "postgres"
+          securityContext:
+            {{- toYaml .securityContext | nindent 12 }}
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          resources:
+            {{- toYaml .resources | nindent 12 }}
+          # command:
+          #   - postgres
+          args:
+          {{- if .args }}
+            {{- toYaml .args | nindent 12 }}
+          {{- end }}
+          ports:
+          {{- range $key, $val := .service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql
+          env:
+            - name: POSTGRES_USER
+              value: "{{ .user }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .password }}"
+        {{- end }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      volumes:
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8}}
+      {{- end }}
+      {{- if not .Values.persistence.enabled }}
+        - name: node-storage
+          emptyDir: {}
+      {{- else if .Values.persistence.existingClaim }}
+        - name: node-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+      {{- else }}
+      {{- end }}
+      {{- with .Values.postgres }}
+      {{- if not .persistence.enabled }}
+        - name: postgres-storage
+          emptyDir: {}
+      {{- else if .persistence.existingClaim }}
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: {{ .persistence.existingClaim }}
+      {{- else }}
+      {{- end }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: node-storage
+        annotations:
+          {{- toYaml .Values.persistence.annotations | nindent 12 }}
+      spec:
+        accessModes:
+          {{- toYaml .Values.persistence.accessModes | nindent 12 }}
+        resources:
+          requests:
+            storage: {{ .Values.persistence.size | quote }}
+        storageClassName: {{ .Values.persistence.storageClassName }}
+        {{- if .Values.persistence.selector }}
+        selector:
+          {{- toYaml .Values.persistence.selector | nindent 12 }}
+        {{- end }}
+    {{- with .Values.postgres }}
+    - metadata:
+        name: postgres-storage
+        annotations:
+          {{- toYaml .persistence.annotations | nindent 12 }}
+      spec:
+        accessModes:
+          {{- toYaml .persistence.accessModes | nindent 12 }}
+        resources:
+          requests:
+            storage: {{ .persistence.size | quote }}
+        storageClassName: {{ .persistence.storageClassName }}
+        {{- if .persistence.selector }}
+        selector:
+          {{- toYaml .persistence.selector | nindent 12 }}
+        {{- end }}
+    {{- end }}
