@@ -1,0 +1,407 @@
+# Default values for zksync.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# -- Download from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://github.com/matter-labs/ansible-en-role?tab=readme-ov-file#step-by-step-guide
+restoreDump:
+  enabled: true
+  snapShotUrl: "https://storage.googleapis.com/zksync-era-mainnet-external-node-backups/external_node_latest.pgdump"
+  fileName: "external_node_latest.pgdump"
+
+  databaseName: # required
+  user: # required
+  password: # required
+
+  storage:
+    # -- Access mode for the volume claim template
+    accessModes:
+      - ReadWriteOnce
+    # -- Requested size for volume claim template
+    size: 512Gi
+    # -- Use a specific storage class
+    # E.g 'local-path' for local storage to achieve best performance
+    # Read more (https://github.com/rancher/local-path-provisioner)
+    storageClassName: null
+    # -- Annotations for volume claim template
+    annotations: {}
+    # -- Selector for volume claim template
+    selector: {}
+    #   matchLabels:
+    #     app.kubernetes.io/name: something
+
+  image:
+    repository: postgres
+    pullPolicy: IfNotPresent
+    # Defaults to 14
+    tag: "14"
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+
+# -- Path to store data
+data:
+  path: /db
+
+# defaults to mainnet, for testnet use https://sepolia.era.zksync.dev
+mainNodeUrl: https://zksync2-mainnet.zksync.io
+# defaults to mainnet, for testnet use 300
+l2ChainId: 324
+# defaults to mainnet, for testnet use 11155111
+l1ChainId: 1
+
+# ------------------------------------------------------------------------
+# -------------- YOU MUST CHANGE THE FOLLOWING VARIABLES -----------------
+# ------------------------------------------------------------------------
+
+# Config of the Postgres DB.
+database:
+  # URL of the Postgres DB. Example: postgres://postgres:notsecurepassword@localhost/zksync_local_ext_node
+  url: # required
+  # PostgreSQL connection pool size
+  poolSize: "50"
+
+storage:
+  # Folder where the state_keeper cache will be stored (RocksDB).
+  stateCachePath: /db/ext-node/state_keeper
+  # Folder where the Merkle Tree will be stored (RocksDB).
+  merkleTreePath: /db/ext-node/lightweight
+
+# URL of the Ethereum client (e.g. infura / alchemy).
+ethClientUrl: https://rpc.ankr.com/eth
+
+# ------------------------------------------------------------------------
+# -------------- YOU MAY CONFIGURE THE FOLLOWING VARIABLES ---------------
+# ------------------------------------------------------------------------
+
+# Port on which to serve the HTTP JSONRPC API.
+httpPort: 3060
+# Port on which to serve the WebSocket JSONRPC API.
+wsPort: 3061
+
+# Port on which to serve metrics to be collected by Prometheus.
+# If not set, metrics won't be collected.
+# prometheus:
+#   port: 3322
+
+# Port on which to serve the healthcheck endpoint (to check if the service is live).
+healthcheckPort: 3081
+
+# Max possible limit of entities to be requested at once.
+reqEntitiesLimit: 10000
+# Max possible limit of filters to be active at once.
+filtersLimit: 10000
+# Max possible limit of subscriptions to be active at once.
+subscriptionsLimit: 10000
+# Interval for polling the DB for pubsub (in ms).
+pubsubPollingInterval: 200
+# Tx nonce: how far ahead from the committed nonce can it be.
+# This shouldn't be larger than the value on the main node (50).
+maxNonceAhead: 50
+# The multiplier to use when suggesting gas price. Should be higher than one,
+# otherwise if the L1 prices soar, the suggested gas price won't be sufficient to be included in block.
+gasPriceScaleFactor: 1.2
+# The factor by which to scale the gasLimit
+estimateGasScaleFactor: 1.2
+# The max possible number of gas that `eth_estimateGas` is allowed to overestimate.
+estimateGasAcceptableOverestimation: 1000
+# Max possible size of an ABI encoded tx (in bytes).
+# This shouldn't be larger than the value on the main node.
+maxTxSize: 1000000
+# Enabled JSON-RPC API namespaces. Also available: en, debug.
+apiNamespaces: eth,net,web3,zks,pubsub
+
+# Settings related to sentry and opentelemetry.
+logFormat: plain
+
+sentry:
+  enabled: false
+  url: unset
+  panicInterval: 1800
+  errorInterval: 10800
+  environment: zksync_mainnet
+
+otlp:
+  enabled: false
+  url: unset
+
+# Settings related to Rust logging and backtraces.
+# You can read about the format [here](https://docs.rs/env_logger/0.10.0/env_logger/#enabling-logging) to fine-tune logging.
+rustLog: zksync_core=debug,zksync_dal=info,zksync_eth_client=info,zksync_merkle_tree=info,zksync_storage=info,zksync_state=debug,zksync_types=info,vm=info,zksync_external_node=info,zksync_utils=debug,
+rustBacktrace: full
+rustLibBacktrace: 1
+
+image:
+  repository: matterlabs/external-node
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    http:
+      port: 3060
+      protocol: TCP
+    ws:
+      port: 3061
+      protocol: TCP
+    healthcheck:
+      port: 3081
+      protocol: TCP
+    prometheus:
+      port: 3322
+      protocol: TCP
+
+# @default -- See `values.yaml`
+livenessProbe:
+  httpGet:
+    path: /health
+    port: healthcheck
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# @default -- See `values.yaml`
+readinessProbe:
+  httpGet:
+    path: /health
+    port: healthcheck
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+### START POSTGRES SECTION ###
+
+postgres:
+  image:
+    repository: postgres
+    pullPolicy: IfNotPresent
+    # Defaults to 14
+    tag: "14"
+
+  imagePullSecrets: []
+  nameOverride: ""
+  fullnameOverride: ""
+
+  args:
+    - -c
+    - log_error_verbosity=terse
+    - -c
+    - max_connections=256
+    - -c
+    - shared_buffers=47616MB
+    - -c
+    - effective_cache_size=142848MB
+    - -c
+    - maintenance_work_mem=2GB
+    - -c
+    - checkpoint_completion_target=0.9
+    - -c
+    - wal_buffers=16MB
+    - -c
+    - default_statistics_target=500
+    - -c
+    - random_page_cost=1.1
+    - -c
+    - effective_io_concurrency=200
+    - -c
+    - work_mem=2573kB
+    - -c
+    - huge_pages=try
+    - -c
+    - min_wal_size=4GB
+    - -c
+    - max_wal_size=16GB
+    - -c
+    - max_worker_processes=74
+    - -c
+    - max_parallel_workers_per_gather=37
+    - -c
+    - max_parallel_workers=74
+    - -c
+    - max_parallel_maintenance_workers=4
+    - -c
+    - checkpoint_timeout=1800
+
+  databaseName: # required
+  user: # required
+  password: # required
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  securityContext:
+    {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  resources: {}
+
+  service:
+    type: ClusterIP
+    ports:
+      postgres:
+        port: 5432
+        protocol: TCP
+
+  # @default -- See `values.yaml`
+  livenessProbe:
+    tcpSocket:
+      port: postgres
+    initialDelaySeconds: 60
+    periodSeconds: 120
+
+  # @default -- See `values.yaml`
+  readinessProbe:
+    tcpSocket:
+      port: postgres
+    initialDelaySeconds: 10
+    periodSeconds: 10
+
+  persistence:
+    # -- Uses an EmptyDir when not enabled
+    enabled: false
+    # -- Use an existing PVC when persistence.enabled
+    existingClaim: null
+    # -- Access mode for the volume claim template
+    accessModes:
+      - ReadWriteOnce
+    # -- Requested size for volume claim template
+    size: 1024Gi
+    # -- Use a specific storage class
+    # E.g 'local-path' for local storage to achieve best performance
+    # Read more (https://github.com/rancher/local-path-provisioner)
+    storageClassName: null
+    # -- Annotations for volume claim template
+    annotations: {}
+    # -- Selector for volume claim template
+    selector: {}
+    #   matchLabels:
+    #     app.kubernetes.io/name: something
+
+### END POSTGRES SECTION ###
+
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+persistence:
+  # -- Uses an EmptyDir when not enabled
+  enabled: false
+  # -- Use an existing PVC when persistence.enabled
+  existingClaim: null
+  # -- Access mode for the volume claim template
+  accessModes:
+    - ReadWriteOnce
+  # -- Requested size for volume claim template
+  size: 1024Gi
+  # -- Use a specific storage class
+  # E.g 'local-path' for local storage to achieve best performance
+  # Read more (https://github.com/rancher/local-path-provisioner)
+  storageClassName: null
+  # -- Annotations for volume claim template
+  annotations: {}
+  # -- Selector for volume claim template
+  selector: {}
+  #   matchLabels:
+  #     app.kubernetes.io/name: something
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- Path to scrape
+  path: /debug/metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+affinity: {}
