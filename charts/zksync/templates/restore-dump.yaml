@@ -32,6 +32,11 @@ data:
     #!/usr/bin/env bash
     set -e
 
+    echo "Downloading snapshot tarball..."
+    cd /pg_backups
+    wget -O {{ .Values.restoreDump.fileName }} {{ .Values.restoreDump.snapShotUrl }}
+
+    echo "Restoring database dump..."
     if psql -U $POSTGRES_USER -d postgres -lqt | cut -d \| -f 1 | grep -qw "{{ .Values.restoreDump.databaseName }}"; then
         echo "Database already exists"
     else
@@ -39,6 +44,7 @@ data:
         pg_restore --exit-on-error -j $(nproc --all) -d postgres -U $POSTGRES_USER --no-owner --no-privileges --disable-triggers --create /pg_backups/external_node_latest.pgdump
     fi
 
+    echo "Database dump download and restore complete."
 ---
 apiVersion: batch/v1
 kind: Job
@@ -69,29 +75,21 @@ spec:
             {{- toYaml .Values.restoreDump.securityContext | nindent 12 }}
           image: "{{ .Values.restoreDump.image.repository }}:{{ .Values.restoreDump.image.tag }}"
           imagePullPolicy: {{ .Values.restoreDump.image.pullPolicy }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - >
-              set -euxo pipefail;
-              cd /pg-backups;
-              echo "Downloading snapshot tarball...";
-              wget -O {{ .Values.restoreDump.fileName }} {{ .Values.restoreDump.snapShotUrl }};
-              echo "Restoring database dump...";
-              /restore-dump.sh
-              echo "Deleting tarball archive..." &&
-              rm -f {{ .Values.restoreDump.fileName }};
-              echo "Database dump download and restore complete.";
+          command: ["/bin/bash", "/restore-dump.sh"]
           resources:
             {{- toYaml .Values.restoreDump.resources | nindent 12 }}
           env:
             - name: POSTGRES_USER
               value: {{ .Values.restoreDump.user }}
+            - name: DATA_SOURCE_NAME
+              value: "postgresql://{{ .Values.restoreDump.user }}:{{ .Values.restoreDump.password }}@postgres:5432/postgres?sslmode=disable"
           volumeMounts:
             - name: restore-dump
-              mountPath: "/"
+              mountPath: /restore-dump.sh
+              subPath: restore-dump.sh
               readOnly: true
             - name: dump-storage
-              mountPath: /pg-backups
+              mountPath: /pg_backups
       volumes:
         - name: restore-dump
           configMap:
