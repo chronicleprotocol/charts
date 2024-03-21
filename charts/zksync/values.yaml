@@ -35,7 +35,7 @@ restoreDump:
     repository: postgres
     pullPolicy: IfNotPresent
     # Defaults to 14
-    tag: "14"
+    tag: "14-alpine"
 
   imagePullSecrets: []
   nameOverride: ""
