@@ -2419,6 +2419,27 @@ entries:
     version: 0.0.1
   rpc-router:
   - apiVersion: v2
+    appVersion: 0.52.1
+    created: "2024-03-22T15:49:05.17542575Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.x.x
+    description: A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load
+      Balancer for Blockchain API, to Kubernetes,
+    digest: 707b42b9fa35b4c952121d3f9b5df84371299bbb5ed2c8b24c85deb1818d9b77
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: rpc-router
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.2.5/rpc-router-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v2
     appVersion: 0.51.0
     created: "2024-03-18T11:44:52.612556894Z"
     dependencies:
@@ -3447,4 +3468,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-03-20T09:03:39.292447112Z"
+generated: "2024-03-22T15:49:05.175721397Z"
