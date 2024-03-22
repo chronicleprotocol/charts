@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.51.0](https://img.shields.io/badge/AppVersion-0.51.0-informational?style=flat-square)
+![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.52.1](https://img.shields.io/badge/AppVersion-0.52.1-informational?style=flat-square)
 
 A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -35,14 +35,15 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.metrics.extended | bool | `false` |  |
 | dshackle.metrics.jvm | bool | `false` |  |
 | dshackle.metrics.path | string | `"/metrics"` |  |
-| dshackle.routes[0] | object | `{"blockchain":"arbitrum","id":"arb1","method_whitelist":[],"upstreams":[{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"},{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}]}` | the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase |
-| dshackle.routes[0].blockchain | string | `"arbitrum"` | the blockchain name Ref `short-names` @ https://github.com/p2p-org/dshackle/blob/master/foundation/src/main/resources/chains.yaml |
+| dshackle.routes[0] | object | `{"blockchain":"ethereum","id":"eth","method_whitelist":[],"upstreams":[{"disableValidation":false,"id":"my-eth","url":"https://ethereum-rpc.publicnode.com","validateCallLimit":true,"validatePeers":true,"validateSyncing":true}]}` | the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase |
 | dshackle.routes[0].method_whitelist | Optional | `[]` | Addition methods to whitelist per chain. Ref https://github.com/p2p-org/dshackle/blob/master/docs/04-upstream-config.adoc#ethereum-methods |
-| dshackle.routes[0].upstreams | list | `[{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"},{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}]` | upstreams are the RPC providers |
-| dshackle.routes[0].upstreams[0] | object | `{"disableValidation":true,"id":"arb-rpc","url":"https://arb1.arbitrum.io/rpc"}` | id is the unique name of the upstream |
-| dshackle.routes[0].upstreams[0].disableValidation | bool | `true` | disableValidation is used to disable the validation of the RPC provider |
-| dshackle.routes[0].upstreams[0].url | string | `"https://arb1.arbitrum.io/rpc"` | url is the RPC provider endpoint |
-| dshackle.routes[0].upstreams[1] | object | `{"disableValidation":true,"id":"arb-publicnode","url":"https://arbitrum-one.publicnode.com"}` | another upstream for the same chain |
+| dshackle.routes[0].upstreams | list | `[{"disableValidation":false,"id":"my-eth","url":"https://ethereum-rpc.publicnode.com","validateCallLimit":true,"validatePeers":true,"validateSyncing":true}]` | upstreams are the RPC providers |
+| dshackle.routes[0].upstreams[0] | object | `{"disableValidation":false,"id":"my-eth","url":"https://ethereum-rpc.publicnode.com","validateCallLimit":true,"validatePeers":true,"validateSyncing":true}` | id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.) |
+| dshackle.routes[0].upstreams[0].disableValidation | bool | `false` | disableValidation (optional) is used to disable the validation of the RPC provider, default is false |
+| dshackle.routes[0].upstreams[0].url | string | `"https://ethereum-rpc.publicnode.com"` | RPC (http) url is the RPC provider endpoint |
+| dshackle.routes[0].upstreams[0].validateCallLimit | bool | `true` | validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[0].validatePeers | bool | `true` | validatePeers (optional) is used to validate the peers of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[0].validateSyncing | bool | `true` | validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true |
 | dshackle.signedResponse | bool | `false` |  |
 | env | list | `[{"name":"HEAP_DUMP_ENABLE","value":"true"},{"name":"HEAP_DUMP_PATH","value":"/tmp"}]` | create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. ) |
 | fullnameOverride | string | `""` |  |

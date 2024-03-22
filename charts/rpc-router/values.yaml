@@ -184,116 +184,27 @@ dshackle:
       client:
         enabled: false
 
-
   routes:
     # -- the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase
-    - id: arb1
-      # -- the blockchain name Ref `short-names` @ https://github.com/p2p-org/dshackle/blob/master/foundation/src/main/resources/chains.yaml
-      blockchain: arbitrum
-      # -- upstreams are the RPC providers
+    - id: eth
+    #   # -- the blockchain name Ref `short-names` @ https://github.com/p2p-org/dshackle/blob/master/foundation/src/main/resources/chains.yaml
+      blockchain: ethereum
+       # -- upstreams are the RPC providers
       upstreams:
-          # -- id is the unique name of the upstream
-        - id: arb-rpc
-          # -- url is the RPC provider endpoint
-          url: https://arb1.arbitrum.io/rpc
-          # -- disableValidation is used to disable the validation of the RPC provider
-          disableValidation: true
-        # -- another upstream for the same chain
-        - id: arb-publicnode
-          url: https://arbitrum-one.publicnode.com
-          disableValidation: true
+        # -- id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.)
+        - id: my-eth
+          # -- RPC (http) url is the RPC provider endpoint
+          url: https://ethereum-rpc.publicnode.com
+          # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
+          disableValidation: false
+          # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
+          validateSyncing: true
+          # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
+          validatePeers: true
+          # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
+          validateCallLimit: true
       # -- (Optional) Addition methods to whitelist per chain. Ref https://github.com/p2p-org/dshackle/blob/master/docs/04-upstream-config.adoc#ethereum-methods
       method_whitelist: []
-
-    # - id: eth
-    #   blockchain: ethereum
-    #   upstreams:
-    #     - id: eth-drpc
-    #       url: https://lb.drpc.org/ogrpc?network=ethereum&dkey=${DRPC_API_KEY}
-    #       disableValidation: true
-    #   method_whitelist: []
-    # - id: gno
-    #   blockchain: gnosis
-    #   upstreams:
-    #     - id: gnosis
-    #       url: https://gnosis-mainnet.public.blastapi.io
-    #       disableValidation: false
-    #       method_whitelist: []
-
-
-    # - id: chi
-    #   blockchain: gnosis-chiado
-    #   upstreams:
-    #     - id: gnosis-chiado
-    #       url: https://gnosis-chiado-mainnet.public.blastapi.io
-    #       disableValidation: false
-    #       method_whitelist: []
-
-
-    # - id: sep
-    #   blockchain: sepolia
-    #   upstreams:
-    #     - id: sepolia
-    #       url: https://sepolia-mainnet.public.blastapi.io
-    #       disableValidation: false
-    #       method_whitelist: []
-
-
-    # - id: mantle
-    #   blockchain: mantle
-    #   upstreams:
-    #     - id: mantle
-    #       url: https://mantle-mainnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: mantletest
-    #   blockchain: mantle-testnet
-    #   upstreams:
-    #     - id: mantle-testnet
-    #       url: https://mantle-testnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: oeth
-    #   blockchain: optimism
-    #   upstreams:
-    #     - id: optimism
-    #       url: https://optimism-mainnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: opsep
-    #   blockchain: optimism-sepolia
-    #   upstreams:
-    #     - id: optimism-sepolia
-    #       url: https://optimism-sepolia.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: zkevm
-    #   blockchain: polygon-zkevm
-    #   upstreams:
-    #     - id: zkevm
-    #       url: https://polygon-zkevm-mainnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: zkevmtest
-    #   blockchain: polygon-zkevm-testnet
-    #   upstreams:
-    #     - id: zkevm-testnet
-    #       url: https://polygon-zkevm-testnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: zksync
-    #   blockchain: zksync
-    #   upstreams:
-    #     - id: zksync
-    #       url: https://zksync-mainnet.public.blastapi.io
-    #       disableValidation: false
-
-    # - id: zksyncsep
-    #   blockchain: zksync-sepolia
-    #   upstreams:
-    #     - id: zksync-sepolia
-    #       url: https://zksync-sepolia.public.blastapi.io
-    #       disableValidation: false
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
