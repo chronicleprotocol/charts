@@ -65,7 +65,10 @@ data:
         - id: {{ $upstream.id }}
           chain: {{ $route.blockchain }}
           options:
-            disable-validation: {{ if $upstream.disableValidation }} true {{ else }} false {{ end }}
+            disable-validation: {{ if $upstream.disableValidation }}true{{ else }}false{{ end }}
+            validate-syncing: {{ if eq $upstream.validateSyncing false }}false{{ else }}true{{ end }}
+            validate-peers: {{ if eq $upstream.validatePeers false }}false{{ else }}true{{ end }}
+            validate-call-limit: {{ if eq $upstream.validateCallLimit false }}false{{ else }}true{{ end }}
           {{- if $route.method_whitelist }}
           methods:
             enabled:
