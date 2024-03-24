@@ -128,8 +128,6 @@ spec:
           image: "{{ .image.repository }}:{{ .image.tag }}"
           resources:
             {{- toYaml .resources | nindent 12 }}
-          # command:
-          #   - postgres
           args:
           {{- if .args }}
             {{- toYaml .args | nindent 12 }}
@@ -159,6 +157,7 @@ spec:
         {{- toYaml .Values.affinity | nindent 8 }}
       tolerations:
         {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- if or (or (not .Values.persistence.enabled) (and .Values.persistence.enabled .Values.persistence.existingClaim)) (or (not .Values.postgres.persistence.enabled) (and .Values.postgres.persistence.enabled .Values.postgres.persistence.existingClaim)) }}
       volumes:
       {{- if .Values.extraVolumes }}
         {{ toYaml .Values.extraVolumes | nindent 8}}
@@ -166,24 +165,27 @@ spec:
       {{- if not .Values.persistence.enabled }}
         - name: node-storage
           emptyDir: {}
-      {{- else if .Values.persistence.existingClaim }}
+      {{- end }}
+      {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: node-storage
           persistentVolumeClaim:
             claimName: {{ .Values.persistence.existingClaim }}
-      {{- else }}
       {{- end }}
       {{- with .Values.postgres }}
       {{- if not .persistence.enabled }}
         - name: postgres-storage
           emptyDir: {}
-      {{- else if .persistence.existingClaim }}
+      {{- end }}
+      {{- if and .persistence.enabled .persistence.existingClaim }}
         - name: postgres-storage
           persistentVolumeClaim:
             claimName: {{ .persistence.existingClaim }}
-      {{- else }}
       {{- end }}
       {{- end }}
+      {{- end }}
+  {{- if or (and .Values.persistence.enabled (not .Values.persistence.existingClaim)) (and .Values.postgres.persistence.enabled (not .Values.postgres.persistence.existingClaim)) }}
   volumeClaimTemplates:
+    {{- if not .Values.persistence.existingClaim }}
     - metadata:
         name: node-storage
         annotations:
@@ -199,7 +201,9 @@ spec:
         selector:
           {{- toYaml .Values.persistence.selector | nindent 12 }}
         {{- end }}
+    {{- end }}
     {{- with .Values.postgres }}
+    {{- if not .persistence.existingClaim }}
     - metadata:
         name: postgres-storage
         annotations:
@@ -216,3 +220,5 @@ spec:
           {{- toYaml .persistence.selector | nindent 12 }}
         {{- end }}
     {{- end }}
+    {{- end }}
+  {{- end }}

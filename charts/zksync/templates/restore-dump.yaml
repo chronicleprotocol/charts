@@ -32,19 +32,22 @@ data:
     #!/usr/bin/env bash
     set -e
 
-    echo "Downloading snapshot tarball..."
     cd /pg_backups
-    wget -O {{ .Values.restoreDump.fileName }} {{ .Values.restoreDump.snapShotUrl }}
+
+    if [ ! -f /pg_backups/{{ .Values.restoreDump.fileName }} ]; then
+      echo "Downloading snapshot tarball..."
+      wget -O {{ .Values.restoreDump.fileName }} {{ .Values.restoreDump.snapShotUrl }} || rm -f {{ .Values.restoreDump.fileName }}
+    fi
 
     echo "Restoring database dump..."
-    if psql -U $POSTGRES_USER -d postgres -lqt | cut -d \| -f 1 | grep -qw "{{ .Values.restoreDump.databaseName }}"; then
+    if psql -U $POSTGRES_USER -d postgres -h postgres -lqt | cut -d \| -f 1 | grep -qw "{{ .Values.restoreDump.databaseName }}"; then
         echo "Database already exists"
     else
         echo "Database does not exist"
-        pg_restore --exit-on-error -j $(nproc --all) -d postgres -U $POSTGRES_USER --no-owner --no-privileges --disable-triggers --create /pg_backups/external_node_latest.pgdump
+        pg_restore --exit-on-error -j $(nproc --all) -d postgres -U $POSTGRES_USER -h postgres --no-owner --no-privileges --disable-triggers --create /pg_backups/external_node_latest.pgdump
+        echo "Database dump download and restore complete."
     fi
 
-    echo "Database dump download and restore complete."
 ---
 apiVersion: batch/v1
 kind: Job
@@ -54,7 +57,6 @@ metadata:
     {{- include "zksync.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": post-install
-    # "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   template:
     metadata:
@@ -81,8 +83,8 @@ spec:
           env:
             - name: POSTGRES_USER
               value: {{ .Values.restoreDump.user }}
-            - name: DATA_SOURCE_NAME
-              value: "postgresql://{{ .Values.restoreDump.user }}:{{ .Values.restoreDump.password }}@postgres:5432/postgres?sslmode=disable"
+            - name: PGPASSWORD
+              value: {{ .Values.restoreDump.password }}
           volumeMounts:
             - name: restore-dump
               mountPath: /restore-dump.sh
