@@ -6,7 +6,7 @@ replicaCount: 1
 
 # -- Download from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://github.com/matter-labs/ansible-en-role?tab=readme-ov-file#step-by-step-guide
 restoreDump:
-  enabled: true
+  enabled: false
   snapShotUrl: "https://storage.googleapis.com/zksync-era-mainnet-external-node-backups/external_node_latest.pgdump"
   fileName: "external_node_latest.pgdump"
 
@@ -40,10 +40,6 @@ restoreDump:
   imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
-
-# -- Path to store data
-data:
-  path: /db
 
 # defaults to mainnet, for testnet use https://sepolia.era.zksync.dev
 mainNodeUrl: https://zksync2-mainnet.zksync.io
