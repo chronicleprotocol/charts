@@ -41,12 +41,12 @@ data:
 
     echo "Restoring database dump..."
     if psql -U $POSTGRES_USER -d postgres -h postgres -lqt | cut -d \| -f 1 | grep -qw "{{ .Values.restoreDump.databaseName }}"; then
-        echo "Database already exists"
-    else
-        echo "Database does not exist"
-        pg_restore --exit-on-error -j $(nproc --all) -d postgres -U $POSTGRES_USER -h postgres --no-owner --no-privileges --disable-triggers --create /pg_backups/external_node_latest.pgdump
-        echo "Database dump download and restore complete."
+        echo "Database already exists, deleting it..."
+        psql -U $POSTGRES_USER -d postgres -h postgres -c "DROP DATABASE {{ .Values.restoreDump.databaseName }}"
     fi
+
+    pg_restore --exit-on-error -d postgres -U $POSTGRES_USER -h postgres --no-owner --no-privileges --disable-triggers --create /pg_backups/external_node_latest.pgdump
+    echo "Database dump download and restore complete."
 
 ---
 apiVersion: batch/v1
