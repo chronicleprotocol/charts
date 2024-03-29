@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "base.fullname" . }}-test-connection"
+  labels:
+    {{- include "base.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ['curl']
+      args:
+        - --location
+        - --request
+        - POST
+        - '{{ include "base.fullname" . }}:{{ .Values.geth.service.ports.rpc.port }}/'
+        - --header
+        - 'Content-Type: application/json'
+        - --data-raw
+        - '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'
+  restartPolicy: Never

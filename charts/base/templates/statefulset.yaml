@@ -1,0 +1,195 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "base.fullname" . }}
+  labels:
+    {{- include "base.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "base.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "base.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "base.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "base.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- if .Values.snapShotSync.enabled }}
+      initContainers:
+        - name: init-download-snapshot
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command: ["/bin/bash", "-c"]
+          args:
+            - >
+              set -euxo pipefail;
+              cd /data;
+              echo "Downloading snapshot tarball..." ;
+              wget --no-verbose -O chaindata.tar {{ .Values.snapShotSync.snapShotUrl }};
+              echo "Extracting snapshot tarball...";
+              tar xf chaindata.tar;
+              echo "Deleting tarball archive..." &&
+              rm -f chaindata.tar;
+              echo "Snapshot download and extraction complete.";
+          volumeMounts:
+            - name: storage
+              mountPath: /data
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-geth
+          securityContext:
+            {{- toYaml .Values.geth.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          resources:
+            {{- toYaml .Values.geth.resources | nindent 12 }}
+          command: ["bash", "./geth-entrypoint"]
+          args:
+          {{- if .Values.geth.args }}
+            {{- toYaml .Values.geth.args | nindent 12 }}
+          {{- end }}
+          ports:
+          {{- range $key, $val := .Values.geth.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.geth.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.geth.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: storage
+              mountPath: /data
+          env:
+            - name: OP_GETH_GENESIS_FILE_PATH
+              value: {{ .Values.geth.genesisFilePath }}
+            - name: OP_GETH_SEQUENCER_HTTP
+              value: {{ .Values.geth.sequencerHttp }}
+            - name: OP_GETH_BOOTNODES
+              value: {{ .Values.geth.bootNodes }}
+            - name: OP_NODE_L2_ENGINE_AUTH_RAW # TODO: load from secret
+              value: {{ .Values.jwtSecret }}
+            - name: OP_NODE_L2_ENGINE_AUTH
+              value: /tmp/engine-auth-jwt
+            - name: METRICS_PORT
+              value: "7060"
+            - name: OP_NODE_NETWORK
+              value: {{ .Values.networkId }}
+          {{- if .Values.geth.env }}
+            {{- toYaml .Values.geth.env | nindent 12 }}
+          {{- end }}
+        - name: {{ .Chart.Name }}-op-node
+          securityContext:
+            {{- toYaml .Values.opNode.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          resources:
+            {{- toYaml .Values.opNode.resources | nindent 12 }}
+          command: ["bash", "./op-node-entrypoint"]
+          args:
+          {{- if .Values.opNode.args }}
+            {{- toYaml .Values.opNode.args | nindent 12 }}
+          {{- end }}
+          ports:
+          {{- range $key, $val := .Values.opNode.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.opNode.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.opNode.readinessProbe | nindent 12 }}
+          env:
+            - name: OP_NODE_L2_ENGINE_AUTH_RAW # TODO: load from secret
+              value: {{ .Values.jwtSecret }}
+            - name: OP_NODE_L2_ENGINE_AUTH
+              value: /tmp/engine-auth-jwt
+            - name: OP_NODE_L2_ENGINE_RPC
+              value: ws://localhost:8551
+            - name: OP_NODE_LOG_LEVEL
+              value: info
+            - name: OP_NODE_METRICS_ADDR
+              value: "0.0.0.0"
+            - name: OP_NODE_METRICS_ENABLED
+              value: "true"
+            - name: OP_NODE_METRICS_PORT
+              value: "7300"
+            - name: OP_NODE_P2P_AGENT
+              value: base
+            - name: OP_NODE_P2P_LISTEN_IP
+              value: "0.0.0.0"
+            - name: OP_NODE_P2P_LISTEN_TCP_PORT
+              value: "9222"
+            - name: OP_NODE_P2P_LISTEN_UDP_PORT
+              value: "9222"
+            - name: OP_NODE_RPC_ADDR
+              value: "0.0.0.0"
+            - name: OP_NODE_RPC_PORT
+              value: "9545"
+            - name: OP_NODE_NETWORK
+              value: {{ .Values.networkId }}
+            - name: OP_NODE_SNAPSHOT_LOG
+              value: /tmp/op-node-snapshot-log
+            - name: OP_NODE_VERIFIER_L1_CONFS
+              value: "4"
+            - name: OP_NODE_ROLLUP_LOAD_PROTOCOL_VERSIONS
+              value: "true"
+            - name: OP_NODE_SYNCMODE
+              value: execution-layer
+            - name: OP_NODE_L1_BEACON
+              value: {{ .Values.opNode.l1Beacon }}
+            - name: OP_NODE_L1_ETH_RPC
+              value: {{ .Values.opNode.l1EthRpc }}
+            - name: OP_NODE_L1_TRUST_RPC
+              value: {{ .Values.opNode.l1TrustRpc | quote }}
+          {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+          {{- end }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      volumes:
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8}}
+      {{- end }}
+  {{- if not .Values.persistence.enabled }}
+        - name: storage
+          emptyDir: {}
+  {{- else if .Values.persistence.existingClaim }}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+  {{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+      annotations:
+        {{- toYaml .Values.persistence.annotations | nindent 8 }}
+    spec:
+      accessModes:
+        {{- toYaml .Values.persistence.accessModes | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+      storageClassName: {{ .Values.persistence.storageClassName }}
+      {{- if .Values.persistence.selector }}
+      selector:
+        {{- toYaml .Values.persistence.selector | nindent 8 }}
+      {{- end }}
+  {{- end }}
