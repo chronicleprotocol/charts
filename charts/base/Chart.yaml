@@ -5,8 +5,6 @@ description: A Helm chart for deploying Base RPC nodes on Kubernetes
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake
-  - name: Vinícius Niche
-    url: https://github.com/vniche
 
 # A chart can be either an 'application' or a 'library' chart.
 #
