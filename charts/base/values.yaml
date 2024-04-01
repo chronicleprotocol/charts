@@ -14,7 +14,11 @@ snapShotSync:
 # -- Network id. Defaults to mainnet value.
 networkId: base-mainnet
 # -- Auth token. Defaults to hardcoded value.
-jwtSecret: 688f5d737bad920bdfb2fc2f488d6b6209eebda1dae949a8de91398d932c517a
+jwtSecret:
+  fromSecret: false
+  # secretName: base-{{ network }}-{{ env }}-rpc-node # required when fromSecret is enabled
+  # secretKey: jwtSecret # required when fromSecret is enabled
+  default: 688f5d737bad920bdfb2fc2f488d6b6209eebda1dae949a8de91398d932c517a
 
 geth:
   # -- Genesis file path. Defaults to mainnet value.
@@ -37,12 +41,6 @@ geth:
       ws:
         port: 8546
         protocol: TCP
-      # p2p:
-      #   port: 30303
-      #   protocol: TCP
-      # p2pudp:
-      #   port: 30303
-      #   protocol: UDP
       metrics:
         port: 7060
         protocol: TCP
@@ -83,12 +81,6 @@ opNode:
       rpc:
         port: 9545
         protocol: TCP
-      # p2p:
-      #   port: 9222
-      #   protocol: TCP
-      # p2pudp:
-      #   port: 9222
-      #   protocol: UDP
       metrics:
         port: 7300
         protocol: TCP
@@ -205,3 +197,17 @@ autoscaling:
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+# -- Extra K8s manifests to deploy
+extraObjects:
+  []
+  # - apiVersion: "external-secrets.io/v1beta1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: "base-{{ network }}-{{ env }}-rpc-node"
+  #   spec:
+  #     data:
+  #     - remoteRef:
+  #         key: "{{ env }}/rpc-nodes/base/{{ network }}"
+  #         property: jwtSecret
+  #       secretKey: jwtSecret

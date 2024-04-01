@@ -80,8 +80,15 @@ spec:
               value: {{ .Values.geth.sequencerHttp }}
             - name: OP_GETH_BOOTNODES
               value: {{ .Values.geth.bootNodes }}
-            - name: OP_NODE_L2_ENGINE_AUTH_RAW # TODO: load from secret
-              value: {{ .Values.jwtSecret }}
+            - name: OP_NODE_L2_ENGINE_AUTH_RAW
+              {{- if .Values.jwtSecret.fromSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.jwtSecret.secretName }}
+                  key: {{ .Values.jwtSecret.secretKey }}
+              {{- else }}
+              value: {{ .Values.jwtSecret.default }}
+              {{- end }}
             - name: OP_NODE_L2_ENGINE_AUTH
               value: /tmp/engine-auth-jwt
             - name: METRICS_PORT
@@ -113,8 +120,15 @@ spec:
           readinessProbe:
             {{- toYaml .Values.opNode.readinessProbe | nindent 12 }}
           env:
-            - name: OP_NODE_L2_ENGINE_AUTH_RAW # TODO: load from secret
-              value: {{ .Values.jwtSecret }}
+            - name: OP_NODE_L2_ENGINE_AUTH_RAW
+              {{- if .Values.jwtSecret.fromSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.jwtSecret.secretName }}
+                  key: {{ .Values.jwtSecret.secretKey }}
+              {{- else }}
+              value: {{ .Values.jwtSecret.default }}
+              {{- end }}
             - name: OP_NODE_L2_ENGINE_AUTH
               value: /tmp/engine-auth-jwt
             - name: OP_NODE_L2_ENGINE_RPC
