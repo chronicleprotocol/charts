@@ -36,17 +36,28 @@ spec:
           args:
             - >
               set -euxo pipefail;
-              cd /data;
-              echo "Downloading snapshot tarball..." ;
-              wget --no-verbose -O chaindata.tar {{ .Values.snapShotSync.snapShotUrl }};
+              {{- if eq .Values.networkId "base-mainnet" }}
+              cd /snapshots;
+              {{- else }}
+              cd /data
+              {{- end }}
+              if [ ! -f chaindata.tar ]; then
+                echo "Downloading snapshot tarball..."
+                wget --no-verbose -O chaindata.tar {{ .Values.snapShotSync.snapShotUrl }}; || rm -f chaindata.tar
+              fi
               echo "Extracting snapshot tarball...";
-              tar xf chaindata.tar;
-              echo "Deleting tarball archive..." &&
-              rm -f chaindata.tar;
+              {{- if eq .Values.networkId "base-mainnet" }}
+              cd /data
+              {{- end }}
+              tar xf {{- if eq .Values.networkId "base-mainnet" }} /snapshots/{{- end }}chaindata.tar;
               echo "Snapshot download and extraction complete.";
           volumeMounts:
             - name: storage
               mountPath: /data
+            {{- if eq .Values.networkId "base-mainnet" }}
+            - name: snapshot-storage
+              mountPath: /snapshots
+            {{- end }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}-geth
@@ -207,3 +218,25 @@ spec:
         {{- toYaml .Values.persistence.selector | nindent 8 }}
       {{- end }}
   {{- end }}
+
+{{- if and .Values.snapShotSync.enabled (eq .Values.networkId "base-mainnet") }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    {{- toYaml .Values.snapShotSync.persistence.annotations | nindent 4 }}
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    app.kubernetes.io/instance: {{ .Values.networkId }}
+    app.kubernetes.io/name: base
+  name: snapshot-storage
+spec:
+  accessModes:
+    {{- toYaml .Values.snapShotSync.persistence.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.snapShotSync.persistence.size | quote }}
+  storageClassName: {{ .Values.snapShotSync.persistence.storageClassName }}
+{{- end }}
