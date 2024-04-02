@@ -39,17 +39,17 @@ spec:
               {{- if eq .Values.networkId "base-mainnet" }}
               cd /snapshots;
               {{- else }}
-              cd /data
+              cd /data;
               {{- end }}
               if [ ! -f chaindata.tar ]; then
-                echo "Downloading snapshot tarball..."
-                wget --no-verbose -O chaindata.tar {{ .Values.snapShotSync.snapShotUrl }}; || rm -f chaindata.tar
-              fi
+                echo "Downloading snapshot tarball...";
+                wget --no-verbose -O chaindata.tar {{ .Values.snapShotSync.snapShotUrl }} || rm -f chaindata.tar;
+              fi;
               echo "Extracting snapshot tarball...";
               {{- if eq .Values.networkId "base-mainnet" }}
-              cd /data
+              cd /data;
               {{- end }}
-              tar xf {{- if eq .Values.networkId "base-mainnet" }} /snapshots/{{- end }}chaindata.tar;
+              tar xf{{ printf " " }}{{- if eq .Values.networkId "base-mainnet" }}/snapshots/{{- end }}chaindata.tar;
               echo "Snapshot download and extraction complete.";
           volumeMounts:
             - name: storage
