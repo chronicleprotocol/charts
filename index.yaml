@@ -91,6 +91,20 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/arbitrum-0.0.1/arbitrum-0.0.1.tgz
     version: 0.0.1
+  base:
+  - apiVersion: v2
+    appVersion: v0.8.1
+    created: "2024-04-02T18:08:51.614569747Z"
+    description: A Helm chart for deploying Base RPC nodes on Kubernetes
+    digest: a04733c3e5bc2e6802a390c40ccf6d00e17c9e6240a852d55114e25359a2baae
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: base
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/base-0.0.1/base-0.0.1.tgz
+    version: 0.0.1
   beacons:
   - apiVersion: v2
     appVersion: v4.1.1
@@ -3468,4 +3482,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-03-22T15:49:05.175721397Z"
+generated: "2024-04-02T18:08:51.615173403Z"
