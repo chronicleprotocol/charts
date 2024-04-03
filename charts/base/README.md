@@ -99,11 +99,6 @@ A Helm chart for deploying Base RPC nodes on Kubernetes
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | snapShotSync.enabled | bool | `false` | Whether to restore from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://docs.base.org/guides/run-a-base-node/#snapshots |
-| snapShotSync.persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
-| snapShotSync.persistence.annotations | object | `{}` | Annotations for volume claim template |
-| snapShotSync.persistence.selector | object | `{}` | Selector for volume claim template |
-| snapShotSync.persistence.size | string | `"3Ti"` | Requested size for volume claim template |
-| snapShotSync.persistence.storageClassName | string | `nil` | Use a specific storage class E.g 'local-path' for local storage to achieve best performance Read more (https://github.com/rancher/local-path-provisioner) |
 | snapShotSync.snapShotUrl | string | `"https://base-snapshots-mainnet-archive.s3.amazonaws.com/$(curl https://base-snapshots-mainnet-archive.s3.amazonaws.com/latest)"` | The URL of snapshot to download. |
 | tolerations | list | `[]` |  |
 

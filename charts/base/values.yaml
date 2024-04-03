@@ -10,22 +10,28 @@ snapShotSync:
   enabled: false
   # -- The URL of snapshot to download.
   snapShotUrl: "https://base-snapshots-mainnet-archive.s3.amazonaws.com/$(curl https://base-snapshots-mainnet-archive.s3.amazonaws.com/latest)"
-  persistence:
-    # -- Access mode for the volume claim template
-    accessModes:
-      - ReadWriteOnce
-    # -- Requested size for volume claim template
-    size: 3Ti
-    # -- Use a specific storage class
-    # E.g 'local-path' for local storage to achieve best performance
-    # Read more (https://github.com/rancher/local-path-provisioner)
-    storageClassName: null
-    # -- Annotations for volume claim template
-    annotations: {}
-    # -- Selector for volume claim template
-    selector: {}
-    #   matchLabels:
-    #     app.kubernetes.io/name: something
+  # persistence: # uncomment for recover from snapshot when mainnet
+  #   # -- Access mode for the volume claim template
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   # -- Requested size for volume claim template
+  #   size: 3Ti
+  #   # -- Use a specific storage class
+  #   # E.g 'local-path' for local storage to achieve best performance
+  #   # Read more (https://github.com/rancher/local-path-provisioner)
+  #   storageClassName: null
+  #   # -- Annotations for volume claim template
+  #   annotations: {}
+  #   # -- Selector for volume claim template
+  #   selector: {}
+  #   #   matchLabels:
+  #   #     app.kubernetes.io/name: something
+
+# uncomment for recover from snapshot when mainnet
+# extraVolumes:
+#   - name: snapshot-storage
+#     persistentVolumeClaim:
+#       claimName: snapshot-storage
 
 # For testnet values, refer to https://github.com/base-org/node/blob/main/.env.sepolia
 
