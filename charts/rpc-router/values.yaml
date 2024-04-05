@@ -194,7 +194,7 @@ dshackle:
         # -- id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.)
         - id: blast-eth
           # -- RPC (http) url is the RPC provider endpoint
-          url: https://eth-mainnet.blastapi.io/3fee6182-f66a-4a85-a03f-5fc5ecab615f
+          url: https://eth-mainnet.public.blastapi.io
           # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
           disableValidation: true
           # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
@@ -209,9 +209,9 @@ dshackle:
             fullnode: true,
             provider: publicnode
           }
-        - id: nodies-eth
+        - id: drpc-eth
           # -- RPC (http) url is the RPC provider endpoint
-          url: https://lb.nodies.app/v1/22b9067b0409458e84c11eb9840927b9
+          url: https://eth.drpc.org
           # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
           disableValidation: true
           # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
