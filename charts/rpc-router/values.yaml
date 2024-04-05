@@ -192,19 +192,40 @@ dshackle:
        # -- upstreams are the RPC providers
       upstreams:
         # -- id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.)
-        - id: my-eth
+        - id: blast-eth
           # -- RPC (http) url is the RPC provider endpoint
-          url: https://ethereum-rpc.publicnode.com
+          url: https://eth-mainnet.blastapi.io/3fee6182-f66a-4a85-a03f-5fc5ecab615f
           # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
-          disableValidation: false
+          disableValidation: true
           # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
-          validateSyncing: true
+          validateSyncing: false
           # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
-          validatePeers: true
+          validatePeers: false
           # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
-          validateCallLimit: true
-      # -- (Optional) Addition methods to whitelist per chain. Ref https://github.com/p2p-org/dshackle/blob/master/docs/04-upstream-config.adoc#ethereum-methods
-      method_whitelist: []
+          validateCallLimit: false
+          # -- role can be on of primary, secondary or fallback. default is primary
+          role: primary
+          labels: {
+            fullnode: true,
+            provider: publicnode
+          }
+        - id: nodies-eth
+          # -- RPC (http) url is the RPC provider endpoint
+          url: https://lb.nodies.app/v1/22b9067b0409458e84c11eb9840927b9
+          # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
+          disableValidation: true
+          # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
+          validateSyncing: false
+          # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
+          validatePeers: false
+          # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
+          validateCallLimit: false
+          # -- role can be on of primary, secondary or fallback. default is primary
+          role: primary
+          labels: {
+            archive: true,
+            provider: nodies
+          }
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator

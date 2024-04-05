@@ -64,6 +64,15 @@ data:
         {{- range $upstream := $route.upstreams }}
         - id: {{ $upstream.id }}
           chain: {{ $route.blockchain }}
+          {{- if $upstream.role }}
+          role: {{ $upstream.role }}
+          {{- end }}
+          {{- if $upstream.labels }}
+          labels:
+            {{- range $key, $value := $upstream.labels }}
+            {{ $key }}: {{ $value }}
+            {{- end }}
+          {{- end }}
           options:
             disable-validation: {{ if $upstream.disableValidation }}true{{ else }}false{{ end }}
             validate-syncing: {{ if eq $upstream.validateSyncing false }}false{{ else }}true{{ end }}
