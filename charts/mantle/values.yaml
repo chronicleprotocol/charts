@@ -12,7 +12,7 @@ snapShotSync:
 
 # -- Path to store data
 data:
-  path: /mantle-data
+  path: /root/.ethereum/geth
 
 # -- ETH l1 node
 ethL1: "https://rpc.ankr.com/eth"
@@ -76,6 +76,8 @@ env:
     value: "3"
   - name: WS_PORT
     value: "8546"
+  - name: WS_ADDR
+    value: "0.0.0.0"
   - name: WS
     value: "true"
   - name: WS_ORIGINS

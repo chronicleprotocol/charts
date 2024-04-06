@@ -55,8 +55,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          # command:
-          #   - sh ./geth.sh
+          command: ["/bin/sh", "-c", "/usr/local/bin/geth.sh"]
           args:
           {{- if .Values.args }}
             {{- toYaml .Values.args | nindent 12 }}
@@ -76,7 +75,7 @@ spec:
               mountPath: {{ .Values.data.path }}
           env:
             - name: DATADIR
-              value: "{{ .Values.data.path }}"
+              value: "/root/.ethereum"
             - name: ETH1_HTTP
               value: "{{ .Values.ethL1 }}"
             - name: ROLLUP_CLIENT_HTTP
@@ -92,8 +91,8 @@ spec:
             - name: CHAIN_ID
               value: "{{ .Values.chainId }}"
             - name: ROLLUP_STATE_DUMP_PATH
-              value: "{{ .Values.rollupStateDumpPath }}"
-            - name: WS_ADDR
+              value: "{{ .Values.rollUpStateDumpPath }}"
+            - name: WS_PORT
               value: "{{ .Values.service.ports.wsrpc.port }}"
             - name: RPC_PORT
               value: "{{ .Values.service.ports.httprpc.port }}"

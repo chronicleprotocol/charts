@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.49.1](https://img.shields.io/badge/AppVersion-0.49.1-informational?style=flat-square)
+![Version: 0.2.6](https://img.shields.io/badge/Version-0.2.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.53.1](https://img.shields.io/badge/AppVersion-0.53.1-informational?style=flat-square)
 
 A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -35,38 +35,23 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | dshackle.metrics.extended | bool | `false` |  |
 | dshackle.metrics.jvm | bool | `false` |  |
 | dshackle.metrics.path | string | `"/metrics"` |  |
-| dshackle.routes[0].blockchain | string | `"arbitrum"` |  |
-| dshackle.routes[0].id | string | `"arb1"` |  |
-| dshackle.routes[10].blockchain | string | `"optimism-testnet"` |  |
-| dshackle.routes[10].id | string | `"ogor"` |  |
-| dshackle.routes[11].blockchain | string | `"polygon-zkevm"` |  |
-| dshackle.routes[11].id | string | `"zkevm"` |  |
-| dshackle.routes[12].blockchain | string | `"polygon-zkevm-testnet"` |  |
-| dshackle.routes[12].id | string | `"zkevmtest"` |  |
-| dshackle.routes[13].blockchain | string | `"zksync"` |  |
-| dshackle.routes[13].id | string | `"zksync"` |  |
-| dshackle.routes[14].blockchain | string | `"zksync-sepolia"` |  |
-| dshackle.routes[14].id | string | `"zksyncsep"` |  |
-| dshackle.routes[1].blockchain | string | `"arbitrum-testnet"` |  |
-| dshackle.routes[1].id | string | `"arb"` |  |
-| dshackle.routes[2].blockchain | string | `"ethereum"` |  |
-| dshackle.routes[2].id | string | `"eth"` |  |
-| dshackle.routes[3].blockchain | string | `"goerli"` |  |
-| dshackle.routes[3].id | string | `"gor"` |  |
-| dshackle.routes[4].blockchain | string | `"gnosis"` |  |
-| dshackle.routes[4].id | string | `"gno"` |  |
-| dshackle.routes[5].blockchain | string | `"gnosis-chiado"` |  |
-| dshackle.routes[5].id | string | `"chi"` |  |
-| dshackle.routes[6].blockchain | string | `"sepolia"` |  |
-| dshackle.routes[6].id | string | `"sep"` |  |
-| dshackle.routes[7].blockchain | string | `"mantle"` |  |
-| dshackle.routes[7].id | string | `"mantle"` |  |
-| dshackle.routes[8].blockchain | string | `"mantle-testnet"` |  |
-| dshackle.routes[8].id | string | `"mantletest"` |  |
-| dshackle.routes[9].blockchain | string | `"optimism"` |  |
-| dshackle.routes[9].id | string | `"oeth"` |  |
+| dshackle.routes[0] | object | `{"blockchain":"ethereum","id":"eth","upstreams":[{"disableValidation":true,"id":"blast-eth","labels":{"fullnode":true,"provider":"publicnode"},"role":"primary","url":"https://eth-mainnet.public.blastapi.io","validateCallLimit":false,"validatePeers":false,"validateSyncing":false},{"disableValidation":true,"id":"drpc-eth","labels":{"archive":true,"provider":"nodies"},"role":"primary","url":"https://eth.drpc.org","validateCallLimit":false,"validatePeers":false,"validateSyncing":false}]}` | the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase |
+| dshackle.routes[0].upstreams | list | `[{"disableValidation":true,"id":"blast-eth","labels":{"fullnode":true,"provider":"publicnode"},"role":"primary","url":"https://eth-mainnet.public.blastapi.io","validateCallLimit":false,"validatePeers":false,"validateSyncing":false},{"disableValidation":true,"id":"drpc-eth","labels":{"archive":true,"provider":"nodies"},"role":"primary","url":"https://eth.drpc.org","validateCallLimit":false,"validatePeers":false,"validateSyncing":false}]` | upstreams are the RPC providers |
+| dshackle.routes[0].upstreams[0] | object | `{"disableValidation":true,"id":"blast-eth","labels":{"fullnode":true,"provider":"publicnode"},"role":"primary","url":"https://eth-mainnet.public.blastapi.io","validateCallLimit":false,"validatePeers":false,"validateSyncing":false}` | id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.) |
+| dshackle.routes[0].upstreams[0].disableValidation | bool | `true` | disableValidation (optional) is used to disable the validation of the RPC provider, default is false |
+| dshackle.routes[0].upstreams[0].role | string | `"primary"` | role can be on of primary, secondary or fallback. default is primary |
+| dshackle.routes[0].upstreams[0].url | string | `"https://eth-mainnet.public.blastapi.io"` | RPC (http) url is the RPC provider endpoint |
+| dshackle.routes[0].upstreams[0].validateCallLimit | bool | `false` | validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[0].validatePeers | bool | `false` | validatePeers (optional) is used to validate the peers of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[0].validateSyncing | bool | `false` | validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[1].disableValidation | bool | `true` | disableValidation (optional) is used to disable the validation of the RPC provider, default is false |
+| dshackle.routes[0].upstreams[1].role | string | `"primary"` | role can be on of primary, secondary or fallback. default is primary |
+| dshackle.routes[0].upstreams[1].url | string | `"https://eth.drpc.org"` | RPC (http) url is the RPC provider endpoint |
+| dshackle.routes[0].upstreams[1].validateCallLimit | bool | `false` | validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[1].validatePeers | bool | `false` | validatePeers (optional) is used to validate the peers of the RPC provider, default is true |
+| dshackle.routes[0].upstreams[1].validateSyncing | bool | `false` | validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true |
 | dshackle.signedResponse | bool | `false` |  |
-| dshackle.upstreams | string | `"- id: arb-mainnet\n  chain: arbitrum\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-one.public.blastapi.io\"\n- id: arb-goerli\n  chain: arbitrum-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://arbitrum-goerli.public.blastapi.io\"\n- id: eth-mainnet\n  chain: ethereum\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth.public-rpc.com\"\n- id: eth-goerli\n  chain: goerli\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://ethereum-goerli.publicnode.com\"\n- id: eth-sepolia\n  chain: sepolia\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://eth-sepolia.public.blastapi.io\"\n- id: gnosis-mainnet\n  chain: gnosis\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://gnosis-mainnet.public.blastapi.io\"\n- id: gnosis-chiado\n  chain: gnosis-chiado\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://gnosis-chiado.public.blastapi.io\"\n- id: mantle\n  chain: mantle\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://mantle-mainnet.public.blastapi.io\"\n- id: mantle-gor\n  chain: mantle-testnet\n  options:\n    disable-validation: true\n  methods:\n    enabled:\n      - name: eth_maxPriorityFeePerGas\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://mantle-goerli.public.blastapi.io\"\n- id: opt-mainent\n  chain: optimism\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-mainnet.public.blastapi.io\"\n- id: opt-goerli\n  chain: optimism-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://optimism-goerli.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://polygon-zkevm-mainnet.public.blastapi.io\"\n- id: zkevm\n  chain: polygon-zkevm-testnet\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://polygon-zkevm-testnet.public.blastapi.io\"\n- id: zksync\n  chain: zksync\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://zksync-mainnet.public.blastapi.io\"\n- id: zkevm\n  chain: zksync-sepolia\n  options:\n    disable-validation: true\n  connection:\n    ethereum-pos:\n      execution:\n        rpc:\n          url: \"https://zksync-sepolia.public.blastapi.io\"\n"` |  |
+| env | list | `[{"name":"HEAP_DUMP_ENABLE","value":"true"},{"name":"HEAP_DUMP_PATH","value":"/tmp"}]` | create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. ) |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"drpcorg/dshackle"` |  |
@@ -82,6 +67,7 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | livenessProbe | object | See `values.yaml` | Liveness probe |
 | maxSurge | string | `nil` | default is 1 |
 | maxUnavailable | string | `nil` | default is 0 |
+| method_whitelist[0] | string | `"eth_maxPriorityFeePerGas"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -126,4 +112,4 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | updateStrategy | string | `nil` | default RollingUpdate |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.12.0](https://github.com/norwoodj/helm-docs/releases/v1.12.0)
+Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)

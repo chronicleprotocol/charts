@@ -1,6 +1,6 @@
 # mantle
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
 
 A Helm chart for deploying Mantle RPC nodes on Kubernetes
 
@@ -22,7 +22,7 @@ A Helm chart for deploying Mantle RPC nodes on Kubernetes
 | blockSignerAddress | string | `"0x000000b36A00872bAF079426e012Cf5Cd2A74E8b"` |  |
 | blockSignerKey | string | `"9f50ccaebd966113a0ef09793f8a3288cd0bb2c05d20caa3c0015b4e665f1b2d"` |  |
 | chainId | int | `5000` | Chain Id |
-| data | object | `{"path":"/mantle-data"}` | Path to store data |
+| data | object | `{"path":"/root/.ethereum/geth"}` | Path to store data |
 | env[0].name | string | `"ETH1_SYNC_SERVICE_ENABLE"` |  |
 | env[0].value | string | `"true"` |  |
 | env[10].name | string | `"ROLLUP_FEE_THRESHOLD_DOWN"` |  |
@@ -53,18 +53,20 @@ A Helm chart for deploying Mantle RPC nodes on Kubernetes
 | env[21].value | string | `"3"` |  |
 | env[22].name | string | `"WS_PORT"` |  |
 | env[22].value | string | `"8546"` |  |
-| env[23].name | string | `"WS"` |  |
-| env[23].value | string | `"true"` |  |
-| env[24].name | string | `"WS_ORIGINS"` |  |
-| env[24].value | string | `"*"` |  |
-| env[25].name | string | `"RPC_ADDR"` |  |
-| env[25].value | string | `"0.0.0.0"` |  |
-| env[26].name | string | `"ROLLUP_VERIFIER_ENABLE"` |  |
-| env[26].value | string | `"true"` |  |
-| env[27].name | string | `"ROLLUP_FEE_THRESHOLD_UP"` |  |
-| env[27].value | string | `"4000"` |  |
-| env[28].name | string | `"WS_API"` |  |
-| env[28].value | string | `"eth,net,rollup,web3"` |  |
+| env[23].name | string | `"WS_ADDR"` |  |
+| env[23].value | string | `"0.0.0.0"` |  |
+| env[24].name | string | `"WS"` |  |
+| env[24].value | string | `"true"` |  |
+| env[25].name | string | `"WS_ORIGINS"` |  |
+| env[25].value | string | `"*"` |  |
+| env[26].name | string | `"RPC_ADDR"` |  |
+| env[26].value | string | `"0.0.0.0"` |  |
+| env[27].name | string | `"ROLLUP_VERIFIER_ENABLE"` |  |
+| env[27].value | string | `"true"` |  |
+| env[28].name | string | `"ROLLUP_FEE_THRESHOLD_UP"` |  |
+| env[28].value | string | `"4000"` |  |
+| env[29].name | string | `"WS_API"` |  |
+| env[29].value | string | `"eth,net,rollup,web3"` |  |
 | env[2].name | string | `"RPC_ENABLE"` |  |
 | env[2].value | string | `"true"` |  |
 | env[3].name | string | `"IPC_DISABLE"` |  |

@@ -134,6 +134,31 @@ redis:
       enabled: false
       size: 8Gi
 
+# -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
+env:
+  - name: HEAP_DUMP_ENABLE
+    value: "true"
+  - name: HEAP_DUMP_PATH
+    value: "/tmp"
+  # - name: DRPC_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: drpc-api-key
+  #       key: DRPC_API_KEY
+  # - name: BLAST_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: blast-api-key
+  #       key: BLAST_API_KEY
+  # - name: INFURA_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: infura-api-key
+  #       key: INFURA_API_KEY
+
+method_whitelist: [
+  "eth_maxPriorityFeePerGas",
+]
 ### Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
 dshackle:
   signedResponse: false
@@ -160,194 +185,47 @@ dshackle:
         enabled: false
 
   routes:
-    - id: arb1
-      blockchain: arbitrum
-    - id: arb
-      blockchain: arbitrum-testnet
+    # -- the http path the chain is configured on (eg, /eth, /bsc, /matic, etc.), Route id must be alphanumeric and lowercase
     - id: eth
+    #   # -- the blockchain name Ref `short-names` @ https://github.com/p2p-org/dshackle/blob/master/foundation/src/main/resources/chains.yaml
       blockchain: ethereum
-    - id: gor
-      blockchain: goerli
-    - id: gno
-      blockchain: gnosis
-    - id: chi
-      blockchain: gnosis-chiado
-    - id: sep
-      blockchain: sepolia
-    - id: mantle
-      blockchain: mantle
-    - id: mantletest
-      blockchain: mantle-testnet
-    - id: oeth
-      blockchain: optimism
-    - id: ogor
-      blockchain: optimism-testnet
-    - id: zkevm
-      blockchain: polygon-zkevm
-    - id: zkevmtest
-      blockchain: polygon-zkevm-testnet
-    - id: zksync
-      blockchain: zksync
-    - id: zksyncsep
-      blockchain: zksync-sepolia
-
-  upstreams: |
-    - id: arb-mainnet
-      chain: arbitrum
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-one.public.blastapi.io"
-    - id: arb-goerli
-      chain: arbitrum-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://arbitrum-goerli.public.blastapi.io"
-    - id: eth-mainnet
-      chain: ethereum
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth.public-rpc.com"
-    - id: eth-goerli
-      chain: goerli
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://ethereum-goerli.publicnode.com"
-    - id: eth-sepolia
-      chain: sepolia
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://eth-sepolia.public.blastapi.io"
-    - id: gnosis-mainnet
-      chain: gnosis
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://gnosis-mainnet.public.blastapi.io"
-    - id: gnosis-chiado
-      chain: gnosis-chiado
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://gnosis-chiado.public.blastapi.io"
-    - id: mantle
-      chain: mantle
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://mantle-mainnet.public.blastapi.io"
-    - id: mantle-gor
-      chain: mantle-testnet
-      options:
-        disable-validation: true
-      methods:
-        enabled:
-          - name: eth_maxPriorityFeePerGas
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://mantle-goerli.public.blastapi.io"
-    - id: opt-mainent
-      chain: optimism
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-mainnet.public.blastapi.io"
-    - id: opt-goerli
-      chain: optimism-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://optimism-goerli.public.blastapi.io"
-    - id: zkevm
-      chain: polygon-zkevm
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://polygon-zkevm-mainnet.public.blastapi.io"
-    - id: zkevm
-      chain: polygon-zkevm-testnet
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://polygon-zkevm-testnet.public.blastapi.io"
-    - id: zksync
-      chain: zksync
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://zksync-mainnet.public.blastapi.io"
-    - id: zkevm
-      chain: zksync-sepolia
-      options:
-        disable-validation: true
-      connection:
-        ethereum-pos:
-          execution:
-            rpc:
-              url: "https://zksync-sepolia.public.blastapi.io"
+       # -- upstreams are the RPC providers
+      upstreams:
+        # -- id is the unique name of the upstream (eg eth-infura, usa-east-1-eth, eth-alchemy, etc.)
+        - id: blast-eth
+          # -- RPC (http) url is the RPC provider endpoint
+          url: https://eth-mainnet.public.blastapi.io
+          # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
+          disableValidation: true
+          # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
+          validateSyncing: false
+          # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
+          validatePeers: false
+          # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
+          validateCallLimit: false
+          # -- role can be on of primary, secondary or fallback. default is primary
+          role: primary
+          labels: {
+            fullnode: true,
+            provider: publicnode
+          }
+        - id: drpc-eth
+          # -- RPC (http) url is the RPC provider endpoint
+          url: https://eth.drpc.org
+          # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
+          disableValidation: true
+          # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
+          validateSyncing: false
+          # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
+          validatePeers: false
+          # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
+          validateCallLimit: false
+          # -- role can be on of primary, secondary or fallback. default is primary
+          role: primary
+          labels: {
+            archive: true,
+            provider: nodies
+          }
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator

@@ -39,6 +39,8 @@ spec:
             - "bootstrap"
           {{- else  if .Values.stream }}
             - "stream"
+          {{- else  if .Values.watch }}
+            - "watch"
           {{- else  if .Values.kafka.enabled }}
             - "kafka"
             {{- range $arg := .Values.kafka.kafkaTopics }}
