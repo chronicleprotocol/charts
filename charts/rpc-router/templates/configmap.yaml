@@ -54,8 +54,40 @@ data:
         - id: {{ .id }}
           blockchain: {{ .blockchain }}
      {{- end }}
-    cluster:
-      upstreams:
-    {{- .Values.dshackle.upstreams | nindent 8 }}
+
     signed-response:
       enabled: {{ .Values.dshackle.signedResponse | default false }}
+
+    cluster:
+      upstreams:
+        {{- range $route := .Values.dshackle.routes }}
+        {{- range $upstream := $route.upstreams }}
+        - id: {{ $upstream.id }}
+          chain: {{ $route.blockchain }}
+          {{- if $upstream.role }}
+          role: {{ $upstream.role }}
+          {{- end }}
+          {{- if $upstream.labels }}
+          labels:
+            {{- range $key, $value := $upstream.labels }}
+            {{ $key }}: {{ $value }}
+            {{- end }}
+          {{- end }}
+          options:
+            disable-validation: {{ if $upstream.disableValidation }}true{{ else }}false{{ end }}
+            validate-syncing: {{ if eq $upstream.validateSyncing false }}false{{ else }}true{{ end }}
+            validate-peers: {{ if eq $upstream.validatePeers false }}false{{ else }}true{{ end }}
+            validate-call-limit: {{ if eq $upstream.validateCallLimit false }}false{{ else }}true{{ end }}
+          {{- if $route.method_whitelist }}
+          methods:
+            enabled:
+              {{- range $route.method_whitelist }}
+              - name: {{ . }}
+              {{- end }}
+          {{- end }}
+          connection:
+            generic:
+              rpc:
+                url: {{ $upstream.url | quote }}
+        {{- end }}
+        {{- end }}

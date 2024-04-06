@@ -123,6 +123,9 @@ bootstrap: false
 # if true, runs stream mode
 stream: true
 
+# if true, runs as a watch mode
+watch: false
+
 # if true, runs spire in kafka made
 kafka:
   enabled: false

@@ -4,21 +4,22 @@
 
 replicaCount: 1
 
-network: goerli
-## can be goerli, mainnet, sepolia etc
+network: sepolia
+## can be mainnet, sepolia etc
 
 data:
   path: /home/user/.arbitrum
 
 nitro:
   httpApi: ["net", "web3", "eth", "debug"]
-  l1RpcUrl: https://ethereum-goerli-rpc.allthatnode.com
-  l2ChainId: 421613
+  l1RpcUrl: https://ethereum-sepolia-rpc.publicnode.com
+  l1BeaconUrl: https://ethereum-sepolia-beacon-api.publicnode.com
+  l2ChainId: 421614
   httpCorsDomain: {}
   httpAddr: {}
   httpVhosts: {}
   extraArgs: {}
-    # - "- --init.url=https://snapshot.arbitrum.io/mainnet/nitro.tar"
+    # - "- --init.url=https://snapshot.arbitrum.io/sepolia/nitro.tar"
   metrics:
     enabled: true
     serverAddr: {}
@@ -29,7 +30,7 @@ image:
   repository: offchainlabs/nitro-node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v2.1.3-e815395"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
