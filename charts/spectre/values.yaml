@@ -38,6 +38,9 @@ entryPointOverride: []
   # - "/usr/local/bin/watchdog"
   # - "/usr/local/bin/chronicle-appp"
 
+argsOverride: []
+  # - "--log-level=debug"
+  # - "--log-format=json"
 env:
   normal:
     # webapi - receive only (Spectre)
