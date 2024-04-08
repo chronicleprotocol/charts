@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.33.0](https://img.shields.io/badge/AppVersion-0.33.0-informational?style=flat-square)
+![Version: 0.2.3](https://img.shields.io/badge/Version-0.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.33.0](https://img.shields.io/badge/AppVersion-0.33.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -10,6 +10,12 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | ---- | ------ | --- |
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake/> |
 | chronicleprotocol |  | <https://github.com/chronicleprotocol> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.0.8 |
 
 ## Values
 
@@ -32,7 +38,7 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | environment | string | `"stage"` | CFG_ENVIRONMENT can be one of `stage` or `prod` |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| fullnameOverride | string | `""` |  |
+| fullnameOverride | string | `"spectre"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spectre"` |  |
 | image.tag | string | `""` |  |
@@ -70,6 +76,10 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | tolerations | list | `[]` |  |
+| tor-proxy.enabled | bool | `true` |  |
+| tor-proxy.env.normal.TOR_EXTRA_ARGS | string | `"AutomapHostsOnResolve 1\nControlSocketsGroupWritable 1\nCookieAuthentication 1\nCookieAuthFileGroupReadable 1\nSOCKSPort 0.0.0.0:9050\nDNSPort 5353\nExitPolicy reject *:*\nLog notice stderr\nRunAsDaemon 0\nControlSocket /home/tor/.tor/control_socket\nCookieAuthFile /home/tor/.tor/control_socket.authcookie\nDataDirectory /home/tor/.tor\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 spectre:8080\nHiddenServiceVersion 3\n"` |  |
+| tor-proxy.fullnameOverride | string | `"tor-proxy"` |  |
+| tor-proxy.torConfig | object | `{}` |  |
 | txType | string | `nil` | can be one of `legacy`or `eip1559` |
 
 ----------------------------------------------
