@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.1.8](https://img.shields.io/badge/Version-0.1.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.11.5](https://img.shields.io/badge/AppVersion-0.11.5-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.33.0](https://img.shields.io/badge/AppVersion-0.33.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -16,10 +16,12 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| argsOverride | list | `[]` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| commandOverride | list | `[]` |  |
 | env | object | `{}` |  |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |

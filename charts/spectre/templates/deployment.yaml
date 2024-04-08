@@ -32,12 +32,24 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          {{- if .Values.commandOverride }}
+          command:
+            {{- range .Values.commandOverride }}
+            - "{{ . }}"
+            {{- end }}
+          {{- end }}
           args:
+            {{- if .Values.argsOverride }}
+            {{- range .Values.argsOverride }}
+            - "{{ . }}"
+            {{- end }}
+            {{- else }}
             - "run"
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
