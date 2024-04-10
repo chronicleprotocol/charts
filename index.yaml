@@ -94,6 +94,19 @@ entries:
   base:
   - apiVersion: v2
     appVersion: v0.8.1
+    created: "2024-04-10T06:53:45.448724126Z"
+    description: A Helm chart for deploying Base RPC nodes on Kubernetes
+    digest: 3c956f1dbbe4d8c27bddd394a2ce0fedad2b309840919cf7ee738d0086c11675
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: base
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/base-0.0.2/base-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: v0.8.1
     created: "2024-04-02T18:08:51.614569747Z"
     description: A Helm chart for deploying Base RPC nodes on Kubernetes
     digest: a04733c3e5bc2e6802a390c40ccf6d00e17c9e6240a852d55114e25359a2baae
@@ -3538,4 +3551,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-04-08T14:16:25.814282628Z"
+generated: "2024-04-10T06:53:45.449095068Z"
