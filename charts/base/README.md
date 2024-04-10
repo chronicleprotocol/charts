@@ -1,6 +1,6 @@
 # base
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.1](https://img.shields.io/badge/AppVersion-v0.8.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.8.1](https://img.shields.io/badge/AppVersion-v0.8.1-informational?style=flat-square)
 
 A Helm chart for deploying Base RPC nodes on Kubernetes
 
@@ -98,7 +98,8 @@ A Helm chart for deploying Base RPC nodes on Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
-| snapShotSync | object | `{"enabled":false,"snapShotUrl":"https://base-snapshots-mainnet-archive.s3.amazonaws.com/$(curl https://base-snapshots-mainnet-archive.s3.amazonaws.com/latest)"}` | Download from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://docs.base.org/guides/run-a-base-node/#snapshots |
+| snapShotSync.enabled | bool | `false` | Whether to restore from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://docs.base.org/guides/run-a-base-node/#snapshots |
+| snapShotSync.snapShotUrl | string | `"https://base-snapshots-mainnet-archive.s3.amazonaws.com/$(curl https://base-snapshots-mainnet-archive.s3.amazonaws.com/latest)"` | The URL of snapshot to download. |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
