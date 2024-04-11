@@ -55,6 +55,7 @@ service:
     grpc:
       port: 12448
       protocol: TCP
+    # -- metrics port, affects the .Values.dshackle.metrics
     metrics:
       port: 8080
       protocol: TCP
@@ -129,7 +130,7 @@ redis:
       enabled: true
       size: 8Gi
   replica:
-    replicaCount: 3
+    replicaCount: 1
     persistence:
       enabled: false
       size: 8Gi
@@ -156,26 +157,37 @@ env:
   #       name: infura-api-key
   #       key: INFURA_API_KEY
 
-method_whitelist: [
-  "eth_maxPriorityFeePerGas",
-]
-### Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
+# -- global method whitelist applied to all upstreams
+
+# -- apply method whitelist to all upstreams
+
+global_method_whitelist: []
+# -- Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
 dshackle:
   signedResponse: false
-
+  # -- enable metrics for dshackle
   metrics:
+    # -- enable metrics for dshackle
     enabled: true
+    # -- collect jvm metrics
     jvm: false
-    extended: false
+    # -- collect extended metrics
+    extended: true
+    # -- host bind address
     bind: "0.0.0.0"
-    # default port is 8081, but is setting by .Values.service.ports.metrics.port
+    # default port is 8080, but is setting by .Values.service.ports.metrics.port
+    # -- path to metrics
     path: "/metrics"
 
   health:
     host: "0.0.0.0"
     # default port is 8082, but is setting by .Values.service.ports.health.port
 
-  accessLog: false
+  accessLog:
+    # -- enable access log, expensive so use only to debug
+    enabled: false
+    # -- include messages in the access log
+    includeMessages: false
 
   compression:
     grpc:
@@ -205,10 +217,15 @@ dshackle:
           validateCallLimit: false
           # -- role can be on of primary, secondary or fallback. default is primary
           role: primary
+          # -- add additional labels to the upstream.
           labels: {
             fullnode: true,
             provider: publicnode
           }
+          # -- add additional method whitelist to the upstream
+          method_whitelist: [
+            "eth_maxPriorityFeePerGas",
+          ]
         - id: drpc-eth
           # -- RPC (http) url is the RPC provider endpoint
           url: https://eth.drpc.org
@@ -222,10 +239,12 @@ dshackle:
           validateCallLimit: false
           # -- role can be on of primary, secondary or fallback. default is primary
           role: primary
+          # -- add additional labels to the upstream
           labels: {
             archive: true,
-            provider: nodies
+            provider: drpc
           }
+
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator

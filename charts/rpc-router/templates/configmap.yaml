@@ -35,6 +35,7 @@ data:
 
     accessLog:
       enabled: {{ .Values.dshackle.accessLog }}
+      include-messages: {{ .Values.dshackle.accessLog.includeMessages | default false }}
 
     {{- if .Values.redis.enabled }}
     cache:
@@ -78,10 +79,14 @@ data:
             validate-syncing: {{ if eq $upstream.validateSyncing false }}false{{ else }}true{{ end }}
             validate-peers: {{ if eq $upstream.validatePeers false }}false{{ else }}true{{ end }}
             validate-call-limit: {{ if eq $upstream.validateCallLimit false }}false{{ else }}true{{ end }}
-          {{- if $route.method_whitelist }}
+
+          {{- if or $.Values.global_method_whitelist $upstream.method_whitelist }}
           methods:
             enabled:
-              {{- range $route.method_whitelist }}
+              {{- range $.Values.global_method_whitelist }}
+              - name: {{ . }}
+              {{- end }}
+              {{- range $upstream.method_whitelist }}
               - name: {{ . }}
               {{- end }}
           {{- end }}
