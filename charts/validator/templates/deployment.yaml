@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "validator.fullname" . }}
+  labels:
+    {{- include "validator.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.ghost.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "validator.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.ghost.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "validator.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.ghost.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "validator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.ghost.securityContext | nindent 12 }}
+          {{- if .Values.ghost.hostNetwork }}
+          hostNetwork: true
+          {{- end }}
+          image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
+          args:
+            - "run"
+            - "-v"
+            - "{{ .Values.ghost.logLevel | default "warning" }}"
+            - "--log.format"
+            - "{{ .Values.ghost.logFormat | default "text" }}"
+          imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
+          ports:
+          {{- range $key, $val := .Values.ghost.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: {{ .Values.ghost.service.ports.metrics.port }}
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: {{ .Values.ghost.service.ports.metrics.port }}
+          env:
+            - name: CFG_LIBP2P_LISTEN_ADDRS
+              value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
+          {{- if eq .Values.ghost.service.type "LoadBalancer" }}
+            - name: CFG_LIBP2P_EXTERNAL_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+          {{- end }}
+          {{- if .Values.ghost.ethConfig }}
+            - name: CFG_ETH_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ghost.ethConfig.ethFrom.existingSecret }}
+                  key: {{ .Values.ghost.ethConfig.ethFrom.key }}
+            - name: CFG_ETH_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ghost.ethConfig.ethKeys.existingSecret }}
+                  key: {{ .Values.ghost.ethConfig.ethKeys.key }}
+            - name: CFG_ETH_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
+                  key: {{ .Values.ghost.ethConfig.ethPass.key }}
+          {{- end }}
+          {{- range $key, $val := .Values.ghost.env.normal }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.ghost.resources | nindent 12 }}
+
+      {{- with .Values.ghost.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ghost.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.ghost.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
