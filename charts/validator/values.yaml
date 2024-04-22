@@ -9,39 +9,58 @@ ghost:
   image:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
+    # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
+  # -- Log level for the validator, can be one of `debug`, `info`, `trace`, `error`
   logLevel: info
+  # -- Log format for the validator, can be one of `json`, `text`
   logFormat: json
-
+  # -- chain name for the "target" or "main" chain we use for the validator
   chainName: eth
+  # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
   rpcUrl: 'https://eth.llamarpc.com'
+  # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
   chainId: '1'
 
+  # -- RPC url where the validator sources data from.
+  # -- RPC URL for ETH
   ethRpcUrl: 'https://eth.llamarpc.com'
+  # -- chain id for source eth
   ethChainId: '1'
-
+  # -- RPC url for ARB
   arbRpcUrl: 'https://arbitrum.drpc.org'
+  # -- RPC url for ETH Archival node
   ethArchRpcUrl: 'https://mainnet.infura.io/v3/'
+  # -- RPC url for GNO
   gnoRpcUrl: 'https://gnosis-pokt.nodies.app'
+  # -- RPC url for MNT
   mntRpcUrl: 'https://rpc.mantle.xyz'
+  # -- RPC url for OETH (optimism)
   optRpcUrl: 'https://mainnet.optimism.io'
+  # -- RPC url for ZKEVM (polygon zkevm)
   polRpcUrl: 'https://zkevm-rpc.com'
 
+  # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  # -- WATCHDOG polling interval (in seconds)
   watchdogInterval: "900s"
 
+  # -- libp2p buffer size
   libP2pSubscriptionBufferSize: '4096'
+  # -- libp2p validate queue size
   libp2pValidateQueueSize: '4096'
 
+  # -- WEB API (tor-proxy)
   webApi:
+    # -- Enables the web api and deploys the tor-proxy subchart
     enabled: true
+    # -- Listen address for the web api
     listenAddr: ":8080"
+    # -- Socks5 proxy address for the web api
     socks5ProxyAddr: "tor-proxy:9050"
 
-  # Provide ETH keys from existing secrets
-  # -- use only existing secret OR env vars, do not provide both
+  # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
     # ethFrom:
     #   existingSecret: ""
@@ -53,30 +72,35 @@ ghost:
     #   existingSecret: ""
     #   key: ""
 
-  # --Environment variable listing
+  # -- Environment variable listing
   env:
-    normal:
+    # -- un-encrypted env vars passed to the pod
+    normal: {}
       # GOLOG_LOG_LEVEL: pubsub=debug
-      # TODO
+      # FOO: bar
 
   imagePullSecrets: []
   nameOverride: ""
+  # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
   fullnameOverride: "ghost"
 
   serviceAccount:
-    # Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
-    # Annotations to add to the service account
+    # -- Annotations to add to the service account
     annotations: {}
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
+    # --The name of the service account to use.
+    # -- If not set and create is true, a name is generated using the fullname template
     name: ""
 
+  # -- Pod annotations for the validator
   podAnnotations: {}
 
+  # -- Pod security context for the validator
   podSecurityContext: {}
     # fsGroup: 2000
 
+  # -- Security context for the validator
   securityContext: {}
     # capabilities:
     #   drop:
@@ -85,23 +109,31 @@ ghost:
     # runAsNonRoot: true
     # runAsUser: 1000
 
+  # -- Service type for the validator
   service:
+    # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
+
     ports:
+      # -- libp2p port for the validator service
       libp2p:
         port: 8000
         protocol: TCP
+      # -- metrics port for the validator service
       metrics:
         port: 9100
         protocol: TCP
-      ### to add more port-mappings, add them here:
-      # rpc:
-      #   port: 9100
+      # to add more port-mappings, add them here:
+      # https:
+      #   port: 8443
       #   protocol: TCP
+    # -- Annotations to add to the service
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
+  # -- Ingress for the validator
   ingress:
+    # -- Disabled by default, as ingress objects need to be created carefully
     enabled: false
     className: ""
     annotations: {}
@@ -137,6 +169,7 @@ ghost:
       initialDelaySeconds: 30
       periodSeconds: 60
 
+  # -- Resources constraints for the validator, CPU, Memory, etc.
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -149,13 +182,16 @@ ghost:
     #   cpu: 100m
     #   memory: 128Mi
 
+  # -- Node selector for the validator
   nodeSelector: {}
 
+  # -- Tolerations applied validator
   tolerations: []
 
+  # -- pod Affinity spec applied validator
   affinity: {}
 
-# Values for Tor Proxy (subchart of ghost)
+# -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
   # -- values for tor-proxy: refer to the [tor-proxy](https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml) subchart
   enabled: true

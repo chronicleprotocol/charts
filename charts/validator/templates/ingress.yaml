@@ -1,6 +1,6 @@
 {{- if .Values.ghost.ingress.enabled -}}
 {{- $fullName := include "validator.fullname" . -}}
-{{- $svcPort := .Values.ghost.service.port -}}
+{{- $svcPort := .Values.ghost.service.ports.libp2p.port -}}
 {{- if and .Values.ghost.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.ghost.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.ghost.ingress.annotations "kubernetes.io/ingress.class" .Values.ghost.ingress.className}}

@@ -70,6 +70,12 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
           {{- end }}
+          {{- if .Values.ghost.ingress.enabled }}
+          {{- range .Values.ghost.ingress.hosts }}
+            - name: CFG_LIBP2P_EXTERNAL_ADDR
+              value: "/dns/{{ .host  }}"
+          {{- end }}
+          {{- end }}
             ### -- WEB API
             - name: CFG_WEBAPI_ENABLE
               value: {{ .Values.ghost.webApi.enabled | quote }}
@@ -77,13 +83,14 @@ spec:
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
               value: {{ .Values.ghost.webApi.socks5ProxyAddr | quote }}
-            ### -- CHAIN and RPC
+            ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
               value: {{ .Values.ghost.chainName | default "eth" | quote}}
             - name: CFG_CHAIN_ID
               value: {{ .Values.ghost.chainId | default "1" | quote}}
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
+            ### -- CHAIN and RPC (source chain)
             - name: CFG_ETH_RPC_URLS
               value: {{ .Values.ghost.ethRpcUrl | quote }}
             - name: CFG_ETH_CHAIN_ID
