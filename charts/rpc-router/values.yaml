@@ -55,6 +55,7 @@ service:
     grpc:
       port: 12448
       protocol: TCP
+    # -- metrics port, affects the .Values.dshackle.metrics
     metrics:
       port: 8080
       protocol: TCP
@@ -129,7 +130,7 @@ redis:
       enabled: true
       size: 8Gi
   replica:
-    replicaCount: 3
+    replicaCount: 1
     persistence:
       enabled: false
       size: 8Gi
@@ -140,6 +141,9 @@ env:
     value: "true"
   - name: HEAP_DUMP_PATH
     value: "/tmp"
+  # -- log level can be debug, info, warn, error, trace etc.
+  - name: DSHACKLE_LOG_LEVEL
+    value: "info"
   # - name: DRPC_API_KEY
   #   valueFrom:
   #     secretKeyRef:
@@ -156,26 +160,39 @@ env:
   #       name: infura-api-key
   #       key: INFURA_API_KEY
 
-method_whitelist: [
-  "eth_maxPriorityFeePerGas",
-]
-### Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
+# -- global method whitelist applied to all upstreams
+global_method_whitelist: []
+
+# -- Ref: https://github.com/p2p-org/dshackle/blob/master/docs/reference-configuration.adoc
 dshackle:
   signedResponse: false
-
+  # -- enable metrics for dshackle
   metrics:
+    # -- enable metrics for dshackle
     enabled: true
+    # -- collect jvm metrics
     jvm: false
+    # -- collect extended metrics
     extended: false
+    # -- host bind address
     bind: "0.0.0.0"
-    # default port is 8081, but is setting by .Values.service.ports.metrics.port
+    # default port is 8080, but is setting by .Values.service.ports.metrics.port
+    # -- path to metrics
     path: "/metrics"
+
+  proxy:
+    # -- Should proxy preserve request-response correspondence when sending batch request via http
+    preserveBatchOrder: false
 
   health:
     host: "0.0.0.0"
     # default port is 8082, but is setting by .Values.service.ports.health.port
 
-  accessLog: false
+  accessLog:
+    # -- enable access log, expensive so use only to debug
+    enabled: false
+    # -- include messages in the access log
+    includeMessages: false
 
   compression:
     grpc:
@@ -196,35 +213,43 @@ dshackle:
           # -- RPC (http) url is the RPC provider endpoint
           url: https://eth-mainnet.public.blastapi.io
           # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
-          disableValidation: true
+          disableValidation: false
           # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
-          validateSyncing: false
+          validateSyncing: true
           # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
           validatePeers: false
           # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
           validateCallLimit: false
+          # -- validationInterval (optional) is used to validate the call limit of the RPC provider, default is 30
+          validationInterval: "500"
           # -- role can be on of primary, secondary or fallback. default is primary
           role: primary
+          # -- add additional labels to the upstream.
           labels: {
             fullnode: true,
             provider: publicnode
           }
+          # -- add additional method whitelist to the upstream
+          method_whitelist: [
+            "eth_maxPriorityFeePerGas",
+          ]
         - id: drpc-eth
           # -- RPC (http) url is the RPC provider endpoint
           url: https://eth.drpc.org
           # -- disableValidation (optional) is used to disable the validation of the RPC provider, default is false
-          disableValidation: true
+          disableValidation: false
           # -- validateSyncing (optional) is used to validate the syncing of the RPC provider, default is true
-          validateSyncing: false
+          validateSyncing: true
           # -- validatePeers (optional) is used to validate the peers of the RPC provider, default is true
           validatePeers: false
           # -- validateCallLimit (optional) is used to validate the call limit of the RPC provider, default is true
           validateCallLimit: false
           # -- role can be on of primary, secondary or fallback. default is primary
-          role: primary
+          role: fallback
+          # -- add additional labels to the upstream
           labels: {
             archive: true,
-            provider: nodies
+            provider: drpc
           }
 
 serviceMonitor:

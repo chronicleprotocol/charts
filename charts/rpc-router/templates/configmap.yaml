@@ -34,7 +34,8 @@ data:
         {{- end }}
 
     accessLog:
-      enabled: {{ .Values.dshackle.accessLog }}
+      enabled: {{ .Values.dshackle.accessLog.enabled | default false }}
+      include-messages: {{ .Values.dshackle.accessLog.includeMessages | default false }}
 
     {{- if .Values.redis.enabled }}
     cache:
@@ -49,6 +50,7 @@ data:
     proxy:
       host: 0.0.0.0
       port: {{ .Values.service.ports.proxy.port }}
+      preserve-batch-order: {{ .Values.dshackle.proxy.preserveBatchOrder | default false }}
       routes:
      {{- range .Values.dshackle.routes }}
         - id: {{ .id }}
@@ -78,10 +80,14 @@ data:
             validate-syncing: {{ if eq $upstream.validateSyncing false }}false{{ else }}true{{ end }}
             validate-peers: {{ if eq $upstream.validatePeers false }}false{{ else }}true{{ end }}
             validate-call-limit: {{ if eq $upstream.validateCallLimit false }}false{{ else }}true{{ end }}
-          {{- if $route.method_whitelist }}
+            validation-interval: {{ $upstream.validationInterval | default "30" }}
+          {{- if or $.Values.global_method_whitelist $upstream.method_whitelist }}
           methods:
             enabled:
-              {{- range $route.method_whitelist }}
+              {{- range $.Values.global_method_whitelist }}
+              - name: {{ . }}
+              {{- end }}
+              {{- range $upstream.method_whitelist }}
               - name: {{ . }}
               {{- end }}
           {{- end }}

@@ -38,6 +38,9 @@ entryPointOverride: []
   # - "/usr/local/bin/watchdog"
   # - "/usr/local/bin/chronicle-appp"
 
+argsOverride: []
+  # - "--log-level=debug"
+  # - "--log-format=json"
 env:
   normal:
     # webapi - receive only (Spectre)
@@ -76,7 +79,7 @@ logFormat: null
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "spectre"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -158,6 +161,38 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+tor-proxy:
+  enabled: true
+  fullnameOverride: "tor-proxy"
+  env:
+    # non sensitive variables
+    # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+    normal:
+      TOR_EXTRA_ARGS: |
+        AutomapHostsOnResolve 1
+        ControlSocketsGroupWritable 1
+        CookieAuthentication 1
+        CookieAuthFileGroupReadable 1
+        SOCKSPort 0.0.0.0:9050
+        DNSPort 5353
+        ExitPolicy reject *:*
+        Log notice stderr
+        RunAsDaemon 0
+        ControlSocket /home/tor/.tor/control_socket
+        CookieAuthFile /home/tor/.tor/control_socket.authcookie
+        DataDirectory /home/tor/.tor
+        HiddenServiceDir /var/lib/tor/hidden_services
+        HiddenServicePort 8888 spectre:8080
+        HiddenServiceVersion 3
+
+  torConfig: {}
+    # existingSecret: ""
+    ## OR specify a private key
+    # torKeys:
+    #   secret_key: "PT0g......."
+    #   public_key: "PT....=="
+    #   hostname: "some.onion"
 
 # -- Extra K8s manifests to deploy
 extraObjects: []

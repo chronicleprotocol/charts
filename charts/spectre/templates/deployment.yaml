@@ -41,11 +41,17 @@ spec:
           command: ["/usr/local/bin/chronicle-app"]
           {{- end }}
           args:
+            {{- if .Values.argsOverride }}
+            {{- range .Values.argsOverride }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- else }}
             - "run"
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
