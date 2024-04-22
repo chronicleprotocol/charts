@@ -3593,4 +3593,23 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-04-22T07:48:08.943119266Z"
+  validator:
+  - apiVersion: v2
+    appVersion: 0.34.2
+    created: "2024-04-22T11:43:55.165273259Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    description: A Helm chart for deploying Chronicle Validator on Kubernetes
+    digest: 73136a89eb32eab2f70b48b7521d7aa12fb45e672b2375a597bb69816fdf2b50
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    name: validator
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/validator-0.2.9/validator-0.2.9.tgz
+    version: 0.2.9
+generated: "2024-04-22T11:43:55.165741091Z"
