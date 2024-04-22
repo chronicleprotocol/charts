@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "validator.fullname" . }}-test-logs"
+  labels:
+    {{- include "validator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  serviceAccountName: {{ include "validator.fullname" . }}-test
+  containers:
+    - name: test-ghost-logs
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo 'Running tests';
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{ include "validator.name" . }}' -o jsonpath='{.items[0].metadata.name}') | grep 'Starting tag=MUSIG'
+  restartPolicy: Never
