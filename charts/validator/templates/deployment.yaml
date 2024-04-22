@@ -46,15 +46,22 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+
+          {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
-            httpGet:
-              path: /healthcheck
-              port: {{ .Values.ghost.service.ports.metrics.port }}
+            {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.ghost.readiness.enabled }}
           readinessProbe:
-            httpGet:
-              path: /metrics
-              port: {{ .Values.ghost.service.ports.metrics.port }}
+            {{- toYaml .Values.ghost.readiness.readinessProbe | nindent 12 }}
+          {{- end }}
+
           env:
+            ### -- LIBP2P
+            - name: CFG_LIBP2P_SUBSCRIPTION_BUFFER_SIZE
+              value: {{ .Values.ghost.libP2pSubscriptionBufferSize | quote }}
+            - name: CFG_LIBP2P_VALIDATE_QUEUE_SIZE
+              value: {{ .Values.ghost.libp2pValidateQueueSize | quote }}
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
           {{- if eq .Values.ghost.service.type "LoadBalancer" }}
@@ -63,6 +70,44 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
           {{- end }}
+            ### -- WEB API
+            - name: CFG_WEBAPI_ENABLE
+              value: {{ .Values.ghost.webApi.enabled | quote }}
+            - name: CFG_WEBAPI_LISTEN_ADDR
+              value: {{ .Values.ghost.webApi.listenAddr | quote }}
+            - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
+              value: {{ .Values.ghost.webApi.socks5ProxyAddr | quote }}
+            ### -- CHAIN and RPC
+            - name: CFG_CHAIN_NAME
+              value: {{ .Values.ghost.chainName | default "eth" | quote}}
+            - name: CFG_CHAIN_ID
+              value: {{ .Values.ghost.chainId | default "1" | quote}}
+            - name: CFG_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.rpcUrl | quote }}
+            - name: CFG_ETH_RPC_URLS
+              value: {{ .Values.ghost.ethRpcUrl | quote }}
+            - name: CFG_ETH_CHAIN_ID
+              value: {{ .Values.ghost.ethChainId | default "1" | quote }}
+            - name: CFG_ARB_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.arbRpcUrl | quote }}
+            - name: CFG_ETH_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.ethRpcUrl | quote }}
+            - name: CFG_ETH_ARCH_RPC_URLS
+              value: {{ .Values.ghost.ethArchRpcUrl | quote }}
+            - name: CFG_GNO_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.gnoRpcUrl | quote }}
+            - name: CFG_MNT_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.mntRpcUrl | quote }}
+            - name: CFG_OPT_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.optRpcUrl | quote }}
+            - name: CFG_POL_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.polRpcUrl | quote }}
+            ### -- WATCHDOG
+            - name: WATCHDOG_CONFIG_REGISTRY
+              value: {{ .Values.ghost.watchdogConfigReg | quote }}
+            - name: WATCHDOG_INTERVAL
+              value: {{ .Values.ghost.watchdogInterval | default "900s" | quote }}
+          ### -- ETH KEYSTORE FROM EXISTING SECRET
           {{- if .Values.ghost.ethConfig }}
             - name: CFG_ETH_FROM
               valueFrom:
@@ -80,6 +125,7 @@ spec:
                   name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
           {{- range $key, $val := .Values.ghost.env.normal }}
             - name: {{ $key }}
               value: {{ $val | quote }}

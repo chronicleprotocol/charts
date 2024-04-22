@@ -15,6 +15,30 @@ ghost:
   logLevel: info
   logFormat: json
 
+  chainName: eth
+  rpcUrl: 'https://eth.llamarpc.com'
+  chainId: '1'
+
+  ethRpcUrl: 'https://eth.llamarpc.com'
+  ethChainId: '1'
+
+  arbRpcUrl: 'https://arbitrum.drpc.org'
+  ethArchRpcUrl: 'https://mainnet.infura.io/v3/'
+  gnoRpcUrl: 'https://gnosis-pokt.nodies.app'
+  mntRpcUrl: 'https://rpc.mantle.xyz'
+  optRpcUrl: 'https://mainnet.optimism.io'
+  polRpcUrl: 'https://zkevm-rpc.com'
+
+  watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  watchdogInterval: "900s"
+
+  libP2pSubscriptionBufferSize: '4096'
+  libp2pValidateQueueSize: '4096'
+
+  webApi:
+    enabled: true
+    listenAddr: ":8080"
+    socks5ProxyAddr: "tor-proxy:9050"
 
   # Provide ETH keys from existing secrets
   # -- use only existing secret OR env vars, do not provide both
@@ -92,6 +116,26 @@ ghost:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+  # -- Liveness probe
+  liveness:
+    enabled: true
+    livenessProbe:
+      httpGet:
+        path: /healthcheck
+        port: 9100
+      initialDelaySeconds: 30
+      periodSeconds: 60
+
+  # -- Readiness probe
+  readiness:
+    enabled: true
+    readinessProbe:
+      httpGet:
+        path: /metrics
+        port: 9100
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
