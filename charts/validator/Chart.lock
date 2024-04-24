@@ -1,6 +1,6 @@
 dependencies:
 - name: tor-proxy
   repository: https://chronicleprotocol.github.io/charts/
-  version: 0.0.8
-digest: sha256:812b35bd941f81498d7aa75d9941b7951e9bf59fb94da0dd027bef0310e3328e
-generated: "2024-04-18T11:46:14.561784+02:00"
+  version: 0.1.0
+digest: sha256:4c1dd09811800e4fc4d5a30c4af230b5863e8015f7d2d11f21cc6b2ecc2d4ba4
+generated: "2024-04-24T11:40:30.594008+02:00"

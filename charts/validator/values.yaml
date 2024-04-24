@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "sha-5cccda9"
+    tag: "0.36.0@sha256:3d6e79dfcca7e2680889a7f2a433fb0a9cc2fb290e80b67b522963ad0797a9ed"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `trace`, `error`
   logLevel: info
@@ -162,7 +162,7 @@ ghost:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /healthcheck
+        path: /metrics
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -212,6 +212,7 @@ tor-proxy:
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 ghost:8080
         HiddenServicePort 9999 ghost:9100
+        SafeLogging 0
 
   # -- provide tor keys from existing secret
   torConfig: {}
