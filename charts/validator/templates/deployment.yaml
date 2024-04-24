@@ -93,8 +93,6 @@ spec:
             ### -- CHAIN and RPC (source chain)
             - name: CFG_ETH_RPC_URLS
               value: {{ .Values.ghost.ethRpcUrl | quote }}
-            - name: CFG_ETH_CHAIN_ID
-              value: {{ .Values.ghost.ethChainId | default "1" | quote }}
             - name: CFG_ARB_CHAIN_RPC_URLS
               value: {{ .Values.ghost.arbRpcUrl | quote }}
             - name: CFG_ETH_CHAIN_RPC_URLS

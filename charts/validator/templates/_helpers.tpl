@@ -46,7 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "validator.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "validator.name" . }}
+app.kubernetes.io/name: ghost
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 

@@ -10,12 +10,12 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "sha-5cccda9"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `trace`, `error`
   logLevel: info
   # -- Log format for the validator, can be one of `json`, `text`
-  logFormat: json
+  logFormat: text
   # -- chain name for the "target" or "main" chain we use for the validator
   chainName: eth
   # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
@@ -26,8 +26,6 @@ ghost:
   # -- RPC url where the validator sources data from.
   # -- RPC URL for ETH
   ethRpcUrl: 'https://eth.llamarpc.com'
-  # -- chain id for source eth
-  ethChainId: '1'
   # -- RPC url for ARB
   arbRpcUrl: 'https://arbitrum.drpc.org'
   # -- RPC url for ETH Archival node
@@ -149,7 +147,7 @@ ghost:
     #    hosts:
     #      - chart-example.local
 
-  # -- Liveness probe
+  # -- Liveness probe : restart the validator if the healthcheck endpoint is not reachable
   liveness:
     enabled: true
     livenessProbe:
@@ -159,12 +157,12 @@ ghost:
       initialDelaySeconds: 30
       periodSeconds: 60
 
-  # -- Readiness probe
+  # -- Readiness probe : stop the validator if the metrics endpoint is not reachable
   readiness:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /metrics
+        path: /healthcheck
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -213,6 +211,7 @@ tor-proxy:
         SocksPort 0.0.0.0:9050
         HiddenServiceDir /var/lib/tor/hidden_services
         HiddenServicePort 8888 ghost:8080
+        HiddenServicePort 9999 ghost:9100
 
   # -- provide tor keys from existing secret
   torConfig: {}
