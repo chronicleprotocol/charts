@@ -88,25 +88,40 @@ spec:
               value: {{ .Values.ghost.chainName | default "eth" | quote}}
             - name: CFG_CHAIN_ID
               value: {{ .Values.ghost.chainId | default "1" | quote}}
+              {{- if .Values.ghost.rpcUrl }}
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
+              {{- end }}
             ### -- CHAIN and RPC (source chain)
-            - name: CFG_ETH_RPC_URLS
-              value: {{ .Values.ghost.ethRpcUrl | quote }}
+              {{- if .Values.ghost.arbRpcUrl }}
             - name: CFG_ARB_CHAIN_RPC_URLS
               value: {{ .Values.ghost.arbRpcUrl | quote }}
-            - name: CFG_ETH_CHAIN_RPC_URLS
+              {{- end }}
+              {{- if .Values.ghost.ethRpcUrl }}
+            - name: CFG_ETH_RPC_URLS
               value: {{ .Values.ghost.ethRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.ethArchRpcUrl }}
             - name: CFG_ETH_ARCH_RPC_URLS
               value: {{ .Values.ghost.ethArchRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.gnoRpcUrl }}
             - name: CFG_GNO_CHAIN_RPC_URLS
               value: {{ .Values.ghost.gnoRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.mntRpcUrl }}
             - name: CFG_MNT_CHAIN_RPC_URLS
               value: {{ .Values.ghost.mntRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.optRpcUrl }}
             - name: CFG_OPT_CHAIN_RPC_URLS
               value: {{ .Values.ghost.optRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.polRpcUrl }}
             - name: CFG_POL_CHAIN_RPC_URLS
               value: {{ .Values.ghost.polRpcUrl | quote }}
+              {{- end }}
+
             ### -- WATCHDOG
             - name: WATCHDOG_CONFIG_REGISTRY
               value: {{ .Values.ghost.watchdogConfigReg | quote }}

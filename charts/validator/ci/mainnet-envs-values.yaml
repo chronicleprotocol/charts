@@ -17,7 +17,7 @@ ghost:
 
       ### This is the tor proxy address for the web api
       CFG_WEB_URL: '44bd7fi6kfrsk2sbqp7qch7wdze4muyrzspdywam4aumz3ioft5pnoad.onion'
-
+      WATCHDOG_ETH_FROM: "0x00000000000000000000000000000000000000000000000"
 tor-proxy:
   torConfig:
     torKeys:
