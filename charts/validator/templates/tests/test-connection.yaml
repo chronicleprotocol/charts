@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "validator.fullname" . }}-test-connection"
+  labels:
+    {{- include "validator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+  {{- $serviceName := include "validator.fullname" . }}
+  {{- range $name, $config := .Values.ghost.service.ports }}
+    - name: nc-{{ $name }}
+      image: busybox
+      command: ['nc']
+      args:
+        - '-zv'
+        - '-v'
+        - '{{ $serviceName }}'
+        - '{{ $config.port }}'
+  {{- end }}
+  restartPolicy: Never

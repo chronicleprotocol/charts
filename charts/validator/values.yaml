@@ -16,12 +16,15 @@ ghost:
   logLevel: info
   # -- Log format for the validator, can be one of `json`, `text`
   logFormat: text
+
   # -- chain name for the "target" or "main" chain we use for the validator
   chainName: eth
   # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
   rpcUrl: null
   # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
   chainId: '1'
+  # -- chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or sepolia ethereum `legacy`
+  chainTxType: eip1559
 
   # -- RPC url where the validator sources data from. (default via protocol or BYO rpc here)
   # -- RPC URL for ETH
@@ -123,6 +126,10 @@ ghost:
       libp2p:
         port: 8000
         protocol: TCP
+      # -- webapi listen port for the validator service
+      webapi:
+        port: 8080
+        protocol: TCP
       # -- metrics port for the validator service
       metrics:
         port: 9100
@@ -131,13 +138,14 @@ ghost:
       # https:
       #   port: 8443
       #   protocol: TCP
+
     # -- Annotations to add to the service
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
-  # -- Ingress for the validator
+  # -- Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet)
   ingress:
-    # -- Disabled by default, as ingress objects need to be created carefully
+    # -- Disabled by default, since there is a bug in libp2p port assignment for dns based routing
     enabled: false
     className: ""
     annotations: {}
@@ -147,7 +155,14 @@ ghost:
       - host: chart-example.local
         paths:
           - path: /
+            port: 8000
             pathType: ImplementationSpecific
+          # - path: /webapi
+          #   port: 8080
+          #   pathType: ImplementationSpecific
+          # - path: /metrics
+          #   port: 9100
+          #   pathType: ImplementationSpecific
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:

@@ -77,13 +77,15 @@ spec:
           {{- end }}
           {{- end }}
             ### -- WEB API
+            {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
               value: {{ .Values.ghost.webApi.enabled | quote }}
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
               value: {{ .Values.ghost.webApi.socks5ProxyAddr | quote }}
-            ### -- CHAIN and RPC (target or main chain)
+            {{- end }}
+              ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
               value: {{ .Values.ghost.chainName | default "eth" | quote}}
             - name: CFG_CHAIN_ID
@@ -92,7 +94,11 @@ spec:
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
               {{- end }}
-            ### -- CHAIN and RPC (source chain)
+              {{- if .Values.ghost.chainTxType }}
+            - name: CFG_CHAIN_TX_TYPE
+              value: {{ .Values.ghost.chainTxType | default "eip1559" quote }}
+              {{- end }}
+              ### -- CHAIN and RPC (source chain)
               {{- if .Values.ghost.arbRpcUrl }}
             - name: CFG_ARB_CHAIN_RPC_URLS
               value: {{ .Values.ghost.arbRpcUrl | quote }}
@@ -121,8 +127,7 @@ spec:
             - name: CFG_POL_CHAIN_RPC_URLS
               value: {{ .Values.ghost.polRpcUrl | quote }}
               {{- end }}
-
-            ### -- WATCHDOG
+              ### -- WATCHDOG
             - name: WATCHDOG_CONFIG_REGISTRY
               value: {{ .Values.ghost.watchdogConfigReg | quote }}
             - name: WATCHDOG_INTERVAL
