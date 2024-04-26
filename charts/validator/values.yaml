@@ -24,7 +24,7 @@ ghost:
   # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
   chainId: '1'
   # -- chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or sepolia ethereum `legacy`
-  chainTxType: eip1559
+  chainTxType: null
 
   # -- RPC url where the validator sources data from. (default via protocol or BYO rpc here)
   # -- RPC URL for ETH
@@ -119,7 +119,7 @@ ghost:
   # -- Service type for the validator
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
-    type: ClusterIP
+    type: LoadBalancer
 
     ports:
       # -- libp2p port for the validator service
@@ -183,7 +183,7 @@ ghost:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /metrics
+        path: /healthcheck
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -246,6 +246,31 @@ tor-proxy:
       # secret_key: null
       # public_key: null
       # hostname: null
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- port to scrape
+  port: metrics
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 60s
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 60s
+  # -- ServiceMonitor relabelings
+  relabelings: []
 
 # -- Extra K8s manifests to deploy
 extraObjects: []
