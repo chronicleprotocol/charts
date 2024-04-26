@@ -5,6 +5,10 @@ ghost:
 
   watchdogInterval: "5s"
 
+  service:
+    # -- Type of service for the validator, can also be `LoadBalancer`
+    type: ClusterIP
+
   env:
     normal:
       # GOLOG_LOG_LEVEL: pubsub=debug
