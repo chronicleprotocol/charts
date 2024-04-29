@@ -77,39 +77,57 @@ spec:
           {{- end }}
           {{- end }}
             ### -- WEB API
+            {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
               value: {{ .Values.ghost.webApi.enabled | quote }}
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
               value: {{ .Values.ghost.webApi.socks5ProxyAddr | quote }}
-            ### -- CHAIN and RPC (target or main chain)
+            {{- end }}
+              ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
               value: {{ .Values.ghost.chainName | default "eth" | quote}}
             - name: CFG_CHAIN_ID
               value: {{ .Values.ghost.chainId | default "1" | quote}}
+              {{- if .Values.ghost.rpcUrl }}
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
-            ### -- CHAIN and RPC (source chain)
+              {{- end }}
+              {{- if .Values.ghost.chainTxType }}
+            - name: CFG_CHAIN_TX_TYPE
+              value: {{ .Values.ghost.chainTxType | default "eip1559" quote }}
+              {{- end }}
+              ### -- CHAIN and RPC (source chain)
+              {{- if .Values.ghost.arbRpcUrl }}
+            - name: CFG_ARB_RPC_URLS
+              value: {{ .Values.ghost.arbRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
               value: {{ .Values.ghost.ethRpcUrl | quote }}
-            - name: CFG_ETH_CHAIN_ID
-              value: {{ .Values.ghost.ethChainId | default "1" | quote }}
-            - name: CFG_ARB_CHAIN_RPC_URLS
-              value: {{ .Values.ghost.arbRpcUrl | quote }}
-            - name: CFG_ETH_CHAIN_RPC_URLS
-              value: {{ .Values.ghost.ethRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.ethArchRpcUrl }}
             - name: CFG_ETH_ARCH_RPC_URLS
               value: {{ .Values.ghost.ethArchRpcUrl | quote }}
-            - name: CFG_GNO_CHAIN_RPC_URLS
+              {{- end }}
+              {{- if .Values.ghost.gnoRpcUrl }}
+            - name: CFG_GNO_RPC_URLS
               value: {{ .Values.ghost.gnoRpcUrl | quote }}
-            - name: CFG_MNT_CHAIN_RPC_URLS
+              {{- end }}
+              {{- if .Values.ghost.mntRpcUrl }}
+            - name: CFG_MNT_RPC_URLS
               value: {{ .Values.ghost.mntRpcUrl | quote }}
-            - name: CFG_OPT_CHAIN_RPC_URLS
+              {{- end }}
+              {{- if .Values.ghost.optRpcUrl }}
+            - name: CFG_OPT_RPC_URLS
               value: {{ .Values.ghost.optRpcUrl | quote }}
-            - name: CFG_POL_CHAIN_RPC_URLS
+              {{- end }}
+              {{- if .Values.ghost.polRpcUrl }}
+            - name: CFG_POL_RPC_URLS
               value: {{ .Values.ghost.polRpcUrl | quote }}
-            ### -- WATCHDOG
+              {{- end }}
+              ### -- WATCHDOG
             - name: WATCHDOG_CONFIG_REGISTRY
               value: {{ .Values.ghost.watchdogConfigReg | quote }}
             - name: WATCHDOG_INTERVAL
