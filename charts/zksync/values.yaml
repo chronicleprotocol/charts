@@ -6,47 +6,15 @@ replicaCount: 1
 
 # -- Download from snapshot. will run snapshot sync before starting node in an initContainer. refer to https://github.com/matter-labs/ansible-en-role?tab=readme-ov-file#step-by-step-guide
 restoreDump:
-  enabled: false
-  snapShotUrl: "https://storage.googleapis.com/zksync-era-mainnet-external-node-backups/external_node_latest.pgdump"
-  fileName: "external_node_latest.pgdump"
-
-  databaseName: # required
-  user: # required
-  password: # required
-
-  storage:
-    # -- Access mode for the volume claim template
-    accessModes:
-      - ReadWriteOnce
-    # -- Requested size for volume claim template
-    size: 512Gi
-    # -- Use a specific storage class
-    # E.g 'local-path' for local storage to achieve best performance
-    # Read more (https://github.com/rancher/local-path-provisioner)
-    storageClassName: null
-    # -- Annotations for volume claim template
-    annotations: {}
-    # -- Selector for volume claim template
-    selector: {}
-    #   matchLabels:
-    #     app.kubernetes.io/name: something
-
-  image:
-    repository: postgres
-    pullPolicy: IfNotPresent
-    # Defaults to 14
-    tag: "14-alpine"
-
-  imagePullSecrets: []
-  nameOverride: ""
-  fullnameOverride: ""
+  enabled: true
+  snapshotUrl: "zksync-era-mainnet-external-node-snapshots"
 
 # defaults to mainnet, for testnet use https://sepolia.era.zksync.dev
 mainNodeUrl: https://zksync2-mainnet.zksync.io
 # defaults to mainnet, for testnet use 300
-l2ChainId: 324
+l2ChainId: "324"
 # defaults to mainnet, for testnet use 11155111
-l1ChainId: 1
+l1ChainId: "1"
 
 # ------------------------------------------------------------------------
 # -------------- YOU MUST CHANGE THE FOLLOWING VARIABLES -----------------
@@ -55,15 +23,15 @@ l1ChainId: 1
 # Config of the Postgres DB.
 database:
   # URL of the Postgres DB. Example: postgres://postgres:notsecurepassword@localhost/zksync_local_ext_node
-  url: # required
+  url:
+    fromSecret: false
+    # Kubernetes secret name to use the value from
+    # secretName:
+    # Kubernetes secret key to use the value from
+    # secretKey:
+    default: "postgres://zksync:zksync@localhost/mainnet2"
   # PostgreSQL connection pool size
   poolSize: "50"
-
-storage:
-  # Folder where the state_keeper cache will be stored (RocksDB).
-  stateCachePath: /db/ext-node/state_keeper
-  # Folder where the Merkle Tree will be stored (RocksDB).
-  merkleTreePath: /db/ext-node/lightweight
 
 # URL of the Ethereum client (e.g. infura / alchemy).
 ethClientUrl: https://rpc.ankr.com/eth
@@ -85,49 +53,11 @@ wsPort: 3061
 # Port on which to serve the healthcheck endpoint (to check if the service is live).
 healthcheckPort: 3081
 
-# Max possible limit of entities to be requested at once.
-reqEntitiesLimit: 10000
-# Max possible limit of filters to be active at once.
-filtersLimit: 10000
-# Max possible limit of subscriptions to be active at once.
-subscriptionsLimit: 10000
-# Interval for polling the DB for pubsub (in ms).
-pubsubPollingInterval: 200
-# Tx nonce: how far ahead from the committed nonce can it be.
-# This shouldn't be larger than the value on the main node (50).
-maxNonceAhead: 50
-# The multiplier to use when suggesting gas price. Should be higher than one,
-# otherwise if the L1 prices soar, the suggested gas price won't be sufficient to be included in block.
-gasPriceScaleFactor: 1.2
-# The factor by which to scale the gasLimit
-estimateGasScaleFactor: 1.2
-# The max possible number of gas that `eth_estimateGas` is allowed to overestimate.
-estimateGasAcceptableOverestimation: 1000
-# Max possible size of an ABI encoded tx (in bytes).
-# This shouldn't be larger than the value on the main node.
-maxTxSize: 1000000
-# Enabled JSON-RPC API namespaces. Also available: en, debug.
-apiNamespaces: eth,net,web3,zks,pubsub
-
 # Settings related to sentry and opentelemetry.
-logFormat: plain
+logFormat: json
 
-sentry:
-  enabled: false
-  url: unset
-  panicInterval: 1800
-  errorInterval: 10800
-  environment: zksync_mainnet
-
-otlp:
-  enabled: false
-  url: unset
-
-# Settings related to Rust logging and backtraces.
 # You can read about the format [here](https://docs.rs/env_logger/0.10.0/env_logger/#enabling-logging) to fine-tune logging.
-rustLog: zksync_core=debug,zksync_dal=info,zksync_eth_client=info,zksync_merkle_tree=info,zksync_storage=info,zksync_state=debug,zksync_types=info,vm=info,zksync_external_node=info,zksync_utils=debug,
-rustBacktrace: full
-rustLibBacktrace: 1
+rustLog: zksync_external_node=info,zksync_core=info,zksync_core::sync_layer=info,zksync_server=info,zksync_prover=info,zksync_contract_verifier=info,zksync_dal=info,zksync_eth_client=info,zksync_storage=info,zksync_db_manager=info,zksync_merkle_tree=info,zksync_state=info,zksync_utils=info,zksync_types=info,loadnext=info,dev_ticker=info,vm=info,block_sizes_test=info,zksync_verification_key_generator_and_server=info,zksync_object_store=info,setup_key_generator_and_server=info,zksync_circuit_synthesizer=info,zksync_queued_job_processor=info,zksync_health_check=info
 
 image:
   repository: matterlabs/external-node
@@ -175,9 +105,9 @@ service:
     healthcheck:
       port: 3081
       protocol: TCP
-    prometheus:
-      port: 3322
-      protocol: TCP
+    # prometheus: # when prometheus enabled
+    #   port: 3322
+    #   protocol: TCP
 
 # @default -- See `values.yaml`
 livenessProbe:
@@ -248,9 +178,21 @@ postgres:
     - -c
     - checkpoint_timeout=1800
 
-  databaseName: # required
-  user: # required
-  password: # required
+  databaseName: mainnet2
+  user:
+    fromSecret: false
+    # Kubernetes secret name to use the value from
+    # secretName:
+    # Kubernetes secret key to use the value from
+    # secretKey:
+    default: zksync
+  password:
+    fromSecret: false
+    # Kubernetes secret name to use the value from
+    # secretName:
+    # Kubernetes secret key to use the value from
+    # secretKey:
+    default: zksync
 
   serviceAccount:
     # Specifies whether a service account should be created
@@ -377,18 +319,7 @@ serviceMonitor:
   # -- ServiceMonitor relabelings
   relabelings: []
 
-resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources: {}
 
 autoscaling:
   enabled: false

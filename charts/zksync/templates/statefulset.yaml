@@ -29,7 +29,6 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- if not .Values.restoreDump.enabled }}
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
@@ -42,85 +41,69 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+          {{- if not .Values.restoreDump.enabled }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: node-storage
               mountPath: /db
           env:
-            - name: ZKSYNC_HOME # docs states that this is not used but must be set and not changed.
-              value: /
-            - name: DATABASE_URL
-              value: "{{ .Values.database.url }}"
-            - name: DATABASE_POOL_SIZE
-              value: "{{ .Values.database.poolSize }}"
+            - name: ZKSYNC_HOME
+              value: "/"
             - name: EN_STATE_CACHE_PATH
-              value: "{{ .Values.storage.stateCachePath }}"
+              value: "/db/state_keeper"
             - name: EN_MERKLE_TREE_PATH
-              value: "{{ .Values.storage.merkleTreePath }}"
-            - name: EN_ETH_CLIENT_URL
-              value: "{{ .Values.ethClientUrl }}"
+              value: "/db/lightweight-new"
             - name: EN_HTTP_PORT
               value: "{{ .Values.httpPort }}"
             - name: EN_WS_PORT
               value: "{{ .Values.wsPort }}"
+            - name: EN_HEALTHCHECK_PORT
+              value: "{{ .Values.healthcheckPort }}"
             {{- with .Values.prometheus }}
             - name: EN_PROMETHEUS_PORT
               value: "{{ .port }}"
             {{- end }}
-            - name: EN_HEALTHCHECK_PORT
-              value: "{{ .Values.healthcheckPort }}"
-            - name: EN_REQ_ENTITIES_LIMIT
-              value: "{{ .Values.reqEntitiesLimit }}"
-            - name: EN_FILTERS_LIMIT
-              value: "{{ .Values.filtersLimit }}"
-            - name: EN_SUBSCRIPTIONS_LIMIT
-              value: "{{ .Values.subscriptionsLimit }}"
-            - name: EN_PUBSUB_POLLING_INTERVAL
-              value: "{{ .Values.pubsubPollingInterval }}"
-            - name: EN_MAX_NONCE_AHEAD
-              value: "{{ .Values.maxNonceAhead }}"
-            - name: EN_GAS_PRICE_SCALE_FACTOR
-              value: "{{ .Values.gasPriceScaleFactor }}"
-            - name: EN_ESTIMATE_GAS_SCALE_FACTOR
-              value: "{{ .Values.estimateGasScaleFactor }}"
-            - name: EN_ESTIMATE_GAS_ACCEPTABLE_OVERESTIMATION
-              value: "{{ .Values.estimateGasAcceptableOverestimation }}"
-            - name: EN_MAX_TX_SIZE
-              value: "{{ .Values.maxTxSize }}"
-            - name: EN_API_NAMESPACES
-              value: "{{ .Values.apiNamespaces }}"
+            - name: EN_THREADS_PER_SERVER
+              value: "64"
+            - name: CHAIN_STATE_KEEPER_VALIDATION_COMPUTATIONAL_GAS_LIMIT
+              value: "2000000"
+            - name: DATABASE_POOL_SIZE
+              value: "{{ .Values.database.poolSize }}"
+            - name: EN_MAX_BLOCKS_PER_TREE_BATCH
+              value: "200"
             - name: MISC_LOG_FORMAT
-              value: "{{ .logFormat }}"
-            {{- if .Values.sentry.enabled }}
-            - name: MISC_SENTRY_URL
-              value: "{{ .Values.sentry.url }}"
-            - name: MISC_SENTRY_PANIC_INTERVAL
-              value: "{{ .Values.sentry.panicInterval }}"
-            - name: MISC_SENTRY_ERROR_INTERVAL
-              value: "{{ .Values.sentry.errorInterval }}"
-            - name: EN_SENTRY_ENVIRONMENT
-              value: "{{ .Values.sentry.environment }}"
-            {{- end }}
-            {{- if .Values.otlp.enabled }}
-            - name: MISC_OTLP_URL
-              value: "{{ .Values.otlp.url }}"
-            {{- end }}
+              value: "{{ .Values.logFormat }}"
             - name: RUST_LOG
               value: "{{ .Values.rustLog }}"
-            - name: RUST_BACKTRACE
-              value: "{{ .Values.rustBacktrace }}"
-            - name: RUST_LIB_BACKTRACE
-              value: "{{ .Values.rustLibBacktrace }}"
+            - name: EN_ETH_CLIENT_URL
+              value: "{{ .Values.ethClientUrl }}"
             - name: EN_MAIN_NODE_URL
               value: "{{ .Values.mainNodeUrl }}"
             - name: EN_L2_CHAIN_ID
               value: "{{ .Values.l2ChainId }}"
             - name: EN_L1_CHAIN_ID
               value: "{{ .Values.l1ChainId }}"
-          {{- end }}
+            {{- if .Values.restoreDump.enabled }}
+            - name: EN_SNAPSHOTS_RECOVERY_ENABLED
+              value: "true"
+            - name: EN_SNAPSHOTS_OBJECT_STORE_MODE
+              value: "GCSAnonymousReadOnly"
+            - name: EN_SNAPSHOTS_OBJECT_STORE_BUCKET_BASE_URL
+              value: "{{ .Values.restoreDump.snapshotUrl }}"
+            {{- end }}
+            - name: DATABASE_URL
+              {{- if .Values.database.url.fromSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.database.url.secretName }}"
+                  key: "{{ .Values.database.url.secretKey }}"
+              {{- else }}
+              value: "{{ .Values.database.url.default }}"
+              {{- end }}
         {{- with .Values.postgres }}
         - name: "postgres"
           securityContext:
@@ -147,9 +130,25 @@ spec:
               mountPath: /var/lib/postgresql
           env:
             - name: POSTGRES_USER
-              value: "{{ .user }}"
+              {{- if .user.fromSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .user.secretName }}"
+                  key: "{{ .user.secretKey }}"
+              {{- else }}
+              value: "{{ .user.default }}"
+              {{- end }}
             - name: POSTGRES_PASSWORD
-              value: "{{ .password }}"
+              {{- if .password.fromSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .password.secretName }}"
+                  key: "{{ .password.secretKey }}"
+              {{- else }}
+              value: "{{ .password.default }}"
+              {{- end }}
+            - name: POSTGRES_DB
+              value: "{{ .databaseName }}"
         {{- end }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
