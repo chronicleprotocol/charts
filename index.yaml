@@ -3722,4 +3722,18 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/validator-0.2.9/validator-0.2.9.tgz
     version: 0.2.9
-generated: "2024-05-20T16:54:48.721312334Z"
+  zksync:
+  - apiVersion: v2
+    appVersion: v24.0.0
+    created: "2024-05-22T07:05:26.385313921Z"
+    description: A Helm chart for deploying zkSync RPC nodes on Kubernetes
+    digest: 4e2389fd115af484d806c51ed5045f255dc894cdb284f1fee24d47199ab51674
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: zksync
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-05-22T07:05:26.385767848Z"
