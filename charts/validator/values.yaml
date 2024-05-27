@@ -211,7 +211,7 @@ ghost:
 
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
-  # -- values for tor-proxy: refer to the [tor-proxy](https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml) subchart
+  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml)
   enabled: true
 
 serviceMonitor:
