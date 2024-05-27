@@ -29,10 +29,3 @@ ghost:
       CFG_FEEDS: "stage"
 
       # WATCHDOG_ETH_FROM: "0x0000000000000000000000000000000000000000"
-tor-proxy:
-  torConfig:
-    torKeys:
-      # these are test secrets / test values. These tor-keys provide no security and are only used for testing purposes.
-      secret_key: "PT0gZWQyNTUxOXYxLXNlY3JldDogdHlwZTAgPT0AAAB48ZoWgg85pG5F3GVsoh1SxulTfa4nR8GVWlzNiFTQRk7LTqzUAmXo7pvB66NaboaZ+p1DqMqJqfv15HJZ4lut"
-      public_key: "PT0gZWQyNTUxOXYxLXB1YmxpYzogdHlwZTAgPT0AAADnAj+VHlFjJWpBg/8BH/YeScZTEcyePFgM4CjM7Q4s+g=="
-      hostname: "44bd7fi6kfrsk2sbqp7qch7wdze4muyrzspdywam4aumz3ioft5pnoad.onion"
