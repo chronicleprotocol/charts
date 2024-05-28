@@ -58,7 +58,6 @@ ghost:
     enabled: true
     # -- Listen address for the web api
     listenAddr: ":8080"
-    # -- Socks5 proxy address for the web api
 
   # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
@@ -118,7 +117,7 @@ ghost:
   # -- Service type for the validator
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
-    type: ClusterIP
+    type: LoadBalancer
 
     ports:
       # -- libp2p port for the validator service
