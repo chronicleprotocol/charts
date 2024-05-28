@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.37.2](https://img.shields.io/badge/AppVersion-0.37.2-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.37.2](https://img.shields.io/badge/AppVersion-0.37.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -11,18 +11,12 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake/> |
 | chronicleprotocol |  | <https://github.com/chronicleprotocol> |
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://chronicleprotocol.github.io/charts/ | tor-proxy | 0.1.0 |
-
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"affinity":{},"arbRpcUrl":null,"chainId":"1","chainName":"eth","chainTxType":null,"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.37.2@sha256:d3d2cd9aff6ed80ff89132ba06d0563ffa85d176c8d354bda0bb718fe51e799d"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":":8080","socks5ProxyAddr":"tor-proxy:9050"}}` | Values for Ghost |
+| ghost | object | `{"affinity":{},"arbRpcUrl":null,"chainId":"1","chainName":"eth","chainTxType":null,"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.37.2@sha256:d3d2cd9aff6ed80ff89132ba06d0563ffa85d176c8d354bda0bb718fe51e799d"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":":8080"}}` | Values for Ghost |
 | ghost.affinity | object | `{}` | pod Affinity spec applied validator |
 | ghost.arbRpcUrl | string | `nil` | RPC url for ARB |
 | ghost.chainId | string | `"1"` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
@@ -65,10 +59,9 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.tolerations | list | `[]` | Tolerations applied validator |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
 | ghost.watchdogInterval | string | `"900s"` | WATCHDOG polling interval (in seconds) |
-| ghost.webApi | object | `{"enabled":true,"listenAddr":":8080","socks5ProxyAddr":"tor-proxy:9050"}` | WEB API (tor-proxy) |
+| ghost.webApi | object | `{"enabled":true,"listenAddr":":8080"}` | WEB API (tor-proxy) |
 | ghost.webApi.enabled | bool | `true` | Enables the web api and deploys the tor-proxy subchart |
 | ghost.webApi.listenAddr | string | `":8080"` | Listen address for the web api |
-| ghost.webApi.socks5ProxyAddr | string | `"tor-proxy:9050"` | Socks5 proxy address for the web api |
 | serviceMonitor.annotations | object | `{}` | Additional ServiceMonitor annotations |
 | serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
 | serviceMonitor.interval | string | `"60s"` | ServiceMonitor scrape interval |
@@ -80,10 +73,8 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"60s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
-| tor-proxy | object | `{"enabled":true,"env":{"normal":{"TOR_EXTRA_ARGS":"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 ghost:8080\nHiddenServicePort 9999 ghost:9100\nSafeLogging 0\n"}},"fullnameOverride":"tor-proxy","service":{"ports":{"socks":{"port":9050,"protocol":"TCP"}},"type":"ClusterIP"},"torConfig":{}}` | Values for Tor Proxy (subchart of ghost) |
-| tor-proxy.enabled | bool | `true` | values for tor-proxy: refer to the [tor-proxy](https://github.com/chronicleprotocol/charts/blob/main/charts/tor-proxy/values.yaml) subchart |
-| tor-proxy.env | object | `{"normal":{"TOR_EXTRA_ARGS":"SocksPort 0.0.0.0:9050\nHiddenServiceDir /var/lib/tor/hidden_services\nHiddenServicePort 8888 ghost:8080\nHiddenServicePort 9999 ghost:9100\nSafeLogging 0\n"}}` | non-sensitive variables passed to container as environment variables |
-| tor-proxy.torConfig | object | `{}` | provide tor keys from existing secret |
+| tor-proxy | object | `{"enabled":true}` | Values for Tor Proxy (subchart of ghost) |
+| tor-proxy.enabled | bool | `true` | values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml) |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)
