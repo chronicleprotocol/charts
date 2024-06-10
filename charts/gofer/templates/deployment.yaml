@@ -39,7 +39,17 @@ spec:
           {{- if .Values.configHcl }}
           args: [ "-c", "/config/gofer.hcl", "{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- else }}
-          args: ["{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args:
+            {{- if .Values.args }}
+            {{- toYaml .Values.args | nindent 12 }}
+            {{- else if not .Values.args }}
+            - "{{ .Values.goferMode }}"
+            - "-v"
+            - "{{ .Values.logLevel | default "debug" }}"
+            {{- range $arg := .Values.customArgs }}
+            - "{{ $arg }}"
+            {{- end }}
+            {{- end }}
           {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
