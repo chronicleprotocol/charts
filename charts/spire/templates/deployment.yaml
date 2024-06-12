@@ -34,10 +34,18 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.entryPointOverride }}
+          command:
+            {{- range .Values.entryPointOverride }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
           args:
-            {{- if .Values.args }}
-            {{- toYaml .Values.args | nindent 12 }}
-            {{- else if not .Values.args }}
+            {{- if .Values.argsOverride }}
+            {{- range .Values.argsOverride }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- else }}
             {{- if .Values.bootstrap }}
             - "bootstrap"
             {{- else  if .Values.stream }}
@@ -66,9 +74,9 @@ spec:
             {{- if .Values.configHcl }}
             - "/config/spire.hcl"
             {{- end }}
-            {{- range $arg := .Values.customArgs }}
-            - "{{ $arg }}"
             {{- end }}
+            {{- range $arg := .Values.extraArgs }}
+            - "{{ $arg }}"
             {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
