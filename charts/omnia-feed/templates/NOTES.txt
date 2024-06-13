@@ -1,7 +1,0 @@
-1. Get the application pods by running these commands:
-
-  kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "omnia-feed.name" . }},app.kubernetes.io/instance={{ .Release.Name }}
-
-2. Get omnia-feed logs:
-
-  kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name={{ include "omnia-feed.name" . }}' -o jsonpath='{.items[0].metadata.name}')
