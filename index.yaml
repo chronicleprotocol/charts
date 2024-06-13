@@ -3580,6 +3580,17 @@ entries:
   ssb-server:
   - apiVersion: v2
     appVersion: 1.13.1
+    created: "2024-06-13T16:58:21.991016288Z"
+    deprecated: true
+    description: A Helm chart for deploying an ssb-server in Kubernetes
+    digest: dd02e241fbc8a0e8a7faec9f078ec2b487fc688d0725fc6cf2dc083880960ddb
+    name: ssb-server
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ssb-server-0.0.3/ssb-server-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 1.13.1
     created: "2023-06-13T20:21:05.748500008Z"
     description: A Helm chart for deploying an ssb-server in Kubernetes
     digest: 793029d286541a7e1303d9e098deba13641f0562ceb87927a3018c16efb77544
@@ -3871,4 +3882,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-13T14:28:43.752957Z"
+generated: "2024-06-13T16:58:21.991282242Z"
