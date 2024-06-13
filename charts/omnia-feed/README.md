@@ -1,15 +1,10 @@
 # omnia-feed
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.15.2-rc.0](https://img.shields.io/badge/AppVersion-1.15.2--rc.0-informational?style=flat-square)
+> **:exclamation: This Helm Chart is deprecated!**
+
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.15.2-rc.0](https://img.shields.io/badge/AppVersion-1.15.2--rc.0-informational?style=flat-square)
 
 A Helm chart for deploying an Omnia relay in Kubernetes
-
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
-| chronicleprotocol |  | <https://github.com/chronicleprotocol> |
 
 ## Requirements
 

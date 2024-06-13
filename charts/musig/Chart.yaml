@@ -1,12 +1,7 @@
 apiVersion: v2
 name: musig
 description: A Helm chart for deploying Chronicle Musig on Kubernetes
-maintainers:
-  - name: WesleyCharlesBlake
-    url: https://github.com/WesleyCharlesBlake
-  - name: chronicleprotocol
-    url: https://github.com/chronicleprotocol
-
+deprecated: true
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -20,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.2.0
+version: 0.2.1
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
