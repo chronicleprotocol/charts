@@ -1136,6 +1136,17 @@ entries:
   ghost:
   - apiVersion: v2
     appVersion: "0.29"
+    created: "2024-06-13T14:28:42.540761183Z"
+    deprecated: true
+    description: A Helm chart for deploying Chronicle Ghost on Kubernetes
+    digest: e78a4ab9b5be9946148f94712d970dd9bf222c255c214a742768cb9f15790a48
+    name: ghost
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ghost-0.2.1/ghost-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "0.29"
     created: "2024-01-16T18:22:58.539945663Z"
     description: A Helm chart for deploying Chronicle Ghost on Kubernetes
     digest: 3eaad272c89b8addfd1317971798398f559db515bbb5d403e2662ddafd9db2c3
@@ -1414,6 +1425,17 @@ entries:
   lair:
   - apiVersion: v2
     appVersion: 0.10.0
+    created: "2024-06-13T14:28:42.746844931Z"
+    deprecated: true
+    description: A Helm chart for deploying lair to Kubernetes
+    digest: e24627c3c116590e2280fa101ab528146f76e0128c1b8e16827b23490a2ef055
+    name: lair
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lair-0.1.3/lair-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 0.10.0
     created: "2023-04-17T19:35:37.252571415Z"
     description: A Helm chart for deploying lair to Kubernetes
     digest: e131a8bf512d9c292b6074de33b10f88bd038c1f90136ef4eeb3b3205a31212f
@@ -1441,6 +1463,17 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/lair-0.1.1/lair-0.1.1.tgz
     version: 0.1.1
   leeloo:
+  - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2024-06-13T14:28:42.939476814Z"
+    deprecated: true
+    description: A Helm chart for deploying leeloo to Kubernetes
+    digest: 3f1b52b0644b895c2878ccd86c762ded9e7cdcaec84eca14155acf1a4ee4dcf9
+    name: leeloo
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/leeloo-0.1.3/leeloo-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 0.10.0
     created: "2023-04-19T13:05:47.590039676Z"
@@ -1722,6 +1755,17 @@ entries:
   musig:
   - apiVersion: v2
     appVersion: "0.29"
+    created: "2024-06-13T14:28:43.136778819Z"
+    deprecated: true
+    description: A Helm chart for deploying Chronicle Musig on Kubernetes
+    digest: 5d64bf6a9d362e72465fa51ad325ddbf66c6f3765d82fc7e5bea6f3f671bee2b
+    name: musig
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/musig-0.2.1/musig-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: "0.29"
     created: "2024-01-16T18:22:58.785708182Z"
     description: A Helm chart for deploying Chronicle Musig on Kubernetes
     digest: da2d520140ca3d9d2b4f2582cafd853325c81368090cc1907d1b5835f128ebea
@@ -1999,6 +2043,30 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-0.0.1/omnia-0.0.1.tgz
     version: 0.0.1
   omnia-feed:
+  - apiVersion: v2
+    appVersion: 1.15.2-rc.0
+    created: "2024-06-13T14:28:43.351406434Z"
+    dependencies:
+    - condition: spire.enabled
+      name: spire
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.1.0
+    - condition: ssb-server.enabled
+      name: ssb-server
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.2
+    - condition: gofer.enabled
+      name: gofer
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.3
+    deprecated: true
+    description: A Helm chart for deploying an Omnia relay in Kubernetes
+    digest: 7a9172c7268a2d561461bde6c2d2b95b732b77c17ba461179f2b4d6f9662d4c7
+    name: omnia-feed
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/omnia-feed-0.0.6/omnia-feed-0.0.6.tgz
+    version: 0.0.6
   - apiVersion: v2
     appVersion: 1.15.2-rc.0
     created: "2023-06-13T20:59:46.139432747Z"
@@ -2361,6 +2429,26 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/omnia-relay-0.0.1/omnia-relay-0.0.1.tgz
     version: 0.0.1
   relay:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2024-06-13T14:28:43.546603594Z"
+    dependencies:
+    - condition: tor-proxy.enabled
+      name: tor-proxy
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.0.8
+    - condition: spectre.enabled
+      name: spectre
+      repository: https://chronicleprotocol.github.io/charts/
+      version: 0.2.1
+    deprecated: true
+    description: A Helm chart for deploying Chronicle Relays on Kubernetes
+    digest: 7fae6493bb5a904fdc9ef4df9154e3d2b0772cffa300225e34923a391e4bceb7
+    name: relay
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/relay-0.1.2/relay-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: 2.0.0
     created: "2024-02-02T11:44:49.364077973Z"
@@ -2846,6 +2934,17 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.1.0/rpc-router-0.1.0.tgz
     version: 0.1.0
   rpc-splitter:
+  - apiVersion: v2
+    appVersion: 0.9.0
+    created: "2024-06-13T14:28:43.752568939Z"
+    deprecated: true
+    description: A Helm chart for deploying rpc-splitter Kubernetes
+    digest: 4b5908405cf3aec65b4188b6a2dd832dd37e6b8d4a89db6d9ffdede08fcead85
+    name: rpc-splitter
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-splitter-0.0.2/rpc-splitter-0.0.2.tgz
+    version: 0.0.2
   - apiVersion: v2
     appVersion: 0.9.0
     created: "2023-03-20T13:32:51.13139259Z"
@@ -3772,4 +3871,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-11T14:42:44.334259605Z"
+generated: "2024-06-13T14:28:43.752957Z"
