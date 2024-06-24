@@ -34,39 +34,50 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.entryPointOverride }}
+          command:
+            {{- range .Values.entryPointOverride }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
           args:
-          {{- if .Values.bootstrap }}
+            {{- if .Values.argsOverride }}
+            {{- range .Values.argsOverride }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- else }}
+            {{- if .Values.bootstrap }}
             - "bootstrap"
-          {{- else  if .Values.stream }}
+            {{- else  if .Values.stream }}
             - "stream"
-          {{- else  if .Values.watch }}
+            {{- else  if .Values.watch }}
             - "watch"
-          {{- else  if .Values.kafka.enabled }}
+            {{- else  if .Values.kafka.enabled }}
             - "kafka"
             {{- range $arg := .Values.kafka.kafkaTopics }}
             - "{{ $arg }}"
             {{- end }}
-          {{- else }}
+            {{- else }}
             - "agent"
-          {{- end }}
-          {{- if .Values.logLevel }}
+            {{- end }}
+            {{- if .Values.logLevel }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
-          {{- end }}
-          {{- if .Values.logFormat }}
+            {{- end }}
+            {{- if .Values.logFormat }}
             - "--log.format"
             - "{{ .Values.logFormat | default "text" }}"
-          {{- end }}
+            {{- end }}
             {{- if .Values.configHcl }}
             - "-c"
             {{- end }}
             {{- if .Values.configHcl }}
             - "/config/spire.hcl"
             {{- end }}
-          {{- range $arg := .Values.customArgs }}
+            {{- end }}
+            {{- range $arg := .Values.extraArgs }}
             - "{{ $arg }}"
-          {{- end }}
-
+            {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}

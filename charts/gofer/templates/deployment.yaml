@@ -36,10 +36,28 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.entryPointOverride }}
+          command:
+            {{- range .Values.entryPointOverride }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- end }}
           {{- if .Values.configHcl }}
           args: [ "-c", "/config/gofer.hcl", "{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
           {{- else }}
-          args: ["{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
+          args:
+            {{- if .Values.argsOverride }}
+            {{- range .Values.argsOverride }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- else }}
+            - "{{ .Values.goferMode }}"
+            - "-v"
+            - "{{ .Values.logLevel | default "debug" }}"
+            {{- end }}
+            {{- range $arg := .Values.extraArgs }}
+            - "{{ $arg }}"
+            {{- end }}
           {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
