@@ -66,7 +66,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           resources:
             {{- toYaml .Values.geth.resources | nindent 12 }}
-          command: ["bash", "./geth-entrypoint"]
+          command: ["bash", "./execution-entrypoint"]
           args:
           {{- if .Values.geth.args }}
             {{- toYaml .Values.geth.args | nindent 12 }}
