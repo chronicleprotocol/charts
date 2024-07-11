@@ -93,6 +93,19 @@ entries:
     version: 0.0.1
   base:
   - apiVersion: v2
+    appVersion: v0.9.0
+    created: "2024-07-11T14:40:33.444138875Z"
+    description: A Helm chart for deploying Base RPC nodes on Kubernetes
+    digest: 6ec2138d3c65d200a761b7d32e487612aae360c6856502009764573f4055cf97
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: base
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/base-0.0.3/base-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
     appVersion: v0.8.1
     created: "2024-04-10T06:53:45.448724126Z"
     description: A Helm chart for deploying Base RPC nodes on Kubernetes
@@ -3917,4 +3930,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-06-24T15:02:11.090393604Z"
+generated: "2024-07-11T14:40:33.444924507Z"
