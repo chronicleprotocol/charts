@@ -20,11 +20,11 @@ A Helm chart for deploying a beacon node to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| checkpointSyncUrl | string | `"https://goerli.checkpoint-sync.ethpandaops.io"` |  |
+| checkpointSyncUrl | string | `"https://checkpoint-sync.sepolia.ethpandaops.io"` |  |
 | executionEndpoint | string | `"http://eth-rpc-ethereum:8551"` |  |
 | extraArgs | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
-| genesisBeaconApiUrl | string | `"https://goerli.checkpoint-sync.ethpandaops.io"` |  |
+| genesisBeaconApiUrl | string | `"https://checkpoint-sync.sepolia.ethpandaops.io"` |  |
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"gcr.io/prysmaticlabs/prysm/beacon-chain"` |  |
@@ -41,7 +41,7 @@ A Helm chart for deploying a beacon node to Kubernetes
 | livenessProbe | object | `{"initialDelaySeconds":60,"periodSeconds":120,"tcpSocket":{"port":"http-api"}}` | Liveness probe |
 | metricsPort | int | `8080` | Metrics Port |
 | nameOverride | string | `""` |  |
-| network | string | `"goerli"` |  |
+| network | string | `"sepolia"` |  |
 | nodeSelector | object | `{}` |  |
 | p2pPort | int | `13000` | P2P Port |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |

@@ -9,17 +9,17 @@ image:
   pullPolicy: IfNotPresent
   tag: ""
 
-network: goerli
-# can be mainnet or goerli
+network: sepolia
+# can be mainnet or sepolia
 
-checkpointSyncUrl: https://goerli.checkpoint-sync.ethpandaops.io
-# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+checkpointSyncUrl: https://checkpoint-sync.sepolia.ethpandaops.io
+# can be https://checkpoint-sync.sepolia.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
-genesisBeaconApiUrl: https://goerli.checkpoint-sync.ethpandaops.io
-# can be https://goerli.checkpoint-sync.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
+genesisBeaconApiUrl: https://checkpoint-sync.sepolia.ethpandaops.io
+# can be https://checkpoint-sync.sepolia.ethpandaops.io https://mainnet-checkpoint-sync.stakely.io
 
 executionEndpoint: http://eth-rpc-ethereum:8551
-# can your own eth instance. eg https://goerli.mydomain.com/v.....
+# can your own eth instance. eg https://sepolia.mydomain.com/v.....
 
 # -- JWT secret used by client as a secret. Change this value.
 jwt: ecb22bc24e7d4061f7ed690ccd5846d7d73f5d2b9733267e12f56790398d908a
