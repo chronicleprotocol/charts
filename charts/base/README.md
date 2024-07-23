@@ -1,6 +1,6 @@
 # base
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.9.0](https://img.shields.io/badge/AppVersion-v0.9.0-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.9.0](https://img.shields.io/badge/AppVersion-v0.9.0-informational?style=flat-square)
 
 A Helm chart for deploying Base RPC nodes on Kubernetes
 
@@ -93,7 +93,7 @@ A Helm chart for deploying Base RPC nodes on Kubernetes
 | serviceMonitor.interval | string | `"1m"` | ServiceMonitor scrape interval |
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
-| serviceMonitor.path | string | `"/debug/metrics"` | Path to scrape |
+| serviceMonitor.path | string | `"/debug/metrics/prometheus"` | Path to scrape |
 | serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
