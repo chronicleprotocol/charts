@@ -50,7 +50,7 @@ spec:
             - --rpc-port={{ .Values.rpcPort }}
             - --grpc-gateway-host=0.0.0.0
             {{- range $arg := .Values.extraArgs }}
-              {{- $arg | nindent 14 }}
+              {{- $arg | nindent 12 }}
             {{- end }}
           ports:
             - name: p2p-tcp
