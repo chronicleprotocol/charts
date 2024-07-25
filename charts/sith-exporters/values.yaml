@@ -5,9 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/chronicleprotocol/oracles-updates-exporter
+  repository: ghcr.io/chronicleprotocol
   pullPolicy: IfNotPresent
   tag: ""
+
+# -- one of oracles-updates-exporter, oracles-gas-exporter, api-greets-exporter
+exporter: "oracles-updates-exporter"
 
 imagePullSecrets: []
 nameOverride: ""
