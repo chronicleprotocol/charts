@@ -1,3 +1,4 @@
+{{- $redisHa := (index .Values "redis-ha") -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -37,14 +38,13 @@ data:
       enabled: {{ .Values.dshackle.accessLog.enabled | default false }}
       include-messages: {{ .Values.dshackle.accessLog.includeMessages | default false }}
 
-    {{- if .Values.redis.enabled }}
+    {{- if $redisHa.enabled }}
     cache:
       redis:
         enabled: true
-        host: {{ .Release.Name }}-redis-master
+        host: localrpc-redis-ha
         port: 6379
         db: 0
-        password: {{ .Values.redis.auth.password }}
     {{- end }}
 
     proxy:

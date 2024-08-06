@@ -120,20 +120,36 @@ tolerations: []
 
 affinity: {}
 
-redis:
-  # -- If enabled a redis chart will be deployed as a dependency
-  enabled: false
-  auth:
-    password: yourRedisSecret
-  master:
-    persistence:
-      enabled: true
-      size: 8Gi
-  replica:
-    replicaCount: 1
-    persistence:
-      enabled: false
-      size: 8Gi
+redis-ha:
+  # -- Enables the Redis HA subchart and disables the custom Redis single node deployment
+  enabled: true
+  ## Redis image
+  image:
+    # -- Redis repository
+    repository: public.ecr.aws/docker/library/redis
+    # -- Redis tag
+    tag: 7.2.4-alpine
+  ## Prometheus redis-exporter sidecar
+  exporter:
+    # -- Enable Prometheus redis-exporter sidecar
+    enabled: false
+    # -- Repository to use for the redis-exporter
+    image: public.ecr.aws/bitnami/redis-exporter
+    # -- Tag to use for the redis-exporter
+    tag: 1.58.0
+  persistentVolume:
+    # -- Configures persistence on Redis nodes
+    enabled: false
+  ## Redis specific configuration options
+  redis:
+    # -- Redis convention for naming the cluster group: must match `^[\\w-\\.]+$` and can be templated
+    masterGroupName: dshackle
+    # -- Any valid redis config options in this section will be applied to each server (see `redis-ha` chart)
+    # @default -- See [values.yaml]
+    config:
+      # -- Will save the DB if both the given number of seconds and the given number of write operations against the DB occurred. `""`  is disabled
+      # @default -- `'""'`
+      save: '""'
 
 # -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
 env:

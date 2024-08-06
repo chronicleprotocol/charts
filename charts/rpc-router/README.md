@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.0](https://img.shields.io/badge/AppVersion-0.54.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.0](https://img.shields.io/badge/AppVersion-0.58.0-informational?style=flat-square)
 
 A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -15,7 +15,7 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | 16.x.x |
+| https://dandydeveloper.github.io/charts/ | redis-ha | 4.26.1 |
 
 ## Values
 
@@ -79,13 +79,16 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | podSecurityContext | object | `{}` |  |
 | preStopSleepSeconds | string | `nil` | default is 20 seconds |
 | readinessProbe | object | See `values.yaml` | Readiness probe |
-| redis.auth.password | string | `"yourRedisSecret"` |  |
-| redis.enabled | bool | `false` | If enabled a redis chart will be deployed as a dependency |
-| redis.master.persistence.enabled | bool | `true` |  |
-| redis.master.persistence.size | string | `"8Gi"` |  |
-| redis.replica.persistence.enabled | bool | `false` |  |
-| redis.replica.persistence.size | string | `"8Gi"` |  |
-| redis.replica.replicaCount | int | `1` |  |
+| redis-ha.enabled | bool | `true` | Enables the Redis HA subchart and disables the custom Redis single node deployment |
+| redis-ha.exporter.enabled | bool | `false` | Enable Prometheus redis-exporter sidecar |
+| redis-ha.exporter.image | string | `"public.ecr.aws/bitnami/redis-exporter"` | Repository to use for the redis-exporter |
+| redis-ha.exporter.tag | string | `"1.58.0"` | Tag to use for the redis-exporter |
+| redis-ha.image.repository | string | `"public.ecr.aws/docker/library/redis"` | Redis repository |
+| redis-ha.image.tag | string | `"7.2.4-alpine"` | Redis tag |
+| redis-ha.persistentVolume.enabled | bool | `false` | Configures persistence on Redis nodes |
+| redis-ha.redis.config | object | See [values.yaml] | Any valid redis config options in this section will be applied to each server (see `redis-ha` chart) |
+| redis-ha.redis.config.save | string | `'""'` | Will save the DB if both the given number of seconds and the given number of write operations against the DB occurred. `""`  is disabled |
+| redis-ha.redis.masterGroupName | string | `"dshackle"` | Redis convention for naming the cluster group: must match `^[\\w-\\.]+$` and can be templated |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
