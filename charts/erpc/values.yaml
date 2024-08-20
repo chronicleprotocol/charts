@@ -147,10 +147,49 @@ env: {}
   #       key: INFURA_API_KEY
 
 erpc:
-  projects: {}
-  upstreams: {}
-  rateLimiters: {}
-  cache: {}
+  cacheConfig:
+    driver: memory
+    # driver: postgresql
+    # postgresql:
+    #   connectionUri: >-
+    #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
+    #   table: rpc_cache
+  projects:
+    - id: main
+      networkIds: ['1', '42161']
+    - id: testnet
+      networkIds: ['5', '111155111']
+
+  upstreams:
+    - id: eth-example-1
+      chainId: 1
+      endpoint: https://mainnet.infura.io/v3/yourInfuraApiKey
+      rateLimit: default-budget
+    - id: arb1-example-1
+      chainId: 42161
+      endpoint: https://arb.infura.io/v3/yourInfuraApiKey
+      rateLimit: global-blast
+    - id: goerli-example-1
+      chainId: 5
+      endpoint: https://goerli.infura.io/v3/yourInfuraApiKey
+      rateLimit: global-quicknode
+
+  rateLimiters:
+    - id: default-budget
+      rules:
+        - method: '*'
+          maxCount: 10000
+          period: 1s
+    - id: global-blast
+      rules:
+        - method: '*'
+          maxCount: 1000
+          period: 2s
+    - id: global-quicknode
+      rules:
+        - method: '*'
+          maxCount: 300
+          period: 1s
 
 
 serviceMonitor:
