@@ -115,7 +115,7 @@ affinity: {}
 
 redis:
   # -- If enabled a redis chart will be deployed as a dependency
-  enabled: true
+  enabled: false
   auth:
     password: yourRedisSecret
   master:
@@ -185,6 +185,7 @@ erpc:
       chainId: 5
       endpoint: https://zksync-era-sepolia.blockpi.network/v1/rpc/public
       rateLimit: p1
+    # -- Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc
     - id: envio-public
       endpoint: envio://rpc.hypersync.xyz
       rateLimit: p2

@@ -32,6 +32,7 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 | erpc.projects[0].networkIds | list | `["5","421614","11155111"]` | A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks |
 | erpc.rateLimiters | list | `[{"id":"p3","rules":[{"maxCount":10000,"method":"*","period":"1s"}]},{"id":"p2","rules":[{"maxCount":1000,"method":"*","period":"2s"}]},{"id":"p1","rules":[{"maxCount":300,"method":"*","period":"1s"}]}]` | Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters |
 | erpc.upstreams | list | `[{"chainId":"11155111","endpoint":"https://ethereum-sepolia-rpc.publicnode.com","id":"sep-public-node","rateLimit":"p2"},{"chainId":"11155111","endpoint":"https://eth-sepolia.public.blastapi.io","id":"sep-blast-node","rateLimit":"p2"},{"chainId":"300","endpoint":"https://zksync-sepolia.drpc.org","id":"zksync-sep-drpc","rateLimit":"p3"},{"chainId":5,"endpoint":"https://zksync-era-sepolia.blockpi.network/v1/rpc/public","id":"zksync-sep-blockpi","rateLimit":"p1"},{"endpoint":"envio://rpc.hypersync.xyz","id":"envio-public","rateLimit":"p2"}]` | A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams |
+| erpc.upstreams[4] | object | `{"endpoint":"envio://rpc.hypersync.xyz","id":"envio-public","rateLimit":"p2"}` | Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc |
 | extraObjects | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -55,7 +56,7 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 | preStopSleepSeconds | string | `nil` | default is 20 seconds |
 | readinessProbe | object | See `values.yaml` | Readiness probe |
 | redis.auth.password | string | `"yourRedisSecret"` |  |
-| redis.enabled | bool | `true` | If enabled a redis chart will be deployed as a dependency |
+| redis.enabled | bool | `false` | If enabled a redis chart will be deployed as a dependency |
 | redis.master.persistence.enabled | bool | `false` |  |
 | redis.master.persistence.size | string | `"8Gi"` |  |
 | redis.replica.persistence.enabled | bool | `false` |  |
