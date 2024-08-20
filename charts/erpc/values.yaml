@@ -88,7 +88,7 @@ resources: {}
 # @default -- See `values.yaml`
 livenessProbe:
   tcpSocket:
-    port: proxy
+    port: http
   initialDelaySeconds: 60
   periodSeconds: 30
 
@@ -96,7 +96,7 @@ livenessProbe:
 # @default -- See `values.yaml`
 readinessProbe:
   tcpSocket:
-    port: proxy
+    port: http
   initialDelaySeconds: 10
   periodSeconds: 10
 
@@ -115,12 +115,12 @@ affinity: {}
 
 redis:
   # -- If enabled a redis chart will be deployed as a dependency
-  enabled: false
+  enabled: true
   auth:
     password: yourRedisSecret
   master:
     persistence:
-      enabled: true
+      enabled: false
       size: 8Gi
   replica:
     replicaCount: 1
@@ -147,51 +147,66 @@ env: {}
   #       key: INFURA_API_KEY
 
 erpc:
+  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
   cacheConfig:
     driver: memory
+    # driver: redis
+    # redis:
+    #   addr: erpc-k8s-redis-headless:6379
+    #   password: yourRedisSecret
+    #   db: 0
     # driver: postgresql
     # postgresql:
     #   connectionUri: >-
     #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
     #   table: rpc_cache
+
+  # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
-    - id: main
-      networkIds: ['1', '42161']
     - id: testnet
-      networkIds: ['5', '111155111']
+      # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
+      networkIds: ['5', '421614', '11155111']
 
+  # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
   upstreams:
-    - id: eth-example-1
-      chainId: 1
-      endpoint: https://mainnet.infura.io/v3/yourInfuraApiKey
-      rateLimit: default-budget
-    - id: arb1-example-1
-      chainId: 42161
-      endpoint: https://arb.infura.io/v3/yourInfuraApiKey
-      rateLimit: global-blast
-    - id: goerli-example-1
+    - id: sep-public-node
+      chainId: '11155111'
+      endpoint: https://ethereum-sepolia-rpc.publicnode.com
+      rateLimit: p2
+    - id: sep-blast-node
+      chainId: '11155111'
+      endpoint: https://eth-sepolia.public.blastapi.io
+      rateLimit: p2
+    - id: zksync-sep-drpc
+      chainId: '300'
+      endpoint: https://zksync-sepolia.drpc.org
+      rateLimit: p3
+    - id: zksync-sep-blockpi
       chainId: 5
-      endpoint: https://goerli.infura.io/v3/yourInfuraApiKey
-      rateLimit: global-quicknode
-
+      endpoint: https://zksync-era-sepolia.blockpi.network/v1/rpc/public
+      rateLimit: p1
+    - id: envio-public
+      endpoint: envio://rpc.hypersync.xyz
+      rateLimit: p2
+  # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
   rateLimiters:
-    - id: default-budget
+    - id: p3
       rules:
         - method: '*'
           maxCount: 10000
           period: 1s
-    - id: global-blast
+    - id: p2
       rules:
         - method: '*'
           maxCount: 1000
           period: 2s
-    - id: global-quicknode
+    - id: p1
       rules:
         - method: '*'
           maxCount: 300
           period: 1s
 
-
+# -- If true, create a ServiceMonitor CRD for prometheus operator
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
   # https://github.com/coreos/prometheus-operator
