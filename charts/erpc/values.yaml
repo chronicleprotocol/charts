@@ -1,0 +1,236 @@
+# Default values for erpc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+# -- default is 20 seconds
+preStopSleepSeconds: null
+# -- default RollingUpdate
+updateStrategy: null
+# -- default is 0
+maxUnavailable: null
+# -- default is 1
+maxSurge: null
+
+image:
+  repository: ghcr.io/erpc/erpc
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+  # configmap.reloader.stakater.com/reload: "erpc-config"
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  annotations: {}
+  ports:
+    http:
+      port: 4000
+      protocol: TCP
+    metrics:
+      port: 4001
+      protocol: TCP
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# -- Liveness probe
+# @default -- See `values.yaml`
+livenessProbe:
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+
+# -- Readiness probe
+# @default -- See `values.yaml`
+readinessProbe:
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+redis:
+  # -- If enabled a redis chart will be deployed as a dependency
+  enabled: false
+  auth:
+    password: yourRedisSecret
+  master:
+    persistence:
+      enabled: false
+      size: 8Gi
+  replica:
+    replicaCount: 1
+    persistence:
+      enabled: false
+      size: 8Gi
+
+# -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
+env: {}
+  # - name: DRPC_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: drpc-api-key
+  #       key: DRPC_API_KEY
+  # - name: BLAST_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: blast-api-key
+  #       key: BLAST_API_KEY
+  # - name: INFURA_API_KEY
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: infura-api-key
+  #       key: INFURA_API_KEY
+
+erpc:
+  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
+  cacheConfig:
+    driver: memory
+    # driver: redis
+    # redis:
+    #   addr: erpc-k8s-redis-headless:6379
+    #   password: yourRedisSecret
+    #   db: 0
+    # driver: postgresql
+    # postgresql:
+    #   connectionUri: >-
+    #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
+    #   table: rpc_cache
+
+  # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
+  projects:
+    - id: testnet
+      # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
+      networkIds: ['5', '421614', '11155111']
+
+  # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
+  upstreams:
+    - id: sep-public-node
+      chainId: '11155111'
+      endpoint: https://ethereum-sepolia-rpc.publicnode.com
+      rateLimit: p2
+    - id: sep-blast-node
+      chainId: '11155111'
+      endpoint: https://eth-sepolia.public.blastapi.io
+      rateLimit: p2
+    - id: zksync-sep-drpc
+      chainId: '300'
+      endpoint: https://zksync-sepolia.drpc.org
+      rateLimit: p3
+    - id: zksync-sep-blockpi
+      chainId: 5
+      endpoint: https://zksync-era-sepolia.blockpi.network/v1/rpc/public
+      rateLimit: p1
+    # -- Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc
+    - id: envio-public
+      endpoint: envio://rpc.hypersync.xyz
+      rateLimit: p2
+  # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
+  rateLimiters:
+    - id: p3
+      rules:
+        - method: '*'
+          maxCount: 10000
+          period: 1s
+    - id: p2
+      rules:
+        - method: '*'
+          maxCount: 1000
+          period: 2s
+    - id: p1
+      rules:
+        - method: '*'
+          maxCount: 300
+          period: 1s
+
+# -- If true, create a ServiceMonitor CRD for prometheus operator
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- port to scrape
+  port: metrics
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 1m
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []
+
+extraObjects: []
