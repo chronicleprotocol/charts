@@ -3115,6 +3115,22 @@ entries:
     version: 0.1.0
   spectre:
   - apiVersion: v2
+    appVersion: 0.42.2
+    created: "2024-08-21T10:15:51.591759199Z"
+    description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
+    digest: ac7c78e822d7c71e3fbb9968406608be62ee0b84516a2802e7f2c073cbceedd5
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.3.0/spectre-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
     appVersion: 0.33.0
     created: "2024-04-08T14:16:25.813912563Z"
     dependencies:
@@ -4038,4 +4054,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-20T19:55:24.468193462Z"
+generated: "2024-08-21T10:15:51.592048238Z"
