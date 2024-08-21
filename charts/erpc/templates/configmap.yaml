@@ -41,14 +41,16 @@ data:
                 delay: 3000ms
                 maxCount: 2
           {{- end }}
-      {{- end }}
+
         upstreams:
-        {{- range $upstream := .Values.erpc.upstreams }}
+        {{- range $upstream := $project.upstreams }}
           - id: {{ $upstream.id }}
             endpoint: {{ $upstream.endpoint }}
             rateLimitBudget: {{ $upstream.rateLimit }}
+            {{- if $upstream.chainId }}
             evm:
               chainId: {{ $upstream.chainId }}
+            {{- end }}
             failsafe:
               timeout:
                 duration: 15s
@@ -59,6 +61,7 @@ data:
                 backoffFactor: 0.3
                 jitter: 500ms
         {{- end }}
+      {{- end }}
 
     rateLimiters:
       budgets:
