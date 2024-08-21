@@ -47,6 +47,10 @@ spec:
             {{- end }}
             {{- else }}
             - "run"
+            {{- if .Values.configsUrl }}
+            - "-c"
+            - "{{ .Values.configsUrl }}"
+            {{- end }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
