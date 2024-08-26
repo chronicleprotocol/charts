@@ -28,18 +28,10 @@ data:
           - architecture: evm
             evm:
               chainId: {{ . }}
+            {{- if $project.failsafe }}
             failsafe:
-              timeout:
-                duration: 30s
-              retry:
-                maxCount: 3
-                delay: 500ms
-                backoffMaxDelay: 10s
-                backoffFactor: 0.3
-                jitter: 500ms
-              hedge:
-                delay: 3000ms
-                maxCount: 2
+              {{- $project.failsafe | toYaml | nindent 14 }}
+            {{- end }}
           {{- end }}
 
         upstreams:
@@ -51,15 +43,29 @@ data:
             evm:
               chainId: {{ $upstream.chainId }}
             {{- end }}
+            {{- if $upstream.failsafe }}
             failsafe:
-              timeout:
-                duration: 15s
-              retry:
-                maxCount: 2
-                delay: 1000ms
-                backoffMaxDelay: 10s
-                backoffFactor: 0.3
-                jitter: 500ms
+              {{- $upstream.failsafe | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.rateLimitAutoTune }}
+            rateLimitAutoTune:
+              {{- $upstream.rateLimitAutoTune | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.jsonRpc }}
+            jsonRpc:
+              {{- $upstream.jsonRpc | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.ignoreMethods }}
+            ignoreMethods:
+              {{- $upstream.ignoreMethods | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.allowMethods }}
+            allowMethods:
+              {{- $upstream.allowMethods | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.autoIgnoreUnsupportedMethods }}
+            autoIgnoreUnsupportedMethods: {{ $upstream.autoIgnoreUnsupportedMethods | default "true" }}
+            {{- end }}
         {{- end }}
       {{- end }}
 
