@@ -2,7 +2,17 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Deployment replica count
 replicaCount: 1
+
+## OR
+# -- Enable autoscaling / HPA
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
 
 # -- default is 20 seconds
 preStopSleepSeconds: null
@@ -100,13 +110,6 @@ readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
 nodeSelector: {}
 
 tolerations: []
@@ -133,13 +136,13 @@ env: {}
   # - name: DRPC_API_KEY
   #   valueFrom:
   #     secretKeyRef:
-  #       name: drpc-api-key
-  #       key: DRPC_API_KEY
+  #       name: rpc-api-keys
+  #       key: drpc-api
   # - name: BLAST_API_KEY
   #   valueFrom:
   #     secretKeyRef:
-  #       name: blast-api-key
-  #       key: BLAST_API_KEY
+  #       name: rpc-api-keys
+  #       key: blast-api
   # - name: INFURA_API_KEY
   #   valueFrom:
   #     secretKeyRef:
@@ -169,36 +172,87 @@ erpc:
       networkIds:
       - '421614'  # -- Arbitrum Sepolia
       - '84532'  # -- Base Sepolia
-      - '80084'  # -- Berachain bartio
-      - '5003'  # -- Mantle Sepolia
-      - '11155420'  # -- Optimism Sepolia
-      - '534351'  # -- Scroll Sepolia
       - '11155111'  # -- Sepolia
-      - '2442'  # -- Zkevm Cardona
       - '300'  # -- ZkSync Sepolia
+      failsafe:
+        # -- Delay means how long to wait before starting a simultaneous hedged request.
+        hedge:
+          # -- e.g. if upstream A did not respond within 500ms, a new request towards upstream B will be started, and whichever responds faster will be returned to the client.
+          delay: 500ms
+          # -- In total how many hedges to start. e.g. if maxCount is 2, and upstream A did not respond within 500ms, a new request towards upstream B will be started. If B also did not respond, a new request towards upstream C will be started.
+          maxCount: 2
+        circuitBreaker:
+          # -- These two variables indicate how many failures and capacity to tolerate before opening the circuit.
+          failureThresholdCount: 30
+          failureThresholdCapacity: 100
+          # -- How long to wait before trying to re-enable the upstream after circuit breaker was opened.
+          halfOpenAfter: 120s
+          # -- These two variables indicate how many successes are required in half-open state before closing the circuit, and putting the upstream back in available upstreams.
+          successThresholdCount: 8
+          successThresholdCapacity: 10        # On network-level retry policy applies to the incoming request to eRPC,
+        # -- this is additional to the retry policy set on upstream level.
+        retry:
+          # -- Total retries besides the initial request:
+          maxCount: 3
+          # -- Min delay between retries:
+          delay: 500ms
+          # -- Maximum delay between retries:
+          backoffMaxDelay: 10s
+          # -- Multiplier for each retry for exponential backoff:
+          backoffFactor: 0.3
+          # -- Random jitter to avoid thundering herd, e.g. add between 0 to 500ms to each retry delay:
+          jitter: 500ms
 
       # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
       upstreams:
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
+          # -- [optional] - additional failsafe settings for this upstream
+          failsafe:
+            timeout:
+              duration: 15s
+            retry:
+              maxCount: 2
+              delay: 1000ms
+              backoffMaxDelay: 10s
+              backoffFactor: 0.3
+              jitter: 500ms
           rateLimit: p2
-        - id: sep-blast-node
-          chainId: '11155111'
-          endpoint: https://eth-sepolia.public.blastapi.io
-          rateLimit: p2
-        - id: zksync-sep-drpc
-          chainId: '300'
-          endpoint: https://zksync-sepolia.drpc.org
-          rateLimit: p3
-        - id: zksync-sep-blockpi
-          chainId: 5
-          endpoint: https://zksync-era-sepolia.blockpi.network/v1/rpc/public
-          rateLimit: p1
+          rateLimitAutoTune:
+            enabled: true
+            adjustmentPeriod: 1m
+            errorRateThreshold: 0.1
+            increaseFactor: 1.05
+            decreaseFactor: 0.9
+            minBudget: 0
+            maxBudget: 10_000
+          jsonRpc:
+            supportsBatch: true
+            batchMaxSize: 100
+            batchMaxWait: 100ms
+          # Which methods must never be sent to this upstream.
+          # For example this can be used to avoid archive calls (traces) to full nodes
+          ignoreMethods:
+            - "eth_traceTransaction"
+            - "alchemy_*"
+          # -- Explicitly allowed methods will take precedence over ignoreMethods.
+          # For example if you only want eth_getLogs to be served, set ignore methods to "*" and allowMethods to "eth_getLogs".
+          allowMethods:
+            - "eth_getLogs"
+          # By default a dynamic mechanism automatically adds "Unsupported" methods to ignoreMethods,
+          # based on errors returned by the upstream. Set this to false to disable this behavior.
+          autoIgnoreUnsupportedMethods: true
+        # - id: blastapi
+        #   endpoint: blastapi://${BLAST_API_KEY}
+        # - id: drpc
+        #   endpoint: drpc://${DRPC_API_KEY}
+
         # -- Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc
-        - id: envio-public
-          endpoint: envio://rpc.hypersync.xyz
-          rateLimit: p2
+        # - id: envio-public
+        #   endpoint: envio://rpc.hypersync.xyz
+        #   rateLimit: p2
+
 
   # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
   rateLimiters:
