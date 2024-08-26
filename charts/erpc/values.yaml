@@ -136,13 +136,13 @@ env: {}
   # - name: DRPC_API_KEY
   #   valueFrom:
   #     secretKeyRef:
-  #       name: drpc-api-key
-  #       key: DRPC_API_KEY
+  #       name: rpc-api-keys
+  #       key: drpc-api
   # - name: BLAST_API_KEY
   #   valueFrom:
   #     secretKeyRef:
-  #       name: blast-api-key
-  #       key: BLAST_API_KEY
+  #       name: rpc-api-keys
+  #       key: blast-api
   # - name: INFURA_API_KEY
   #   valueFrom:
   #     secretKeyRef:
@@ -208,7 +208,6 @@ erpc:
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
-          rateLimit: p2
           # -- [optional] - additional failsafe settings for this upstream
           failsafe:
             timeout:
@@ -219,8 +218,7 @@ erpc:
               backoffMaxDelay: 10s
               backoffFactor: 0.3
               jitter: 500ms
-        - id: blastapi
-          endpoint: blastapi://${BLAST_API_KEY}
+          rateLimit: p2
           rateLimitAutoTune:
             enabled: true
             adjustmentPeriod: 1m
@@ -245,13 +243,15 @@ erpc:
           # By default a dynamic mechanism automatically adds "Unsupported" methods to ignoreMethods,
           # based on errors returned by the upstream. Set this to false to disable this behavior.
           autoIgnoreUnsupportedMethods: true
-        - id: drpc
-          endpoint: drpc://${DRPC_API_KEY}
+        # - id: blastapi
+        #   endpoint: blastapi://${BLAST_API_KEY}
+        # - id: drpc
+        #   endpoint: drpc://${DRPC_API_KEY}
 
         # -- Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc
-        - id: envio-public
-          endpoint: envio://rpc.hypersync.xyz
-          rateLimit: p2
+        # - id: envio-public
+        #   endpoint: envio://rpc.hypersync.xyz
+        #   rateLimit: p2
 
 
   # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters

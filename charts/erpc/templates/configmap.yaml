@@ -47,6 +47,25 @@ data:
             failsafe:
               {{- $upstream.failsafe | toYaml | nindent 14 }}
             {{- end }}
+            {{- if $upstream.rateLimitAutoTune }}
+            rateLimitAutoTune:
+              {{- $upstream.rateLimitAutoTune | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.jsonRpc }}
+            jsonRpc:
+              {{- $upstream.jsonRpc | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.ignoreMethods }}
+            ignoreMethods:
+              {{- $upstream.ignoreMethods | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.allowMethods }}
+            allowMethods:
+              {{- $upstream.allowMethods | toYaml | nindent 14 }}
+            {{- end }}
+            {{- if $upstream.autoIgnoreUnsupportedMethods }}
+            autoIgnoreUnsupportedMethods: {{ $upstream.autoIgnoreUnsupportedMethods | default "true" }}
+            {{- end }}
         {{- end }}
       {{- end }}
 
