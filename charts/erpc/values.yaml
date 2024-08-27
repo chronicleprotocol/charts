@@ -150,6 +150,8 @@ env: {}
   #       key: INFURA_API_KEY
 
 erpc:
+  # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
+  logLevel: info
   # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
   cacheConfig:
     driver: memory
@@ -164,6 +166,7 @@ erpc:
     #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
     #   table: rpc_cache
 
+
   # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
     # -- each project must have a unique id, and is used in the URL structure: fqdn/{project_id}/{network-architecture}/{chain-id}
@@ -171,9 +174,19 @@ erpc:
       # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
       networkIds:
       - '421614'  # -- Arbitrum Sepolia
-      - '84532'  # -- Base Sepolia
       - '11155111'  # -- Sepolia
-      - '300'  # -- ZkSync Sepolia
+      # todo: apply network level configuration per networkId
+
+      # -- Apply auth to project level. ref: https://docs.erpc.cloud/config/auth
+      authStrategies: {}
+        # - type: secret
+        #   rateLimitBudget: freemium
+        #   secret:
+        #     value: "some-random-secret-value"
+        # - type: secret
+        #   rateLimitBudget: premium
+        #   secret:
+        #     value: "some-random-secret2-value"
       failsafe:
         # -- Delay means how long to wait before starting a simultaneous hedged request.
         hedge:
@@ -205,6 +218,10 @@ erpc:
 
       # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
       upstreams:
+        - id: arbsep-public-blast
+          chainId: '421614'
+          endpoint: https://arbitrum-sepolia.public.blastapi.io
+          rateLimitBudget: freemium
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
@@ -218,7 +235,7 @@ erpc:
               backoffMaxDelay: 10s
               backoffFactor: 0.3
               jitter: 500ms
-          rateLimit: p2
+          rateLimitBudget: freemium
           rateLimitAutoTune:
             enabled: true
             adjustmentPeriod: 1m
@@ -234,7 +251,6 @@ erpc:
           # Which methods must never be sent to this upstream.
           # For example this can be used to avoid archive calls (traces) to full nodes
           ignoreMethods:
-            - "eth_traceTransaction"
             - "alchemy_*"
           # -- Explicitly allowed methods will take precedence over ignoreMethods.
           # For example if you only want eth_getLogs to be served, set ignore methods to "*" and allowMethods to "eth_getLogs".
@@ -256,21 +272,17 @@ erpc:
 
   # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
   rateLimiters:
-    - id: p3
+    - id: freemium
       rules:
         - method: '*'
-          maxCount: 10000
+          maxCount: 100
           period: 1s
-    - id: p2
+    - id: premium
       rules:
         - method: '*'
           maxCount: 1000
           period: 2s
-    - id: p1
-      rules:
-        - method: '*'
-          maxCount: 300
-          period: 1s
+
 
 # -- If true, create a ServiceMonitor CRD for prometheus operator
 serviceMonitor:

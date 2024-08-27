@@ -4,7 +4,7 @@ metadata:
   name: {{ include "erpc.fullname" . }}-config
 data:
   erpc.yaml: |
-    logLevel: warn
+    logLevel: {{ .Values.erpc.logLevel | default "warn" }}
     {{ if .Values.erpc.cacheConfig }}
     database:
       evmJsonRpcCache:
@@ -23,6 +23,13 @@ data:
     projects:
       {{- range $project := .Values.erpc.projects }}
       - id: {{ $project.id }}
+        {{- if $project.authStrategies }}
+        auth:
+          strategies:
+          {{- range $strategy := $project.authStrategies }}
+            - {{ $strategy | toYaml | nindent 14 | trim }}
+          {{- end }}
+        {{- end }}
         networks:
         {{- range $project.networkIds }}
           - architecture: evm
@@ -38,7 +45,7 @@ data:
         {{- range $upstream := $project.upstreams }}
           - id: {{ $upstream.id }}
             endpoint: {{ $upstream.endpoint }}
-            rateLimitBudget: {{ $upstream.rateLimit }}
+            rateLimitBudget: {{ $upstream.rateLimitBudget }}
             {{- if $upstream.chainId }}
             evm:
               chainId: {{ $upstream.chainId }}
