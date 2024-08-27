@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "validator.fullname" . }}-sleep"
+  labels:
+    {{- include "validator.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: sleep
+      image: busybox
+      command: ['sleep']
+      args:
+        - '20'
+  restartPolicy: Never

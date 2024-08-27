@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "validator.labels" . | nindent 4 }}
   annotations:
+    "helm.sh/hook-weight": "5"
     "helm.sh/hook": test
 spec:
   serviceAccountName: {{ include "validator.fullname" . }}-test
