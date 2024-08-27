@@ -14,7 +14,7 @@ ghost:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
 
-  rpcUrl: https://erpc.stage.chroniclelabs.io/stage/evm/11155111
+  rpcUrl: https://eth-sepolia.public.blastapi.io
   chainId: "11155111"
   chainName: sep
   env:
