@@ -3249,6 +3249,22 @@ entries:
     version: 0.0.1
   sith-exporters:
   - apiVersion: v2
+    appVersion: 0.0.4
+    created: "2024-09-18T17:56:56.665185593Z"
+    description: A Helm chart for deploying prometheus exporters for Chronicle Oracles
+      to Kubernetes
+    digest: cfb1d359f01e10da332373b367b546b0aaa7cc048abccb6ee8d70e27e48c7553
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: sith-exporters
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/sith-exporters-0.2.2/sith-exporters-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     appVersion: 0.0.3
     created: "2024-07-25T10:23:05.686641413Z"
     description: A Helm chart for deploying prometheus exporters for Chronicle Oracles
@@ -4237,4 +4253,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-09-11T14:13:59.199414999Z"
+generated: "2024-09-18T17:56:56.665720986Z"
