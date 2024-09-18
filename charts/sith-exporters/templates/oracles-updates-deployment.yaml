@@ -35,7 +35,7 @@ spec:
           image: "{{ .Values.image.repository }}/{{ .Values.exporter }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
+            - name: metrics
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
@@ -45,7 +45,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /metrics
-              port: http
+              port: metrics
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
