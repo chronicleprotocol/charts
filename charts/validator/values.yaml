@@ -52,6 +52,19 @@ ghost:
   # -- libp2p validate queue size
   libp2pValidateQueueSize: '4096'
 
+  # -- command override for the validator
+  commandOverride: []
+    # - "/usr/local/bin/watchdog"
+    # - "/usr/local/bin/chronicle-app"
+
+  # -- args override for the validator
+  argsOverride: []
+    # - "--log-level=debug"
+    # - "--log-format=json"
+
+  # -- config url for the app, if provided, will override the default config. can be an ipfs url or a http url
+  configsUrl: null
+
   # -- WEB API (tor-proxy)
   webApi:
     # -- Enables the web api and deploys the tor-proxy subchart

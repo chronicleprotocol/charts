@@ -33,12 +33,28 @@ spec:
           hostNetwork: true
           {{- end }}
           image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
+          {{- if .Values.ghost.commandOverride }}
+          command:
+          {{- range $key, $val := .Values.ghost.commandOverride }}
+            - {{ $val }}
+          {{- end }}
+          {{- end }}
           args:
+          {{- if .Values.ghost.argsOverride }}
+          {{- range $key, $val := .Values.ghost.argsOverride }}
+            - {{ $val }}
+          {{- end }}
+          {{- else }}
             - "run"
             - "-v"
             - "{{ .Values.ghost.logLevel | default "warning" }}"
             - "--log.format"
             - "{{ .Values.ghost.logFormat | default "text" }}"
+          {{- end }}
+            {{- if .Values.ghost.configsUrl }}
+            - "-c"
+            - "{{ .Values.ghost.configsUrl }}"
+            {{- end }}
           imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
           ports:
           {{- range $key, $val := .Values.ghost.service.ports }}
@@ -83,7 +99,7 @@ spec:
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-tor-svc:8888"
+              value: "{{ include "validator.fullname" . }}-tor-svc:9050"
             - name: CFG_WEB_URL
               valueFrom:
                 secretKeyRef:
