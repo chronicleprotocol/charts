@@ -35,26 +35,18 @@ spec:
           image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
           {{- if .Values.ghost.commandOverride }}
           command:
-          {{- range $key, $val := .Values.ghost.commandOverride }}
-            - {{ $val }}
+          {{- range .Values.ghost.commandOverride }}
+            - {{ . | quote }}
           {{- end }}
           {{- end }}
           args:
           {{- if .Values.ghost.argsOverride }}
-          {{- range $key, $val := .Values.ghost.argsOverride }}
-            - {{ $val }}
+          {{- range .Values.ghost.argsOverride }}
+            - {{ . | quote }}
           {{- end }}
           {{- else }}
             - "run"
-            - "-v"
-            - "{{ .Values.ghost.logLevel | default "warning" }}"
-            - "--log.format"
-            - "{{ .Values.ghost.logFormat | default "text" }}"
           {{- end }}
-            {{- if .Values.ghost.configsUrl }}
-            - "-c"
-            - "{{ .Values.ghost.configsUrl }}"
-            {{- end }}
           imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
           ports:
           {{- range $key, $val := .Values.ghost.service.ports }}
@@ -171,6 +163,11 @@ spec:
                   name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
+          ### Logging
+            - name: CFG_LOG_LEVEL
+              value: {{ .Values.ghost.logLevel | default "warning" | quote }}
+            - name: CFG_LOG_FORMAT
+              value: {{ .Values.ghost.logFormat | default "text" | quote }}
           ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
           {{- range $key, $val := .Values.ghost.env.normal }}
             - name: {{ $key }}
