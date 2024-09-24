@@ -54,16 +54,18 @@ ghost:
 
   # -- command override for the validator
   commandOverride: []
+    # eg:
     # - "/usr/local/bin/watchdog"
     # - "/usr/local/bin/chronicle-app"
 
   # -- args override for the validator
   argsOverride: []
-    # - "--log-level=debug"
-    # - "--log-format=json"
-
-  # -- config url for the app, if provided, will override the default config. can be an ipfs url or a http url
-  configsUrl: null
+    # eg:
+    # - "run"
+    # - "-c"
+    # - "ipfs://Qm......."
+    # - "-v"
+    # - "debug"
 
   # -- WEB API (tor-proxy)
   webApi:
