@@ -12,7 +12,7 @@ ghost:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: "0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"
 
-  # -- Log level for the validator, can be one of `debug`, `info`, `trace`, `error`
+  # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
   # -- Log format for the validator, can be one of `json`, `text`
   logFormat: text
@@ -64,8 +64,6 @@ ghost:
     # - "run"
     # - "-c"
     # - "ipfs://Qm......."
-    # - "-v"
-    # - "debug"
 
   # -- WEB API (tor-proxy)
   webApi:

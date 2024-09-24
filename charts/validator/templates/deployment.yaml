@@ -29,9 +29,6 @@ spec:
         - name: ghost
           securityContext:
             {{- toYaml .Values.ghost.securityContext | nindent 12 }}
-          {{- if .Values.ghost.hostNetwork }}
-          hostNetwork: true
-          {{- end }}
           image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
           {{- if .Values.ghost.commandOverride }}
           command:
@@ -39,13 +36,11 @@ spec:
             - {{ . | quote }}
           {{- end }}
           {{- end }}
-          args:
           {{- if .Values.ghost.argsOverride }}
+          args:
           {{- range .Values.ghost.argsOverride }}
             - {{ . | quote }}
           {{- end }}
-          {{- else }}
-            - "run"
           {{- end }}
           imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
           ports:
