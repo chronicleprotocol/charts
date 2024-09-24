@@ -47,5 +47,27 @@ And be sure to install the precommit configs
 ```
 pre-commit install
 ```
+
+nd be sure to install the pre-commit configs
+```
+pre-commit install
+```
+
+##### Install chart-testing
+https://github.com/helm/chart-testing#installation
+###### TL;DR
+```shell
+go install github.com/helm/chart-testing/ct@latest
+rm -f {chart_schema,lintconf}.yaml && \
+wget -nv https://raw.githubusercontent.com/helm/chart-testing/refs/heads/main/etc/{chart_schema,lintconf}.yaml
+```
+
+##### Install helm-docs
+https://github.com/norwoodj/helm-docs#installation
+###### TL;DR
+```shell
+go install github.com/norwoodj/helm-docs/cmd/helm-docs@latest
+```
+
 ### Helm Chart Release
 Once your PR passes all status checks, merge to `main`, and the chart-release action will publish the new version of the chart.
