@@ -1,5 +1,10 @@
-*.tgz
-/.idea/*
-.vscode
 .DS_Store
+
+.idea
+.vscode
+
+*.tgz
 dev-*.yaml
+
+chart_schema.yaml
+lintconf.yaml
