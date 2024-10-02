@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.3.5](https://img.shields.io/badge/Version-0.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.37.2](https://img.shields.io/badge/AppVersion-0.37.2-informational?style=flat-square)
+![Version: 0.3.6](https://img.shields.io/badge/Version-0.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.42.2](https://img.shields.io/badge/AppVersion-0.42.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,12 +16,14 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"affinity":{},"arbRpcUrl":null,"chainId":"1","chainName":"eth","chainTxType":null,"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":":8080"}}` | Values for Ghost |
+| ghost | object | `{"affinity":{},"arbRpcUrl":null,"argsOverride":[],"chainId":"1","chainName":"eth","chainTxType":null,"commandOverride":[],"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":":8080"}}` | Values for Ghost |
 | ghost.affinity | object | `{}` | pod Affinity spec applied validator |
 | ghost.arbRpcUrl | string | `nil` | RPC url for ARB |
+| ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.chainId | string | `"1"` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | ghost.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
 | ghost.chainTxType | string | `nil` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or sepolia ethereum `legacy` |
+| ghost.commandOverride | list | `[]` | command override for the validator |
 | ghost.env | object | `{"normal":{}}` | Environment variable listing |
 | ghost.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | ghost.ethArchRpcUrl | string | `nil` | RPC url for ETH Archival node |
@@ -36,7 +38,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.libp2pValidateQueueSize | string | `"4096"` | libp2p validate queue size |
 | ghost.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
 | ghost.logFormat | string | `"text"` | Log format for the validator, can be one of `json`, `text` |
-| ghost.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `trace`, `error` |
+| ghost.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `warning`, `error` |
 | ghost.mntRpcUrl | string | `nil` | RPC url for MNT |
 | ghost.nodeSelector | object | `{}` | Node selector for the validator |
 | ghost.optRpcUrl | string | `nil` | RPC url for OETH (optimism) |

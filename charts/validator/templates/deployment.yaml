@@ -29,16 +29,19 @@ spec:
         - name: ghost
           securityContext:
             {{- toYaml .Values.ghost.securityContext | nindent 12 }}
-          {{- if .Values.ghost.hostNetwork }}
-          hostNetwork: true
-          {{- end }}
           image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
+          {{- if .Values.ghost.commandOverride }}
+          command:
+          {{- range .Values.ghost.commandOverride }}
+            - {{ . | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.ghost.argsOverride }}
           args:
-            - "run"
-            - "-v"
-            - "{{ .Values.ghost.logLevel | default "warning" }}"
-            - "--log.format"
-            - "{{ .Values.ghost.logFormat | default "text" }}"
+          {{- range .Values.ghost.argsOverride }}
+            - {{ . | quote }}
+          {{- end }}
+          {{- end }}
           imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
           ports:
           {{- range $key, $val := .Values.ghost.service.ports }}
@@ -83,7 +86,7 @@ spec:
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-tor-svc:8888"
+              value: "{{ include "validator.fullname" . }}-tor-svc:9050"
             - name: CFG_WEB_URL
               valueFrom:
                 secretKeyRef:
@@ -155,6 +158,11 @@ spec:
                   name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
+          ### Logging
+            - name: CFG_LOG_LEVEL
+              value: {{ .Values.ghost.logLevel | default "warning" | quote }}
+            - name: CFG_LOG_FORMAT
+              value: {{ .Values.ghost.logFormat | default "text" | quote }}
           ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
           {{- range $key, $val := .Values.ghost.env.normal }}
             - name: {{ $key }}
