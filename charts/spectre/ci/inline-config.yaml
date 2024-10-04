@@ -1,0 +1,356 @@
+rpcUrl: https://ethereum-sepolia.blockpi.network/v1/rpc/public
+# -- must match target chain
+chainId: '11155111'
+# -- can be one of `legacy`or `eip1559`
+txType: legacy
+# -- can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia`
+chainType: sep
+
+inlineConfig: |
+  # Generated for PROD Relay on eth
+  variables {
+    environment = "prod"
+    separator   = env("CFG_SEPARATOR", env("CFG_ITEM_SEPARATOR", "\n"))
+    defaults    = {
+      "libp2p_bootstraps": [
+        "/dns/spire-bootstrap1.chroniclelabs.io/tcp/8000/p2p/12D3KooWFYkJ1SghY4KfAkZY9Exemqwnh4e4cmJPurrQ8iqy2wJG",
+        "/dns/spire-bootstrap2.chroniclelabs.io/tcp/8000/p2p/12D3KooWD7eojGbXT1LuqUZLoewRuhNzCE2xQVPHXNhAEJpiThYj",
+        "/dns/spire-bootstrap3.chroniclelabs.io/tcp/8000/p2p/12D3KooWR468DB3gnXjyJVFkg32MA2ggi5TwxpzTwQPWvyXgRvtK"
+      ],
+      "feeds": [
+        "0x130431b4560cd1d74a990ae86c337a33171ff3c6",
+        "0x16655369eb59f3e1cafbcfac6d3dd4001328f747",
+        "0x3cb645a8f10fb7b0721eabae958f77a878441cb9",
+        "0x4b0e327c08e23dd08cb87ec994915a5375619aa2",
+        "0x4f95d9b4d842b2e2b1d1ac3f2cf548b93fd77c67",
+        "0x60da93d9903cb7d3ed450d4f81d402f7c4f71dd9",
+        "0x71ecff5261baa115dcb1d9335c88678324b8a987",
+        "0x75ef8432566a79c86bbf207a47df3963b8cf0753",
+        "0x77eb6cf8d732fe4d92c427fcdd83142db3b742f7",
+        "0x83e23c207a67a9f9cb680ce84869b91473403e7d",
+        "0x8afbd9c3d794ed8df903b3468f4c4ea85be953fb",
+        "0x8de9c5f1ac1d4d02bbfc25fd178f5daa4d5b26dc",
+        "0x8ff6a38a1cd6a42caac45f08eb0c802253f68dfd",
+        "0xa580bbcb1cee2bcec4de2ea870d20a12a964819e",
+        "0xa8eb82456ed9bae55841529888cde9152468635a",
+        "0xac8519b3495d8a3e3e44c041521cf7ac3f8f63b3",
+        "0xc9508e9e3ccf319f5333a5b8c825418abec688ba",
+        "0xd09506dac64aaa718b45346a032f934602e29cca",
+        "0xd27fa2361bc2cfb9a591fb289244c538e190684b",
+        "0xd72ba9402e9f3ff01959d6c841ddd13615ffff42",
+        "0xd94bbe83b4a68940839cd151478852d16b3ef891",
+        "0xda1d2961da837891f43235fddf66bad26f41368b",
+        "0xe6367a7da2b20ecb94a25ef06f3b551bab2682e6",
+        "0xfbaf3a7eb4ec2962bd1847687e56aaee855f5d00",
+        "0xfeed00aa3f0845afe52df9ecfe372549b74c69d2",
+      ]
+    }
+    oracles     = [
+      {
+        "address": "0xe0F30cb149fAADC7247E953746Be9BbBB6B5751f",
+        "wat": "BTC/USD",
+        "poke": {
+          "expiration": 86400,
+          "spread": 1
+        }
+      },
+      {
+        "address": "0x64DE91F5A373Cd4c28de3600cB34C7C6cE410C85",
+        "wat": "ETH/USD",
+        "poke": {
+          "expiration": 86400,
+          "spread": 1
+        }
+      },
+      {
+        "address": "0x31BFA908637C29707e155Cfac3a50C9823bF8723",
+        "wat": "GNO/USD",
+        "poke": {
+          "expiration": 86400,
+          "spread": 15
+        }
+      },
+      {
+        "address": "0xdbBe5e9B1dAa91430cF0772fCEbe53F6c6f137DF",
+        "wat": "MKR/USD",
+        "poke": {
+          "expiration": 86400,
+          "spread": 1
+        }
+      },
+      {
+        "address": "0x2F73b6567B866302e132273f67661fB89b5a66F2",
+        "wat": "WSTETH/USD",
+        "poke": {
+          "expiration": 86400,
+          "spread": 2
+        }
+      },
+    ]
+  }
+  variables {
+    chain_id       = tonumber(env("CFG_CHAIN_ID", "1"))
+    chain_rpc_urls = explode(var.separator, env("CFG_CHAIN_RPC_URLS", env("CFG_RPC_URLS", "https://eth.public-rpc.com")))
+
+    eth_from = env("CFG_ETH_FROM", env("ETH_FROM", ""))
+    eth_keys = env("CFG_ETH_KEYS", env("ETH_KEYS", ""))
+    eth_pass = env("CFG_ETH_PASS", env("ETH_PASS", ""))
+
+
+    expiration_list= {
+      "0xbC37eDeD69f559D31DC0bA468fFa54fe1283BDCD":"43000"
+      "0xDBF07B87A67D0e978A3706FD0D4D6b0eBc78c8D4":"43200"
+      "0x41c0cCeC5De7c71e99D9C29FF4B8C341fa156f0B":"43400"
+      "0x6a0382D063637781B314A75284b38a302cB6AEcA":"43600"
+    }
+    spread_mod_list= {
+      "0xbC37eDeD69f559D31DC0bA468fFa54fe1283BDCD":"0.90"
+      "0xDBF07B87A67D0e978A3706FD0D4D6b0eBc78c8D4":"0.92"
+      "0x41c0cCeC5De7c71e99D9C29FF4B8C341fa156f0B":"0.94"
+      "0x6a0382D063637781B314A75284b38a302cB6AEcA":"0.96"
+    }
+    expiration = tonumber(env("CFG_EXPIRATION", try(var.expiration_list[var.eth_from], "43000")))
+    spread_mod = tonumber(env("CFG_SPREAD_MOD", try(var.spread_mod_list[var.eth_from], "1")))
+  }
+  ethereum {
+    rand_keys = var.eth_from == "" ? ["default"] : []
+    dynamic "key" {
+      for_each = var.eth_from == "" ? [] : [1]
+      labels   = ["default"]
+      content {
+        address         = var.eth_from
+        keystore_path   = var.eth_keys
+        passphrase_file = var.eth_pass
+      }
+    }
+    dynamic "client" { # Default Client (this comment preserves the block from being removed by the generator)
+      for_each = length(var.chain_rpc_urls) == 0 ? [] : [1]
+      labels   = ["default"]
+      content {
+        ethereum_key                = "default"
+        chain_id                    = var.chain_id
+        rpc_urls                    = var.chain_rpc_urls
+        tx_type                     = env("CFG_CHAIN_TX_TYPE", "eip1559")
+        gas_priority_fee_multiplier = tonumber(env("CFG_CHAIN_GAS_PRIORITY_FEE_MULTIPLIER", "1"))
+        gas_fee_multiplier          = tonumber(env("CFG_CHAIN_GAS_FEE_MULTIPLIER", "1"))
+        max_gas_fee                 = tonumber(env("CFG_CHAIN_MAX_GAS_FEE", "0"))
+        max_gas_priority_fee        = tonumber(env("CFG_CHAIN_MAX_GAS_PRIORITY_FEE", "0"))
+        max_gas_limit               = tonumber(env("CFG_CHAIN_MAX_GAS_LIMIT", "0"))
+      }
+    }
+  }
+  variables {
+    logger_metrics = [
+      {
+        name          = "libp2p.connected_peers"
+        value         = "peerCount"
+        match_message = "Connection monitor"
+      },
+      {
+        name              = "messages.received_5m.%%{message.Meta.Transport}.%%{topic}"
+        match_message     = "Received message"
+        window_length_min = 5
+        aggregate         = "sum"
+      },
+      {
+        name              = "messages.received_5m.%%{message.Meta.Transport}.all"
+        match_message     = "Received message"
+        window_length_min = 5
+        aggregate         = "sum"
+      },
+      {
+        name              = "messages.received_5m.all"
+        match_message     = "Received message"
+        window_length_min = 5
+        aggregate         = "sum"
+      },
+      {
+        name              = "messages.broadcast_5m.%%{topic}"
+        match_message     = "Broadcast message"
+        window_length_min = 5
+        aggregate         = "sum"
+      },
+      {
+        name              = "messages.broadcast_5m.all"
+        match_message     = "Broadcast message"
+        window_length_min = 5
+        aggregate         = "sum"
+      },
+      {
+        name          = "sysmon.uptime"
+        value         = "uptime"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.memAlloc"
+        value         = "memAlloc"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.memTotalAlloc"
+        value         = "memTotalAlloc"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.memSys"
+        value         = "memSys"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.memNumGC"
+        value         = "memNumGC"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.runtimeNumCPU"
+        value         = "runtimeNumCPU"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.runtimeNumGoroutine"
+        value         = "runtimeNumGoroutine"
+        match_message = "Status"
+      },
+      {
+        name          = "sysmon.spaceAvail"
+        value         = "spaceAvail"
+        match_message = "Status"
+      }
+    ]
+    logger_healthcheck = [
+      {
+        metric    = "libp2p.connected_peers"
+        operator  = ">="
+        value     = 4
+        readiness = 15 * 60 # libp2p.connected_peers is available after 10 minutes
+      }
+    ]
+  }
+  dynamic "logger" {
+    for_each = try(suite_version, "-") != "-" ? [1] : []
+    content {
+      log_level  = env("CFG_LOG_LEVEL", "info")
+      log_format = env("CFG_LOG_FORMAT", "text")
+      metrics {
+        listen_addr = env("CFG_METRICS_ENDPOINT", ":9100") # this is different from prometheus
+        dynamic "metric" {
+          for_each = concat(var.logger_metrics, try(var.musig_logger_metrics, []), try(var.ghost_logger_metrics, []))
+          content {
+            name              = metric.value.name
+            match_message     = metric.value.match_message
+            value             = try(metric.value.value, "")
+            scale_factor      = try(metric.value.scale_factor, 0)
+            window_length_min = try(metric.value.window_length_min, 0)
+            aggregate         = try(metric.value.aggregate, "")
+          }
+        }
+        dynamic "healthcheck" {
+          for_each = concat(var.logger_healthcheck, try(var.musig_logger_healthcheck, []), try(var.ghost_logger_healthcheck, []))
+          content {
+            metric    = healthcheck.value.metric
+            operator  = healthcheck.value.operator
+            value     = healthcheck.value.value
+            readiness = healthcheck.value.readiness
+          }
+        }
+      }
+    }
+  }
+  variables {
+    transport_feeds = explode(var.separator, env("CFG_FEEDS", join(
+      var.separator,
+      try(var.defaults.feeds, [])
+    )))
+    libp2p_enable          = tobool(env("CFG_LIBP2P_ENABLE", "1"))
+    libp2p_bootstrap_addrs = explode(var.separator, env("CFG_LIBP2P_BOOTSTRAP_ADDRS", join(
+      var.separator,
+      try(var.defaults.libp2p_bootstraps, [])
+    )))
+    webapi_enable              = tobool(env("CFG_WEBAPI_ENABLE", "0"))
+    webapi_static_address_book = explode(var.separator, env("CFG_WEBAPI_STATIC_ADDR_BOOK", join(
+      var.separator,
+      try(var.defaults.webapi_static_address_book, [])
+    )))
+  }
+  transport {
+    dynamic "libp2p" {
+      for_each = var.libp2p_enable && try(suite_version, "-") == "-" ? [1] : []
+      content {
+        feeds                    = var.transport_feeds
+        feeds_filter_disable     = tobool(env("CFG_LIBP2P_FEEDS_FILTER_DISABLE", "0"))
+        priv_key_seed            = env("CFG_LIBP2P_PK_SEED", "")
+        listen_addrs             = explode(var.separator, env("CFG_LIBP2P_LISTEN_ADDRS", "/ip4/0.0.0.0/tcp/8000"))
+        bootstrap_addrs          = var.libp2p_bootstrap_addrs
+        direct_peers_addrs       = explode(var.separator, env("CFG_LIBP2P_DIRECT_PEERS_ADDRS", ""))
+        blocked_addrs            = explode(var.separator, env("CFG_LIBP2P_BLOCKED_ADDRS", ""))
+        disable_discovery        = tobool(env("CFG_LIBP2P_DISABLE_DISCOVERY", "0"))
+        ethereum_key             = "default"
+        external_addr            = env("CFG_LIBP2P_EXTERNAL_ADDR", env("CFG_LIBP2P_EXTERNAL_IP", ""))
+      }
+    }
+    dynamic "libp2p" {
+      for_each = var.libp2p_enable && try(suite_version, "-") != "-" ? [1] : []
+      content {
+        feeds                    = var.transport_feeds
+        feeds_filter_disable     = tobool(env("CFG_LIBP2P_FEEDS_FILTER_DISABLE", "0"))
+        priv_key_seed            = env("CFG_LIBP2P_PK_SEED", "")
+        listen_addrs             = explode(var.separator, env("CFG_LIBP2P_LISTEN_ADDRS", "/ip4/0.0.0.0/tcp/8000"))
+        bootstrap_addrs          = var.libp2p_bootstrap_addrs
+        direct_peers_addrs       = explode(var.separator, env("CFG_LIBP2P_DIRECT_PEERS_ADDRS", ""))
+        blocked_addrs            = explode(var.separator, env("CFG_LIBP2P_BLOCKED_ADDRS", ""))
+        disable_discovery        = tobool(env("CFG_LIBP2P_DISABLE_DISCOVERY", "0"))
+        ethereum_key             = "default"
+        external_addr            = env("CFG_LIBP2P_EXTERNAL_ADDR", env("CFG_LIBP2P_EXTERNAL_IP", ""))
+        subscription_buffer_size = tonumber(env("CFG_LIBP2P_SUBSCRIPTION_BUFFER_SIZE", "4096")) # 0 defaults to 32
+        validate_queue_size      = tonumber(env("CFG_LIBP2P_VALIDATE_QUEUE_SIZE", "4096")) # 0 defaults to 32
+      }
+    }
+    dynamic "webapi" {
+      for_each = var.webapi_enable ? [1] : []
+      content {
+        feeds             = var.transport_feeds
+        listen_addr       = env("CFG_WEBAPI_LISTEN_ADDR", "")
+        socks5_proxy_addr = env("CFG_WEBAPI_SOCKS5_PROXY_ADDR", "")
+        ethereum_key      = "default"
+        dynamic "static_address_book" {
+          for_each = var.webapi_static_address_book =="" ? [] : [1]
+          content {
+            addresses = var.webapi_static_address_book
+          }
+        }
+      }
+    }
+  }
+  variables {
+    spectre_pairs = explode(var.separator, env("CFG_SPECTRE_PAIRS", env("CFG_MODELS", "")))
+  }
+  spectre {
+    dynamic "median" {
+      for_each = [
+        for v in var.oracles : v
+        if try(length(var.spectre_pairs) == 0 || contains(var.spectre_pairs, v.wat), false)
+      ]
+      content {
+        ethereum_client = "default"
+        contract_addr   = median.value.address
+        spread          = median.value.poke.spread * var.spread_mod
+        expiration      = var.expiration
+      }
+    }
+  }
+
+env:
+  normal:
+    CFG_WEBAPI_ENABLE: 1
+    CFG_WEBAPI_LISTEN_ADDR: ":8080"
+    CFG_WEBAPI_SOCKS5_PROXY_ADDR: ""
+    CFG_WEBAPI_ETH_ADDR_BOOK: ""
+    CFG_WEBAPI_STATIC_ADDR_BOOK: ""
+
+    CFG_SPECTRE_PAIRS: "DAI/USD"
+      # CFG_MODELS: '"MKR/USD"\n"MKR/ETH"'
+
+    CFG_ETH_FROM: "0x1e68967a10a30602EbBa297cffeCC3645cB28D99"
+    CFG_ETH_PASS: ""
+    # THIS keystore is for testing purposes only. do not send funds here as you will lose them:
+    CFG_ETH_KEYS: '{"crypto":{"cipher":"aes-128-ctr","cipherparams":{"iv":"22ae1be4ab7cd766e05c03e334deb9d2"},"ciphertext":"56439cc948fbecff1c252f5cede620f65821c6446ddb6d4bfa38f17754555a44","kdf":"scrypt","kdfparams":{"dklen":32,"n":8192,"p":1,"r":8,"salt":"7dcaf2f0196aa5c9d05dc15fac39ec15dbd99db2311813fd3d1d98324faf05c5"},"mac":"191ffca516d2c263402bd03e4cf1a6df60ebc833f489346fefdf0fe89138f305"},"id":"aea697d6-94d9-4433-bd69-4808597b0768","version":3}'

@@ -51,6 +51,10 @@ spec:
             - "-c"
             - "{{ .Values.configsUrl }}"
             {{- end }}
+            {{- if .Values.inlineConfig }}
+            - "--config"
+            - "config.hcl"
+            {{- end }}
             - "-v"
             - "{{ .Values.logLevel | default "debug" }}"
             - "--log.format"
@@ -102,6 +106,20 @@ spec:
           {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.inlineConfig }}
+          volumeMounts:
+            - name: inline-config
+              mountPath: /config.hcl
+              subPath: config.hcl
+              readOnly: true
+          {{- end }}
+
+      {{- if .Values.inlineConfig }}
+      volumes:
+        - name: inline-config
+          configMap:
+            name: inline-config
+      {{- end }}
 
       {{- with .Values.nodeSelector }}
       nodeSelector:

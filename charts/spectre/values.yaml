@@ -45,6 +45,9 @@ argsOverride: []
 # -- config url for the app, if provided, will override the default config. can be an ipfs url or a http url
 configsUrl: ""
 
+# Mount inline config
+inlineConfig: ""
+
 env:
   normal:
     # webapi - receive only (Spectre)
