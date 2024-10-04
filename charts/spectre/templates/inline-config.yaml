@@ -1,0 +1,9 @@
+{{- if .Values.inlineConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: inline-config
+data:
+  config.hcl: |
+    {{ .Values.inlineConfig | nindent 4 }}
+{{- end }}
