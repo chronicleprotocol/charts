@@ -130,7 +130,7 @@ persistence:
   # -- Uses an EmptyDir when not enabled
   enabled: false
   # -- Use an existing PVC when persistence.enabled
-  existingClaim: null
+  existingClaim: ""
   # -- Access mode for the volume claim template
   accessModes:
   - ReadWriteOnce
@@ -139,7 +139,7 @@ persistence:
   # -- Use a specific storage class
   # E.g 'local-path' for local storage to achieve best performance
   # Read more (https://github.com/rancher/local-path-provisioner)
-  storageClassName: null
+  storageClassName: ""
   # -- Annotations for volume claim template
   annotations: {}
   # -- Selector for volume claim template
@@ -164,7 +164,7 @@ serviceMonitor:
   # -- Path to scrape
   path: /debug/metrics
   # -- Alternative namespace for ServiceMonitor
-  namespace: null
+  namespace: ""
   # -- Additional ServiceMonitor labels
   labels: {}
   # -- Additional ServiceMonitor annotations
