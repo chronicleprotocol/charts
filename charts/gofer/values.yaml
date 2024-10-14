@@ -77,6 +77,12 @@ livenessProbe: {}
   #   port: gofer
   # initialDelaySeconds: 60
   # periodSeconds: 120
+  # -- for proxy mode:
+  # httpGet:
+  #   path: /livez
+  #   port: gofer
+  # initialDelaySeconds: 60
+  # periodSeconds: 120
 
 # @default -- See `values.yaml`
 readinessProbe: {}
@@ -84,6 +90,12 @@ readinessProbe: {}
   #   port: gofer
   # initialDelaySeconds: 10
   # periodSeconds: 10
+  # -- for proxy mode:
+  # httpGet:
+  #   path: /readyz
+  #   port: gofer
+  # initialDelaySeconds: 60
+  # periodSeconds: 60
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
