@@ -152,3 +152,15 @@ serviceMonitor:
   scrapeTimeout: 30s
   # -- ServiceMonitor relabelings
   relabelings: []
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: some-secrets
+  #   spec:
+  #     backendType: someBackend
+  #     data:
+  #       - key: some-creds
+  #         name: client_secret
