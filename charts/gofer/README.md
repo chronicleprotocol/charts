@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.44](https://img.shields.io/badge/AppVersion-0.44-informational?style=flat-square)
+![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.44](https://img.shields.io/badge/AppVersion-0.44-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -22,6 +22,7 @@ A Helm chart for deploying gofer to Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
 | env | object | `{}` | Environment variable listing |
+| extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | goferMode | string | `"agent"` | can be "agent" or "watch" or "proxy" |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
