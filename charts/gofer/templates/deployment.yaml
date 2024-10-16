@@ -52,8 +52,6 @@ spec:
             {{- end }}
             {{- else }}
             - "{{ .Values.goferMode }}"
-            - "-v"
-            - "{{ .Values.logLevel | default "debug" }}"
             {{- end }}
             {{- range $arg := .Values.extraArgs }}
             - "{{ $arg }}"
@@ -65,10 +63,14 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+          {{- if .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -78,6 +80,11 @@ spec:
             subPath: gofer.hcl
           {{- end }}
           env:
+            ### Logging
+            - name: CFG_LOG_LEVEL
+              value: {{ .Values.logLevel | default "warning" | quote }}
+            - name: CFG_LOG_FORMAT
+              value: {{ .Values.logFormat | default "text" | quote }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
 
       volumes:

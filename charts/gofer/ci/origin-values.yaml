@@ -1,0 +1,24 @@
+goferMode: "proxy"
+
+service:
+  ports:
+    gofer:
+      port: 8080
+
+env:
+  normal:
+    CFG_WATCH_INTERVAL: "10s"
+
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: gofer
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: gofer
+  initialDelaySeconds: 60
+  periodSeconds: 60

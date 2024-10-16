@@ -5,7 +5,8 @@
 replicaCount: 1
 
 logLevel: "debug"
-# -- can be "agent" or "watch"
+logFormat: "text"
+# -- can be "agent" or "watch" or "proxy"
 goferMode: "agent"
 
 # -- Environment variable listing
@@ -19,7 +20,7 @@ image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "sha-f2a5f01"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -71,18 +72,30 @@ ingress:
   #      - chart-example.local
 
 # @default -- See `values.yaml`
-livenessProbe:
-  tcpSocket:
-    port: gofer
-  initialDelaySeconds: 60
-  periodSeconds: 120
+livenessProbe: {}
+  # tcpSocket:
+  #   port: gofer
+  # initialDelaySeconds: 60
+  # periodSeconds: 120
+  # -- for proxy mode:
+  # httpGet:
+  #   path: /livez
+  #   port: gofer
+  # initialDelaySeconds: 60
+  # periodSeconds: 120
 
 # @default -- See `values.yaml`
-readinessProbe:
-  tcpSocket:
-    port: gofer
-  initialDelaySeconds: 10
-  periodSeconds: 10
+readinessProbe: {}
+  # tcpSocket:
+  #   port: gofer
+  # initialDelaySeconds: 10
+  # periodSeconds: 10
+  # -- for proxy mode:
+  # httpGet:
+  #   path: /readyz
+  #   port: gofer
+  # initialDelaySeconds: 60
+  # periodSeconds: 60
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -139,3 +152,15 @@ serviceMonitor:
   scrapeTimeout: 30s
   # -- ServiceMonitor relabelings
   relabelings: []
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: some-secrets
+  #   spec:
+  #     backendType: someBackend
+  #     data:
+  #       - key: some-creds
+  #         name: client_secret
