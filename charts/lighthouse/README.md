@@ -1,6 +1,6 @@
 # lighthouse
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.3.0](https://img.shields.io/badge/AppVersion-v5.3.0-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v5.2.1](https://img.shields.io/badge/AppVersion-v5.2.1-informational?style=flat-square)
 
 A Helm chart for deploying the Lighthouse Consensus Layer / beacon on Kubernetes
 
@@ -27,7 +27,7 @@ A Helm chart for deploying the Lighthouse Consensus Layer / beacon on Kubernetes
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"sigp/lighthouse"` |  |
-| image.tag | string | `"v5.3.0-arm64-modern"` |  |
+| image.tag | string | `"v5.2.1-modern"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
