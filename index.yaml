@@ -1859,6 +1859,23 @@ entries:
     version: 0.1.1
   lighthouse:
   - apiVersion: v2
+    appVersion: v5.2.1
+    created: "2024-10-16T10:21:58.6780736Z"
+    description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
+      on Kubernetes
+    digest: b734d0f06ab9b96b621212be7e30754c4690dd2ea99c6da897f4f5a3e2db7190
+    icon: https://avatars.githubusercontent.com/u/22672004
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: lighthouse
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.5/lighthouse-0.0.5.tgz
+    version: 0.0.5
+  - apiVersion: v2
     appVersion: v5.1.3
     created: "2024-05-17T13:43:55.396077721Z"
     description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
@@ -4385,4 +4402,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-14T11:25:49.917022674Z"
+generated: "2024-10-16T10:21:58.678434742Z"
