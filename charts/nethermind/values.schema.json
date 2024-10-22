@@ -449,7 +449,7 @@
       "type": "string"
     },
     "nodeSelector": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [],
       "title": "nodeSelector",
       "type": "object"
