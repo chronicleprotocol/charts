@@ -47,6 +47,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  annotations: {}
+  labels: {}
   ports:
     http:
       port: 8545
