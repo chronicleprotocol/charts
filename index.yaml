@@ -188,6 +188,21 @@ entries:
     version: 0.0.1
   beacons:
   - apiVersion: v2
+    appVersion: v5.1.2
+    created: "2024-10-23T15:14:09.551271876Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: 941e172c8b51607de0d32562c35e1e1939becf4c11a89a2def8296c860412e67
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.12/beacons-0.0.12.tgz
+    version: 0.0.12
+  - apiVersion: v2
     appVersion: v5.0.4
     created: "2024-07-25T16:12:19.33941199Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
@@ -4418,4 +4433,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-22T12:19:18.00184604Z"
+generated: "2024-10-23T15:14:09.552031063Z"
