@@ -77,6 +77,12 @@ securityContext: {}
 service:
   type: ClusterIP
   annotations: {}
+  # annotations:
+  #   svccontroller.k3s.cattle.io/tolerations: |
+  #     - effect: NoExecute
+  #       key: somekey
+  #       operator: Equal
+  #       value: somevalue
   labels: {}
   ports:
     httprpc:
