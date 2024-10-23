@@ -76,6 +76,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  annotations: {}
+  labels: {}
   ports:
     httprpc:
       port: 8545
@@ -95,6 +97,7 @@ service:
     metrics:
       port: 9545
       protocol: TCP
+
 
 # @default -- See `values.yaml`
 livenessProbe:
