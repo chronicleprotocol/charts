@@ -4,9 +4,6 @@
 
 replicaCount: 1
 
-network: sepolia
-## can be mainnet, sepolia etc
-
 data:
   path: /home/user/.arbitrum
 

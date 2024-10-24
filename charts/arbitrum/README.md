@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.2.1-d81324d](https://img.shields.io/badge/AppVersion-v3.2.1--d81324d-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.2.1-d81324d](https://img.shields.io/badge/AppVersion-v3.2.1--d81324d-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
@@ -34,7 +34,6 @@ A Helm chart for deploying Arbitrum Nitro on Kubernetes
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| network | string | `"sepolia"` |  |
 | nitro.extraArgs | object | `{}` |  |
 | nitro.httpAddr | object | `{}` |  |
 | nitro.httpApi[0] | string | `"net"` |  |
