@@ -60,6 +60,9 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  labels: {}
+  annotations: {}
+    # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
   ports:
     rpc:
       port: 8547
