@@ -58,6 +58,7 @@ securityContext: {}
 service:
   type: ClusterIP
   annotations: {}
+  labels: {}
   ports:
     http:
       port: 4000
@@ -173,7 +174,7 @@ erpc:
     - id: testnet
       # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
       networkIds:
-      - '421614'  # -- Arbitrum Sepolia
+      - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
       # todo: apply network level configuration per networkId
 
@@ -218,12 +219,12 @@ erpc:
 
       # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
       upstreams:
-        - id: arbsep-public-blast
-          chainId: '421614'
-          endpoint: https://arbitrum-sepolia.public.blastapi.io
+        - id: eth-public-blast
+          chainId: 1
+          endpoint: https://eth-mainnet.public.blastapi.io
           rateLimitBudget: freemium
         - id: sep-public-node
-          chainId: '11155111'
+          chainId: 11155111
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
           # -- [optional] - additional failsafe settings for this upstream
           failsafe:

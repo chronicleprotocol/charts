@@ -4,6 +4,9 @@ metadata:
   name: {{ include "erpc.fullname" . }}
   labels:
     {{- include "erpc.labels" . | nindent 4 }}
+    {{- with .Values.service.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   annotations:
   {{- with .Values.service.annotations }}
   {{- toYaml . | nindent 4 }}
