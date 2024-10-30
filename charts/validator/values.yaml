@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"
+    tag: "0.44.3@sha256:f3e39fab94de807cb0a817014febbc3e18150cf6a6c7dde74082596225d852c1"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -70,7 +70,7 @@ ghost:
     # -- Enables the web api and deploys the tor-proxy subchart
     enabled: true
     # -- Listen address for the web api
-    listenAddr: ":8080"
+    listenAddr: "0.0.0.0:8080"
 
   # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
