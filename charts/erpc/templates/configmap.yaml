@@ -12,13 +12,24 @@ data:
     {{- end }}
 
     server:
-      httpHost: 0.0.0.0
+      maxTimeout: {{ .Values.erpc.server.maxTimeout | default "30s" }}
+      {{- if .Values.erpc.listenV4 }}
+      listenV4: true
+      httpHostV4: "0.0.0.0"
       httpPort: {{ .Values.service.ports.http.port | default "4000" }}
+      {{- end }}
+      {{- if .Values.erpc.listenV6 }}
+      listenV6: false
+      httpHostV6: "[::]"
+      {{- end }}
 
     metrics:
       enabled: true
-      host: 0.0.0.0
       port: {{ .Values.service.ports.metrics.port | default "4001" }}
+      listenV4: {{ .Values.erpc.listenV4 | default "true" }}
+      hostV4: "0.0.0.0"
+      listenV6: {{ .Values.erpc.listenV6 | default "false" }}
+      hostV6: "[::]"
 
     projects:
       {{- range $project := .Values.erpc.projects }}

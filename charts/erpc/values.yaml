@@ -151,6 +151,11 @@ env: {}
   #       key: INFURA_API_KEY
 
 erpc:
+  listenV4: true
+  listenV6: false
+  server:
+    maxTimeout: 30s
+  metrics: true
   # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
   logLevel: info
   # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
@@ -177,7 +182,6 @@ erpc:
       - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
       # todo: apply network level configuration per networkId
-
       # -- Apply auth to project level. ref: https://docs.erpc.cloud/config/auth
       authStrategies: {}
         # - type: secret
@@ -224,7 +228,7 @@ erpc:
           endpoint: https://eth-mainnet.public.blastapi.io
           rateLimitBudget: freemium
         - id: sep-public-node
-          chainId: 11155111
+          chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
           # -- [optional] - additional failsafe settings for this upstream
           failsafe:
