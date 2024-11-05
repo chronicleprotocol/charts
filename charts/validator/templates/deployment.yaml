@@ -49,6 +49,9 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+            - containerPort: 9100
+              name: metrics
+              protocol: TCP
 
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
