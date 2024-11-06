@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"
+    tag: "0.44.5@sha256:1af40235690d2669d9491ab79e4abde07d2d57621ebc012dfb475ca19b4cc9b3"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -70,7 +70,7 @@ ghost:
     # -- Enables the web api and deploys the tor-proxy subchart
     enabled: true
     # -- Listen address for the web api
-    listenAddr: ":8080"
+    listenAddr: "0.0.0.0:8080"
 
   # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
@@ -140,10 +140,6 @@ ghost:
       # -- webapi listen port for the validator service
       webapi:
         port: 8080
-        protocol: TCP
-      # -- metrics port for the validator service
-      metrics:
-        port: 9100
         protocol: TCP
       # to add more port-mappings, add them here:
       # https:

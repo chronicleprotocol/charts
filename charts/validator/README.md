@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.3.6](https://img.shields.io/badge/Version-0.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.42.2](https://img.shields.io/badge/AppVersion-0.42.2-informational?style=flat-square)
+![Version: 0.3.7-alpha.1](https://img.shields.io/badge/Version-0.3.7--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.44.5](https://img.shields.io/badge/AppVersion-0.44.5-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,7 +16,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"affinity":{},"arbRpcUrl":null,"argsOverride":[],"chainId":"1","chainName":"eth","chainTxType":null,"commandOverride":[],"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":":8080"}}` | Values for Ghost |
+| ghost | object | `{"affinity":{},"arbRpcUrl":null,"argsOverride":[],"chainId":"1","chainName":"eth","chainTxType":null,"commandOverride":[],"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"ghost","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.44.5@sha256:1af40235690d2669d9491ab79e4abde07d2d57621ebc012dfb475ca19b4cc9b3"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libP2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"900s","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
 | ghost.affinity | object | `{}` | pod Affinity spec applied validator |
 | ghost.arbRpcUrl | string | `nil` | RPC url for ARB |
 | ghost.argsOverride | list | `[]` | args override for the validator |
@@ -31,7 +31,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.ethRpcUrl | string | `nil` | RPC URL for ETH |
 | ghost.fullnameOverride | string | `"ghost"` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
 | ghost.gnoRpcUrl | string | `nil` | RPC url for GNO |
-| ghost.image.tag | string | `"0.42.2@sha256:66724907b479004e6a46a26175038c5cb88c88c2f47617df6e7fc3741e6d1876"` | Overrides the image tag whose default is the chart appVersion. |
+| ghost.image.tag | string | `"0.44.5@sha256:1af40235690d2669d9491ab79e4abde07d2d57621ebc012dfb475ca19b4cc9b3"` | Overrides the image tag whose default is the chart appVersion. |
 | ghost.ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]}` | Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet) |
 | ghost.ingress.enabled | bool | `false` | Disabled by default, since there is a bug in libp2p port assignment for dns based routing |
 | ghost.libP2pSubscriptionBufferSize | string | `"4096"` | libp2p buffer size |
@@ -49,10 +49,9 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.resources | object | `{}` | Resources constraints for the validator, CPU, Memory, etc. |
 | ghost.rpcUrl | string | `nil` | RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum |
 | ghost.securityContext | object | `{}` | Security context for the validator |
-| ghost.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"metrics":{"port":9100,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
+| ghost.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
 | ghost.service.annotations | object | `{}` | Annotations to add to the service |
 | ghost.service.ports.libp2p | object | `{"port":8000,"protocol":"TCP"}` | libp2p port for the validator service |
-| ghost.service.ports.metrics | object | `{"port":9100,"protocol":"TCP"}` | metrics port for the validator service |
 | ghost.service.ports.webapi | object | `{"port":8080,"protocol":"TCP"}` | webapi listen port for the validator service |
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, can also be `LoadBalancer` |
 | ghost.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
@@ -61,9 +60,9 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.tolerations | list | `[]` | Tolerations applied validator |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
 | ghost.watchdogInterval | string | `"900s"` | WATCHDOG polling interval (in seconds) |
-| ghost.webApi | object | `{"enabled":true,"listenAddr":":8080"}` | WEB API (tor-proxy) |
+| ghost.webApi | object | `{"enabled":true,"listenAddr":"0.0.0.0:8080"}` | WEB API (tor-proxy) |
 | ghost.webApi.enabled | bool | `true` | Enables the web api and deploys the tor-proxy subchart |
-| ghost.webApi.listenAddr | string | `":8080"` | Listen address for the web api |
+| ghost.webApi.listenAddr | string | `"0.0.0.0:8080"` | Listen address for the web api |
 | serviceMonitor.annotations | object | `{}` | Additional ServiceMonitor annotations |
 | serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
 | serviceMonitor.interval | string | `"60s"` | ServiceMonitor scrape interval |

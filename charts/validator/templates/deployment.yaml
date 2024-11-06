@@ -49,6 +49,9 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+            - containerPort: 9100
+              name: metrics
+              protocol: TCP
 
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
@@ -86,7 +89,7 @@ spec:
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-tor-svc:9050"
+              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
             - name: CFG_WEB_URL
               valueFrom:
                 secretKeyRef:
