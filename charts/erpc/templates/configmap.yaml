@@ -13,6 +13,7 @@ data:
 
     server:
       maxTimeout: {{ .Values.erpc.server.maxTimeout | default "30s" }}
+      enableGzip: {{ .Values.erpc.server.enableGzip | default "true" }}
       {{- if .Values.erpc.listenV4 }}
       listenV4: true
       httpHostV4: "0.0.0.0"
@@ -60,6 +61,10 @@ data:
             {{- if $upstream.chainId }}
             evm:
               chainId: {{ $upstream.chainId }}
+            {{- end }}
+            {{- if $upstream.selectionPolicy }}
+            selectionPolicy:
+              {{- $upstream.selectionPolicy | toYaml | nindent 14 }}
             {{- end }}
             {{- if $upstream.failsafe }}
             failsafe:
