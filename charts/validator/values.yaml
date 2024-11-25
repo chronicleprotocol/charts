@@ -130,7 +130,7 @@ ghost:
   # -- Service type for the validator
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
-    type: LoadBalancer
+    type: NodePort
 
     ports:
       # -- libp2p port for the validator service
