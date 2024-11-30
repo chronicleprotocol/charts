@@ -133,13 +133,13 @@ redis:
       size: 8Gi
 
 # -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
-env:
-  - name: ROUTING_POLICY_MAX_ERROR_RATE
-    value: "0.7"
-  - name: ROUTING_POLICY_MAX_BLOCK_HEAD_LAG
-    value: "10"
-  - name: ROUTING_POLICY_MIN_HEALTHY_THRESHOLD
-    value: "1"
+env: {}
+  # - name: ROUTING_POLICY_MAX_ERROR_RATE
+  #   value: "0.7"
+  # - name: ROUTING_POLICY_MAX_BLOCK_HEAD_LAG
+  #   value: "10"
+  # - name: ROUTING_POLICY_MIN_HEALTHY_THRESHOLD
+  #   value: "1"
   # - name: DRPC_API_KEY
   #   valueFrom:
   #     secretKeyRef:
@@ -166,20 +166,45 @@ erpc:
   metrics: true
   # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
   logLevel: info
-  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
+  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
   cacheConfig:
-    driver: memory
-    # driver: redis
-    # redis:
-    #   addr: erpc-k8s-redis-headless:6379
-    #   password: yourRedisSecret
-    #   db: 0
-    # driver: postgresql
-    # postgresql:
-    #   connectionUri: >-
-    #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
-    #   table: rpc_cache
-
+    # -- can provide multiple connectors
+    connectors:
+      - id: memory-cache
+        driver: memory
+        memory:
+          maxItems: 100000
+    # -- can provide multiple policies to work with all connectors configured
+    policies:
+      # Example: Cache all methods with finalized data including empty responses
+      - network: "*"
+        method: "*"
+        finality: finalized
+        empty: allow
+        connector: memory-cache
+        ttl: 0
+      # Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
+      - network: "*"
+        method: "*"
+        finality: unfinalized
+        empty: ignore
+        connector: memory-cache
+        ttl: 5s
+      # Example: Cache unknown finalization data (eth_trace*) only for 10 seconds
+      - network: "*"
+        method: "*"
+        finality: unknown
+        empty: ignore
+        connector: memory-cache
+        ttl: 10s
+      # Example: Cache realtime data only for 2 seconds (eth_blockNumber, eth_gasPrice, etc) to reduce costs yet fresh enough data
+      - network: "*"
+        method: "*"
+        finality: realtime
+        empty: ignore
+        connector: memory-cache
+        ttl: 2s
+        driver: memory
 
   # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
