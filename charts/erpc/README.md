@@ -1,6 +1,6 @@
 # erpc
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.31](https://img.shields.io/badge/AppVersion-0.0.31-informational?style=flat-square)
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.32](https://img.shields.io/badge/AppVersion-0.0.32-informational?style=flat-square)
 
 A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-aware permanent caching to Kubernetes
 
@@ -23,8 +23,10 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Enable autoscaling / HPA |
-| env | list | `[{"name":"ROUTING_POLICY_MAX_ERROR_RATE","value":"0.7"},{"name":"ROUTING_POLICY_MAX_BLOCK_HEAD_LAG","value":"10"},{"name":"ROUTING_POLICY_MIN_HEALTHY_THRESHOLD","value":"1"}]` | create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. ) |
-| erpc.cacheConfig | object | `{"driver":"memory"}` | provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database |
+| env | object | `{}` | create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. ) |
+| erpc.cacheConfig | object | `{"connectors":[{"driver":"memory","id":"memory-cache","memory":{"maxItems":100000}}],"policies":[{"connector":"memory-cache","empty":"allow","finality":"finalized","method":"*","network":"*","ttl":0},{"connector":"memory-cache","empty":"ignore","finality":"unfinalized","method":"*","network":"*","ttl":"5s"},{"connector":"memory-cache","empty":"ignore","finality":"unknown","method":"*","network":"*","ttl":"10s"},{"connector":"memory-cache","driver":"memory","empty":"ignore","finality":"realtime","method":"*","network":"*","ttl":"2s"}]}` | provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers |
+| erpc.cacheConfig.connectors | list | `[{"driver":"memory","id":"memory-cache","memory":{"maxItems":100000}}]` | can provide multiple connectors |
+| erpc.cacheConfig.policies | list | `[{"connector":"memory-cache","empty":"allow","finality":"finalized","method":"*","network":"*","ttl":0},{"connector":"memory-cache","empty":"ignore","finality":"unfinalized","method":"*","network":"*","ttl":"5s"},{"connector":"memory-cache","empty":"ignore","finality":"unknown","method":"*","network":"*","ttl":"10s"},{"connector":"memory-cache","driver":"memory","empty":"ignore","finality":"realtime","method":"*","network":"*","ttl":"2s"}]` | can provide multiple policies to work with all connectors configured |
 | erpc.listenV4 | bool | `true` |  |
 | erpc.listenV6 | bool | `false` |  |
 | erpc.logLevel | string | `"info"` | Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`. |
