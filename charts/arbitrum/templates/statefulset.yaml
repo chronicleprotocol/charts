@@ -36,20 +36,39 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           command:
-            - nitro
+            -  /usr/local/bin/nitro
           args:
-            - --parent-chain.connection.url={{ .Values.nitro.l1RpcUrl }}
-            - --parent-chain.blob-client.beacon-url={{ .Values.nitro.l1BeaconUrl }}
             - --http.api={{ .Values.nitro.httpApi | join "," }}
             - --http.corsdomain={{ .Values.nitro.httpCorsDomain | default "*" }}
             - --http.addr={{ .Values.nitro.httpAddr | default "0.0.0.0" }}
             - --http.vhosts={{ .Values.nitro.httpVhosts | default "*" }}
-            - --chain.id={{ .Values.nitro.l2ChainId }}
+            - --parent-chain.connection.url={{ .Values.nitro.l1RpcUrl }}
+            - --parent-chain.blob-client.beacon-url={{ .Values.nitro.l1BeaconUrl }}
           {{- if .Values.nitro.metrics.enabled }}
             - --metrics
-            - --metrics-server.addr={{ .Values.nitro.metrics.serverAddr | default "0.0.0.0"}}
+            - --metrics-server.addr={{ .Values.nitro.metrics.serverAddr | default "127.0.0.1"}}
             - --metrics-server.port={{ .Values.nitro.metrics.serverPort | default "6070"}}
             - --metrics-server.update-interval={{ .Values.nitro.metrics.serverUpdateInterval | default "5s"}}
+          {{- end }}
+            - --chain.id={{ .Values.nitro.l2ChainId }}
+          {{- if .Values.nitro.l2ChainInfo }}
+            - --chain.info-json={{ .Values.nitro.l2ChainInfo }}
+          {{- end }}
+          {{- if .Values.nitro.l2ChainName }}
+            - --chain.name={{ .Values.nitro.l2ChainName }}
+          {{- end }}
+          {{- if .Values.nitro.l2ExecutionCaching }}
+            - --execution.caching.archive
+          {{- end }}
+          {{- if .Values.nitro.l2ExecutionForwardingTarget }}
+            - --execution.forwarding-target={{ .Values.nitro.l2ExecutionForwardingTarget }}
+          {{- end }}
+          {{- if .Values.nitro.l2NodeDataAvailability.enabled }}
+            - --node.data-availability.enable=true
+            - --node.data-availability.rest-aggregator.enable={{ .Values.nitro.l2NodeDataAvailability.restAggregator }}
+            - --node.data-availability.rest-aggregator.urls={{ .Values.nitro.l2NodeDataAvailability.urls }}
+            - --node.staker.enable={{ .Values.nitro.l2Staker }}
+            - --node.feed.input.url={{ .Values.nitro.l2FeedInputUrl }}
           {{- end }}
           {{- range $arg := .Values.nitro.extraArgs }}
             {{- $arg | nindent 12 }}

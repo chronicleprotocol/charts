@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.2.1-d81324d](https://img.shields.io/badge/AppVersion-v3.2.1--d81324d-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.2.1-d81324d](https://img.shields.io/badge/AppVersion-v3.2.1--d81324d-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
@@ -44,7 +44,16 @@ A Helm chart for deploying Arbitrum Nitro on Kubernetes
 | nitro.httpVhosts | object | `{}` |  |
 | nitro.l1BeaconUrl | string | `"https://ethereum-sepolia-beacon-api.publicnode.com"` |  |
 | nitro.l1RpcUrl | string | `"https://ethereum-sepolia-rpc.publicnode.com"` |  |
-| nitro.l2ChainId | int | `421614` |  |
+| nitro.l2ChainId | int | `421614` | can also be Orbit Chain ID for non arbitrum chains |
+| nitro.l2ChainInfo | object | `{}` |  |
+| nitro.l2ChainName | object | `{}` |  |
+| nitro.l2ExecutionCaching | bool | `false` |  |
+| nitro.l2ExecutionForwardingTarget | object | `{}` |  |
+| nitro.l2FeedInputUrl | object | `{}` |  |
+| nitro.l2NodeDataAvailability.enabled | bool | `false` |  |
+| nitro.l2NodeDataAvailability.restAggregator | bool | `true` |  |
+| nitro.l2NodeDataAvailability.urls | object | `{}` |  |
+| nitro.l2Staker | bool | `false` |  |
 | nitro.metrics.enabled | bool | `true` |  |
 | nitro.metrics.serverAddr | object | `{}` |  |
 | nitro.metrics.serverPort | object | `{}` |  |
