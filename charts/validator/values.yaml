@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.44.5@sha256:1af40235690d2669d9491ab79e4abde07d2d57621ebc012dfb475ca19b4cc9b3"
+    tag: "0.45.0@sha256:48a167bd8511a03a7ac089f242158a84d2d75ff0aec7a0cb952f194b0b9d33d6"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -130,7 +130,7 @@ ghost:
   # -- Service type for the validator
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
-    type: NodePort
+    type: LoadBalancer
 
     ports:
       # -- libp2p port for the validator service
