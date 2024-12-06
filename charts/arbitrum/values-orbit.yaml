@@ -1,0 +1,17 @@
+# The following examples show how to configure Arbitrum to use Orbit chain:
+# The configuration is specifically for running a bitcorn maizenet Orbit chain node
+nitro:
+  l1RpcUrl: https://ethereum-sepolia-rpc.publicnode.com
+  l1BeaconUrl: https://ethereum-sepolia-beacon-api.publicnode.com
+  # -- can also be Orbit Chain ID for non arbitrum chains
+  l2ChainId: '21000000'
+  l2ChainName: conduit-orbit-deployer
+  l2ChainInfo: '[{"chain-id":21000000,"parent-chain-id":1,"chain-name":"conduit-orbit-deployer","chain-config":{"chainId":21000000,"homesteadBlock":0,"daoForkBlock":null,"daoForkSupport":true,"eip150Block":0,"eip150Hash":"0x0000000000000000000000000000000000000000000000000000000000000000","eip155Block":0,"eip158Block":0,"byzantiumBlock":0,"constantinopleBlock":0,"petersburgBlock":0,"istanbulBlock":0,"muirGlacierBlock":0,"berlinBlock":0,"londonBlock":0,"clique":{"period":0,"epoch":0},"arbitrum":{"EnableArbOS":true,"AllowDebugPrecompiles":false,"DataAvailabilityCommittee":true,"InitialArbOSVersion":32,"InitialChainOwner":"0x23ddFc9AA09612eE0417d0655ED1076F153f915E","GenesisBlockNum":0}},"rollup":{"bridge":"0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C","inbox":"0x37693F11f3D724E55D0B03D5F328D8202C913243","sequencer-inbox":"0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA","rollup":"0x828C71bc1D7A34F32FfA624240633b6B7272C3D6","validator-utils":"0x84eA2523b271029FFAeB58fc6E6F1435a280db44","validator-wallet-creator":"0x0A5eC2286bB15893d5b8f320aAbc823B2186BA09","deployed-at":21221163}}]'
+  l2ExecutionCaching: true
+  l2ExecutionForwardingTarget: wss://relay-corn-maizenet.t.conduit.xyz
+  l2NodeDataAvailability:
+    enabled: true
+    restAggregator: true
+    urls: https://das-corn-maizenet.t.conduit.xyz
+  l2Staker: false
+  l2FeedInputUrl: wss://relay-corn-maizenet.t.conduit.xyz

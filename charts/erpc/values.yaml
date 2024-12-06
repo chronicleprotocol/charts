@@ -134,6 +134,12 @@ redis:
 
 # -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
 env: {}
+  # - name: ROUTING_POLICY_MAX_ERROR_RATE
+  #   value: "0.7"
+  # - name: ROUTING_POLICY_MAX_BLOCK_HEAD_LAG
+  #   value: "10"
+  # - name: ROUTING_POLICY_MIN_HEALTHY_THRESHOLD
+  #   value: "1"
   # - name: DRPC_API_KEY
   #   valueFrom:
   #     secretKeyRef:
@@ -155,28 +161,55 @@ erpc:
   listenV6: false
   server:
     maxTimeout: 30s
+    enableGzip: true
+
   metrics: true
   # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
   logLevel: info
-  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database
+  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
   cacheConfig:
-    driver: memory
-    # driver: redis
-    # redis:
-    #   addr: erpc-k8s-redis-headless:6379
-    #   password: yourRedisSecret
-    #   db: 0
-    # driver: postgresql
-    # postgresql:
-    #   connectionUri: >-
-    #     postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
-    #   table: rpc_cache
-
+    # -- can provide multiple connectors
+    connectors:
+      - id: memory-cache
+        driver: memory
+        memory:
+          maxItems: 100000
+    # -- can provide multiple policies to work with all connectors configured
+    policies:
+      # Example: Cache all methods with finalized data including empty responses
+      - network: "*"
+        method: "*"
+        finality: finalized
+        empty: allow
+        connector: memory-cache
+        ttl: 0
+      # Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
+      - network: "*"
+        method: "*"
+        finality: unfinalized
+        empty: ignore
+        connector: memory-cache
+        ttl: 5s
+      # Example: Cache unknown finalization data (eth_trace*) only for 10 seconds
+      - network: "*"
+        method: "*"
+        finality: unknown
+        empty: ignore
+        connector: memory-cache
+        ttl: 10s
+      # Example: Cache realtime data only for 2 seconds (eth_blockNumber, eth_gasPrice, etc) to reduce costs yet fresh enough data
+      - network: "*"
+        method: "*"
+        finality: realtime
+        empty: ignore
+        connector: memory-cache
+        ttl: 2s
+        driver: memory
 
   # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
     # -- each project must have a unique id, and is used in the URL structure: fqdn/{project_id}/{network-architecture}/{chain-id}
-    - id: testnet
+    - id: main
       # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
       networkIds:
       - '1'  # -- Eth mainnet
@@ -227,6 +260,7 @@ erpc:
           chainId: 1
           endpoint: https://eth-mainnet.public.blastapi.io
           rateLimitBudget: freemium
+          group: fallback
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
@@ -264,15 +298,55 @@ erpc:
           # By default a dynamic mechanism automatically adds "Unsupported" methods to ignoreMethods,
           # based on errors returned by the upstream. Set this to false to disable this behavior.
           autoIgnoreUnsupportedMethods: true
-        # - id: blastapi
-        #   endpoint: blastapi://${BLAST_API_KEY}
-        # - id: drpc
-        #   endpoint: drpc://${DRPC_API_KEY}
+          # Determines when to include or exclude upstreams depending on their health and performance
+          selectionPolicy:
+            # Every 1 minute evaluate which upstreams must be included,
+            # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
+            evalInterval: 1m
 
-        # -- Ref: https://docs.erpc.cloud/config/projects/upstreams#envio-json-rpc
-        # - id: envio-public
-        #   endpoint: envio://rpc.hypersync.xyz
-        #   rateLimit: p2
+            # Freeform TypeScript-based logic to select upstreams to be included by returning them:
+            evalFunction: |
+              (upstreams, method) => {
+
+                const defaults = upstreams.filter(u => u.config.group !== 'fallback')
+                const fallbacks = upstreams.filter(u => u.config.group === 'fallback')
+
+                // Maximum allowed error rate.
+                const maxErrorRate = parseFloat(process.env.ROUTING_POLICY_MAX_ERROR_RATE || '0.7')
+
+                // Maximum allowed block head lag.
+                const maxBlockHeadLag = parseFloat(process.env.ROUTING_POLICY_MAX_BLOCK_HEAD_LAG || '10')
+
+                // Minimum number of healthy upstreams that must be included in default group.
+                const minHealthyThreshold = parseInt(process.env.ROUTING_POLICY_MIN_HEALTHY_THRESHOLD || '1')
+
+                // Filter upstreams that are healthy based on error rate and block head lag.
+                const healthyOnes = defaults.filter(
+                  u => u.metrics.errorRate < maxErrorRate && u.metrics.blockHeadLag < maxBlockHeadLag
+                )
+
+                // If there are enough healthy upstreams, return them.
+                if (healthyOnes.length >= minHealthyThreshold) {
+                  return healthyOnes
+                }
+
+                // The reason all upstreams are returned is to be less harsh and still consider default nodes (in case they have intermittent issues)
+                // Order of upstreams does not matter as that will be decided by the upstream scoring mechanism
+                return upstreams
+              }
+
+            # To isolate selection evaluation and result to each "method" separately change this flag to true
+            evalPerMethod: false
+
+            # When an upstream is excluded, you can give it a chance on a regular basis
+            # to handle a certain number of sample requests again, so that metrics are refreshed.
+            # For example, to see if error rate is improving after 5 minutes, or still too high.
+            # This is conceptually similar to how a circuit-breaker works in a "half-open" state.
+            # Resampling is not always needed because the "evm state poller" component will still make
+            # requests for the "latest" block, which still updates errorRate.
+            resampleExcluded: false
+            resampleInterval: 5m
+            resampleCount: 100
 
 
   # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
