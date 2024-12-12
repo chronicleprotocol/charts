@@ -2564,6 +2564,22 @@ entries:
     version: 0.0.1
   nethermind:
   - apiVersion: v2
+    appVersion: 1.30.0
+    created: "2024-12-12T04:36:18.27345072Z"
+    description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
+    digest: 95efd7b6eda243606b8680a2b56ba8ebcf2811bf366cb3729715bd448f0805b9
+    icon: https://avatars.githubusercontent.com/u/43478154
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: nethermind
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.11/nethermind-0.0.11.tgz
+    version: 0.0.11
+  - apiVersion: v2
     appVersion: 1.29.0
     created: "2024-10-23T17:37:44.902173849Z"
     description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
@@ -4713,4 +4729,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-06T11:21:52.387131176Z"
+generated: "2024-12-12T04:36:18.273892167Z"
