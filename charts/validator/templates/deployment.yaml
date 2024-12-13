@@ -83,11 +83,6 @@ spec:
               value: {{ .Values.ghost.libp2pValidateQueueSize | quote }}
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-            - name: CFG_LIBP2P_EXTERNAL_IP
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "validator.fullname" . }}-podinfo
-                  key: PUBLIC_IP
           {{- if .Values.ghost.ingress.enabled }}
           {{- range .Values.ghost.ingress.hosts }}
             - name: CFG_LIBP2P_EXTERNAL_ADDR
@@ -188,6 +183,11 @@ spec:
               value: {{ $val | quote }}
           {{- end }}
           {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
+            - name: CFG_LIBP2P_EXTERNAL_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "validator.fullname" . }}-podinfo
+                  key: PUBLIC_IP
             - name: PUBLIC_IP
               valueFrom:
                 configMapKeyRef:
