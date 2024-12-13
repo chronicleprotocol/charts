@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.44.5@sha256:1af40235690d2669d9491ab79e4abde07d2d57621ebc012dfb475ca19b4cc9b3"
+    tag: "0.45.5@sha256:35159698537df458eb3de1e80640f902cdf40b02f0b9890e314bdcb66714a112"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -31,6 +31,8 @@ ghost:
   ethRpcUrl: null
   # -- RPC url for ARB
   arbRpcUrl: null
+  # -- RPC url for BNB
+  bnbRpcUrl: null
   # -- RPC url for ETH Archival node
   ethArchRpcUrl: null
   # -- RPC url for GNO
@@ -39,7 +41,7 @@ ghost:
   mntRpcUrl: null
   # -- RPC url for OETH (optimism)
   optRpcUrl: null
-  # -- RPC url for ZKEVM (polygon zkevm)
+  # -- RPC url for Polygon (polygon)
   polRpcUrl: null
 
   # -- WATCHDOG onchain config address
@@ -129,7 +131,7 @@ ghost:
 
   # -- Service type for the validator
   service:
-    # -- Type of service for the validator, can also be `LoadBalancer`
+    # -- Type of service for the validator, can also be `LoadBalancer`, `NodePort` is experimental
     type: LoadBalancer
 
     ports:
