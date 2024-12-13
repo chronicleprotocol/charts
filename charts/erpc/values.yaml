@@ -208,6 +208,7 @@ erpc:
 
   # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
+
     # -- each project must have a unique id, and is used in the URL structure: fqdn/{project_id}/{network-architecture}/{chain-id}
     - id: main
       # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
@@ -253,7 +254,40 @@ erpc:
           backoffFactor: 0.3
           # -- Random jitter to avoid thundering herd, e.g. add between 0 to 500ms to each retry delay:
           jitter: 500ms
+      # -- Upstream Defaults These defaults are applied before any upstream-specific configurations:
+      upstreamDefaults:
+        # -- Default group for all upstreams
+        group: "default"
 
+        # -- Default JSON-RPC settings
+        jsonRpc:
+          supportsBatch: true
+          batchMaxSize: 10
+          batchMaxWait: "50ms"
+
+        # -- Default failsafe policies
+        failsafe:
+          timeout:
+            duration: "15s"
+          retry:
+            maxAttempts: 3
+            delay: "300ms"
+            jitter: "100ms"
+            backoffMaxDelay: "5s"
+            backoffFactor: 1.5
+          circuitBreaker:
+            failureThresholdCount: 160
+            failureThresholdCapacity: 200
+            halfOpenAfter: "5m"
+            successThresholdCount: 3
+            successThresholdCapacity: 3
+
+        # Default method filters
+        ignoreMethods:
+          - "eth_traceTransaction"
+          - "alchemy_*"
+        allowMethods:
+          - "eth_getLogs"
       # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
       upstreams:
         - id: eth-public-blast

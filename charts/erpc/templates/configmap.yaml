@@ -52,7 +52,10 @@ data:
               {{- $project.failsafe | toYaml | nindent 14 }}
             {{- end }}
           {{- end }}
-
+        {{- if $project.upstreamDefaults }}
+        upstreamDefaults:
+          {{- $project.upstreamDefaults | toYaml | nindent 10 }}
+        {{- end }}
         upstreams:
         {{- range $upstream := $project.upstreams }}
           - id: {{ $upstream.id }}
