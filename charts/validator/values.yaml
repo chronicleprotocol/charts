@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.45.0@sha256:48a167bd8511a03a7ac089f242158a84d2d75ff0aec7a0cb952f194b0b9d33d6"
+    tag: "0.45.5@sha256:7a605f126c8d3af7bdd1655d10c1f7b2dac0b0f7323534bbeb2c0e39b241cb46"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -31,6 +31,8 @@ ghost:
   ethRpcUrl: null
   # -- RPC url for ARB
   arbRpcUrl: null
+  # -- RPC url for BNB
+  bnbRpcUrl: null
   # -- RPC url for ETH Archival node
   ethArchRpcUrl: null
   # -- RPC url for GNO
@@ -39,7 +41,7 @@ ghost:
   mntRpcUrl: null
   # -- RPC url for OETH (optimism)
   optRpcUrl: null
-  # -- RPC url for ZKEVM (polygon zkevm)
+  # -- RPC url for Polygon (polygon)
   polRpcUrl: null
 
   # -- WATCHDOG onchain config address
