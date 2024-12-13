@@ -26,6 +26,7 @@ spec:
       serviceAccountName: {{ include "validator.serviceAccountName" . }}-serviceaccount
       securityContext:
         {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
+      {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
       initContainers:
         - name: init-public-ip
           image: bitnami/kubectl:latest
@@ -37,7 +38,7 @@ spec:
             - name: scripts
               mountPath: /scripts/get-ips.sh
               subPath: get-ips.sh
-
+      {{- end }}
       containers:
         - name: ghost
           securityContext:
@@ -125,6 +126,10 @@ spec:
             - name: CFG_ARB_RPC_URLS
               value: {{ .Values.ghost.arbRpcUrl | quote }}
               {{- end }}
+              {{- if .Values.ghost.bnbRpcUrl }}
+            - name: CFG_BNB_RPC_URLS
+              value: {{ .Values.ghost.bnbRpcUrl | quote }}
+              {{- end }}
               {{- if .Values.ghost.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
               value: {{ .Values.ghost.ethRpcUrl | quote }}
@@ -195,11 +200,13 @@ spec:
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
 
+      {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
       volumes:
         - name: scripts
           configMap:
             name: {{ include "validator.fullname" . }}-scripts
             defaultMode: 0755
+      {{- end }}
 
       {{- with .Values.ghost.nodeSelector }}
       nodeSelector:

@@ -54,7 +54,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.service.annotations | object | `{}` | Annotations to add to the service |
 | ghost.service.ports.libp2p | object | `{"port":8000,"protocol":"TCP"}` | libp2p port for the validator service |
 | ghost.service.ports.webapi | object | `{"port":8080,"protocol":"TCP"}` | webapi listen port for the validator service |
-| ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, can also be `LoadBalancer` |
+| ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, can also be `LoadBalancer`, `NodePort` is experimental |
 | ghost.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | ghost.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | ghost.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |

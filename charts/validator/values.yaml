@@ -131,7 +131,7 @@ ghost:
 
   # -- Service type for the validator
   service:
-    # -- Type of service for the validator, can also be `LoadBalancer`
+    # -- Type of service for the validator, can also be `LoadBalancer`, `NodePort` is experimental
     type: LoadBalancer
 
     ports:

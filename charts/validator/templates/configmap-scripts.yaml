@@ -1,3 +1,4 @@
+{{- if .Values.ghost.service.type | quote | eq "NodePort" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -60,3 +61,4 @@ data:
     echo "creating configmap to store PUBLIC_IP and NODE_PORT: ....."
     kubectl create configmap {{ include "validator.fullname" . }}-podinfo --from-literal=PUBLIC_IP=$PUBLIC_IP --from-literal=NODE_PORT=$NODE_PORT -n $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
     echo "configmap created successfully"
+{{- end }}
