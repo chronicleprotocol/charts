@@ -226,35 +226,7 @@ erpc:
         #   rateLimitBudget: premium
         #   secret:
         #     value: "some-random-secret2-value"
-      failsafe:
-        # -- Delay means how long to wait before starting a simultaneous hedged request.
-        hedge:
-          # -- e.g. if upstream A did not respond within 500ms, a new request towards upstream B will be started, and whichever responds faster will be returned to the client.
-          delay: 500ms
-          # -- In total how many hedges to start. e.g. if maxCount is 2, and upstream A did not respond within 500ms, a new request towards upstream B will be started. If B also did not respond, a new request towards upstream C will be started.
-          maxCount: 2
-        circuitBreaker:
-          # -- These two variables indicate how many failures and capacity to tolerate before opening the circuit.
-          failureThresholdCount: 30
-          failureThresholdCapacity: 100
-          # -- How long to wait before trying to re-enable the upstream after circuit breaker was opened.
-          halfOpenAfter: 120s
-          # -- These two variables indicate how many successes are required in half-open state before closing the circuit, and putting the upstream back in available upstreams.
-          successThresholdCount: 8
-          successThresholdCapacity: 10        # On network-level retry policy applies to the incoming request to eRPC,
-        # -- this is additional to the retry policy set on upstream level.
-        retry:
-          # -- Total retries besides the initial request:
-          maxCount: 3
-          # -- Min delay between retries:
-          delay: 500ms
-          # -- Maximum delay between retries:
-          backoffMaxDelay: 10s
-          # -- Multiplier for each retry for exponential backoff:
-          backoffFactor: 0.3
-          # -- Random jitter to avoid thundering herd, e.g. add between 0 to 500ms to each retry delay:
-          jitter: 500ms
-      # -- Upstream Defaults These defaults are applied before any upstream-specific configurations:
+      networkFailsafe: {}
       upstreamDefaults:
         # -- Default group for all upstreams
         group: "default"
@@ -293,8 +265,21 @@ erpc:
         - id: eth-public-blast
           chainId: 1
           endpoint: https://eth-mainnet.public.blastapi.io
-          rateLimitBudget: freemium
           group: fallback
+          rateLimitBudget: freemium
+          # -- (OPTIONAL) statePollerInterval used to periodically fetch the latest/finalized/sync states.
+          # To disable state polling set this value to 0, which means no regular calls to RPC for latest/finalized/sync states.
+          # The consequence of this is all data will be considered "unfinalized" or "unknown" despite their block numbers (and where if theye're actually finalized or not).
+          # DEFAULT: 30s.
+          statePollerInterval: 30s
+          # -- (OPTIONAL) nodeType is optional and you can manually set it to "full" or "archive".
+          # -- DEFAULT: archive
+          nodeType: full
+          # (OPTIONAL) maxAvailableRecentBlocks limits the maximum number of recent blocks to be served by this upstream.
+          # -- DEFAULT: 128 (for "full" nodes).
+          maxAvailableRecentBlocks: 128
+
+
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com

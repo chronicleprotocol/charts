@@ -47,9 +47,9 @@ data:
           - architecture: evm
             evm:
               chainId: {{ . }}
-            {{- if $project.failsafe }}
+            {{- if $project.networkFailsafe }}
             failsafe:
-              {{- $project.failsafe | toYaml | nindent 14 }}
+              {{- $project.networkFailsafe | toYaml | nindent 14 }}
             {{- end }}
           {{- end }}
         {{- if $project.upstreamDefaults }}
@@ -64,6 +64,9 @@ data:
             {{- if $upstream.chainId }}
             evm:
               chainId: {{ $upstream.chainId }}
+            {{- end }}
+            {{- if $upstream.group }}
+            group: {{ $upstream.group }}
             {{- end }}
             {{- if $upstream.selectionPolicy }}
             selectionPolicy:
@@ -91,6 +94,15 @@ data:
             {{- end }}
             {{- if $upstream.autoIgnoreUnsupportedMethods }}
             autoIgnoreUnsupportedMethods: {{ $upstream.autoIgnoreUnsupportedMethods | default "true" }}
+            {{- end }}
+            {{- if $upstream.statePollerInterval }}
+            statePollerInterval: {{ $upstream.statePollerInterval }}
+            {{- end }}
+            {{- if $upstream.nodeType }}
+            nodeType: {{ $upstream.nodeType }}
+            {{- end }}
+            {{- if $upstream.maxAvailableRecentBlocks }}
+            maxAvailableRecentBlocks: {{ $upstream.maxAvailableRecentBlocks }}
             {{- end }}
         {{- end }}
       {{- end }}
