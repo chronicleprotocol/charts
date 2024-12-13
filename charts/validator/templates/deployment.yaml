@@ -187,6 +187,7 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
           {{- end }}
+          {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
             - name: PUBLIC_IP
               valueFrom:
                 configMapKeyRef:
@@ -197,6 +198,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "validator.fullname" . }}-podinfo
                   key: NODE_PORT
+          {{- end }}
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
 
