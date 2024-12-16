@@ -1,0 +1,18 @@
+# challenger rust implementation (default values)
+ethRpcUrl: "https://eth-mainnet.public.blastapi.io"
+
+contractAddresses:
+  # Chronicle_ETH_USD_3
+  - 0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E
+
+ethConfig: {}
+  # ethKeys:
+  #   existingSecret: "eth-keystore"
+  #   key: "keystore.son"
+  # ethPass:
+  #   existingSecret: "eth-password"
+  #   key: "password.txt"
+  # -- OR you can supply only ETH private key:
+  # ethPrivateKey:
+  #   existingSecret: "eth-private-key"
+  #   key: "ethPrivateKey"

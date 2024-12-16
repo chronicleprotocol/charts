@@ -1,0 +1,151 @@
+# Default values for challenger.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- how many replicas to run (default 1)
+replicaCount: 1
+
+# -- Which implementation to use, can be one of `challenger-go` or `challenger` (rust impl)  (default `challenger`)
+implementation: challenger
+
+imagePullSecrets: []
+# - name: ghcr-login
+
+image:
+  repository: ghcr.io/chronicleprotocol
+  pullPolicy: IfNotPresent
+  # -- tag must correspond to what is available at {{ .Values.image.repository }}/{{.Values.implementation}}. `latest` tag if not specified.
+  tag: "0.1.0-alpine"
+  # 0.1.0 if implementation is challenger-go
+
+# -- Provide ETH keys from existing secrets
+ethConfig: {}
+  # ethKeys:
+  #   existingSecret: "eth-keystore"
+  #   key: "keystore.son"
+  # ethPass:
+  #   existingSecret: "eth-password"
+  #   key: "password.txt"
+  # -- OR you can supply only ETH private key:
+  # ethPrivateKey:
+  #   existingSecret: "eth-private-key"
+  #   key: "ethPrivateKey"
+
+# -- mainnet eth or sepolia eth
+ethChainId: "1"
+# -- mainnet or sepolia RPC endpoint
+ethRpcUrl: ""
+# -- If challenger-go, we can also provide a wss endpoint (OPTIONAL)
+subscriptionUrl: ""
+
+# -- Oracle Contract address to listen to.
+contractAddresses: []
+  # - 0x46ef0071b1E2fF6B42d36e5A177EA43Ae5917f4E # Chronicle_ETH_USD_3
+
+# -- non encrypted variables
+env:
+  normal: {}
+    # RUST_LOG: debug
+    # GOLOG_LOG_LEVEL: pubsub=debug
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  ports:
+    challenger:
+      port: 9090
+      protocol: TCP
+
+# @default -- See `values.yaml`
+livenessProbe:
+  tcpSocket:
+    port: challenger
+  initialDelaySeconds: 60
+  periodSeconds: 120
+
+# @default -- See `values.yaml`
+readinessProbe:
+  tcpSocket:
+    port: challenger
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# -- Extra K8s manifests to deploy
+extraObjects: []
+  # - apiVersion: "kubernetes-client.io/v1"
+  #   kind: ExternalSecret
+  #   metadata:
+  #     name: some-secrets
+  #   spec:
+  #     backendType: someBackend
+  #     data:
+  #       - key: some-creds
+  #         name: client_secret
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- port to scrape
+  port: challenger
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 30s
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 30s
+  # -- ServiceMonitor relabelings
+  relabelings: []
