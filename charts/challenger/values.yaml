@@ -5,18 +5,15 @@
 # -- how many replicas to run (default 1)
 replicaCount: 1
 
-# -- Which implementation to use, can be one of `challenger-go` or `challenger` (rust impl)  (default `challenger`)
-implementation: challenger
-
 imagePullSecrets: []
 # - name: ghcr-login
 
 image:
-  repository: ghcr.io/chronicleprotocol
+  repository: ghcr.io/chronicleprotocol/challenger-go
+  image:
   pullPolicy: IfNotPresent
-  # -- tag must correspond to what is available at {{ .Values.image.repository }}/{{.Values.implementation}}. `latest` tag if not specified.
-  tag: "0.1.0-alpine"
-  # 0.1.0 if implementation is challenger-go
+  # -- `latest` tag if not specified.
+  tag: "0.1.0"
 
 # -- Provide ETH keys from existing secrets
 ethConfig: {}

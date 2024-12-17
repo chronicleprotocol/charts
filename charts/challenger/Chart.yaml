@@ -1,6 +1,7 @@
 apiVersion: v2
 name: challenger
-description: A Helm chart for deploying the OpPoke Challenger Bot on Kubernetes
+description: A Helm chart for deploying the OpPoke Challenger Go Bot on Kubernetes
+home: https://github.com/chronicleprotocol/challenger
 maintainers:
   - name: WesleyCharlesBlake
     url: https://github.com/WesleyCharlesBlake

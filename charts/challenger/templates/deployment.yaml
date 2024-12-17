@@ -29,11 +29,9 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/{{ .Values.implementation }}:{{ .Values.image.tag | default "latest" }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
           args:
-          {{- if eq .Values.implementation "challenger-go" }}
             - "run"
-          {{- end }}
           {{- range $address := .Values.contractAddresses }}
             - "-a"
             - "{{ $address }}"
@@ -52,7 +50,7 @@ spec:
           {{- end }}
             - "--chain-id"
             - "{{ .Values.ethChainId }}"
-          {{- if eq .Values.implementation "challenger-go" }}
+          {{- if .Values.subscriptionUrl }}
             - "--subscription-url"
             - "{{ .Values.subscriptionUrl }}"
           {{- end }}

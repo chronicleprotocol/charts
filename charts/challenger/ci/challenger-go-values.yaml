@@ -1,9 +1,3 @@
-# challenger go implementation
-implementation: challenger-go
-
-image:
-  tag: "0.1.0"
-
 ethRpcUrl: "https://eth.drpc.org"
 subscriptionUrl: "wss://eth.drpc.org"
 
