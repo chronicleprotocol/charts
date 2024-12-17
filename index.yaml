@@ -415,6 +415,24 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.1/beacons-0.0.1.tgz
     version: 0.0.1
+  challenger:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-12-17T19:01:03.24496018Z"
+    description: A Helm chart for deploying the OpPoke Challenger Go Bot on Kubernetes
+    digest: c5a340f5117ddbad587b89736826025978307af1af552d41d08ec802b2c8c7ad
+    home: https://github.com/chronicleprotocol/challenger
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: challenger
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/challenger-0.0.1/challenger-0.0.1.tgz
+    version: 0.0.1
   erpc:
   - apiVersion: v2
     appVersion: 0.0.33
@@ -4789,4 +4807,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-13T10:42:34.967707315Z"
+generated: "2024-12-17T19:01:03.245451998Z"
