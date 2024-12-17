@@ -36,7 +36,7 @@ ethRpcUrl: ""
 subscriptionUrl: ""
 
 # -- Transaction type definition, possible values are: legacy, eip1559 or none (default "none")
-transactionType: "none"
+transactionType: ""
 
 # -- Oracle Contract address to listen to.
 contractAddresses: []
@@ -83,14 +83,14 @@ service:
 # @default -- See `values.yaml`
 livenessProbe:
   tcpSocket:
-    port: challenger
+    port: 9090
   initialDelaySeconds: 60
   periodSeconds: 120
 
 # @default -- See `values.yaml`
 readinessProbe:
   tcpSocket:
-    port: challenger
+    port: 9090
   initialDelaySeconds: 10
   periodSeconds: 10
 

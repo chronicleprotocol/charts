@@ -50,8 +50,10 @@ spec:
           {{- end }}
             - "--chain-id"
             - "{{ .Values.ethChainId }}"
+          {{- if .Values.transactionType }}
             - "--tx-type"
-            - "{{ .Values.transactionType | default "none" }}"
+            - "{{ .Values.transactionType | default "legacy" }}"
+          {{- end }}
           {{- if .Values.subscriptionUrl }}
             - "--subscription-url"
             - "{{ .Values.subscriptionUrl }}"
@@ -59,13 +61,11 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+
 
           env:
           {{- if .Values.ethConfig.ethPrivateKey }}
