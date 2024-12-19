@@ -11,8 +11,9 @@ spec:
       {{- include "validator.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.ghost.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-scripts.yaml") . | sha256sum }}
+      {{- with .Values.ghost.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -22,9 +23,22 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "validator.serviceAccountName" . }}
+      serviceAccountName: {{ include "validator.serviceAccountName" . }}-serviceaccount
       securityContext:
         {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
+      {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
+      initContainers:
+        - name: init-public-ip
+          image: bitnami/kubectl:latest
+          # command: ["sleep", "9999"]
+          command: ["/bin/bash", "-c"]
+          args:
+            - /scripts/get-ips.sh
+          volumeMounts:
+            - name: scripts
+              mountPath: /scripts/get-ips.sh
+              subPath: get-ips.sh
+      {{- end }}
       containers:
         - name: ghost
           securityContext:
@@ -61,7 +75,6 @@ spec:
           readinessProbe:
             {{- toYaml .Values.ghost.readiness.readinessProbe | nindent 12 }}
           {{- end }}
-
           env:
             ### -- LIBP2P
             - name: CFG_LIBP2P_SUBSCRIPTION_BUFFER_SIZE
@@ -70,12 +83,6 @@ spec:
               value: {{ .Values.ghost.libp2pValidateQueueSize | quote }}
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-          {{- if eq .Values.ghost.service.type "LoadBalancer" }}
-            - name: CFG_LIBP2P_EXTERNAL_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-          {{- end }}
           {{- if .Values.ghost.ingress.enabled }}
           {{- range .Values.ghost.ingress.hosts }}
             - name: CFG_LIBP2P_EXTERNAL_ADDR
@@ -113,6 +120,10 @@ spec:
               {{- if .Values.ghost.arbRpcUrl }}
             - name: CFG_ARB_RPC_URLS
               value: {{ .Values.ghost.arbRpcUrl | quote }}
+              {{- end }}
+              {{- if .Values.ghost.bnbRpcUrl }}
+            - name: CFG_BNB_RPC_URLS
+              value: {{ .Values.ghost.bnbRpcUrl | quote }}
               {{- end }}
               {{- if .Values.ghost.ethRpcUrl }}
             - name: CFG_ETH_RPC_URLS
@@ -171,8 +182,33 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
           {{- end }}
+          {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
+            - name: CFG_LIBP2P_EXTERNAL_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "validator.fullname" . }}-podinfo
+                  key: PUBLIC_IP
+            - name: PUBLIC_IP
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "validator.fullname" . }}-podinfo
+                  key: PUBLIC_IP
+            - name: NODE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "validator.fullname" . }}-podinfo
+                  key: NODE_PORT
+          {{- end }}
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
+
+      {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "validator.fullname" . }}-scripts
+            defaultMode: 0755
+      {{- end }}
 
       {{- with .Values.ghost.nodeSelector }}
       nodeSelector:
