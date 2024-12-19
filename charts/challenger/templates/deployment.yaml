@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "challenger.fullname" . }}
+  labels:
+    {{- include "challenger.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "challenger.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "challenger.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "challenger.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          args:
+            - "run"
+          {{- range $address := .Values.contractAddresses }}
+            - "-a"
+            - "{{ $address }}"
+          {{- end }}
+            - "--rpc-url"
+            - "{{ .Values.ethRpcUrl }}"
+          {{- if  .Values.ethConfig.ethPrivateKey }}
+            - "--secret-key"
+            - "${ETH_SECRET_KEY}"
+          {{- end }}
+          {{- if .Values.ethConfig.ethKeys }}
+            - "--keystore"
+            - "/keystore/keystore.json"
+            - "--password-file"
+            - "/password/password.txt"
+          {{- end }}
+            - "--chain-id"
+            - "{{ .Values.ethChainId }}"
+          {{- if .Values.transactionType }}
+            - "--tx-type"
+            - "{{ .Values.transactionType | default "legacy" }}"
+          {{- end }}
+          {{- if .Values.subscriptionUrl }}
+            - "--subscription-url"
+            - "{{ .Values.subscriptionUrl }}"
+          {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+
+
+          env:
+          {{- if .Values.ethConfig.ethPrivateKey }}
+          - name: ETH_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.ethConfig.ethPrivateKey.existingSecret }}
+                key: {{ .Values.ethConfig.ethPrivateKey.key }}
+          {{- end }}
+          {{- include "helpers.list-env-variables" . | indent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.ethConfig.ethKeys }}
+            - name: keystore
+              mountPath: /keystore/
+            - name: password
+              mountPath: /password/
+            {{- end }}
+      volumes:
+      {{- if .Values.ethConfig.ethKeys }}
+      - name: keystore
+        secret:
+          secretName: {{ .Values.ethConfig.ethKeys.existingSecret }}
+          items:
+          - key: {{ .Values.ethConfig.ethKeys.key }}
+            path: keystore.json
+      {{- end }}
+      {{- if .Values.ethConfig.ethPass }}
+      - name: password
+        secret:
+          secretName: {{ .Values.ethConfig.ethPass.existingSecret }}
+          items:
+          - key: {{ .Values.ethConfig.ethPass.key }}
+            path: password.txt
+      {{- end }}
+
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
