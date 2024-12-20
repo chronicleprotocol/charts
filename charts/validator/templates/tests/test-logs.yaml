@@ -8,7 +8,7 @@ metadata:
     "helm.sh/hook-weight": "5"
     "helm.sh/hook": test
 spec:
-  serviceAccountName: {{ include "validator.fullname" . }}-test
+  serviceAccountName: {{ include "validator.fullname" . }}-serviceaccount
   containers:
     - name: test-ghost-logs
       image: bitnami/kubectl:latest
@@ -17,5 +17,5 @@ spec:
         - -c
         - |
           echo 'Running tests';
-          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Starting tag=MUSIG'
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Data point collected'
   restartPolicy: Never
