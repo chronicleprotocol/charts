@@ -876,6 +876,20 @@ entries:
     version: 0.0.1
   ethereum:
   - apiVersion: v2
+    appVersion: v1.14.12
+    created: "2025-01-07T20:43:25.894552464Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: c2f2b66cb35fa3ed70b43a3e27667f94afa74e51737dbf83cf0bf32425061be1
+    icon: https://avatars.githubusercontent.com/u/6250754
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.2.1/ethereum-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
     appVersion: v1.14.11
     created: "2024-10-23T18:08:32.338902014Z"
     description: A Helm chart for deploying Ethereum nodes on Kubernetes
@@ -4883,4 +4897,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-07T05:37:51.384844337Z"
+generated: "2025-01-07T20:43:25.895185934Z"
