@@ -184,8 +184,8 @@ ghost:
       httpGet:
         path: /healthcheck
         port: 9100
-      initialDelaySeconds: 3600
-      periodSeconds: 3600
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
   # -- Readiness probe : stop the validator if the metrics endpoint is not reachable
   readiness:
@@ -194,8 +194,8 @@ ghost:
       httpGet:
         path: /healthcheck
         port: 9100
-      initialDelaySeconds: 3600
-      periodSeconds: 3600
+      initialDelaySeconds: 30
+      periodSeconds: 60
 
   # -- Resources constraints for the validator, CPU, Memory, etc.
   resources: {}
