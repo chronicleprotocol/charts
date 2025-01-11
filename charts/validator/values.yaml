@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.45.11@sha256:1900a84a836ae24c931bca7e0389ce57e27d99938bb6d09bec83e8323b1ca32f"
+    tag: "0.45.12@sha256:6a7d3f05fb549bbc7cdfee74167b0b4fec469279fca4d7941d77296f325c40c3"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -184,8 +184,8 @@ ghost:
       httpGet:
         path: /healthcheck
         port: 9100
-      initialDelaySeconds: 30
-      periodSeconds: 60
+      initialDelaySeconds: 3600
+      periodSeconds: 3600
 
   # -- Readiness probe : stop the validator if the metrics endpoint is not reachable
   readiness:
@@ -194,8 +194,8 @@ ghost:
       httpGet:
         path: /healthcheck
         port: 9100
-      initialDelaySeconds: 30
-      periodSeconds: 60
+      initialDelaySeconds: 3600
+      periodSeconds: 3600
 
   # -- Resources constraints for the validator, CPU, Memory, etc.
   resources: {}
