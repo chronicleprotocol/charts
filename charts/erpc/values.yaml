@@ -157,10 +157,15 @@ env: {}
   #       key: INFURA_API_KEY
 
 erpc:
-  listenV4: true
-  listenV6: false
   server:
+    listenV4: true
+    httpHostV4: "0.0.0.0"
+    listenV6: false
+    httpHostV6: "[::]"
+    httpPort: 4000
     maxTimeout: 30s
+    readTimeout: 10s
+    writeTimeout: 20s
     enableGzip: true
 
   metrics: true
