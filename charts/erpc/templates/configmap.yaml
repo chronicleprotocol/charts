@@ -12,22 +12,10 @@ data:
     {{- end }}
 
     server:
-      {{- range $key, $value := .Values.erpc.server }}
-      {{ $key }}: {{ $value | quote }}
-      {{- end }}
+      {{- .Values.erpc.server | toYaml | nindent 6 }}
 
     metrics:
-      enabled: {{ .Values.erpc.metrics | default "true" }}
-      {{- if .Values.erpc.metrics }}
-      {{- if .Values.erpc.server.listenV6 }}
-      listenV6: {{ .Values.erpc.server.listenV6 }}
-      hostV6: {{ .Values.erpc.server.hostV6 | default "[::]" }}
-      {{- else }}
-      listenV4: "true"
-      port: {{ .Values.service.ports.metrics.port | default "4001" }}
-      hostV4: {{ .Values.erpc.server.httpHostV4 | default "0.0.0.0" }}
-      {{- end }}
-      {{- end }}
+      {{- .Values.erpc.metrics | toYaml | nindent 6 }}
 
     projects:
       {{- range $project := .Values.erpc.projects }}

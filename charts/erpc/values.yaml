@@ -156,7 +156,9 @@ env: {}
   #       name: infura-api-key
   #       key: INFURA_API_KEY
 
+# -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
 erpc:
+  # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
   server:
     listenV4: true
     httpHostV4: "0.0.0.0"
@@ -167,8 +169,21 @@ erpc:
     readTimeout: 10s
     writeTimeout: 20s
     enableGzip: true
+    tls:
+      enabled: false
+      certFile: "/path/to/cert.pem"
+      keyFile: "/path/to/key.pem"
+      caFile: "/path/to/ca.pem"  # Optional, for client cert verification
+      insecureSkipVerify: false  # Optional, defaults to false
 
-  metrics: true
+  # -- eRPC Metrics configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
+  metrics:
+    enabled: true
+    listenV4: true
+    hostV4: "0.0.0.0"
+    listenV6: false
+    hostV6: "[::]"
+    port: 4001
   # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
   logLevel: info
   # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
@@ -181,28 +196,28 @@ erpc:
           maxItems: 100000
     # -- can provide multiple policies to work with all connectors configured
     policies:
-      # Example: Cache all methods with finalized data including empty responses
+      # -- Example: Cache all methods with finalized data including empty responses
       - network: "*"
         method: "*"
         finality: finalized
         empty: allow
         connector: memory-cache
         ttl: 0
-      # Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
+      # -- Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
       - network: "*"
         method: "*"
         finality: unfinalized
         empty: ignore
         connector: memory-cache
         ttl: 5s
-      # Example: Cache unknown finalization data (eth_trace*) only for 10 seconds
+      # -- Example: Cache unknown finalization data (eth_trace*) only for 10 seconds
       - network: "*"
         method: "*"
         finality: unknown
         empty: ignore
         connector: memory-cache
         ttl: 10s
-      # Example: Cache realtime data only for 2 seconds (eth_blockNumber, eth_gasPrice, etc) to reduce costs yet fresh enough data
+      # -- Example: Cache realtime data only for 2 seconds (eth_blockNumber, eth_gasPrice, etc) to reduce costs yet fresh enough data
       - network: "*"
         method: "*"
         finality: realtime
