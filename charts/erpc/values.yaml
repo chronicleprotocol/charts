@@ -192,8 +192,7 @@ erpc:
     connectors:
       - id: memory-cache
         driver: memory
-        memory:
-          maxItems: 100000
+
     # -- can provide multiple policies to work with all connectors configured
     policies:
       # -- Example: Cache all methods with finalized data including empty responses
@@ -201,6 +200,9 @@ erpc:
         method: "*"
         finality: finalized
         empty: allow
+        minItemSize: 1Mb
+        maxItemSize: 10Mb
+        params: []
         connector: memory-cache
         ttl: 0
       # -- Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
@@ -224,7 +226,6 @@ erpc:
         empty: ignore
         connector: memory-cache
         ttl: 2s
-        driver: memory
 
   # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
   projects:
@@ -235,7 +236,55 @@ erpc:
       networkIds:
       - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
-      # todo: apply network level configuration per networkId
+      selectionPolicy:
+        # Every 1 minute evaluate which upstreams must be included,
+        # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
+        evalInterval: 1m
+
+        # Freeform TypeScript-based logic to select upstreams to be included by returning them:
+        evalFunction: |
+          (upstreams, method) => {
+
+            const defaults = upstreams.filter(u => u.config.group !== 'fallback')
+            const fallbacks = upstreams.filter(u => u.config.group === 'fallback')
+
+            // Maximum allowed error rate.
+            const maxErrorRate = parseFloat(process.env.ROUTING_POLICY_MAX_ERROR_RATE || '0.7')
+
+            // Maximum allowed block head lag.
+            const maxBlockHeadLag = parseFloat(process.env.ROUTING_POLICY_MAX_BLOCK_HEAD_LAG || '10')
+
+            // Minimum number of healthy upstreams that must be included in default group.
+            const minHealthyThreshold = parseInt(process.env.ROUTING_POLICY_MIN_HEALTHY_THRESHOLD || '1')
+
+            // Filter upstreams that are healthy based on error rate and block head lag.
+            const healthyOnes = defaults.filter(
+              u => u.metrics.errorRate < maxErrorRate && u.metrics.blockHeadLag < maxBlockHeadLag
+            )
+
+            // If there are enough healthy upstreams, return them.
+            if (healthyOnes.length >= minHealthyThreshold) {
+              return healthyOnes
+            }
+
+            // The reason all upstreams are returned is to be less harsh and still consider default nodes (in case they have intermittent issues)
+            // Order of upstreams does not matter as that will be decided by the upstream scoring mechanism
+            return upstreams
+          }
+
+        # To isolate selection evaluation and result to each "method" separately change this flag to true
+        evalPerMethod: false
+
+        # When an upstream is excluded, you can give it a chance on a regular basis
+        # to handle a certain number of sample requests again, so that metrics are refreshed.
+        # For example, to see if error rate is improving after 5 minutes, or still too high.
+        # This is conceptually similar to how a circuit-breaker works in a "half-open" state.
+        # Resampling is not always needed because the "evm state poller" component will still make
+        # requests for the "latest" block, which still updates errorRate.
+        resampleExcluded: false
+        resampleInterval: 5m
+        resampleCount: 100
+
       # -- Apply auth to project level. ref: https://docs.erpc.cloud/config/auth
       authStrategies: {}
         # - type: secret
@@ -308,7 +357,7 @@ erpc:
             timeout:
               duration: 15s
             retry:
-              maxCount: 2
+              maxAttempts: 2
               delay: 1000ms
               backoffMaxDelay: 10s
               backoffFactor: 0.3
@@ -338,54 +387,6 @@ erpc:
           # based on errors returned by the upstream. Set this to false to disable this behavior.
           autoIgnoreUnsupportedMethods: true
           # Determines when to include or exclude upstreams depending on their health and performance
-          selectionPolicy:
-            # Every 1 minute evaluate which upstreams must be included,
-            # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
-            evalInterval: 1m
-
-            # Freeform TypeScript-based logic to select upstreams to be included by returning them:
-            evalFunction: |
-              (upstreams, method) => {
-
-                const defaults = upstreams.filter(u => u.config.group !== 'fallback')
-                const fallbacks = upstreams.filter(u => u.config.group === 'fallback')
-
-                // Maximum allowed error rate.
-                const maxErrorRate = parseFloat(process.env.ROUTING_POLICY_MAX_ERROR_RATE || '0.7')
-
-                // Maximum allowed block head lag.
-                const maxBlockHeadLag = parseFloat(process.env.ROUTING_POLICY_MAX_BLOCK_HEAD_LAG || '10')
-
-                // Minimum number of healthy upstreams that must be included in default group.
-                const minHealthyThreshold = parseInt(process.env.ROUTING_POLICY_MIN_HEALTHY_THRESHOLD || '1')
-
-                // Filter upstreams that are healthy based on error rate and block head lag.
-                const healthyOnes = defaults.filter(
-                  u => u.metrics.errorRate < maxErrorRate && u.metrics.blockHeadLag < maxBlockHeadLag
-                )
-
-                // If there are enough healthy upstreams, return them.
-                if (healthyOnes.length >= minHealthyThreshold) {
-                  return healthyOnes
-                }
-
-                // The reason all upstreams are returned is to be less harsh and still consider default nodes (in case they have intermittent issues)
-                // Order of upstreams does not matter as that will be decided by the upstream scoring mechanism
-                return upstreams
-              }
-
-            # To isolate selection evaluation and result to each "method" separately change this flag to true
-            evalPerMethod: false
-
-            # When an upstream is excluded, you can give it a chance on a regular basis
-            # to handle a certain number of sample requests again, so that metrics are refreshed.
-            # For example, to see if error rate is improving after 5 minutes, or still too high.
-            # This is conceptually similar to how a circuit-breaker works in a "half-open" state.
-            # Resampling is not always needed because the "evm state poller" component will still make
-            # requests for the "latest" block, which still updates errorRate.
-            resampleExcluded: false
-            resampleInterval: 5m
-            resampleCount: 100
 
 
   # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
