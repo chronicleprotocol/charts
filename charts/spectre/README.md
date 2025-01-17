@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.42.2](https://img.shields.io/badge/AppVersion-0.42.2-informational?style=flat-square)
+![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.42.2](https://img.shields.io/badge/AppVersion-0.42.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -65,6 +65,7 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | resources | object | `{}` |  |
 | rpcUrl | string | `nil` | rpcUrl for the target chain |
 | securityContext | object | `{}` |  |
+| service.annotations | object | `{}` |  |
 | service.ports.listen.port | int | `8080` |  |
 | service.ports.listen.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
