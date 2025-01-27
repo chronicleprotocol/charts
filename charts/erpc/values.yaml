@@ -27,7 +27,7 @@ image:
   repository: ghcr.io/erpc/erpc
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "main@sha256:e5745059b71c81a372e70a9c91861e95b163b934d4987f426cc2990522d4b30a"
 
 imagePullSecrets: []
 nameOverride: ""

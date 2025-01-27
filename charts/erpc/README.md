@@ -1,6 +1,6 @@
 # erpc
 
-![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.36](https://img.shields.io/badge/AppVersion-0.0.36-informational?style=flat-square)
+![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.35](https://img.shields.io/badge/AppVersion-0.0.35-informational?style=flat-square)
 
 A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-aware permanent caching to Kubernetes
 
@@ -53,7 +53,7 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/erpc/erpc"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"main@sha256:e5745059b71c81a372e70a9c91861e95b163b934d4987f426cc2990522d4b30a"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
