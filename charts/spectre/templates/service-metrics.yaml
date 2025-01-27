@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "spectre.fullname" . }}
+  name: {{ include "spectre.fullname" . }}-metrics
   annotations:
   {{- with .Values.service.annotations }}
   {{- toYaml . | nindent 4 }}
@@ -9,13 +9,11 @@ metadata:
   labels:
     {{- include "spectre.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    {{- range $key, $val := .Values.service.ports }}
-    - port: {{ $val.port }}
-      targetPort: {{ $val.port }}
-      protocol: {{ $val.protocol }}
-      name: {{ $key }}
-    {{- end }}
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
   selector:
     {{- include "spectre.selectorLabels" . | nindent 4 }}

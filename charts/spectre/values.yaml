@@ -119,6 +119,8 @@ service:
     # rpc:
     #   port: 9100
     #   protocol: TCP
+  annotations:
+    {}
 
 livenessProbe:
   enabled: false
@@ -172,6 +174,31 @@ affinity: {}
 tor-proxy:
   # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml)
   enabled: true
+
+serviceMonitor:
+  # -- If true, a ServiceMonitor CRD is created for a prometheus operator
+  # https://github.com/coreos/prometheus-operator
+  enabled: false
+  # -- port to scrape
+  port: metrics
+  # -- Path to scrape
+  path: /metrics
+  # -- Alternative namespace for ServiceMonitor
+  namespace: null
+  # -- Additional ServiceMonitor labels
+  labels: {}
+  # -- Additional ServiceMonitor annotations
+  annotations: {}
+  # -- ServiceMonitor scrape interval
+  interval: 60s
+  # -- ServiceMonitor scheme
+  scheme: http
+  # -- ServiceMonitor TLS configuration
+  tlsConfig: {}
+  # -- ServiceMonitor scrape timeout
+  scrapeTimeout: 60s
+  # -- ServiceMonitor relabelings
+  relabelings: []
 
 # -- Extra K8s manifests to deploy
 extraObjects: []
