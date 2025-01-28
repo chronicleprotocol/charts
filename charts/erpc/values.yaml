@@ -27,7 +27,7 @@ image:
   repository: ghcr.io/erpc/erpc
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "main@sha256:e5745059b71c81a372e70a9c91861e95b163b934d4987f426cc2990522d4b30a"
+  tag: "main@sha256:2c5220bd98dbdb139675d860a3a1bb3352011f3883e17b49fccfa292e1929ff3"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -348,7 +348,6 @@ erpc:
           # -- DEFAULT: 128 (for "full" nodes).
           maxAvailableRecentBlocks: 128
 
-
         - id: sep-public-node
           chainId: '11155111'
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
@@ -375,6 +374,9 @@ erpc:
             supportsBatch: true
             batchMaxSize: 100
             batchMaxWait: 100ms
+
+          headers:
+            SomeHeader: "Bearer mytoken"
           # Which methods must never be sent to this upstream.
           # For example this can be used to avoid archive calls (traces) to full nodes
           ignoreMethods:
