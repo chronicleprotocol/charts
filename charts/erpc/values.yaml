@@ -187,6 +187,7 @@ erpc:
   # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
   logLevel: info
   # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
+  disableCache: false
   cacheConfig:
     # -- can provide multiple connectors
     connectors:
