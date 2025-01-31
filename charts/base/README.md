@@ -57,7 +57,7 @@ A Helm chart for deploying Base RPC nodes on Kubernetes
 | nodeSelector | object | `{}` |  |
 | opNode.l1Beacon | string | `"https://ethereum-beacon-api.publicnode.com"` | L1 Beacon URL. Defaults to mainnet value. |
 | opNode.l1EthRpc | string | `"https://ethereum-rpc.publicnode.com"` | L1 RPC URL. Defaults to mainnet value. |
-| opNode.l1TrustRpc | string | `"true"` | Boolean wheter to trust L1 RPC. Defaults to true. |
+| opNode.l1TrustRpc | string | `"true"` | Boolean whether to trust L1 RPC. Defaults to true. |
 | opNode.livenessProbe.initialDelaySeconds | int | `60` |  |
 | opNode.livenessProbe.periodSeconds | int | `120` |  |
 | opNode.livenessProbe.tcpSocket.port | string | `"rpc"` |  |
