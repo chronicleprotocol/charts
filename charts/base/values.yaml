@@ -84,7 +84,7 @@ geth:
     periodSeconds: 10
 
 opNode:
-  # -- Boolean wheter to trust L1 RPC. Defaults to true.
+  # -- Boolean whether to trust L1 RPC. Defaults to true.
   l1TrustRpc: "true"
   # -- L1 RPC URL. Defaults to mainnet value.
   l1EthRpc: https://ethereum-rpc.publicnode.com
