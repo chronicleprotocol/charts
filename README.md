@@ -43,12 +43,12 @@ Check pre-commit version
 $ pre-commit --version
 pre-commit 3.3.3
 ```
-And be sure to install the precommit configs
+And be sure to install the pre-commit configs
 ```
 pre-commit install
 ```
 
-nd be sure to install the pre-commit configs
+and be sure to install the pre-commit configs
 ```
 pre-commit install
 ```
