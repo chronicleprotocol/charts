@@ -4778,6 +4778,22 @@ entries:
   validator:
   - apiVersion: v2
     appVersion: 0.46.0
+    created: "2025-02-10T20:26:58.322179412Z"
+    description: A Helm chart for deploying Chronicle Validator on Kubernetes
+    digest: 661f8225a157e07ffffab2c31cb48fd8147d4bd7ed0d73d82b2b5dab55253624
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: validator
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/validator-0.3.22/validator-0.3.22.tgz
+    version: 0.3.22
+  - apiVersion: v2
+    appVersion: 0.46.0
     created: "2025-02-10T15:19:13.004521577Z"
     description: A Helm chart for deploying Chronicle Validator on Kubernetes
     digest: 5eb33510a872094ab39402be1ed59ae5898dd26134e305d4b7221929a677380e
@@ -5190,4 +5206,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-10T15:19:13.004961862Z"
+generated: "2025-02-10T20:26:58.322742517Z"
