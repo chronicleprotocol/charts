@@ -237,6 +237,20 @@ erpc:
       networkIds:
       - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
+
+      networkDefaults:
+        failsafe:
+          timeout:
+            duration: "30s"
+          hedge:
+            quantile: 0.99
+            maxCount: 3
+          retry:
+            maxAttempts: 3
+            delay: "100ms"
+            jitter: "0ms"
+            backoffMaxDelay: "1s"
+            backoffFactor: 1.5
       selectionPolicy:
         # Every 1 minute evaluate which upstreams must be included,
         # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
