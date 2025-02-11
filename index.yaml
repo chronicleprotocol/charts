@@ -497,6 +497,28 @@ entries:
   erpc:
   - apiVersion: v2
     appVersion: 0.0.39
+    created: "2025-02-11T16:41:55.936619821Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.x.x
+    description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
+      reorg-aware permanent caching to Kubernetes
+    digest: f56415fd6cf6bf094be9e05dccb30dcdef46571454841a9b4ae83770c5708fd3
+    icon: https://avatars.githubusercontent.com/u/6142249
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: erpc
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.2.6/erpc-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
+    appVersion: 0.0.39
     created: "2025-02-04T18:24:40.900252937Z"
     dependencies:
     - condition: redis.enabled
@@ -5206,4 +5228,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-10T20:26:58.322742517Z"
+generated: "2025-02-11T16:41:55.937069215Z"
