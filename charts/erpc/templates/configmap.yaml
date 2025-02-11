@@ -31,6 +31,10 @@ data:
             - {{ $strategy | toYaml | nindent 14 | trim }}
           {{- end }}
         {{- end }}
+        {{- if $project.networkDefaults }}
+        networkDefaults:
+          {{- $project.networkDefaults | toYaml | nindent 10 }}
+        {{- end }}
         networks:
         {{- range $project.networkIds }}
           - architecture: evm
