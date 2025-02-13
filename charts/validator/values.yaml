@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.46.0@sha256:bb2cbe0ebe110ac0e0c508020c5c302a688fb8177aafaef2cc419812e6352c56"
+    tag: "0.46.1@sha256:e69d8363d5a1f74d534fbae9c1d4f46909a69b9e192bb8153bb20942732911b7"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -50,7 +50,7 @@ ghost:
   watchdogInterval: "900s"
 
   # -- libp2p buffer size
-  libP2pSubscriptionBufferSize: '4096'
+  libp2pSubscriptionBufferSize: '4096'
   # -- libp2p validate queue size
   libp2pValidateQueueSize: '4096'
 
