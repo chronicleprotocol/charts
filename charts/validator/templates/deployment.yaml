@@ -80,7 +80,7 @@ spec:
           env:
             ### -- LIBP2P
             - name: CFG_LIBP2P_SUBSCRIPTION_BUFFER_SIZE
-              value: {{ .Values.ghost.libP2pSubscriptionBufferSize | quote }}
+              value: {{ .Values.ghost.libp2pSubscriptionBufferSize | quote }}
             - name: CFG_LIBP2P_VALIDATE_QUEUE_SIZE
               value: {{ .Values.ghost.libp2pValidateQueueSize | quote }}
             - name: CFG_LIBP2P_LISTEN_ADDRS
