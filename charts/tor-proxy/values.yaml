@@ -43,9 +43,6 @@ service:
       port: 9050
       protocol: TCP
     ### to add more listeners for webapi, add them here
-    # hidden1:
-    #   port: 8888
-    #   protocol: TCP
     # webapi:
     #   port: 8080
     #   protocol: TCP
@@ -107,6 +104,7 @@ env:
       SocksPort 0.0.0.0:9050
       HiddenServiceDir /var/lib/tor/hidden_services
       HiddenServicePort 8888 127.0.0.1:8080
+      HiddenServicePort 9999 127.0.0.1:9090
 torConfig: {}
   # existingSecret: "existingSecret"
   ## OR specify a private key
