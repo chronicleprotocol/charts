@@ -143,6 +143,10 @@ ghost:
       webapi:
         port: 8080
         protocol: TCP
+      # -- metrics listen port for the validator service
+      metrics:
+        port: 9090
+        protocol: TCP
       # to add more port-mappings, add them here:
       # https:
       #   port: 8443
@@ -221,7 +225,7 @@ ghost:
 
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
-  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml)
+  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)
   enabled: true
 
 serviceMonitor:

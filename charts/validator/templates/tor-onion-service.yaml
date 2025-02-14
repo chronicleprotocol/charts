@@ -14,3 +14,10 @@ spec:
           name: ghost
           port:
             number: {{ .Values.ghost.service.ports.webapi.port }}
+    - port:
+        number: 9999
+      backend:
+        service:
+          name: ghost
+          port:
+            number: {{ .Values.ghost.service.ports.metrics.port }}
