@@ -65,8 +65,11 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-            - containerPort: 9100
+            - containerPort: {{ .Values.metrics.port}}
               name: metrics
+              protocol: TCP
+            - containerPort: 9100
+              name: healthz
               protocol: TCP
 
           {{- if .Values.ghost.liveness.enabled }}
