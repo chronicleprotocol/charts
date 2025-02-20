@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.46.1@sha256:e69d8363d5a1f74d534fbae9c1d4f46909a69b9e192bb8153bb20942732911b7"
+    tag: "0.47.4@sha256:b539ec2d7db53db8d19f87a7a527728d02dd398088dae5785996ee019112e390"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -169,9 +169,6 @@ ghost:
           # - path: /webapi
           #   port: 8080
           #   pathType: ImplementationSpecific
-          # - path: /metrics
-          #   port: 9100
-          #   pathType: ImplementationSpecific
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -221,8 +218,12 @@ ghost:
 
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
-  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml)
+  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)
   enabled: true
+
+metrics:
+  enabled: true
+  port: 9090
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
