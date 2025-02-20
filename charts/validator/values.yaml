@@ -169,9 +169,6 @@ ghost:
           # - path: /webapi
           #   port: 8080
           #   pathType: ImplementationSpecific
-          # - path: /metrics
-          #   port: 9090
-          #   pathType: ImplementationSpecific
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
