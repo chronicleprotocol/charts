@@ -143,10 +143,6 @@ ghost:
       webapi:
         port: 8080
         protocol: TCP
-      # -- metrics listen port for the validator service
-      metrics:
-        port: 9090
-        protocol: TCP
       # to add more port-mappings, add them here:
       # https:
       #   port: 8443
