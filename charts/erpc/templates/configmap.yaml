@@ -14,7 +14,10 @@ data:
         {{- .Values.erpc.cacheConfig | toYaml | nindent 8 }}
       {{- end }}
     {{- end }}
-
+    {{ if .Values.erpc.admin }}
+    admin:
+      {{- .Values.erpc.admin | toYaml | nindent 6 }}
+    {{- end }}
     server:
       {{- .Values.erpc.server | toYaml | nindent 6 }}
 

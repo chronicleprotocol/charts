@@ -158,6 +158,13 @@ env: {}
 
 # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
 erpc:
+  # -- If enabled, the admin API will be enabled ref:
+  admin:
+    auth:
+      strategies:
+        - type: secret
+          secret:
+            value: mysecret
   # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
   server:
     listenV4: true
