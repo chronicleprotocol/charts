@@ -228,6 +228,9 @@ tor-proxy:
   # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)
   enabled: true
 
+metrics:
+  enabled: true
+  port: 9090
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
   # https://github.com/coreos/prometheus-operator

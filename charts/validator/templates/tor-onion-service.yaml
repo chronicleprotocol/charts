@@ -11,6 +11,8 @@ spec:
         number: 8888
       backend:
         service:
-          name: ghost
+          name: {{ include "validator.fullname" . }}
           port:
             number: {{ .Values.ghost.service.ports.webapi.port }}
+  extraConfig: |
+    HiddenServicePort 9999 ghost-metrics:9090
