@@ -12873,7 +12873,7 @@ spec:
                 description: HealthProbeBindAddress is the TCP address that the controller should bind to for serving health probes
                 type: string
               livenessEndpointName:
-                description: LivenessEndpointName, defaults to "healthz"
+                description: LivenessEndpointName, defaults to "livez"
                 type: string
               readinessEndpointName:
                 description: ReadinessEndpointName, defaults to "readyz"
@@ -17813,7 +17813,7 @@ spec:
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /livez
             port: 8081
           initialDelaySeconds: 15
           periodSeconds: 20
