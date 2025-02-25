@@ -12,8 +12,8 @@ spec:
   type: ClusterIP
   ports:
     - name: metrics
-      port: 9100
+      port: {{ .Values.ghost.metrics.port }}
       protocol: TCP
-      targetPort: 9100
+      targetPort: {{ .Values.ghost.metrics.port }}
   selector:
     {{- include "validator.selectorLabels" . | nindent 4 }}

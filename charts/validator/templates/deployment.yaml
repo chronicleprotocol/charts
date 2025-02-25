@@ -65,10 +65,14 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
-            - containerPort: 9100
+          {{- if .Values.ghost.metrics.enabled }}
+            - containerPort: {{ .Values.ghost.metrics.port }}
               name: metrics
               protocol: TCP
-
+          {{- end }}
+            - containerPort: 9100
+              name: readiness
+              protocol: TCP
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
             {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
