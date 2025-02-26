@@ -5,14 +5,19 @@ metadata:
 data:
   erpc.yaml: |
     logLevel: {{ .Values.erpc.logLevel | default "warn" }}
-    {{ if .Values.erpc.cacheConfig }}
+    {{- if .Values.erpc.cacheConfig }}
     database:
+      {{- if .Values.erpc.sharedState }}
+      sharedState:
+        {{- .Values.erpc.sharedState | toYaml | nindent 8 }}
+      {{- end }}
       {{- if .Values.erpc.disableCache }}
       evmJsonRpcCache: ~
       {{- else }}
       evmJsonRpcCache:
         {{- .Values.erpc.cacheConfig | toYaml | nindent 8 }}
       {{- end }}
+
     {{- end }}
 
     server:

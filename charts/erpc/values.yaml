@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # -- Deployment replica count
-replicaCount: 1
+replicaCount: 2
 
 ## OR
 # -- Enable autoscaling / HPA
@@ -188,12 +188,31 @@ erpc:
   logLevel: info
   # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
   disableCache: false
+
+  # -- Shared state configuration, ref: https://docs.erpc.cloud/config/database/shared-state
+  sharedState:
+    # Unique identifier for a group of eRPC instances that should share state
+    # Recommended if you have multiple separate eRPC clusters
+    # Default: "erpc-default"
+    clusterKey: "my-cluster-1"
+
+    # Storage backend configuration
+    # Local "memory" is used by default
+    connector:
+      # Storage driver: memory, redis, postgresql (memory is default)
+      driver: redis
+      # Redis-specific configuration
+      redis:
+        addr: "dragonfly-sample:6379"
+        password: ""
+        db: 0
+        connPoolSize: 10
+
   cacheConfig:
     # -- can provide multiple connectors
     connectors:
       - id: memory-cache
         driver: memory
-
     # -- can provide multiple policies to work with all connectors configured
     policies:
       # -- Example: Cache all methods with finalized data including empty responses
