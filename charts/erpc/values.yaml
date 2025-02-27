@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # -- Deployment replica count
-replicaCount: 2
+replicaCount: 1
 
 ## OR
 # -- Enable autoscaling / HPA
@@ -158,6 +158,13 @@ env: {}
 
 # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
 erpc:
+  # -- If enabled, the admin API will be enabled ref:
+  admin:
+    auth:
+      strategies:
+        - type: secret
+          secret:
+            value: mysecret
   # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
   server:
     listenV4: true
@@ -190,23 +197,23 @@ erpc:
   disableCache: false
 
   # -- Shared state configuration, ref: https://docs.erpc.cloud/config/database/shared-state
-  sharedState:
+  sharedState: {}
     # Unique identifier for a group of eRPC instances that should share state
     # Recommended if you have multiple separate eRPC clusters
     # Default: "erpc-default"
-    clusterKey: "my-cluster-1"
+    # clusterKey: "my-local-1"
 
     # Storage backend configuration
     # Local "memory" is used by default
-    connector:
-      # Storage driver: memory, redis, postgresql (memory is default)
-      driver: redis
-      # Redis-specific configuration
-      redis:
-        addr: "dragonfly-sample:6379"
-        password: ""
-        db: 0
-        connPoolSize: 10
+    # connector:
+    #   # Storage driver: memory, redis, postgresql (memory is default)
+    #   driver: redis
+    #   # Redis-specific configuration
+    #   redis:
+    #     addr: "my-redis-host:6379"
+    #     password: ""
+    #     db: 0
+    #     connPoolSize: 10
 
   cacheConfig:
     # -- can provide multiple connectors
@@ -317,7 +324,20 @@ erpc:
         #   secret:
         #     value: "some-random-secret2-value"
       networkFailsafe: {}
+      # -- Network defaults enable for all networks
       networkDefaults:
+        evm:
+          integrity:
+            # eth_blockNumber and eth_getBlockByNumber if the chosen upstream returns a block older than the highest known block,
+            # it will return the highest known block instead.
+            # This _might_ cause an extra upstream request for eth_getBlockByNumber(latest) calls.
+            enforceHighestBlock: true
+
+            # When eth_getLogs end-range is a specific blockNumber ensure only upstreams whose
+            # latest block is equal or more handle it, otherwise return an error (i.e. MissingData) for client to retry.
+            # This might cause more requests if evm state poller has lagging latest block vs eth_getLogs end-range;
+            # it _might_ send an additional eth_blockNumber to other upstreams to see which one definitively has the requested range.
+            enforceGetLogsBlockRange: true
         failsafe:
           timeout:
             duration: "30s"
@@ -365,6 +385,9 @@ erpc:
           - "eth_getLogs"
       # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
       upstreams:
+        # - id: erpc-public
+        #   endpoint: repository://evm-public-endpoints.erpc.cloud
+        #   autoIgnoreUnsupportedMethods: true
         - id: eth-public-blast
           chainId: 1
           endpoint: https://eth-mainnet.public.blastapi.io
