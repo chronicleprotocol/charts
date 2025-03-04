@@ -4212,6 +4212,21 @@ entries:
     version: 0.1.1
   spire:
   - apiVersion: v2
+    appVersion: 0.47.8
+    created: "2025-03-04T11:03:56.32717112Z"
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: 71d45fa2178df5381dbbc61ec3590104d2d9e90bb42340a4c84bd1b11e12b400
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.3.1/spire-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
     appVersion: "0.31"
     created: "2024-06-24T15:02:11.090027202Z"
     dependencies:
@@ -5282,4 +5297,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-27T13:25:03.699728793Z"
+generated: "2025-03-04T11:03:56.327966967Z"
