@@ -175,13 +175,7 @@ env:
 configHcl: {}
 
 tor-proxy:
-  enabled: false
-  env:
-    normal:
-      TOR_EXTRA_ARGS: |
-        SocksPort 0.0.0.0:9050
-        HiddenServiceDir /var/lib/tor/hidden_services
-        HiddenServicePort 8888 spire:8080
+  enabled: true
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
