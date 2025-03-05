@@ -265,6 +265,21 @@ entries:
     version: 0.0.1
   beacons:
   - apiVersion: v2
+    appVersion: v5.3.0
+    created: "2025-03-05T08:48:47.996814079Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: c36b961dae561291730f114f8fc4af99f390e9702854ec588c55dfc03d9aa7d1
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.14/beacons-0.0.14.tgz
+    version: 0.0.14
+  - apiVersion: v2
     appVersion: v5.2.0
     created: "2025-01-07T05:37:51.384324979Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
@@ -958,6 +973,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.0.1/erpc-0.0.1.tgz
     version: 0.0.1
   ethereum:
+  - apiVersion: v2
+    appVersion: v1.15.3
+    created: "2025-03-05T08:48:48.095042993Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: 09d046653c73227576db87e41d595b957f2ac2bcb4189b6a2ddef63e2b9f45df
+    icon: https://avatars.githubusercontent.com/u/6250754
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.2.3/ethereum-0.2.3.tgz
+    version: 0.2.3
   - apiVersion: v2
     appVersion: v1.14.13
     created: "2025-01-30T14:49:50.960448226Z"
@@ -5297,4 +5326,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-04T11:03:56.327966967Z"
+generated: "2025-03-05T08:48:48.095477557Z"
