@@ -3975,6 +3975,24 @@ entries:
   safe-watcher:
   - apiVersion: v2
     appVersion: 1.2.1
+    created: "2025-03-13T16:05:13.381669185Z"
+    description: A Helm chart for deploy Safe-Watcher to Kubernetes
+    digest: 9c54f90d6609b54d00d824a7344da3a11ca19e0b2496a81bea4a9c69d45d7751
+    icon: https://avatars.githubusercontent.com/u/79740422
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: safe-watcher
+    sources:
+    - https://github.com/Gearbox-protocol/safe-watcher
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/safe-watcher-0.0.2/safe-watcher-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.2.1
     created: "2025-03-13T15:01:06.082824227Z"
     description: A Helm chart for deploy Safe-Watcher to Kubernetes
     digest: b8c21d714158220dea478c3b7b48aebce36d7802c48684d5c34ba679693d36f9
@@ -5396,4 +5414,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-13T15:01:06.083271391Z"
+generated: "2025-03-13T16:05:13.382194235Z"
