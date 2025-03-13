@@ -1,6 +1,6 @@
 # safe-watcher
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.1](https://img.shields.io/badge/AppVersion-1.2.1-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.1](https://img.shields.io/badge/AppVersion-1.2.1-informational?style=flat-square)
 
 A Helm chart for deploy Safe-Watcher to Kubernetes
 
@@ -24,7 +24,7 @@ A Helm chart for deploy Safe-Watcher to Kubernetes
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| configYaml | object | `{"safeAddresses":["eth:0x11111"],"signers":{"0x22222":"alice","0x33333":"bob"},"telegramBotToken":"xxxx","telegramChannelId":"-1111"}` | inline plain text config, if empty, app expects an existing CM |
+| configYaml | object | `{}` | inline plain text config, if empty, app expects an existing CM |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/gearbox-protocol/safe-watcher"` |  |

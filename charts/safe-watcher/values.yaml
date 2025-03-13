@@ -21,14 +21,14 @@ fullnameOverride: ""
 
 
 # -- inline plain text config, if empty, app expects an existing CM
-configYaml:
-  telegramBotToken: "xxxx"
-  telegramChannelId: "-1111"
-  safeAddresses:
-    - "eth:0x11111"
-  signers:
-    "0x22222": "alice"
-    "0x33333": "bob"
+configYaml: {}
+  # telegramBotToken: "xxxx"
+  # telegramChannelId: "-1111"
+  # safeAddresses:
+  #   - "eth:0x11111"
+  # signers:
+  #   "0x22222": "alice"
+  #   "0x33333": "bob"
 
 # -- Default for CM, but you can also set it to your own CM instead of supplying values inline
 volumes:
