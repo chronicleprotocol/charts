@@ -1,0 +1,11 @@
+{{- if .Values.configYaml }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: safe-watcher-config
+  labels:
+    {{- include "safe-watcher.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+{{ .Values.configYaml | toJson | indent 4 }}
+{{- end }}
