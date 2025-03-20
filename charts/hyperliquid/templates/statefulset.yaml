@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    {{- include "hyperliquid.labels" . | nindent 4 }}
+  name: '{{ include "hyperliquid.fullname" . }}'
+spec:
+  replicas: {{ .Values.node.replicas }}
+  selector:
+    matchLabels:
+      {{- include "hyperliquid.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "hyperliquid.fullname" . }}
+  template:
+    metadata:
+      labels:
+        {{- include "hyperliquid.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "hyperliquid.serviceAccountName" . }}
+      containers:
+      - image: '{{ tpl .Values.node.image.repository $ }}:{{ tpl .Values.node.image.tag $ | default "latest" }}'
+        imagePullPolicy: {{ .Values.node.image.pullPolicy }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        name: node
+        command:
+          - /home/hluser/hl-visor
+        args:
+          - run-non-validator
+          - --serve-eth-rpc
+        ports:
+        {{- range $key, $val := .Values.service.ports }}
+          - name: {{ $key }}
+            containerPort: {{ $val.port }}
+            protocol: {{ $val.protocol }}
+        {{- end }}
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 12 }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 12 }}
+        {{- if .Values.node.resources }}
+        resources:
+          {{ .Values.node.resources | toYaml | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.node.persistence.hl_data.enabled }}
+        - mountPath: /home/hluser/hl/data
+          name: hl-data
+        {{- end }}
+      - image: '{{ tpl .Values.pruner.image.repository $ }}:{{ tpl .Values.pruner.image.tag $ | default "latest" }}'
+        imagePullPolicy: {{ .Values.pruner.image.pullPolicy }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        name: pruner
+        {{- if .Values.pruner.resources }}
+        resources:
+          {{ .Values.pruner.resources | toYaml | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.node.persistence.hl_data.enabled }}
+        - mountPath: /home/hluser/hl/data
+          name: hl-data
+        {{- end }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- if ne .Values.node.serviceAccount "" }}
+      serviceAccountName: {{ .Values.node.serviceAccount | quote }}
+      {{- end }}
+      volumes:
+      {{- if .Values.node.persistence.hl_data.enabled }}
+      - name: hl-data
+        persistentVolumeClaim:
+          claimName: '{{ include "hyperliquid.fullname" . }}-node-hl-data'
+      {{- end }}

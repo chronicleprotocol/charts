@@ -34,3 +34,14 @@
 {{ printf "katenary.v3/name: %s" $name }}
 {{ printf "katenary.v3/instance: %s" .Release.Name }}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "hyperliquid.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "hyperliquid.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
