@@ -1,0 +1,19 @@
+{{- if .Values.pruner.persistence.hl_data.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  labels:
+    {{- include "hyperliquid.labels" . | nindent 4 }}
+  name: '{{ include "hyperliquid.fullname" . }}-pruner-hl-data'
+spec:
+  accessModes:
+  {{- .Values.pruner.persistence.hl_data.accessMode | toYaml | nindent 2 }}
+  resources:
+    requests:
+      storage: {{ tpl .Values.pruner.persistence.hl_data.size $ }}
+  {{- if ne .Values.pruner.persistence.hl_data.storageClass "-" }}
+  storageClassName: '{{ .Values.pruner.persistence.hl_data.storageClass }}'
+  {{- end }}
+
+{{- end }}

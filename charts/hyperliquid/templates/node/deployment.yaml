@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{- include "hyperliquid.labels" . | nindent 4 }}
+  name: '{{ include "hyperliquid.fullname" . }}-node'
+spec:
+  replicas: {{ .Values.node.replicas }}
+  selector:
+    matchLabels:
+      {{- include "hyperliquid.selectorLabels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        {{- include "hyperliquid.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: '{{ tpl .Values.node.repository.image $ }}:{{ tpl .Values.node.repository.tag $ | default "latest" }}'
+        imagePullPolicy: {{ .Values.node.imagePullPolicy }}
+        name: node
+        ports:
+        - containerPort: 4000
+          name: port-4000
+        - containerPort: 4001
+          name: port-4001
+        - containerPort: 4002
+          name: port-4002
+        - containerPort: 4003
+          name: port-4003
+        - containerPort: 4004
+          name: port-4004
+        - containerPort: 4005
+          name: port-4005
+        - containerPort: 4006
+          name: port-4006
+        - containerPort: 4007
+          name: port-4007
+        - containerPort: 4008
+          name: port-4008
+        - containerPort: 4009
+          name: port-4009
+        - containerPort: 4010
+          name: port-4010
+        {{- if .Values.node.resources }}
+        resources:
+          {{ .Values.node.resources | toYaml | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+        {{- if .Values.node.persistence.hl_data.enabled }}
+        - mountPath: /home/hluser/hl/data
+          name: hl-data
+        {{- end }}
+      {{- if .Values.pullSecrets }}
+      imagePullSecrets:
+      {{- .Values.pullSecrets | toYaml | nindent 6 }}
+      {{- end }}
+      {{- if .Values.node.nodeSelector }}
+      nodeSelector:
+        {{- .Values.node.nodeSelector | toYaml | nindent 8 }}
+      {{- end }}
+      {{- if ne .Values.node.serviceAccount "" }}
+      serviceAccountName: {{ .Values.node.serviceAccount | quote }}
+      {{- end }}
+      volumes:
+      {{- if .Values.node.persistence.hl_data.enabled }}
+      - name: hl-data
+        persistentVolumeClaim:
+          claimName: '{{ include "hyperliquid.fullname" . }}-node-hl-data'
+      {{- end }}
