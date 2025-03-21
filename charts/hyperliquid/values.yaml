@@ -62,20 +62,6 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-# @default -- See `values.yaml`
-livenessProbe:
-  tcpSocket:
-    port: httprpc
-  initialDelaySeconds: 60
-  periodSeconds: 120
-
-# @default -- See `values.yaml`
-readinessProbe:
-  tcpSocket:
-    port: httprpc
-  initialDelaySeconds: 10
-  periodSeconds: 10
-
 service:
   type: ClusterIP
   annotations: {}

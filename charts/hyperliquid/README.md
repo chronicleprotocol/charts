@@ -17,9 +17,6 @@ A Helm chart for running a hyperliquid node
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | imagePullSecrets | list | `[]` |  |
-| livenessProbe.initialDelaySeconds | int | `60` |  |
-| livenessProbe.periodSeconds | int | `120` |  |
-| livenessProbe.tcpSocket.port | string | `"httprpc"` |  |
 | node.image.pullPolicy | string | `"IfNotPresent"` |  |
 | node.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid"` |  |
 | node.image.tag | string | `"latest"` |  |
@@ -35,9 +32,6 @@ A Helm chart for running a hyperliquid node
 | pruner.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid-pruner"` |  |
 | pruner.image.tag | string | `"latest"` |  |
 | pruner.resources | object | `{}` |  |
-| readinessProbe.initialDelaySeconds | int | `10` |  |
-| readinessProbe.periodSeconds | int | `10` |  |
-| readinessProbe.tcpSocket.port | string | `"httprpc"` |  |
 | replicaCount | int | `1` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |

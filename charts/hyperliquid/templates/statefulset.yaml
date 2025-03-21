@@ -39,10 +39,6 @@ spec:
             containerPort: {{ $val.port }}
             protocol: {{ $val.protocol }}
         {{- end }}
-        livenessProbe:
-          {{- toYaml .Values.livenessProbe | nindent 12 }}
-        readinessProbe:
-          {{- toYaml .Values.readinessProbe | nindent 12 }}
         {{- if .Values.node.resources }}
         resources:
           {{ .Values.node.resources | toYaml | nindent 10 }}
@@ -72,9 +68,6 @@ spec:
         {{- toYaml .Values.affinity | nindent 8 }}
       tolerations:
         {{- toYaml .Values.tolerations | nindent 8 }}
-      {{- if ne .Values.node.serviceAccount "" }}
-      serviceAccountName: {{ .Values.node.serviceAccount | quote }}
-      {{- end }}
       volumes:
       {{- if .Values.node.persistence.hl_data.enabled }}
       - name: hl-data
