@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.47.8@sha256:c675afa5ecb41ca1787dd71e27837f999a4aa2b943f4477c12543bbde9e90fae"
+    tag: "0.53.0@sha256:8d9a90a902821578baf5b925653a6f8e7ede03c90d3b3fc8382e048d5a6bf201"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -47,7 +47,7 @@ ghost:
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
   # -- WATCHDOG polling interval (in seconds)
-  watchdogInterval: "900s"
+  watchdogInterval: "300s"
 
   # -- libp2p buffer size
   libp2pSubscriptionBufferSize: '4096'
