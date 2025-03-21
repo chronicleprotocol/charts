@@ -21,7 +21,7 @@ A Helm chart for running a hyperliquid node
 | node.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid"` |  |
 | node.image.tag | string | `"latest"` |  |
 | node.persistence.hl_data.accessMode[0] | string | `"ReadWriteOnce"` |  |
-| node.persistence.hl_data.enabled | bool | `true` |  |
+| node.persistence.hl_data.enabled | bool | `false` |  |
 | node.persistence.hl_data.size | string | `"200Gi"` |  |
 | node.persistence.hl_data.storageClass | string | `"gp3"` |  |
 | node.replicas | int | `1` |  |
