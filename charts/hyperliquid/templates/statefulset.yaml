@@ -48,6 +48,11 @@ spec:
         - mountPath: /home/hluser/hl/data
           name: hl-data
         {{- end }}
+        {{- if .Values.gossipOverride }}
+        - mountPath: /home/hluser/override_gossip_config.json
+          subPath: override_gossip_config.json
+          name: gossip-override
+        {{- end }}
       - image: '{{ tpl .Values.pruner.image.repository $ }}:{{ tpl .Values.pruner.image.tag $ | default "latest" }}'
         imagePullPolicy: {{ .Values.pruner.image.pullPolicy }}
         securityContext:
@@ -73,4 +78,9 @@ spec:
       - name: hl-data
         persistentVolumeClaim:
           claimName: '{{ include "hyperliquid.fullname" . }}-node-hl-data'
+      {{- end }}
+      {{- if .Values.gossipOverride }}
+      - name: gossip-override
+        configMap:
+          name: gossip-override
       {{- end }}

@@ -1,6 +1,6 @@
 # hyperliquid
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for running a hyperliquid node
 
@@ -16,6 +16,7 @@ A Helm chart for running a hyperliquid node
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| gossipOverride | bool | `false` |  |
 | imagePullSecrets | list | `[]` |  |
 | node.image.pullPolicy | string | `"IfNotPresent"` |  |
 | node.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid"` |  |
