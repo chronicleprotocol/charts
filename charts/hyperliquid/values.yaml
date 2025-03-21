@@ -1,0 +1,136 @@
+# Default values for hyperliquid.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# node configuration
+node:
+  replicas: 1
+  image:
+    repository: ghcr.io/chronicleprotocol/hyperliquid
+    pullPolicy: IfNotPresent
+    tag: latest
+  persistence:
+    hl_data:
+      # Storage class to use for PVCs
+      # storageClass: "-" means use default
+      # storageClass: "" means do not specify
+      # storageClass: "foo" means use that storageClass
+      storageClass: 'gp3'
+      size: 200Gi
+      accessMode:
+        - ReadWriteOnce
+      enabled: false
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# pruner configuration
+pruner:
+  image:
+    repository: ghcr.io/chronicleprotocol/hyperliquid-pruner
+    pullPolicy: IfNotPresent
+    tag: latest
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+service:
+  type: ClusterIP
+  annotations: {}
+  # annotations:
+  #   svccontroller.k3s.cattle.io/tolerations: |
+  #     - effect: NoExecute
+  #       key: somekey
+  #       operator: Equal
+  #       value: somevalue
+  labels: {}
+  ports:
+    httprpc:
+      port: 3001
+      protocol: TCP
+    gossip0:
+      port: 4000
+      protocol: TCP
+    gossip1:
+      port: 4001
+      protocol: TCP
+    gossip2:
+      port: 4002
+      protocol: TCP
+    gossip3:
+      port: 4003
+      protocol: TCP
+    gossip4:
+      port: 4004
+      protocol: TCP
+    gossip5:
+      port: 4005
+      protocol: TCP
+    gossip6:
+      port: 4006
+      protocol: TCP
+    gossip7:
+      port: 4007
+      protocol: TCP
+    gossip8:
+      port: 4008
+      protocol: TCP
+    gossip9:
+      port: 4009
+      protocol: TCP
+    gossip10:
+      port: 4010
+      protocol: TCP
+
+# imagePullSecrets allows you to specify a name of an image pull secret.
+# You must provide a list of object with the name field set to the name of the
+# e.g.
+# pullSecrets:
+# - name: regcred
+# You are, for now, responsible for creating the secret.
+imagePullSecrets: []
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

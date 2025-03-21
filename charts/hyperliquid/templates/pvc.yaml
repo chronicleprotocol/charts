@@ -1,0 +1,19 @@
+{{- if .Values.node.persistence.hl_data.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  labels:
+    {{- include "hyperliquid.labels" . | nindent 4 }}
+  name: '{{ include "hyperliquid.fullname" . }}-node-hl-data'
+spec:
+  accessModes:
+  {{- .Values.node.persistence.hl_data.accessMode | toYaml | nindent 2 }}
+  resources:
+    requests:
+      storage: {{ tpl .Values.node.persistence.hl_data.size $ }}
+  {{- if ne .Values.node.persistence.hl_data.storageClass "-" }}
+  storageClassName: '{{ .Values.node.persistence.hl_data.storageClass }}'
+  {{- end }}
+
+{{- end }}
