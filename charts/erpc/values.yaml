@@ -404,6 +404,7 @@ erpc:
           # (OPTIONAL) maxAvailableRecentBlocks limits the maximum number of recent blocks to be served by this upstream.
           # -- DEFAULT: 128 (for "full" nodes).
           maxAvailableRecentBlocks: 128
+          getLogsMaxBlockRange: 1000
 
         - id: sep-public-node
           chainId: '11155111'
