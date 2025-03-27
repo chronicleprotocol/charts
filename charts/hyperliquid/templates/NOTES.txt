@@ -14,7 +14,7 @@ Use helm uninstall command to delete the release.
 
   $ helm -n {{ .Release.Namespace }} uninstall {{ .Release.Name }}
 
-Note that some resources may still be in use after a release is deleted. For exemple, PersistentVolumeClaims are not deleted by default for some storage classes or if some annotations are set.
+Note that some resources may still be in use after a release is deleted. For example, PersistentVolumeClaims are not deleted by default for some storage classes or if some annotations are set.
 
 # More information
 
