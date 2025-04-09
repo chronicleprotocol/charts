@@ -48,11 +48,6 @@ And be sure to install the pre-commit configs
 pre-commit install
 ```
 
-and be sure to install the pre-commit configs
-```
-pre-commit install
-```
-
 ##### Install chart-testing
 https://github.com/helm/chart-testing#installation
 ###### TL;DR
