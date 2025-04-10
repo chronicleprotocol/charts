@@ -80,6 +80,9 @@ data:
               {{- if $upstream.maxAvailableRecentBlocks }}
               maxAvailableRecentBlocks: {{ $upstream.maxAvailableRecentBlocks  }}
               {{- end }}
+              {{- if $upstream.getLogsMaxBlockRange }}
+              getLogsMaxBlockRange: {{ $upstream.getLogsMaxBlockRange  }}
+              {{- end }}
             {{- if $upstream.group }}
             group: {{ $upstream.group }}
             {{- end }}
