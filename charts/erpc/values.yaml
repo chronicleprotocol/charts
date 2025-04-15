@@ -263,7 +263,28 @@ erpc:
       networkIds:
       - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
-
+      # -- Provider config, reg https://docs.erpc.cloud/config/projects/providers#advanced-config
+      providers:
+        - id: alchemy-prod
+          vendor: alchemy
+          settings:
+            apiKey: xxxxx
+          onlyNetworks:
+            - evm:1
+            - evm:137
+          upstreamIdTemplate: "some-name"
+          overrides:
+            "evm:1":
+              rateLimitBudget: {}
+              jsonRpc: {}
+              ignoreMethods: {}
+              allowMethods: {}
+              failsafe: {}
+            "evm:*":
+              failsafe: {}
+            "evm:123|evm:10":
+              failsafe: {}
+      # -- Selection Policy ref https://docs.erpc.cloud/config/projects/selection-policies
       selectionPolicy:
         # Every 1 minute evaluate which upstreams must be included,
         # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
