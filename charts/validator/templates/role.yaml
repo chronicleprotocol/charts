@@ -8,4 +8,5 @@ rules:
   verbs: ["get", "list"]
 - apiGroups: [""]
   resources: ["configmaps"]
+  resourceNames: ["{{ include "validator.fullname" . }}-scripts"]
   verbs: ["create","delete","get","list","patch","update","watch"]
