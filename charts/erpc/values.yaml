@@ -274,16 +274,29 @@ erpc:
             - evm:137
           upstreamIdTemplate: "some-name"
           overrides:
-            "evm:1":
-              rateLimitBudget: {}
-              jsonRpc: {}
-              ignoreMethods: {}
-              allowMethods: {}
-              failsafe: {}
             "evm:*":
-              failsafe: {}
-            "evm:123|evm:10":
-              failsafe: {}
+              rateLimitBudget: freemium
+              jsonRpc:
+                supportsBatch: true
+                batchMaxSize: 20
+                batchMaxWait: "30ms"
+              ignoreMethods:
+                - "eth_getBlockByNumber"
+              allowMethods:
+                - "eth_getLogs"
+              failsafe:
+                timeout:
+                  duration: "30s"
+                hedge:
+                  quantile: 0.99
+                  maxCount: 3
+                retry:
+                  maxAttempts: 3
+                  delay: "100ms"
+                  jitter: "0ms"
+                  backoffMaxDelay: "1s"
+                  backoffFactor: 1.5
+
       # -- Selection Policy ref https://docs.erpc.cloud/config/projects/selection-policies
       selectionPolicy:
         # Every 1 minute evaluate which upstreams must be included,
