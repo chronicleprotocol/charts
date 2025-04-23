@@ -263,7 +263,41 @@ erpc:
       networkIds:
       - '1'  # -- Eth mainnet
       - '11155111'  # -- Sepolia
+      # -- Provider config, reg https://docs.erpc.cloud/config/projects/providers#advanced-config
+      providers:
+        - id: alchemy-prod
+          vendor: alchemy
+          settings:
+            apiKey: xxxxx
+          onlyNetworks:
+            - evm:1
+            - evm:137
+          upstreamIdTemplate: "some-name"
+          overrides:
+            "evm:*":
+              rateLimitBudget: freemium
+              jsonRpc:
+                supportsBatch: true
+                batchMaxSize: 20
+                batchMaxWait: "30ms"
+              ignoreMethods:
+                - "eth_getBlockByNumber"
+              allowMethods:
+                - "eth_getLogs"
+              failsafe:
+                timeout:
+                  duration: "30s"
+                hedge:
+                  quantile: 0.99
+                  maxCount: 3
+                retry:
+                  maxAttempts: 3
+                  delay: "100ms"
+                  jitter: "0ms"
+                  backoffMaxDelay: "1s"
+                  backoffFactor: 1.5
 
+      # -- Selection Policy ref https://docs.erpc.cloud/config/projects/selection-policies
       selectionPolicy:
         # Every 1 minute evaluate which upstreams must be included,
         # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
