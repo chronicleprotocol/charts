@@ -27,7 +27,7 @@ A Helm chart for deploying the Lighthouse Consensus Layer / beacon on Kubernetes
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"sigp/lighthouse"` |  |
-| image.tag | string | `"v5.2.1-modern"` |  |
+| image.tag | string | `"v7.0.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
