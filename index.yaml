@@ -265,6 +265,21 @@ entries:
     version: 0.0.1
   beacons:
   - apiVersion: v2
+    appVersion: v6.0.0
+    created: "2025-04-25T06:19:04.564133096Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: 0e98278cc9e05633b18ec75fa8cfb82410b8e297f2a9e9f2d2a1ca686c95171d
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.15/beacons-0.0.15.tgz
+    version: 0.0.15
+  - apiVersion: v2
     appVersion: v5.3.0
     created: "2025-03-05T08:48:47.996814079Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
@@ -1061,6 +1076,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.0.1/erpc-0.0.1.tgz
     version: 0.0.1
   ethereum:
+  - apiVersion: v2
+    appVersion: v1.15.9
+    created: "2025-04-25T06:19:04.791174512Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: f4019514f1b597c11dfdcb87e5b741879de2c46ebafbe321bc4913c0a8bd0023
+    icon: https://avatars.githubusercontent.com/u/6250754
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.2.6/ethereum-0.2.6.tgz
+    version: 0.2.6
   - apiVersion: v2
     appVersion: v1.15.5
     created: "2025-03-05T14:41:07.008995603Z"
@@ -2484,6 +2513,23 @@ entries:
     version: 0.1.1
   lighthouse:
   - apiVersion: v2
+    appVersion: v7.0.0
+    created: "2025-04-25T06:19:04.99083382Z"
+    description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
+      on Kubernetes
+    digest: d41e08477e0b488ee2a2fa2dcb500ccb669b16be3921557a298d161ac933af8d
+    icon: https://avatars.githubusercontent.com/u/22672004
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: lighthouse
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.6/lighthouse-0.0.6.tgz
+    version: 0.0.6
+  - apiVersion: v2
     appVersion: v5.2.1
     created: "2024-10-16T10:21:58.6780736Z"
     description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
@@ -2957,6 +3003,22 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/musig-0.0.1/musig-0.0.1.tgz
     version: 0.0.1
   nethermind:
+  - apiVersion: v2
+    appVersion: 1.31.9
+    created: "2025-04-25T06:19:05.176821698Z"
+    description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
+    digest: 054ad842b6472e9aac7294c75e679d504b055ba2a74addc6d42f242f4d8ebe99
+    icon: https://avatars.githubusercontent.com/u/43478154
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: nethermind
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.13/nethermind-0.0.13.tgz
+    version: 0.0.13
   - apiVersion: v2
     appVersion: 1.30.1
     created: "2024-12-13T09:51:38.788660127Z"
@@ -5511,4 +5573,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-23T17:58:53.055517274Z"
+generated: "2025-04-25T06:19:05.17815085Z"
