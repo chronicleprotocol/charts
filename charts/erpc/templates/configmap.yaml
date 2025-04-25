@@ -40,6 +40,10 @@ data:
             - {{ $strategy | toYaml | nindent 14 | trim }}
           {{- end }}
         {{- end }}
+        {{- if $project.providers }}
+        providers:
+          {{- $project.providers | toYaml | nindent 10 }}
+        {{- end }}
         {{- if $project.networkDefaults }}
         networkDefaults:
           {{- $project.networkDefaults | toYaml | nindent 10 }}

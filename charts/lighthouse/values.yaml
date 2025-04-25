@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: sigp/lighthouse
   pullPolicy: IfNotPresent
-  tag: "v5.2.1-modern"
+  tag: "v7.0.0"
 
 network: sepolia
 # can be mainnet or sepolia, gnosis etc
