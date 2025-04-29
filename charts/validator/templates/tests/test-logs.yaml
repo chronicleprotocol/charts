@@ -17,5 +17,5 @@ spec:
         - -c
         - |
           echo 'Running tests';
-          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Data point collected'
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Received message'
   restartPolicy: Never
