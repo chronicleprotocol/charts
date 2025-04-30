@@ -19,50 +19,30 @@ ghost:
 
   # -- chain name for the "target" or "main" chain we use for the validator
   chainName: eth
+  # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
+  chainId: 1
+  # -- chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy`
+  chainTxType: eip1559
+
   # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
   rpcUrl: null
-  # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
-  chainId: '1'
-  # -- chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or sepolia ethereum `legacy`
-  chainTxType: null
-
-  # -- RPC url where the validator sources data from. (default via protocol or BYO rpc here)
-  # -- RPC URL for ETH
-  ethRpcUrl: null
-  # -- RPC url for ARB
-  arbRpcUrl: null
-  # -- RPC url for BNB
-  bnbRpcUrl: null
-  # -- RPC url for ETH Archival node
-  ethArchRpcUrl: null
-  # -- RPC url for GNO
-  gnoRpcUrl: null
-  # -- RPC url for MNT
-  mntRpcUrl: null
-  # -- RPC url for OETH (optimism)
-  optRpcUrl: null
-  # -- RPC url for Polygon (polygon)
-  polRpcUrl: null
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
   # -- WATCHDOG polling interval (in seconds)
-  watchdogInterval: "300s"
-
-  # -- libp2p buffer size
-  libp2pSubscriptionBufferSize: '4096'
-  # -- libp2p validate queue size
-  libp2pValidateQueueSize: '4096'
+  # ---- NB: default behavior is to use a scheduler (like cron), and it is set to `30 */12 * * * *` (more or less)
+  # ---- if you want to use the *interval*, set this to a value to a duration string and the chart will disable scheduler
+  #watchdogInterval: "300s"
 
   # -- command override for the validator
   commandOverride: []
-    # eg:
+    # default (baked in the image):
     # - "/usr/local/bin/watchdog"
     # - "/usr/local/bin/chronicle-app"
 
   # -- args override for the validator
   argsOverride: []
-    # eg:
+    # eg: - could be used to use a custom config file
     # - "run"
     # - "-c"
     # - "ipfs://Qm......."
@@ -94,6 +74,7 @@ ghost:
       # FOO: bar
 
   imagePullSecrets: []
+
   nameOverride: ""
   # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
   fullnameOverride: "ghost"
@@ -152,9 +133,9 @@ ghost:
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
-  # -- Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet)
+  # -- Ingress for the validator - we should start using it maybe???
   ingress:
-    # -- Disabled by default, since there is a bug in libp2p port assignment for dns based routing
+    # -- Disabled by default, since there WAS a bug in libp2p port assignment for dns based routing
     enabled: false
     className: ""
     annotations: {}
@@ -163,12 +144,9 @@ ghost:
     hosts:
       - host: chart-example.local
         paths:
-          - path: /
-            port: 8000
+          - port: 8000
+            path: /
             pathType: ImplementationSpecific
-          # - path: /webapi
-          #   port: 8080
-          #   pathType: ImplementationSpecific
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -179,7 +157,7 @@ ghost:
     enabled: true
     livenessProbe:
       httpGet:
-        path: /healthcheck
+        path: /livez
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -189,7 +167,7 @@ ghost:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /healthcheck
+        path: /readyz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -224,10 +202,6 @@ ghost:
 tor-proxy:
   # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)
   enabled: true
-
-metrics:
-  enabled: true
-  port: 9090
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
