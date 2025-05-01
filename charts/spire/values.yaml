@@ -150,7 +150,7 @@ logFormat: null
 
 # Environment variable listing
 env:
-  # non sensitive variables
+  # non-sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
   normal: {}
     # CFG_ITEM_SEPARATOR: "\n"
