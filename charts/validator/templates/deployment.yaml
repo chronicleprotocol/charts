@@ -25,7 +25,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "validator.serviceAccountName" . }}-serviceaccount
+      serviceAccountName: {{ include "validator.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
       {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
@@ -70,6 +70,11 @@ spec:
               name: metrics
               protocol: TCP
           {{- end }}
+          {{- if or .Values.ghost.liveness.enabled .Values.ghost.readiness.enabled }}
+            - containerPort: 9100
+              name: probes
+              protocol: TCP
+          {{- end }}
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
             {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
@@ -104,7 +109,7 @@ spec:
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
             - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050" #??? is this supposed to be hardcoded?
+              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
             - name: CFG_WEB_URL
               valueFrom:
                 secretKeyRef:

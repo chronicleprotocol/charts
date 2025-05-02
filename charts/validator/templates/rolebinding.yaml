@@ -1,11 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "validator.fullname" . }}-rolebinding
+  name: {{ include "validator.serviceAccountName" . }}-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "validator.fullname" . }}-role
+  name: {{ include "validator.serviceAccountName" . }}-role
+
 subjects:
 - kind: ServiceAccount
-  name: {{ include "validator.fullname" . }}-serviceaccount
+  name: {{ include "validator.serviceAccountName" . }}-serviceaccount
