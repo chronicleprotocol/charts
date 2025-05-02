@@ -32,7 +32,7 @@ ghost:
   # -- WATCHDOG polling interval (in seconds)
   # ---- NB: default behavior is to use a scheduler (like cron), and it is set to `30 */12 * * * *` (more or less)
   # ---- if you want to use the *interval*, set this to a value to a duration string and the chart will disable scheduler
-  #watchdogInterval: "300s"
+  # watchdogInterval: "300s"
 
   # -- command override for the validator
   commandOverride: []
