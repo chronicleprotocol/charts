@@ -9,4 +9,4 @@ roleRef:
 
 subjects:
 - kind: ServiceAccount
-  name: {{ include "validator.serviceAccountName" . }}-serviceaccount
+  name: {{ include "validator.serviceAccountName" . }}-test
