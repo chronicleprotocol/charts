@@ -145,8 +145,8 @@ ghost:
     hosts:
       - host: chart-example.local
         paths:
-          - port: 8000
-            path: /
+          - path: /
+            port: 8000
             pathType: ImplementationSpecific
     tls: []
     #  - secretName: chart-example-tls
@@ -158,7 +158,7 @@ ghost:
     enabled: true
     livenessProbe:
       httpGet:
-        path: /livez
+        path: /healthz # will be changed to /livez
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -168,7 +168,7 @@ ghost:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /readyz
+        path: /healthz # will be changed to /readyz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
