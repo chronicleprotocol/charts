@@ -70,10 +70,19 @@ spec:
               name: metrics
               protocol: TCP
           {{- end }}
-          {{- if or .Values.ghost.liveness.enabled .Values.ghost.readiness.enabled }}
-            - containerPort: 9100
-              name: probes
+          {{- if .Values.ghost.liveness.enabled }}
+          {{- if or (not.Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
+            - containerPort: {{ .Values.ghost.liveness.livenessProbe.httpGet.port }}
+              name: probeLive
               protocol: TCP
+          {{- end }}
+          {{- end }}
+          {{- if .Values.ghost.readiness.enabled }}
+          {{- if or (not .Values.ghost.liveness.enabled) (and .Values.ghost.liveness.enabled (ne .Values.ghost.readiness.readinessProbe.httpGet.port .Values.ghost.liveness.livenessProbe.httpGet.port))}}
+            - containerPort: {{ .Values.ghost.readiness.readinessProbe.httpGet.port }}
+              name: probeReady
+              protocol: TCP
+          {{- end }}
           {{- end }}
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
