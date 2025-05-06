@@ -60,14 +60,6 @@ spec:
             {{- else }}
             - "agent"
             {{- end }}
-            {{- if .Values.logLevel }}
-            - "-v"
-            - "{{ .Values.logLevel | default "debug" }}"
-            {{- end }}
-            {{- if .Values.logFormat }}
-            - "--log.format"
-            - "{{ .Values.logFormat | default "text" }}"
-            {{- end }}
             {{- if .Values.configHcl }}
             - "-c"
             - "/config/spire.hcl"
@@ -93,10 +85,15 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-          {{- if .Values.kafka.enabled }}
+            ### Logging
+            - name: CFG_LOG_LEVEL
+              value: {{ .Values.ghost.logLevel | default "warning" | quote }}
+            - name: CFG_LOG_FORMAT
+              value: {{ .Values.ghost.logFormat | default "text" | quote }}
+            {{- if .Values.kafka.enabled }}
             - name: CFG_KAFKA_BROKERS
               value: "{{ .Values.kafka.kafkaEnpoint }}"
-          {{- end }}
+            {{- end }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
           volumeMounts:
           {{- if .Values.configHcl }}
