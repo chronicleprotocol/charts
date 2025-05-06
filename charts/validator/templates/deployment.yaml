@@ -130,7 +130,10 @@ spec:
               value: {{ .Values.ghost.chainName | default "eth" | quote }}
             - name: CFG_CHAIN_ID
               value: {{ .Values.ghost.chainId | default "1" | quote }}
-              {{- if .Values.ghost.rpcUrl }}
+              {{- if .Values.ghost.chainRpcUrl }}
+            - name: CFG_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.chainRpcUrl | quote }}
+              {{- else if .Values.ghost.rpcUrl }}
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
               {{- end }}
