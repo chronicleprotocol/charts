@@ -136,7 +136,7 @@ ghost:
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
-  # -- Ingress for the validator - we should start using it maybe???
+  # -- Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet)
   ingress:
     # -- Disabled by default, since there WAS a bug in libp2p port assignment for dns based routing
     enabled: false
