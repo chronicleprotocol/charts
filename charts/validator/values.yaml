@@ -160,7 +160,8 @@ ghost:
     enabled: true
     livenessProbe:
       httpGet:
-        path: /healthz  # will be changed to /livez
+        # will be changed to /livez
+        path: /healthz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -170,7 +171,8 @@ ghost:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /healthz  # will be changed to /readyz
+        # will be changed to /readyz
+        path: /healthz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
