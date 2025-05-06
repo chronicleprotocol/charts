@@ -10,7 +10,7 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.58.0@sha256:35addbb175ffaf5f241445ae4e3acba84ed854e2b93501630bb1bbc8318eb0c2"
+    tag: "0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
