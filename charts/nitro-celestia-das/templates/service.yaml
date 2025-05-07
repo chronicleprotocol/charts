@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nitro-celestia-das.fullname" . }}
+  labels:
+    {{- include "nitro-celestia-das.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "nitro-celestia-das.selectorLabels" . | nindent 4 }}
