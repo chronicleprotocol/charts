@@ -79,7 +79,7 @@ ghost:
 
   nameOverride: ""
   # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
-  fullnameOverride: "ghost"
+  fullnameOverride: ""
 
   serviceAccount:
     # -- Specifies whether a service account should be created

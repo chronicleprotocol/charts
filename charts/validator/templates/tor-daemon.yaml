@@ -7,4 +7,4 @@ spec:
     # ghost validator svc
     HiddenServiceDir /var/lib/tor/data/authorized_clients
     HiddenServiceVersion 3
-    HiddenServicePort 8888 ghost:{{ .Values.ghost.service.ports.webapi.port }}
+    HiddenServicePort 8888 {{ include "validator.fullname" . }}:{{ .Values.ghost.service.ports.webapi.port }}
