@@ -8,7 +8,7 @@ metadata:
     "helm.sh/hook-weight": "5"
     "helm.sh/hook": test
 spec:
-  serviceAccountName: {{ include "validator.fullname" . }}-serviceaccount
+  serviceAccountName: {{ include "validator.fullname" . }}-test
   containers:
     - name: test-ghost-logs
       image: bitnami/kubectl:latest

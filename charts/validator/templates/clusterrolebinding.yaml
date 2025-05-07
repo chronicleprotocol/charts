@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ include "validator.fullname" . }}-clusterrolebinding
+  name: {{ include "validator.fullname" . }}-crb
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ include "validator.fullname" . }}-clusterrole
+  name: {{ include "validator.fullname" . }}-cr
 subjects:
 - kind: ServiceAccount
-  name: {{ include "validator.fullname" . }}-serviceaccount
+  name: {{ include "validator.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
