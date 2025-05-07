@@ -70,9 +70,20 @@ spec:
               name: metrics
               protocol: TCP
           {{- end }}
-            - containerPort: 9100
-              name: readiness
+          {{- if .Values.ghost.liveness.enabled }}
+          {{- if or (not.Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
+            - containerPort: {{ .Values.ghost.liveness.livenessProbe.httpGet.port }}
+              name: probeLive
               protocol: TCP
+          {{- end }}
+          {{- end }}
+          {{- if .Values.ghost.readiness.enabled }}
+          {{- if or (not .Values.ghost.liveness.enabled) (and .Values.ghost.liveness.enabled (ne .Values.ghost.readiness.readinessProbe.httpGet.port .Values.ghost.liveness.livenessProbe.httpGet.port))}}
+            - containerPort: {{ .Values.ghost.readiness.readinessProbe.httpGet.port }}
+              name: probeReady
+              protocol: TCP
+          {{- end }}
+          {{- end }}
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
             {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
@@ -82,17 +93,22 @@ spec:
             {{- toYaml .Values.ghost.readiness.readinessProbe | nindent 12 }}
           {{- end }}
           env:
+            ### -- WATCHDOG
+            - name: WATCHDOG_CONFIG_REGISTRY
+              value: {{ .Values.ghost.watchdogConfigReg | quote }}
+          {{- if .Values.ghost.watchdogInterval }}
+            - name: WATCHDOG_INTERVAL
+              value: {{ .Values.ghost.watchdogInterval | quote }}
+            - name: WATCHDOG_SCHEDULE
+              value: ""
+          {{- end }}
             ### -- LIBP2P
-            - name: CFG_LIBP2P_SUBSCRIPTION_BUFFER_SIZE
-              value: {{ .Values.ghost.libp2pSubscriptionBufferSize | quote }}
-            - name: CFG_LIBP2P_VALIDATE_QUEUE_SIZE
-              value: {{ .Values.ghost.libp2pValidateQueueSize | quote }}
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
           {{- if .Values.ghost.ingress.enabled }}
           {{- range .Values.ghost.ingress.hosts }}
             - name: CFG_LIBP2P_EXTERNAL_ADDR
-              value: "/dns/{{ .host  }}"
+              value: "/dns/{{ .host }}"
           {{- end }}
           {{- end }}
             ### -- WEB API
@@ -111,10 +127,13 @@ spec:
             {{- end }}
               ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
-              value: {{ .Values.ghost.chainName | default "eth" | quote}}
+              value: {{ .Values.ghost.chainName | default "eth" | quote }}
             - name: CFG_CHAIN_ID
-              value: {{ .Values.ghost.chainId | default "1" | quote}}
-              {{- if .Values.ghost.rpcUrl }}
+              value: {{ .Values.ghost.chainId | default "1" | quote }}
+              {{- if .Values.ghost.chainRpcUrl }}
+            - name: CFG_CHAIN_RPC_URLS
+              value: {{ .Values.ghost.chainRpcUrl | quote }}
+              {{- else if .Values.ghost.rpcUrl }}
             - name: CFG_CHAIN_RPC_URLS
               value: {{ .Values.ghost.rpcUrl | quote }}
               {{- end }}
@@ -122,44 +141,6 @@ spec:
             - name: CFG_CHAIN_TX_TYPE
               value: {{ .Values.ghost.chainTxType | default "eip1559" quote }}
               {{- end }}
-              ### -- CHAIN and RPC (source chain)
-              {{- if .Values.ghost.arbRpcUrl }}
-            - name: CFG_ARB_RPC_URLS
-              value: {{ .Values.ghost.arbRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.bnbRpcUrl }}
-            - name: CFG_BNB_RPC_URLS
-              value: {{ .Values.ghost.bnbRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.ethRpcUrl }}
-            - name: CFG_ETH_RPC_URLS
-              value: {{ .Values.ghost.ethRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.ethArchRpcUrl }}
-            - name: CFG_ETH_ARCH_RPC_URLS
-              value: {{ .Values.ghost.ethArchRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.gnoRpcUrl }}
-            - name: CFG_GNO_RPC_URLS
-              value: {{ .Values.ghost.gnoRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.mntRpcUrl }}
-            - name: CFG_MNT_RPC_URLS
-              value: {{ .Values.ghost.mntRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.optRpcUrl }}
-            - name: CFG_OPT_RPC_URLS
-              value: {{ .Values.ghost.optRpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.polRpcUrl }}
-            - name: CFG_POL_RPC_URLS
-              value: {{ .Values.ghost.polRpcUrl | quote }}
-              {{- end }}
-              ### -- WATCHDOG
-            - name: WATCHDOG_CONFIG_REGISTRY
-              value: {{ .Values.ghost.watchdogConfigReg | quote }}
-            - name: WATCHDOG_INTERVAL
-              value: {{ .Values.ghost.watchdogInterval | default "900s" | quote }}
           ### -- ETH KEYSTORE FROM EXISTING SECRET
           {{- if .Values.ghost.ethConfig }}
             - name: CFG_ETH_FROM
