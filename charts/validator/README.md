@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.3.27](https://img.shields.io/badge/Version-0.3.27-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.57.3](https://img.shields.io/badge/AppVersion-0.57.3-informational?style=flat-square)
+![Version: 0.3.27](https://img.shields.io/badge/Version-0.3.27-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58.1](https://img.shields.io/badge/AppVersion-0.58.1-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,25 +16,22 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"affinity":{},"arbRpcUrl":null,"argsOverride":[],"bnbRpcUrl":null,"chainId":"1","chainName":"eth","chainTxType":null,"commandOverride":[],"env":{"normal":{}},"ethArchRpcUrl":null,"ethConfig":{},"ethRpcUrl":null,"fullnameOverride":"","gnoRpcUrl":null,"image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.57.3@sha256:cc50f2eb8092dce67584f334cc73ce750a8ede0ca970dd759679df7b40501ee5"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"libp2pSubscriptionBufferSize":"4096","libp2pValidateQueueSize":"4096","liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"mntRpcUrl":null,"nameOverride":"","nodeSelector":{},"optRpcUrl":null,"podAnnotations":{},"podSecurityContext":{},"polRpcUrl":null,"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","watchdogInterval":"300s","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
+| ghost | object | `{"affinity":{},"argsOverride":[],"chainId":1,"chainName":"eth","chainRpcUrl":null,"chainTxType":"eip1559","commandOverride":[],"env":{"normal":{}},"ethConfig":{},"fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
 | ghost.affinity | object | `{}` | pod Affinity spec applied validator |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | ghost.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
+| ghost.chainRpcUrl | string | `nil` | RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum |
 | ghost.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
 | ghost.commandOverride | list | `[]` | command override for the validator |
 | ghost.env | object | `{"normal":{}}` | Environment variable listing |
 | ghost.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | ghost.ethConfig | object | `{}` | Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both |
-| ghost.ethRpcUrl | string | `nil` | RPC URL for ETH |
 | ghost.fullnameOverride | string | `""` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
-| ghost.gnoRpcUrl | string | `nil` | RPC url for GNO |
-| ghost.image.tag | string | `"0.57.3@sha256:cc50f2eb8092dce67584f334cc73ce750a8ede0ca970dd759679df7b40501ee5"` | Overrides the image tag whose default is the chart appVersion. |
+| ghost.image.tag | string | `"0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"` | Overrides the image tag whose default is the chart appVersion. |
 | ghost.ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]}` | Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet) |
-| ghost.ingress.enabled | bool | `false` | Disabled by default, since there is a bug in libp2p port assignment for dns based routing |
-| ghost.libp2pSubscriptionBufferSize | string | `"4096"` | libp2p buffer size |
-| ghost.libp2pValidateQueueSize | string | `"4096"` | libp2p validate queue size |
-| ghost.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthcheck","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
+| ghost.ingress.enabled | bool | `false` | Disabled by default, since there WAS a bug in libp2p port assignment for dns based routing |
+| ghost.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
 | ghost.logFormat | string | `"text"` | Log format for the validator, can be one of `json`, `text` |
 | ghost.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `warning`, `error` |
 | ghost.nodeSelector | object | `{}` | Node selector for the validator |
@@ -42,7 +39,6 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.podSecurityContext | object | `{}` | Pod security context for the validator |
 | ghost.readiness | object | `{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Readiness probe : stop the validator if the metrics endpoint is not reachable |
 | ghost.resources | object | `{}` | Resources constraints for the validator, CPU, Memory, etc. |
-| ghost.rpcUrl | string | `nil` | RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum |
 | ghost.securityContext | object | `{}` | Security context for the validator |
 | ghost.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
 | ghost.service.annotations | object | `{}` | Annotations to add to the service |
