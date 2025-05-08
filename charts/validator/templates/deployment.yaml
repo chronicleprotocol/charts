@@ -25,14 +25,15 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       serviceAccountName: {{ include "validator.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
+
       {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
       initContainers:
         - name: init-public-ip
           image: bitnami/kubectl:latest
-          # command: ["sleep", "9999"]
           command: ["/bin/bash", "-c"]
           args:
             - /scripts/get-ips.sh
@@ -41,153 +42,12 @@ spec:
               mountPath: /scripts/get-ips.sh
               subPath: get-ips.sh
       {{- end }}
+
       containers:
         - name: ghost
-          securityContext:
-            {{- toYaml .Values.ghost.securityContext | nindent 12 }}
-          image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
-          {{- if .Values.ghost.commandOverride }}
-          command:
-          {{- range .Values.ghost.commandOverride }}
-            - {{ . | quote }}
-          {{- end }}
-          {{- end }}
-          {{- if .Values.ghost.argsOverride }}
-          args:
-          {{- range .Values.ghost.argsOverride }}
-            - {{ . | quote }}
-          {{- end }}
-          {{- end }}
-          imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
-          ports:
-          {{- range $key, $val := .Values.ghost.service.ports }}
-            - name: {{ $key }}
-              containerPort: {{ $val.port }}
-              protocol: {{ $val.protocol }}
-          {{- end }}
-          {{- if .Values.ghost.metrics.enabled }}
-            - containerPort: {{ .Values.ghost.metrics.port }}
-              name: metrics
-              protocol: TCP
-          {{- end }}
-          {{- if .Values.ghost.liveness.enabled }}
-          {{- if or (not.Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
-            - containerPort: {{ .Values.ghost.liveness.livenessProbe.httpGet.port }}
-              name: probeLive
-              protocol: TCP
-          {{- end }}
-          {{- end }}
-          {{- if .Values.ghost.readiness.enabled }}
-          {{- if or (not .Values.ghost.liveness.enabled) (and .Values.ghost.liveness.enabled (ne .Values.ghost.readiness.readinessProbe.httpGet.port .Values.ghost.liveness.livenessProbe.httpGet.port))}}
-            - containerPort: {{ .Values.ghost.readiness.readinessProbe.httpGet.port }}
-              name: probeReady
-              protocol: TCP
-          {{- end }}
-          {{- end }}
-          {{- if .Values.ghost.liveness.enabled }}
-          livenessProbe:
-            {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
-          {{- end }}
-          {{- if .Values.ghost.readiness.enabled }}
-          readinessProbe:
-            {{- toYaml .Values.ghost.readiness.readinessProbe | nindent 12 }}
-          {{- end }}
-          env:
-            ### -- WATCHDOG
-            - name: WATCHDOG_CONFIG_REGISTRY
-              value: {{ .Values.ghost.watchdogConfigReg | quote }}
-          {{- if .Values.ghost.watchdogInterval }}
-            - name: WATCHDOG_INTERVAL
-              value: {{ .Values.ghost.watchdogInterval | quote }}
-            - name: WATCHDOG_SCHEDULE
-              value: ""
-          {{- end }}
-            ### -- LIBP2P
-            - name: CFG_LIBP2P_LISTEN_ADDRS
-              value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-          {{- if .Values.ghost.ingress.enabled }}
-          {{- range .Values.ghost.ingress.hosts }}
-            - name: CFG_LIBP2P_EXTERNAL_ADDR
-              value: "/dns/{{ .host }}"
-          {{- end }}
-          {{- end }}
-            ### -- WEB API
-            {{- if .Values.ghost.webApi.enabled }}
-            - name: CFG_WEBAPI_ENABLE
-              value: {{ .Values.ghost.webApi.enabled | quote }}
-            - name: CFG_WEBAPI_LISTEN_ADDR
-              value: {{ .Values.ghost.webApi.listenAddr | quote }}
-            - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
-            - name: CFG_WEB_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "validator.fullname" . }}-tor-secret
-                  key: onionAddress
-            {{- end }}
-              ### -- CHAIN and RPC (target or main chain)
-            - name: CFG_CHAIN_NAME
-              value: {{ .Values.ghost.chainName | default "eth" | quote }}
-            - name: CFG_CHAIN_ID
-              value: {{ .Values.ghost.chainId | default "1" | quote }}
-              {{- if .Values.ghost.chainRpcUrl }}
-            - name: CFG_CHAIN_RPC_URLS
-              value: {{ .Values.ghost.chainRpcUrl | quote }}
-              {{- else if .Values.ghost.rpcUrl }}
-            - name: CFG_CHAIN_RPC_URLS
-              value: {{ .Values.ghost.rpcUrl | quote }}
-              {{- end }}
-              {{- if .Values.ghost.chainTxType }}
-            - name: CFG_CHAIN_TX_TYPE
-              value: {{ .Values.ghost.chainTxType | default "eip1559" quote }}
-              {{- end }}
-          ### -- ETH KEYSTORE FROM EXISTING SECRET
-          {{- if .Values.ghost.ethConfig }}
-            - name: CFG_ETH_FROM
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.ghost.ethConfig.ethFrom.existingSecret }}
-                  key: {{ .Values.ghost.ethConfig.ethFrom.key }}
-            - name: CFG_ETH_KEYS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.ghost.ethConfig.ethKeys.existingSecret }}
-                  key: {{ .Values.ghost.ethConfig.ethKeys.key }}
-            - name: CFG_ETH_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
-                  key: {{ .Values.ghost.ethConfig.ethPass.key }}
-          {{- end }}
-          ### Logging
-            - name: CFG_LOG_LEVEL
-              value: {{ .Values.ghost.logLevel | default "warning" | quote }}
-            - name: CFG_LOG_FORMAT
-              value: {{ .Values.ghost.logFormat | default "text" | quote }}
-          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
-          {{- range $key, $val := .Values.ghost.env.normal }}
-            - name: {{ $key }}
-              value: {{ $val | quote }}
-          {{- end }}
-          {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
-            - name: CFG_LIBP2P_EXTERNAL_IP
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "validator.fullname" . }}-podinfo
-                  key: PUBLIC_IP
-            - name: PUBLIC_IP
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "validator.fullname" . }}-podinfo
-                  key: PUBLIC_IP
-            - name: NODE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "validator.fullname" . }}-podinfo
-                  key: NODE_PORT
-          {{- end }}
-          resources:
-            {{- toYaml .Values.ghost.resources | nindent 12 }}
+          {{- include "ghost.container" (dict "ghost" .Values.ghost "chartName" .Chart.Name "releaseName" .Release.Name "chartVersion" .Chart.AppVersion) | nindent 8 }}
+        - name: ghost2
+          {{- include "ghost.container" (dict "ghost" .Values.ghost2 "chartName" .Chart.Name "releaseName" .Release.Name "chartVersion" .Chart.AppVersion) | nindent 8 }}
 
       {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
       volumes:
@@ -201,10 +61,12 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.ghost.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.ghost.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
