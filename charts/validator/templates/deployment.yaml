@@ -79,7 +79,7 @@ spec:
           {{- end }}
 
           {{- if .Values.ghost.liveness.enabled }}
-          {{- if or (not Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
+          {{- if or (not .Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
             - containerPort: {{ .Values.ghost.liveness.livenessProbe.httpGet.port }}
               name: probeLive
               protocol: TCP
