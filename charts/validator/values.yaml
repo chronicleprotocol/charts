@@ -6,6 +6,7 @@
 ghost:
   replicaCount: 1
 
+  # -- Image for the validator
   image:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
@@ -27,7 +28,6 @@ ghost:
   chainRpcUrl: null
   # Deprecated: use `chainRpcUrl` instead
   rpcUrl: null
-
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"

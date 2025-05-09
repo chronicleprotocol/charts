@@ -15,9 +15,9 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-scripts.yaml") . | sha256sum }}
-      {{- with .Values.ghost.podAnnotations }}
+        {{- with .Values.ghost.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "validator.selectorLabels" . | nindent 8 }}
     spec:
@@ -25,9 +25,12 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       serviceAccountName: {{ include "validator.serviceAccountName" . }}
+
       securityContext:
         {{- toYaml .Values.ghost.podSecurityContext | nindent 8 }}
+
       {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
       initContainers:
         - name: init-public-ip
@@ -41,22 +44,25 @@ spec:
               mountPath: /scripts/get-ips.sh
               subPath: get-ips.sh
       {{- end }}
+
       containers:
         - name: ghost
           securityContext:
             {{- toYaml .Values.ghost.securityContext | nindent 12 }}
           image: "{{ .Values.ghost.image.repository }}:{{ .Values.ghost.image.tag | default .Chart.AppVersion }}"
+
           {{- if .Values.ghost.commandOverride }}
           command:
-          {{- range .Values.ghost.commandOverride }}
+            {{- range .Values.ghost.commandOverride }}
             - {{ . | quote }}
+            {{- end }}
           {{- end }}
-          {{- end }}
+
           {{- if .Values.ghost.argsOverride }}
           args:
-          {{- range .Values.ghost.argsOverride }}
+            {{- range .Values.ghost.argsOverride }}
             - {{ . | quote }}
-          {{- end }}
+            {{- end }}
           {{- end }}
           imagePullPolicy: {{ .Values.ghost.image.pullPolicy }}
           ports:
@@ -65,18 +71,21 @@ spec:
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
           {{- end }}
+
           {{- if .Values.ghost.metrics.enabled }}
             - containerPort: {{ .Values.ghost.metrics.port }}
               name: metrics
               protocol: TCP
           {{- end }}
+
           {{- if .Values.ghost.liveness.enabled }}
-          {{- if or (not.Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
+          {{- if or (not .Values.ghost.readiness.enabled) (and .Values.ghost.readiness.enabled (ne .Values.ghost.liveness.livenessProbe.httpGet.port .Values.ghost.readiness.readinessProbe.httpGet.port))}}
             - containerPort: {{ .Values.ghost.liveness.livenessProbe.httpGet.port }}
               name: probeLive
               protocol: TCP
           {{- end }}
           {{- end }}
+
           {{- if .Values.ghost.readiness.enabled }}
           {{- if or (not .Values.ghost.liveness.enabled) (and .Values.ghost.liveness.enabled (ne .Values.ghost.readiness.readinessProbe.httpGet.port .Values.ghost.liveness.livenessProbe.httpGet.port))}}
             - containerPort: {{ .Values.ghost.readiness.readinessProbe.httpGet.port }}
@@ -84,10 +93,12 @@ spec:
               protocol: TCP
           {{- end }}
           {{- end }}
+
           {{- if .Values.ghost.liveness.enabled }}
           livenessProbe:
             {{- toYaml .Values.ghost.liveness.livenessProbe | nindent 12 }}
           {{- end }}
+
           {{- if .Values.ghost.readiness.enabled }}
           readinessProbe:
             {{- toYaml .Values.ghost.readiness.readinessProbe | nindent 12 }}
@@ -96,21 +107,25 @@ spec:
             ### -- WATCHDOG
             - name: WATCHDOG_CONFIG_REGISTRY
               value: {{ .Values.ghost.watchdogConfigReg | quote }}
-          {{- if .Values.ghost.watchdogInterval }}
+
+            {{- if .Values.ghost.watchdogInterval }}
             - name: WATCHDOG_INTERVAL
               value: {{ .Values.ghost.watchdogInterval | quote }}
             - name: WATCHDOG_SCHEDULE
               value: ""
-          {{- end }}
+            {{- end }}
+
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-          {{- if .Values.ghost.ingress.enabled }}
-          {{- range .Values.ghost.ingress.hosts }}
+
+            {{- if .Values.ghost.ingress.enabled }}
+            {{- range .Values.ghost.ingress.hosts }}
             - name: CFG_LIBP2P_EXTERNAL_ADDR
               value: "/dns/{{ .host }}"
-          {{- end }}
-          {{- end }}
+            {{- end }}
+            {{- end }}
+
             ### -- WEB API
             {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
@@ -125,7 +140,8 @@ spec:
                   name: {{ include "validator.fullname" . }}-tor-secret
                   key: onionAddress
             {{- end }}
-              ### -- CHAIN and RPC (target or main chain)
+
+            ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
               value: {{ .Values.ghost.chainName | default "eth" | quote }}
             - name: CFG_CHAIN_ID
@@ -141,6 +157,7 @@ spec:
             - name: CFG_CHAIN_TX_TYPE
               value: {{ .Values.ghost.chainTxType | default "eip1559" quote }}
               {{- end }}
+
           ### -- ETH KEYSTORE FROM EXISTING SECRET
           {{- if .Values.ghost.ethConfig }}
             - name: CFG_ETH_FROM
@@ -159,16 +176,19 @@ spec:
                   name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
+
           ### Logging
             - name: CFG_LOG_LEVEL
               value: {{ .Values.ghost.logLevel | default "warning" | quote }}
             - name: CFG_LOG_FORMAT
               value: {{ .Values.ghost.logFormat | default "text" | quote }}
+
           ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
           {{- range $key, $val := .Values.ghost.env.normal }}
             - name: {{ $key }}
               value: {{ $val | quote }}
           {{- end }}
+
           {{- if .Values.ghost.service.type | quote | eq "NodePort" }}
             - name: CFG_LIBP2P_EXTERNAL_IP
               valueFrom:
@@ -186,6 +206,7 @@ spec:
                   name: {{ include "validator.fullname" . }}-podinfo
                   key: NODE_PORT
           {{- end }}
+
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
 
@@ -201,10 +222,12 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.ghost.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
       {{- with .Values.ghost.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
