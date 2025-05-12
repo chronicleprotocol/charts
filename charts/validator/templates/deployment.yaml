@@ -177,6 +177,20 @@ spec:
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
 
+          ### -- PINATA KEYS FROM EXISTING SECRET
+          {{- if .Values.ghost.pinataConfig }}
+            - name: CFG_PINATA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ghost.pinataConfig.pinataApiKey.existingSecret }}
+                  key: {{ .Values.ghost.pinataConfig.pinataApiKey.key }}
+            - name: CFG_PINATA_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ghost.pinataConfig.pinataSecretKey.existingSecret }}
+                  key: {{ .Values.ghost.pinataConfig.pinataSecretKey.key }}
+          {{- end }}
+
           ### Logging
             - name: CFG_LOG_LEVEL
               value: {{ .Values.ghost.logLevel | default "warning" | quote }}

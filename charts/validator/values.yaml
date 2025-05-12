@@ -68,6 +68,14 @@ ghost:
     #   existingSecret: ""
     #   key: ""
 
+  pinataConfig: {}
+    # pinataApiKey:
+    #   existingSecret: ""
+    #   key: ""
+    # pinataSecretKey:
+    #   existingSecret: ""
+    #   key: ""
+
   # -- Environment variable listing
   env:
     # -- un-encrypted env vars passed to the pod
