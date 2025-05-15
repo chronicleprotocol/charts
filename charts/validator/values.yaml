@@ -68,20 +68,18 @@ ghost:
     #   existingSecret: ""
     #   key: ""
 
-  pinataConfig: {}
-    # pinataApiKey:
-    #   existingSecret: ""
-    #   key: ""
-    # pinataSecretKey:
-    #   existingSecret: ""
-    #   key: ""
-
   # -- Environment variable listing
   env:
     # -- un-encrypted env vars passed to the pod
     normal: {}
       # GOLOG_LOG_LEVEL: pubsub=debug
       # FOO: bar
+    raw: {}
+      # - name: FOO
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: foo-secret
+      #       key: foo-key
 
   imagePullSecrets: []
 
