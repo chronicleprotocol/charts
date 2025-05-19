@@ -36,24 +36,16 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           command:
-            -  celestia light start
+            -  celestia-server
           args:
-            - --core.ip={{ .Values.nitro.config.light.configtoml.Core.IP }}
-            - --core.port={{ .Values.nitro.config.light.configtoml.Core.Port }}
-          {{- if .Values.nitro.config.light.configtoml.Core.tls.enabled }}
-            - --core.tls
-          {{- end }}
-            - --core.xtoken.path {{ .Values.nitro.config.light.configtoml.Core.XTokenPath }}
-          {{- if .Values.nitro.metrics.enabled }}
-            - --metrics
-            - --metrics-server.addr={{ .Values.nitro.metrics.serverAddr | default "127.0.0.1"}}
-            - --metrics-server.port={{ .Values.nitro.metrics.serverPort | default "6070"}}
-            - --metrics-server.update-interval={{ .Values.nitro.metrics.serverUpdateInterval | default "5s"}}
-          {{- end }}
+            - --enable-rpc --rpc-addr={{ .Values.rpcAddress }}
+            - --rpc-port={{ .Values.rpcPort }}
+            - --celestia.auth-token {{ .Values.celestia.authToken }}
+            - --celestia.gas-price {{ .Values.celestia.gasPrice }}
+            - --celestia.gas-multiplier {{ .Values.celestia.gasMultiplier }}
+            - --celestia.namespace-id {{ .Values.celestia.namespaceId }}
+            - --celestia.rpc {{ .Values.celestia.rpc }}
 
-          {{- range $arg := .Values.nitro.extraArgs }}
-            {{- $arg | nindent 12 }}
-          {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}

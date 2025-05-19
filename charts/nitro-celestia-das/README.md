@@ -20,11 +20,16 @@ A Helm chart for deploying celestia-nitro-das
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| data.path | string | `"/home/user/.arbitrum"` |  |
+| celestia.authToken | string | `""` |  |
+| celestia.gasMultiplier | string | `""` |  |
+| celestia.gasTrice | string | `""` |  |
+| celestia.namespaceId | string | `""` |  |
+| celestia.rpc | string | `""` |  |
+| data.path | string | `"/storage"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"offchainlabs/nitro-node"` |  |
-| image.tag | string | `""` |  |
+| image.repository | string | `"ghcr.io/celestiaorg/nitro"` |  |
+| image.tag | string | `"v3.5.5"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -34,30 +39,6 @@ A Helm chart for deploying celestia-nitro-das
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| nitro.extraArgs | object | `{}` |  |
-| nitro.httpAddr | object | `{}` |  |
-| nitro.httpApi[0] | string | `"net"` |  |
-| nitro.httpApi[1] | string | `"web3"` |  |
-| nitro.httpApi[2] | string | `"eth"` |  |
-| nitro.httpApi[3] | string | `"debug"` |  |
-| nitro.httpCorsDomain | object | `{}` |  |
-| nitro.httpVhosts | object | `{}` |  |
-| nitro.l1BeaconUrl | string | `"https://ethereum-sepolia-beacon-api.publicnode.com"` |  |
-| nitro.l1RpcUrl | string | `"https://ethereum-sepolia-rpc.publicnode.com"` |  |
-| nitro.l2ChainId | int | `421614` | can also be Orbit Chain ID for non arbitrum chains |
-| nitro.l2ChainInfo | object | `{}` |  |
-| nitro.l2ChainName | object | `{}` |  |
-| nitro.l2ExecutionCaching | bool | `false` |  |
-| nitro.l2ExecutionForwardingTarget | object | `{}` |  |
-| nitro.l2FeedInputUrl | object | `{}` |  |
-| nitro.l2NodeDataAvailability.enabled | bool | `false` |  |
-| nitro.l2NodeDataAvailability.restAggregator | bool | `true` |  |
-| nitro.l2NodeDataAvailability.urls | object | `{}` |  |
-| nitro.l2Staker | bool | `false` |  |
-| nitro.metrics.enabled | bool | `true` |  |
-| nitro.metrics.serverAddr | object | `{}` |  |
-| nitro.metrics.serverPort | object | `{}` |  |
-| nitro.metrics.serverUpdateInterval | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
 | persistence.annotations | object | `{}` | Annotations for volume claim template |
@@ -71,6 +52,8 @@ A Helm chart for deploying celestia-nitro-das
 | probes.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
+| rpcAddress | string | `""` |  |
+| rpcPort | int | `1337` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
