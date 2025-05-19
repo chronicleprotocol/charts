@@ -4,46 +4,177 @@
 
 replicaCount: 1
 
-data:
-  path: /home/user/.arbitrum
+image:
+  repository: ghcr.io/celestiaorg/nitro
+  pullPolicy: IfNotPresent
+  tag: "v3.5.5"
 
-nitro:
-  httpApi: ["net", "web3", "eth", "debug"]
-  httpCorsDomain: {}
-  httpAddr: {}
-  httpVhosts: {}
-  l1RpcUrl: https://ethereum-sepolia-rpc.publicnode.com
-  l1BeaconUrl: https://ethereum-sepolia-beacon-api.publicnode.com
-  # -- can also be Orbit Chain ID for non arbitrum chains
-  l2ChainId: 421614
-  l2ChainName: {}
-  l2ChainInfo: {}
-  l2ExecutionCaching: false
-  l2ExecutionForwardingTarget: {}
-  l2NodeDataAvailability:
-    enabled: false
-    restAggregator: true
-    urls: {}
-  l2Staker: false
-  l2FeedInputUrl: {}
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
 
-  extraArgs: {}
-    # - "- --init.url=https://snapshot.arbitrum.io/sepolia/nitro.tar"
+settings:
+    nodeType: light
+    network: "celestia"
+    # -- home directory for the celestia-node, defaults to /home/celestia
+    home: "/home/celestia"
+
+    ## A secret must be available in the cluster with the following format:
+    ## - name: <secret-name>
+    ## - items:
+    ##     - key: my_celes_key_info
+    ##     - key: uid
+    ##     - key: address
+    ##     - key: NJ3XILLTMVRXEZLUFZVHO5A
+    ##     - key: OAZHALLLMV4Q
+    secret:
+      enabled: true
+      # -- name of the secret, it must be set
+      name: SET_IT
+    ws:
+      tls:
+        enabled: false
+        ## A secret must be available in the cluster with the following format:
+        ## - name: <secret-name>
+        ## - items:
+        ##     - key: tls.cert
+        ##     - key: tls.key
+        secret:
+          name: SET_IT
+  config:
+    light:
+      configtoml:
+        Node:
+          StartupTimeout: 20s
+          ShutdownTimeout: 20s
+        Core:
+          IP: ""
+          Port: "9090"
+          TLSEnabled: false
+          XTokenPath: ""
+        State:
+          DefaultKeyName: my_celes_key
+          DefaultBackendName: test
+          EstimatorAddress: ""
+          EnableEstimatorTLS: false
+        P2P:
+          ListenAddresses:
+            - /ip4/0.0.0.0/udp/2121/quic-v1/webtransport
+            - /ip6/::/udp/2121/quic-v1/webtransport
+            - /ip4/0.0.0.0/udp/2121/quic-v1
+            - /ip6/::/udp/2121/quic-v1
+            - /ip4/0.0.0.0/udp/2121/webrtc-direct
+            - /ip6/::/udp/2121/webrtc-direct
+            - /ip4/0.0.0.0/tcp/2121
+            - /ip6/::/tcp/2121
+          AnnounceAddresses: []
+          NoAnnounceAddresses:
+            - /ip4/127.0.0.1/udp/2121/quic-v1/webtransport
+            - /ip4/0.0.0.0/udp/2121/quic-v1/webtransport
+            - /ip6/::/udp/2121/quic-v1/webtransport
+            - /ip4/0.0.0.0/udp/2121/quic-v1
+            - /ip4/127.0.0.1/udp/2121/quic-v1
+            - /ip6/::/udp/2121/quic-v1
+            - /ip4/0.0.0.0/udp/2121/webrtc-direct
+            - /ip4/127.0.0.1/udp/2121/webrtc-direct
+            - /ip6/::/udp/2121/webrtc-direct
+            - /ip4/0.0.0.0/tcp/2121
+            - /ip4/127.0.0.1/tcp/2121
+            - /ip6/::/tcp/2121
+          MutualPeers: []
+          PeerExchange: false
+          ConnManager:
+            Low: 50
+            High: 100
+            GracePeriod: 1m0s
+        RPC:
+          Address: localhost
+          Port: "26658"
+          SkipAuth: false
+        Gateway:
+          Address: localhost
+          Port: "26659"
+          Enabled: false
+        Share:
+          BlockStoreCacheSize: 128
+          UseShareExchange: true
+          EDSStoreParams:
+            RecentBlocksCacheSize: 10
+          ShrExEDSParams:
+            ServerReadTimeout: 5s
+            ServerWriteTimeout: 1m0s
+            HandleRequestTimeout: 1m0s
+            ConcurrencyLimit: 10
+            BufferSize: 32768
+          ShrExNDParams:
+            ServerReadTimeout: 5s
+            ServerWriteTimeout: 1m0s
+            HandleRequestTimeout: 1m0s
+            ConcurrencyLimit: 10
+          PeerManagerParams:
+            PoolValidationTimeout: 2m0s
+            PeerCooldown: 3s
+            GcInterval: 30s
+            EnableBlackListing: false
+          LightAvailability:
+            SampleAmount: 16
+          Discovery:
+            PeersLimit: 5
+            AdvertiseInterval: 1h0m0s
+        Header:
+          TrustedHash: ""
+          TrustedPeers: []
+          Store:
+            StoreCacheSize: 512
+            IndexCacheSize: 2048
+            WriteBatchSize: 512
+          Syncer:
+            TrustingPeriod: 336h0m0s
+          Server:
+            WriteDeadline: 8s
+            ReadDeadline: 1m0s
+            RangeRequestTimeout: 10s
+          Client:
+            MaxHeadersPerRangeRequest: 64
+            RangeRequestTimeout: 8s
+        DASer:
+          SamplingRange: 100
+          ConcurrencyLimit: 16
+          BackgroundStoreInterval: 10m0s
+          SampleFrom: 1
+          SampleTimeout: 2m40s
+        Pruner:
+          EnableService: false
+
+  # -- Container ports for the node
+  containerPorts:
+    # -- P2P container port, 2121 by default
+    p2p: 2121
+    # -- WebSocket container port, 2122 by default
+    ws: 2122
+    # -- REST container port, 26659 by default
+    rest: 26659
+    # -- RPC container port, 26658 by default
+    rpc: 26658
+    # -- Profiling container port, 6060 by default
+    profiling: 6060
+    # -- Prometheus container port, 8890 by default
+    prometheus: 8890
+
+  # -- Enable hostPort for the node
+  #enableHostPort: true
+
+  extraArgs:
+    - --metrics
+    - --metrics.tls=false
+    - --p2p.metrics
+
   metrics:
     enabled: true
     serverAddr: {}
     serverPort: {}
     serverUpdateInterval: {}
 
-image:
-  repository: offchainlabs/nitro-node
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
 
 serviceAccount:
   # Specifies whether a service account should be created
