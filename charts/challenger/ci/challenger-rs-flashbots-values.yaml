@@ -1,6 +1,7 @@
-implementation: go
+implementation: rs
 
 ethRpcUrl: "https://eth.drpc.org"
+flashbotsRpcUrl: "https://rpc.flashbots.net/fast"
 
 contractAddresses:
   # Chronicle_ETH_USD_3

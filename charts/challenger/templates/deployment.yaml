@@ -29,15 +29,30 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          {{- /* Replace the original image line with this block */}}
+          {{- if eq .Values.implementation "go" }}
+          image: "{{ .Values.image.repository }}/{{ .Values.tags.challengerGo }}"
+          {{- else if eq .Values.implementation "rs" }}
+          image: "{{ .Values.image.repository }}/{{ .Values.tags.challengerRs }}"
+          {{- else }}
+          {{- /* It's good practice to handle unexpected values for .Values.implementation */}}
+          {{- /* This will cause Helm to fail if .Values.implementation is not 'go' or 'rs' */}}
+          {{- required (printf "Invalid .Values.implementation: '%s'. Must be 'go' or 'rs'." .Values.implementation) nil }}
+          {{- end }}
           args:
+          {{- if eq .Values.implementation "go" }}
             - "run"
+          {{- end }}
           {{- range $address := .Values.contractAddresses }}
             - "-a"
             - "{{ $address }}"
           {{- end }}
             - "--rpc-url"
             - "{{ .Values.ethRpcUrl }}"
+          {{- if .Values.flashbotsRpcUrl }}
+            - "--flashbot-rpc-url"
+            - "{{ .Values.flashbotsRpcUrl }}"
+          {{- end }}
           {{- if  .Values.ethConfig.ethPrivateKey }}
             - "--secret-key"
             - "${ETH_SECRET_KEY}"
@@ -53,10 +68,6 @@ spec:
           {{- if .Values.transactionType }}
             - "--tx-type"
             - "{{ .Values.transactionType | default "legacy" }}"
-          {{- end }}
-          {{- if .Values.subscriptionUrl }}
-            - "--subscription-url"
-            - "{{ .Values.subscriptionUrl }}"
           {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
