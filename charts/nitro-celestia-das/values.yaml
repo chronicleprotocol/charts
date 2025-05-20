@@ -8,22 +8,26 @@ data:
   path: /storage
 
 image:
-  repository: ghcr.io/celestiaorg/nitro
+  repository: ghcr.io/celestiaorg/nitro-das-celestia
   pullPolicy: IfNotPresent
-  tag: "v3.5.5"
+  tag: "v0.4.3"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-rpcAddress: ""
-rpcPort: 1337
+# It is not recommended to listen to all addressess, but since we are behind
+# an internal cluster ip service it is fine.
+rpcAddress: "0.0.0.0"
+rpcPort: 26657
+# Log level can be set to INFO, DEBUG, ERROR etc.
+logLevel: "INFO"
 celestia:
-  authToken: ""
-  gasTrice: ""
+  authToken: "CELESTIA_AUTH_TOKEN"
+  gasPrice: ""
   gasMultiplier: ""
-  namespaceId: ""
-  rpc: ""
+  namespaceId: "0000062c0e34772b9054"
+  rpcEndpoint: "CELESTIA_NODE_ENDPOINT"
 
 serviceAccount:
   # Specifies whether a service account should be created

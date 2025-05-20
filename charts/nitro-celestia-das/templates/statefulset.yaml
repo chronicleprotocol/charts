@@ -44,8 +44,8 @@ spec:
             - --celestia.gas-price {{ .Values.celestia.gasPrice }}
             - --celestia.gas-multiplier {{ .Values.celestia.gasMultiplier }}
             - --celestia.namespace-id {{ .Values.celestia.namespaceId }}
-            - --celestia.rpc {{ .Values.celestia.rpc }}
-
+            - --celestia.rpc {{ .Values.celestia.rpcEndpoint }}
+            - --log-level={{ .Values.logLevel }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}

@@ -20,16 +20,16 @@ A Helm chart for deploying celestia-nitro-das
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| celestia.authToken | string | `""` |  |
+| celestia.authToken | string | `"CELESTIA_AUTH_TOKEN"` |  |
 | celestia.gasMultiplier | string | `""` |  |
-| celestia.gasTrice | string | `""` |  |
-| celestia.namespaceId | string | `""` |  |
-| celestia.rpc | string | `""` |  |
+| celestia.gasPrice | string | `""` |  |
+| celestia.namespaceId | string | `"0000062c0e34772b9054"` |  |
+| celestia.rpcEndpoint | string | `"CELESTIA_NODE_ENDPOINT"` |  |
 | data.path | string | `"/storage"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/celestiaorg/nitro"` |  |
-| image.tag | string | `"v3.5.5"` |  |
+| image.repository | string | `"ghcr.io/celestiaorg/nitro-das-celestia"` |  |
+| image.tag | string | `"v0.4.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -38,6 +38,7 @@ A Helm chart for deploying celestia-nitro-das
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| logLevel | string | `"INFO"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
@@ -52,8 +53,8 @@ A Helm chart for deploying celestia-nitro-das
 | probes.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpcAddress | string | `""` |  |
-| rpcPort | int | `1337` |  |
+| rpcAddress | string | `"0.0.0.0"` |  |
+| rpcPort | int | `26657` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
