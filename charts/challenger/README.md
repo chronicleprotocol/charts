@@ -1,8 +1,8 @@
 # challenger
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
-A Helm chart for deploying the OpPoke Challenger Go Bot on Kubernetes
+A Helm chart for deploying the OpPoke Challenger Bot (go and rust) in Kubernetes
 
 **Homepage:** <https://github.com/chronicleprotocol/challenger>
 
@@ -24,12 +24,13 @@ A Helm chart for deploying the OpPoke Challenger Go Bot on Kubernetes
 | ethConfig | object | `{}` | Provide ETH keys from existing secrets |
 | ethRpcUrl | string | `""` | mainnet or sepolia RPC endpoint |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
+| flashbotsRpcUrl | string | `""` | provide flashbots RPC |
 | fullnameOverride | string | `""` |  |
-| image.image | string | `nil` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"ghcr.io/chronicleprotocol/challenger-go"` |  |
-| image.tag | string | `"0.1.0"` | `latest` tag if not specified. |
+| image.repository | string | `"ghcr.io/chronicleprotocol"` |  |
+| image.tag | string | `"0.1.2"` | `latest` tag if not specified. |
 | imagePullSecrets | list | `[]` |  |
+| implementation | string | `"go"` | can be one of `go` or `rs` |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `120` |  |
 | livenessProbe.tcpSocket.port | int | `9090` |  |
@@ -60,7 +61,8 @@ A Helm chart for deploying the OpPoke Challenger Go Bot on Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
-| subscriptionUrl | string | `""` | If challenger-go, we can also provide a wss endpoint (OPTIONAL) |
+| tags.challengerGo | string | `"challenger-go:0.1.2"` |  |
+| tags.challengerRs | string | `"challenger:0.1.1-alpine"` |  |
 | tolerations | list | `[]` |  |
 | transactionType | string | `""` | Transaction type definition, possible values are: legacy, eip1559 or none (default "none") |
 

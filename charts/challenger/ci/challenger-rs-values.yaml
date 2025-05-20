@@ -1,5 +1,6 @@
+implementation: rs
+
 ethRpcUrl: "https://eth.drpc.org"
-subscriptionUrl: ""
 
 contractAddresses:
   # Chronicle_ETH_USD_3
@@ -7,10 +8,10 @@ contractAddresses:
 
 ethConfig:
   ethKeys:
-    existingSecret: "my-eth-keys"
+    existingSecret: "dev-eth-keys"
     key: "ethKeyStore"
   ethPass:
-    existingSecret: "my-eth-keys"
+    existingSecret: "dev-eth-keys"
     key: "ethPass"
   # -- OR you can supply only ETH private key:
   # ethPrivateKey:

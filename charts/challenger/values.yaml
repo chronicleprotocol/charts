@@ -2,6 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+
+# -- can be one of `go` or `rs`
+implementation: go
+tags:
+  challengerGo: challenger-go:0.1.2
+  challengerRs: challenger:0.1.1-alpine
+
 # -- how many replicas to run (default 1)
 replicaCount: 1
 
@@ -9,11 +16,10 @@ imagePullSecrets: []
 # - name: ghcr-login
 
 image:
-  repository: ghcr.io/chronicleprotocol/challenger-go
-  image:
+  repository: ghcr.io/chronicleprotocol
   pullPolicy: IfNotPresent
   # -- `latest` tag if not specified.
-  tag: "0.1.0"
+  tag: "0.1.2"
 
 # -- Provide ETH keys from existing secrets
 ethConfig: {}
@@ -32,9 +38,8 @@ ethConfig: {}
 ethChainId: "1"
 # -- mainnet or sepolia RPC endpoint
 ethRpcUrl: ""
-# -- If challenger-go, we can also provide a wss endpoint (OPTIONAL)
-subscriptionUrl: ""
-
+# -- provide flashbots RPC
+flashbotsRpcUrl: ""
 # -- Transaction type definition, possible values are: legacy, eip1559 or none (default "none")
 transactionType: ""
 
