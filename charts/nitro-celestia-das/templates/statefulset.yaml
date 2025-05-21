@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "nitro-celestia-das.fullname" . }}
+  labels:
+    {{- include "nitro-celestia-das.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nitro-celestia-das.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "nitro-celestia-das.fullname" . }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nitro-celestia-das.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "nitro-celestia-das.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          command:
+            -  /bin/celestia-server
+          args:
+            - --enable-rpc
+            - --rpc-addr={{ .Values.celestia.rpcAddress }}
+            - --rpc-port={{ .Values.celestia.rpcPort }}
+            - --celestia.auth-token={{ .Values.celestia.authToken }}
+            {{- if .Values.celestia.gasPrice }}
+            - --celestia.gas-price={{ .Values.celestia.gasPrice }}
+            {{- end }}
+            {{- if .Values.celestia.gasMultiplier }}
+            - --celestia.gas-multiplier={{ .Values.celestia.gasMultiplier }}
+            {{- end }}
+            - --celestia.namespace-id={{ .Values.celestia.namespaceId }}
+            - --celestia.rpc={{ .Values.celestia.rpcEndpoint }}
+            - --log-level={{ .Values.logLevel }}
+            {{- if .Values.celestia.metrics }}
+            - --metrics
+            {{- end }}
+          ports:
+          {{- range $key, $val := .Values.service.ports }}
+            - name: {{ $key }}
+              containerPort: {{ $val.port }}
+              protocol: {{ $val.protocol }}
+          {{- end }}
+          {{ if .Values.probes.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: rpc
+          readinessProbe:
+            httpGet:
+              path: /
+              port: rpc
+          {{ end }}
+          volumeMounts:
+            - name: storage
+              mountPath: {{ .Values.data.path }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      volumes:
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | nindent 8}}
+      {{- end }}
+  {{- if not .Values.persistence.enabled }}
+        - name: storage
+          emptyDir: {}
+  {{- else if .Values.persistence.existingClaim }}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+  {{- else }}
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+      annotations:
+        {{- toYaml .Values.persistence.annotations | nindent 8 }}
+    spec:
+      accessModes:
+        {{- toYaml .Values.persistence.accessModes | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size | quote }}
+      storageClassName: {{ .Values.persistence.storageClassName }}
+      {{- if .Values.persistence.selector }}
+      selector:
+        {{- toYaml .Values.persistence.selector | nindent 8 }}
+      {{- end }}
+  {{- end }}
