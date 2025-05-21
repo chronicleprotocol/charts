@@ -1,6 +1,6 @@
 # nitro-celestia-das
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.3"](https://img.shields.io/badge/AppVersion-0.4.3"-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.4.3](https://img.shields.io/badge/AppVersion-0.4.3-informational?style=flat-square)
 
 A Helm chart for deploying celestia-nitro-das
 
@@ -20,16 +20,19 @@ A Helm chart for deploying celestia-nitro-das
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| celestia.authToken | string | `"CELESTIA_AUTH_TOKEN"` |  |
+| celestia.authToken | string | `""` |  |
 | celestia.gasMultiplier | string | `""` |  |
 | celestia.gasPrice | string | `""` |  |
-| celestia.namespaceId | string | `"0000062c0e34772b9054"` |  |
-| celestia.rpcEndpoint | string | `"CELESTIA_NODE_ENDPOINT"` |  |
+| celestia.metrics | bool | `false` |  |
+| celestia.namespaceId | string | `""` |  |
+| celestia.rpcAddress | string | `"0.0.0.0"` |  |
+| celestia.rpcEndpoint | string | `""` |  |
+| celestia.rpcPort | int | `26657` |  |
 | data.path | string | `"/storage"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/celestiaorg/nitro-das-celestia"` |  |
-| image.tag | string | `"v0.4.3"` |  |
+| image.tag | string | `"v0.4.3@sha256:ce5ec7936e4ca48b1ece67a9e2d5887a1e39fc2cabe0df2e3350c4790c1d950c"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -38,7 +41,7 @@ A Helm chart for deploying celestia-nitro-das
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| logLevel | string | `"INFO"` |  |
+| logLevel | string | `"TRACE"` | valid values are CRIT, ERROR, WARN, INFO, DEBUG, TRACE (default "INFO") |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | Access mode for the volume claim template |
@@ -53,19 +56,15 @@ A Helm chart for deploying celestia-nitro-das
 | probes.enabled | bool | `false` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
-| rpcAddress | string | `"0.0.0.0"` |  |
-| rpcPort | int | `26657` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
 | service.ports.metrics.port | int | `6070` |  |
 | service.ports.metrics.protocol | string | `"TCP"` |  |
-| service.ports.rpc.port | int | `8547` |  |
-| service.ports.rpc.protocol | string | `"TCP"` |  |
-| service.ports.sequencer.port | int | `9642` |  |
-| service.ports.sequencer.protocol | string | `"TCP"` |  |
-| service.ports.ws.port | int | `8548` |  |
-| service.ports.ws.protocol | string | `"TCP"` |  |
+| service.ports.pprof.port | int | `6071` |  |
+| service.ports.pprof.protocol | string | `"TCP"` |  |
+| service.ports.rpcport.port | int | `26657` |  |
+| service.ports.rpcport.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

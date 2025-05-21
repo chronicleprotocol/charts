@@ -10,7 +10,7 @@ data:
 image:
   repository: ghcr.io/celestiaorg/nitro-das-celestia
   pullPolicy: IfNotPresent
-  tag: "v0.4.3"
+  tag: v0.4.3@sha256:ce5ec7936e4ca48b1ece67a9e2d5887a1e39fc2cabe0df2e3350c4790c1d950c
 
 imagePullSecrets: []
 nameOverride: ""
@@ -18,17 +18,18 @@ fullnameOverride: ""
 
 # It is not recommended to listen to all addressess, but since we are behind
 # an internal cluster ip service it is fine.
-rpcAddress: "0.0.0.0"
-rpcPort: 26657
-# Log level can be set to INFO, DEBUG, ERROR etc.
-logLevel: "INFO"
+
+# -- valid values are CRIT, ERROR, WARN, INFO, DEBUG, TRACE (default "INFO")
+logLevel: "TRACE"
 celestia:
-  authToken: "CELESTIA_AUTH_TOKEN"
+  rpcAddress: "0.0.0.0"
+  rpcPort: 26657
+  authToken: ""
   gasPrice: ""
   gasMultiplier: ""
-  namespaceId: "0000062c0e34772b9054"
-  rpcEndpoint: "CELESTIA_NODE_ENDPOINT"
-
+  namespaceId: ""
+  rpcEndpoint: ""
+  metrics: false
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -57,17 +58,14 @@ service:
   annotations: {}
     # service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
   ports:
-    rpc:
-      port: 8547
+    rpcport:
+      port: 26657
       protocol: TCP
-    ws:
-      port: 8548
+    pprof:
+      port: 6071
       protocol: TCP
     metrics:
       port: 6070
-      protocol: TCP
-    sequencer:
-      port: 9642
       protocol: TCP
 
 probes:
