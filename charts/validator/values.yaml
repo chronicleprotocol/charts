@@ -6,6 +6,7 @@
 ghost:
   replicaCount: 1
 
+  # -- Image for the validator
   image:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
@@ -25,9 +26,8 @@ ghost:
   chainTxType: eip1559
   # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
   chainRpcUrl: null
-  # Deprecated: use `chainRpcUrl` instead
+  # Deprecated: use `chainRpcUrl` instead - remove after FINSHED release
   rpcUrl: null
-
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
@@ -74,6 +74,12 @@ ghost:
     normal: {}
       # GOLOG_LOG_LEVEL: pubsub=debug
       # FOO: bar
+    raw: {}
+      # - name: FOO
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: foo-secret
+      #       key: foo-key
 
   imagePullSecrets: []
 
