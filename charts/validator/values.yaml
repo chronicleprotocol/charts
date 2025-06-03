@@ -89,7 +89,7 @@ ghost:
 
   serviceAccount:
     # -- Specifies whether a service account should be created
-    create: true
+    create: "true"
     # -- Annotations to add to the service account
     annotations: {}
       # iam.amazonaws.com/role: arn:aws:iam::123456789012:role/role-name

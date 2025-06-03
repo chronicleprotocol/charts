@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.4.0-pre.6](https://img.shields.io/badge/Version-0.4.0--pre.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58](https://img.shields.io/badge/AppVersion-0.58-informational?style=flat-square)
+![Version: 0.4.0-pre.7](https://img.shields.io/badge/Version-0.4.0--pre.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.58](https://img.shields.io/badge/AppVersion-0.58-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,7 +16,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"affinity":{},"argsOverride":[],"chainId":1,"chainName":"eth","chainRpcUrl":null,"chainTxType":"eip1559","commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
+| ghost | object | `{"affinity":{},"argsOverride":[],"chainId":1,"chainName":"eth","chainRpcUrl":null,"chainTxType":"eip1559","commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"},"imagePullSecrets":[],"ingress":{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific","port":8000}]}],"tls":[]},"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"rpcUrl":null,"securityContext":{},"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[],"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
 | ghost.affinity | object | `{}` | pod Affinity spec applied validator |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
@@ -47,7 +47,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.service.ports.webapi | object | `{"port":8080,"protocol":"TCP"}` | webapi listen port for the validator service |
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, can also be `LoadBalancer`, `NodePort` is experimental |
 | ghost.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| ghost.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| ghost.serviceAccount.create | string | `"true"` | Specifies whether a service account should be created |
 | ghost.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
 | ghost.tolerations | list | `[]` | Tolerations applied validator |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
