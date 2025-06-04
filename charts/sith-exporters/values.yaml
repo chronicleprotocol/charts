@@ -16,6 +16,25 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# -- @section archiver addtional env vars
+env:
+  # - name: NODE_DEBUG
+  #   value: "net"
+
+  # Ethereum RPC node
+  ## reference https://github.com/chronicleprotocol/archiver/blob/master/env.sample#L21
+  # - name: ETH_RPC_NODE
+  #   value: "https://rpc.chroniclelabs.io/eth"
+  # - name: ETH_BLOCK_LIMIT
+  #   value: "10000"
+
+  # -- you can also reference values from secrets like this:
+  # - name: FOO
+  #   valueFrom:
+  #     secretKeyRef:
+  #       name: foo-secret
+  #       key: foo-key
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
