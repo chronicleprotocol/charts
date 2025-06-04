@@ -36,16 +36,24 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           command:
-            -  celestia-server
+            -  /bin/celestia-server
           args:
-            - --enable-rpc --rpc-addr={{ .Values.rpcAddress }}
-            - --rpc-port={{ .Values.rpcPort }}
-            - --celestia.auth-token {{ .Values.celestia.authToken }}
-            - --celestia.gas-price {{ .Values.celestia.gasPrice }}
-            - --celestia.gas-multiplier {{ .Values.celestia.gasMultiplier }}
-            - --celestia.namespace-id {{ .Values.celestia.namespaceId }}
-            - --celestia.rpc {{ .Values.celestia.rpcEndpoint }}
+            - --enable-rpc
+            - --rpc-addr={{ .Values.celestia.rpcAddress }}
+            - --rpc-port={{ .Values.celestia.rpcPort }}
+            - --celestia.auth-token={{ .Values.celestia.authToken }}
+            {{- if .Values.celestia.gasPrice }}
+            - --celestia.gas-price={{ .Values.celestia.gasPrice }}
+            {{- end }}
+            {{- if .Values.celestia.gasMultiplier }}
+            - --celestia.gas-multiplier={{ .Values.celestia.gasMultiplier }}
+            {{- end }}
+            - --celestia.namespace-id={{ .Values.celestia.namespaceId }}
+            - --celestia.rpc={{ .Values.celestia.rpcEndpoint }}
             - --log-level={{ .Values.logLevel }}
+            {{- if .Values.celestia.metrics }}
+            - --metrics
+            {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}

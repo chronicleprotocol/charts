@@ -20,3 +20,16 @@
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
 {{- end }}
+
+{{- /*
+This template performs validations for required chart values.
+If a required value is missing, the Helm operation (install, upgrade, template) will fail
+with the specified error message.
+*/ -}}
+
+{{- required (printf "\n\n[REQUIRED] Missing value for .Values.celestia.namespaceId\n\n  The '.celestia.namespaceId' field is mandatory for this chart.\n  Please provide the Celestia Namespace ID.\n\n  You can set this in your values.yaml file:\n    celestia:\n      namespaceId: \"your-namespace-id\"\n\n  Or by using the --set flag during installation/upgrade:\n    --set celestia.namespaceId=<your-namespace-id>\n ") .Values.celestia.namespaceId -}}
+
+{{- required (printf "\n\n[REQUIRED] Missing value for .Values.celestia.rpcEndpoint\n\n  The '.celestia.rpcEndpoint' field is mandatory for this chart.\n  Please provide the Celestia RPC Endpoint.\n  This is the endpoint of your Celestia node (e.g., 'http://localhost:26658' or an external one).\n\n  You can set this in your values.yaml file:\n    celestia:\n      rpcEndpoint: \"http://your-celestia-node-rpc-endpoint\"\n\n  Or by using the --set flag during installation/upgrade:\n    --set celestia.rpcEndpoint=<your-celestia-node-rpc-endpoint>\n ") .Values.celestia.rpcEndpoint -}}
+
+{{- /* This line ensures that this template doesn't produce any output if all validations pass. */ -}}
+{{- "" -}}
