@@ -41,7 +41,9 @@ spec:
             - --enable-rpc
             - --rpc-addr={{ .Values.celestia.rpcAddress }}
             - --rpc-port={{ .Values.celestia.rpcPort }}
+            {{- if .Values.celestia.authToken }}
             - --celestia.auth-token={{ .Values.celestia.authToken }}
+            {{- end }}
             {{- if .Values.celestia.gasPrice }}
             - --celestia.gas-price={{ .Values.celestia.gasPrice }}
             {{- end }}
