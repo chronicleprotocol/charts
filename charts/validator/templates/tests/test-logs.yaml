@@ -19,4 +19,12 @@ spec:
         - |
           echo 'Running tests';
           kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Received message'
+    - name: test-vao-logs
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo 'Running tests';
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=vao' -o jsonpath='{.items[0].metadata.name}') | grep 'Received message'
   restartPolicy: Never

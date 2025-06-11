@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "validator.fullname" . }}-metrics
+  name: {{ include "validator.fullname" . }}-metrics-vao
   annotations:
-  {{- with .Values.ghost.service.annotations }}
+  {{- with .Values.vao.service.annotations }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-    {{- include "validator.labels" . | nindent 4 }}
+    {{- include "validatorVao.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -16,4 +16,4 @@ spec:
       protocol: TCP
       targetPort: {{ .Values.global.metrics.port }}
   selector:
-    {{- include "validator.selectorLabels" . | nindent 4 }}
+    {{- include "validatorVao.selectorLabels" . | nindent 4 }}
