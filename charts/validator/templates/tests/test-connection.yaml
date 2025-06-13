@@ -11,13 +11,24 @@ spec:
   containers:
   {{- $serviceName := include "validator.fullname" . }}
   {{- range $name, $config := .Values.ghost.service.ports }}
-    - name: nc-{{ $name }}
+    - name: nc-ghost-{{ $name }}
       image: busybox
       command: ['nc']
       args:
         - '-zv'
         - '-v'
         - '{{ $serviceName }}'
+        - '{{ $config.port }}'
+  {{- end }}
+  {{- $vaoServiceName := printf "%s-vao" (include "validator.fullname" .) }}
+  {{- range $name, $config := .Values.vao.service.ports }}
+    - name: nc-vao-{{ $name }}
+      image: busybox
+      command: ['nc']
+      args:
+        - '-zv'
+        - '-v'
+        - '{{ $vaoServiceName }}'
         - '{{ $config.port }}'
   {{- end }}
   restartPolicy: Never

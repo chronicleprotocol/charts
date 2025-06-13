@@ -42,6 +42,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{- define "validatorVao.labels" -}}
+helm.sh/chart: {{ include "validator.chart" . }}
+{{ include "validatorVao.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
@@ -50,13 +59,18 @@ app.kubernetes.io/name: ghost
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{- define "validatorVao.selectorLabels" -}}
+app.kubernetes.io/name: vao
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 {{/*
 Create the name of the service account to use
 */}}
 {{- define "validator.serviceAccountName" -}}
-{{- if .Values.ghost.serviceAccount.create }}
-{{- default (include "validator.fullname" .) .Values.ghost.serviceAccount.name }}
+{{- if .Values.global.serviceAccount.create }}
+{{- default (include "validator.fullname" .) .Values.global.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.ghost.serviceAccount.name }}
+{{- default "default" .Values.global.serviceAccount.name }}
 {{- end }}
 {{- end }}
