@@ -31,14 +31,14 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.webApi | object | `{"enabled":true,"listenAddr":"0.0.0.0:8080"}` | WEB API (tor-proxy) |
 | ghost.webApi.enabled | bool | `true` | Enables the web api and deploys the tor-proxy subchart |
 | ghost.webApi.listenAddr | string | `"0.0.0.0:8080"` | Listen address for the web api |
-| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.9@sha256:dd1afbde33e2881ff3d8a33cace5c62537725ac8559f6058bda104aa36f19204"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/livez","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/readyz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
+| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.10@sha256:9f82b4ad17da7e7c5a166ff4949494856b567c4a154aa9da649921f93faa3633"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/livez","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/readyz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
 | global.affinity | object | `{}` | pod Affinity spec applied validator |
 | global.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | global.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
 | global.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
 | global.fullnameOverride | string | `""` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
-| global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.9@sha256:dd1afbde33e2881ff3d8a33cace5c62537725ac8559f6058bda104aa36f19204"}` | Image for the validator |
-| global.image.tag | string | `"0.60.9@sha256:dd1afbde33e2881ff3d8a33cace5c62537725ac8559f6058bda104aa36f19204"` | Overrides the image tag whose default is the chart appVersion. |
+| global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.10@sha256:9f82b4ad17da7e7c5a166ff4949494856b567c4a154aa9da649921f93faa3633"}` | Image for the validator |
+| global.image.tag | string | `"0.60.10@sha256:9f82b4ad17da7e7c5a166ff4949494856b567c4a154aa9da649921f93faa3633"` | Overrides the image tag whose default is the chart appVersion. |
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/livez","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
 | global.logFormat | string | `"text"` | Log format for the validator, can be one of `json`, `text` |
 | global.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `warning`, `error` |
@@ -70,11 +70,12 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | vao.commandOverride | list | `[]` | command override for the validator |
 | vao.env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
 | vao.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
+| vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
 | vao.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
 | vao.service.annotations | object | `{}` | Annotations to add to the service |
 | vao.service.ports.libp2p | object | `{"port":8001,"protocol":"TCP"}` | libp2p port for the validator service |
 | vao.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
-| vao.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
+| vao.watchdogConfigReg | string | `"0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"` | WATCHDOG onchain config address |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

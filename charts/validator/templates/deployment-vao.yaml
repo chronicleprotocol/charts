@@ -147,8 +147,31 @@ spec:
             {{- toYaml .Values.ghost.env.raw | nindent 12 }}
           {{- end }}
 
+          {{- if .Values.vao.extraVolumes }}
+          volumeMounts:
+            {{- range .Values.vao.extraVolumes }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+              readOnly: {{ .readOnly | default true }}
+            {{- end }}
+          {{- end }}
+
+      {{- if .Values.vao.extraVolumes }}
+      volumes:
+        {{- range .Values.vao.extraVolumes }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+        {{- end }}
+      {{- end }}
+
+          {{- with .Values.ghost.resources }}
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
+          {{- end }}
 
 
       {{- with .Values.global.nodeSelector }}

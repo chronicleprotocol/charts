@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.60.9@sha256:dd1afbde33e2881ff3d8a33cace5c62537725ac8559f6058bda104aa36f19204"
+    tag: "0.60.10@sha256:9f82b4ad17da7e7c5a166ff4949494856b567c4a154aa9da649921f93faa3633"
 
   imagePullSecrets: []
 
@@ -195,7 +195,7 @@ ghost:
 vao:
 
   # -- WATCHDOG onchain config address
-  watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
+  watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
   # -- WATCHDOG polling interval (in seconds)
   # ---- NB: default behavior is to use a scheduler (like cron), and it is set to `30 */12 * * * *` (more or less)
   # ---- if you want to use the *interval*, set this to a value to a duration string and the chart will disable scheduler
@@ -242,6 +242,14 @@ vao:
     # -- Annotations to add to the service
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
+
+  # -- Extra volumes to mount (typically for secrets)
+  extraVolumes: []
+    # - name: eth-keys
+    #   secretName: eth-keys-secret
+    #   mountPath: /app/keys/keyfile
+    #   subPath: keyfile.json  # Mount specific file from secret
+    #   readOnly: true
 
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
