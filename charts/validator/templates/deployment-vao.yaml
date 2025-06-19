@@ -141,15 +141,15 @@ spec:
             - name: CFG_VAO_ENABLE
               value: "1"
             {{- end }}
-          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
-          {{- range $key, $val := .Values.ghost.env.normal }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.vao.env.normal`
+          {{- range $key, $val := .Values.vao.env.normal }}
             - name: {{ $key }}
               value: {{ $val | quote }}
           {{- end }}
 
-          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.raw`
-          {{- if .Values.ghost.env.raw }}
-            {{- toYaml .Values.ghost.env.raw | nindent 12 }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.vao.env.raw`
+          {{- if .Values.vao.env.raw }}
+            {{- toYaml .Values.vao.env.raw | nindent 12 }}
           {{- end }}
 
           {{- if .Values.vao.extraVolumes }}

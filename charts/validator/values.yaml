@@ -219,9 +219,9 @@ vao:
   # -- Environment variable listing
   env:
     # -- un-encrypted env vars passed to the pod
-    normal: {}
-      # GOLOG_LOG_LEVEL: pubsub=debug
-      # FOO: bar
+    normal:
+      CFG_DEFI_ENABLE: "0"
+      CFG_VAO_ENABLE: "1"
     raw: {}
       # - name: FOO
       #   valueFrom:

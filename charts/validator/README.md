@@ -68,8 +68,8 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | tor-proxy.enabled | bool | `true` | values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml) |
 | vao.argsOverride | list | `[]` | args override for the validator |
 | vao.commandOverride | list | `[]` | command override for the validator |
-| vao.env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
-| vao.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
+| vao.env | object | `{"normal":{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"},"raw":{}}` | Environment variable listing |
+| vao.env.normal | object | `{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"}` | un-encrypted env vars passed to the pod |
 | vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
 | vao.mode | string | `"vao"` | run Ghost in DEFI or VAO mode |
 | vao.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
