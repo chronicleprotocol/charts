@@ -10,7 +10,8 @@ global:
   chainName: sep
 ghost:
   watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
-  rpcUrl: https://eth-sepolia.public.blastapi.io
+  rpcUrl: https://11155111.rpc.hypersync.xyz
+
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
@@ -19,6 +20,9 @@ ghost:
     normal:
       CFG_ENVIRONMENT: "stage"
 
+      CFG_ETH_ARCH_RPC_URLS: "https://1.rpc.hypersync.xyz"
+      CFG_ETH_RPC_URLS: "https://1.rpc.hypersync.xyz"
+      CFG_BAS_RPC_URLS: "https://8453.rpc.hypersync.xyz"
       # if no .Values.ethConfig.eth*.existingSecret is specified, then the following env vars need to be supplied:
       # These are dummy values. please do not use these eth keys at all as you will lose any funds
       CFG_ETH_FROM: "0x535e1946bD6F571e9E7f53433b3756478586384d"
@@ -28,7 +32,7 @@ ghost:
       WATCHDOG_ETH_FROM: "0x0000000000000000000000000000000000000000"
 
 vao:
-  watchdogConfigReg: "0xE1CcD31f46F30A764DbACB4759E69d8799126941"
+  watchdogConfigReg: "0x43b9395BBB1d7A7a5862993256C5572f2c95663D"
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
@@ -45,8 +49,5 @@ vao:
 
       WATCHDOG_ETH_FROM: "0x0000000000000000000000000000000000000000"
 
-      CFG_GHOST_INTERVAL: "50"
-      CFG_MUSIG_INTERVAL: "100"
       CFG_DEFI_ENABLE: "0"
       CFG_VAO_ENABLE: "1"
-      CFG_VAO_AGENT_ENABLE: "0"

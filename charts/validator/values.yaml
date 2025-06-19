@@ -193,6 +193,8 @@ ghost:
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 vao:
+  # -- run Ghost in DEFI or VAO mode
+  mode: vao
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
