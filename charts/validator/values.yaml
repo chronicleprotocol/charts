@@ -2,8 +2,8 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Values for Ghost
-ghost:
+# -- Global values for the validator chart, values are used across the chart resources
+global:
   replicaCount: 1
 
   # -- Image for the validator
@@ -11,7 +11,23 @@ ghost:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.58.1@sha256:af00d26b85c603960b8a11c3b6500f0993eef3d86d1afea7114fe272cb577474"
+    tag: "0.60.10@sha256:9f82b4ad17da7e7c5a166ff4949494856b567c4a154aa9da649921f93faa3633"
+
+  imagePullSecrets: []
+
+  nameOverride: ""
+  # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
+  fullnameOverride: ""
+
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: "true"
+    # -- Annotations to add to the service account
+    annotations: {}
+      # iam.amazonaws.com/role: arn:aws:iam::123456789012:role/role-name
+    # --The name of the service account to use.
+    # -- If not set and create is true, a name is generated using the fullname template
+    name: ""
 
   # -- Log level for the validator, can be one of `debug`, `info`, `warning`, `error`
   logLevel: info
@@ -20,12 +36,84 @@ ghost:
 
   # -- chain name for the "target" or "main" chain we use for the validator
   chainName: eth
+
   # -- chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111`
   chainId: 1
+
   # -- chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy`
   chainTxType: eip1559
-  # -- RPC url for the "target" or "main" chain we use for the validator. Can be mainnet ethereum or sepolia ethereum
-  chainRpcUrl: null
+
+  # -- Pod annotations for the validator
+  podAnnotations: {}
+
+  # -- Pod security context for the validator
+  podSecurityContext: {}
+    # sysctls:
+      # unsafe sysctls, need to be allowed at kubelet level
+      # - name: net.core.rmem_max
+      #   value: "4096"
+      # - name: net.core.wmem_max
+      #   value: "4096"
+    # fsGroup: 2000
+
+  # -- Security context for the validator
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  # -- Liveness probe : restart the validator if the healthcheck endpoint is not reachable
+  liveness:
+    enabled: true
+    livenessProbe:
+      httpGet:
+        path: /livez
+        port: 9100
+      initialDelaySeconds: 30
+      periodSeconds: 60
+
+  # -- Readiness probe : stop the validator if the metrics endpoint is not reachable
+  readiness:
+    enabled: true
+    readinessProbe:
+      httpGet:
+        path: /readyz
+        port: 9100
+      initialDelaySeconds: 30
+      periodSeconds: 60
+
+  # -- Metrics port for the validator, used by the service and the service monitor
+  metrics:
+    enabled: true
+    port: 9090
+
+  # -- Resources constraints for the validator, CPU, Memory, etc.
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  # -- Node selector for the validator
+  nodeSelector: {}
+
+  # -- Tolerations applied validator
+  tolerations: []
+
+  # -- pod Affinity spec applied validator
+  affinity: {}
+
+# -- Values for Ghost
+ghost:
   # Deprecated: use `chainRpcUrl` instead - remove after FINSHED release
   rpcUrl: null
 
@@ -81,47 +169,9 @@ ghost:
       #       name: foo-secret
       #       key: foo-key
 
-  imagePullSecrets: []
-
-  nameOverride: ""
-  # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
-  fullnameOverride: ""
-
-  serviceAccount:
-    # -- Specifies whether a service account should be created
-    create: "true"
-    # -- Annotations to add to the service account
-    annotations: {}
-      # iam.amazonaws.com/role: arn:aws:iam::123456789012:role/role-name
-    # --The name of the service account to use.
-    # -- If not set and create is true, a name is generated using the fullname template
-    name: ""
-
-  # -- Pod annotations for the validator
-  podAnnotations: {}
-
-  # -- Pod security context for the validator
-  podSecurityContext: {}
-    # sysctls:
-      # unsafe sysctls, need to be allowed at kubelet level
-      # - name: net.core.rmem_max
-      #   value: "4096"
-      # - name: net.core.wmem_max
-      #   value: "4096"
-    # fsGroup: 2000
-
-  # -- Security context for the validator
-  securityContext: {}
-    # capabilities:
-    #   drop:
-    #   - ALL
-    # readOnlyRootFilesystem: true
-    # runAsNonRoot: true
-    # runAsUser: 1000
-
   # -- Service type for the validator
   service:
-    # -- Type of service for the validator, can also be `LoadBalancer`, `NodePort` is experimental
+    # -- Type of service for the validator, only `LoadBalancer` supported for now
     type: LoadBalancer
 
     ports:
@@ -142,72 +192,66 @@ ghost:
     annotations: {}
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
-  # -- Ingress for the validator (Do not enable ingress, as libp2p does not support path based routing yet)
-  ingress:
-    # -- Disabled by default, since there WAS a bug in libp2p port assignment for dns based routing
-    enabled: false
-    className: ""
+vao:
+  # -- run Ghost in DEFI or VAO mode
+  mode: vao
+
+  # -- WATCHDOG onchain config address
+  watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
+  # -- WATCHDOG polling interval (in seconds)
+  # ---- NB: default behavior is to use a scheduler (like cron), and it is set to `30 */12 * * * *` (more or less)
+  # ---- if you want to use the *interval*, set this to a value to a duration string and the chart will disable scheduler
+  # watchdogInterval: "300s"
+
+  # -- command override for the validator
+  commandOverride: []
+    # default (baked in the image):
+    # - "/usr/local/bin/watchdog"
+    # - "/usr/local/bin/chronicle-app"
+
+  # -- args override for the validator
+  argsOverride: []
+    # eg: - could be used to use a custom config file
+    # - "run"
+    # - "-c"
+    # - "ipfs://Qm......."
+
+  # -- Environment variable listing
+  env:
+    # -- un-encrypted env vars passed to the pod
+    normal:
+      CFG_DEFI_ENABLE: "0"
+      CFG_VAO_ENABLE: "1"
+    raw: {}
+      # - name: FOO
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: foo-secret
+      #       key: foo-key
+
+  # -- Service type for the validator
+  service:
+    # -- Type of service for the validator, only `LoadBalancer` supported for now
+    type: LoadBalancer
+
+    ports:
+      # -- libp2p port for the validator service
+      libp2p:
+        port: 8001
+        protocol: TCP
+      # -- webapi listen port for the validator service
+
+    # -- Annotations to add to the service
     annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: chart-example.local
-        paths:
-          - path: /
-            port: 8000
-            pathType: ImplementationSpecific
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+      # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
-  # -- Liveness probe : restart the validator if the healthcheck endpoint is not reachable
-  liveness:
-    enabled: true
-    livenessProbe:
-      httpGet:
-        # will be changed to /livez
-        path: /healthz
-        port: 9100
-      initialDelaySeconds: 30
-      periodSeconds: 60
-
-  # -- Readiness probe : stop the validator if the metrics endpoint is not reachable
-  readiness:
-    enabled: true
-    readinessProbe:
-      httpGet:
-        # will be changed to /readyz
-        path: /healthz
-        port: 9100
-      initialDelaySeconds: 30
-      periodSeconds: 60
-
-  metrics:
-    enabled: true
-    port: 9090
-
-  # -- Resources constraints for the validator, CPU, Memory, etc.
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
-  # -- Node selector for the validator
-  nodeSelector: {}
-
-  # -- Tolerations applied validator
-  tolerations: []
-
-  # -- pod Affinity spec applied validator
-  affinity: {}
+  # -- Extra volumes to mount (typically for secrets)
+  extraVolumes: []
+    # - name: eth-keys
+    #   secretName: eth-keys-secret
+    #   mountPath: /app/keys/keyfile
+    #   subPath: keyfile.json  # Mount specific file from secret
+    #   readOnly: true
 
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:

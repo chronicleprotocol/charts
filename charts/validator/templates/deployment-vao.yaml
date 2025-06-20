@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "validator.fullname" . }}
+  name: {{ include "validator.fullname" . }}-vao
   labels:
-    {{- include "validator.labels" . | nindent 4 }}
+    {{- include "validatorVao.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.global.replicaCount }}
   selector:
     matchLabels:
-      {{- include "validator.selectorLabels" . | nindent 6 }}
+      {{- include "validatorVao.selectorLabels" . | nindent 6 }}
   strategy:
     type: Recreate
   template:
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "validator.selectorLabels" . | nindent 8 }}
+        {{- include "validatorVao.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
@@ -31,27 +31,27 @@ spec:
         {{- toYaml .Values.global.podSecurityContext | nindent 8 }}
 
       containers:
-        - name: ghost
+        - name: vao
           securityContext:
             {{- toYaml .Values.global.securityContext | nindent 12 }}
           image: "{{ .Values.global.image.repository }}:{{ .Values.global.image.tag | default .Chart.AppVersion }}"
 
-          {{- if .Values.ghost.commandOverride }}
+          {{- if .Values.vao.commandOverride }}
           command:
-            {{- range .Values.ghost.commandOverride }}
+            {{- range .Values.vao.commandOverride }}
             - {{ . | quote }}
             {{- end }}
           {{- end }}
 
-          {{- if .Values.ghost.argsOverride }}
+          {{- if .Values.vao.argsOverride }}
           args:
-            {{- range .Values.ghost.argsOverride }}
+            {{- range .Values.vao.argsOverride }}
             - {{ . | quote }}
             {{- end }}
           {{- end }}
           imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           ports:
-          {{- range $key, $val := .Values.ghost.service.ports }}
+          {{- range $key, $val := .Values.vao.service.ports }}
             - name: {{ $key }}
               containerPort: {{ $val.port }}
               protocol: {{ $val.protocol }}
@@ -68,7 +68,6 @@ spec:
               name: probe-live
               protocol: TCP
           {{- end }}
-
           {{- if .Values.global.readiness.enabled }}
             - containerPort: {{ .Values.global.readiness.readinessProbe.httpGet.port }}
               name: probe-ready
@@ -87,7 +86,7 @@ spec:
           env:
             ### -- WATCHDOG
             - name: WATCHDOG_CONFIG_REGISTRY
-              value: {{ .Values.ghost.watchdogConfigReg | quote }}
+              value: {{ .Values.vao.watchdogConfigReg | quote }}
 
             {{- if .Values.ghost.watchdogInterval }}
             - name: WATCHDOG_INTERVAL
@@ -98,22 +97,7 @@ spec:
 
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
-              value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-
-            ### -- WEB API
-            {{- if .Values.ghost.webApi.enabled }}
-            - name: CFG_WEBAPI_ENABLE
-              value: {{ .Values.ghost.webApi.enabled | quote }}
-            - name: CFG_WEBAPI_LISTEN_ADDR
-              value: {{ .Values.ghost.webApi.listenAddr | quote }}
-            - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
-            - name: CFG_WEB_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "validator.fullname" . }}-tor-secret
-                  key: onionAddress
-            {{- end }}
+              value: "/ip4/0.0.0.0/tcp/{{ .Values.vao.service.ports.libp2p.port | default 8001 }}"
 
             ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
@@ -151,20 +135,48 @@ spec:
               value: {{ .Values.global.logLevel | default "warning" | quote }}
             - name: CFG_LOG_FORMAT
               value: {{ .Values.global.logFormat | default "text" | quote }}
-
-          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.normal`
-          {{- range $key, $val := .Values.ghost.env.normal }}
+            {{- if eq "vao" .Values.vao.mode }}
+            - name: CFG_DEFI_ENABLE
+              value: "0"
+            - name: CFG_VAO_ENABLE
+              value: "1"
+            {{- end }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.vao.env.normal`
+          {{- range $key, $val := .Values.vao.env.normal }}
             - name: {{ $key }}
               value: {{ $val | quote }}
           {{- end }}
 
-          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.raw`
-          {{- if .Values.ghost.env.raw }}
-            {{- toYaml .Values.ghost.env.raw | nindent 12 }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.vao.env.raw`
+          {{- if .Values.vao.env.raw }}
+            {{- toYaml .Values.vao.env.raw | nindent 12 }}
           {{- end }}
 
+          {{- if .Values.vao.extraVolumes }}
+          volumeMounts:
+            {{- range .Values.vao.extraVolumes }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+              readOnly: {{ .readOnly | default true }}
+            {{- end }}
+          {{- end }}
+
+      {{- if .Values.vao.extraVolumes }}
+      volumes:
+        {{- range .Values.vao.extraVolumes }}
+        - name: {{ .name }}
+          secret:
+            secretName: {{ .secretName }}
+        {{- end }}
+      {{- end }}
+
+          {{- with .Values.ghost.resources }}
           resources:
             {{- toYaml .Values.ghost.resources | nindent 12 }}
+          {{- end }}
 
 
       {{- with .Values.global.nodeSelector }}
