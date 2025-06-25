@@ -135,12 +135,7 @@ spec:
               value: {{ .Values.global.logLevel | default "warning" | quote }}
             - name: CFG_LOG_FORMAT
               value: {{ .Values.global.logFormat | default "text" | quote }}
-            {{- if eq "vao" .Values.vao.mode }}
-            - name: CFG_DEFI_ENABLE
-              value: "0"
-            - name: CFG_VAO_ENABLE
-              value: "1"
-            {{- end }}
+
           ### -- ADDITIONAL ENV VARS FROM `.Values.vao.env.normal`
           {{- range $key, $val := .Values.vao.env.normal }}
             - name: {{ $key }}
