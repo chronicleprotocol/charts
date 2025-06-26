@@ -70,7 +70,7 @@ global:
     enabled: true
     livenessProbe:
       httpGet:
-        path: /livez
+        path: /healthz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
@@ -80,7 +80,7 @@ global:
     enabled: true
     readinessProbe:
       httpGet:
-        path: /readyz
+        path: /healthz
         port: 9100
       initialDelaySeconds: 30
       periodSeconds: 60
