@@ -164,7 +164,7 @@ spec:
           {{- end }}
 
           resources:
-            {{- toYaml .Values.ghost.resources | nindent 12 }}
+            {{- toYaml .Values.global.resources | nindent 12 }}
 
 
       {{- with .Values.global.nodeSelector }}

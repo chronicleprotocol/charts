@@ -147,6 +147,11 @@ spec:
             {{- toYaml .Values.vao.env.raw | nindent 12 }}
           {{- end }}
 
+          {{- with .Values.global.resources }}
+          resources:
+            {{- toYaml .Values.global.resources | nindent 12 }}
+          {{- end }}
+
           {{- if .Values.vao.extraVolumes }}
           volumeMounts:
             {{- range .Values.vao.extraVolumes }}
@@ -167,12 +172,6 @@ spec:
             secretName: {{ .secretName }}
         {{- end }}
       {{- end }}
-
-          {{- with .Values.ghost.resources }}
-          resources:
-            {{- toYaml .Values.ghost.resources | nindent 12 }}
-          {{- end }}
-
 
       {{- with .Values.global.nodeSelector }}
       nodeSelector:
