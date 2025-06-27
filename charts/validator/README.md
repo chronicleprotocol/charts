@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.4.2](https://img.shields.io/badge/Version-0.4.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60](https://img.shields.io/badge/AppVersion-0.60-informational?style=flat-square)
+![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60](https://img.shields.io/badge/AppVersion-0.60-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -31,12 +31,12 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.webApi | object | `{"enabled":true,"listenAddr":"0.0.0.0:8080"}` | WEB API (tor-proxy) |
 | ghost.webApi.enabled | bool | `true` | Enables the web api and deploys the tor-proxy subchart |
 | ghost.webApi.listenAddr | string | `"0.0.0.0:8080"` | Listen address for the web api |
-| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.12@sha256:9df2caffaa1aef802f1ea7ca484037113f834f5064ddfed1830a796fabb5334a"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
+| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.12@sha256:9df2caffaa1aef802f1ea7ca484037113f834f5064ddfed1830a796fabb5334a"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
 | global.affinity | object | `{}` | pod Affinity spec applied validator |
 | global.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | global.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
 | global.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
-| global.fullnameOverride | string | `""` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
+| global.fullnameOverride | string | `"ghost"` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
 | global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.60.12@sha256:9df2caffaa1aef802f1ea7ca484037113f834f5064ddfed1830a796fabb5334a"}` | Image for the validator |
 | global.image.tag | string | `"0.60.12@sha256:9df2caffaa1aef802f1ea7ca484037113f834f5064ddfed1830a796fabb5334a"` | Overrides the image tag whose default is the chart appVersion. |
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
@@ -71,7 +71,6 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | vao.env | object | `{"normal":{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"},"raw":{}}` | Environment variable listing |
 | vao.env.normal | object | `{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"}` | un-encrypted env vars passed to the pod |
 | vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
-| vao.mode | string | `"vao"` | run Ghost in DEFI or VAO mode |
 | vao.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
 | vao.service.annotations | object | `{}` | Annotations to add to the service |
 | vao.service.ports.libp2p | object | `{"port":8001,"protocol":"TCP"}` | libp2p port for the validator service |
