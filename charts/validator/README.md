@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.4.4](https://img.shields.io/badge/Version-0.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60](https://img.shields.io/badge/AppVersion-0.60-informational?style=flat-square)
+![Version: 0.4.5](https://img.shields.io/badge/Version-0.4.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.60](https://img.shields.io/badge/AppVersion-0.60-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,7 +16,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"argsOverride":[],"commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"rpcUrl":null,"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
+| ghost | object | `{"argsOverride":[],"commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"ethRpcUrl":null,"rpcUrl":null,"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"},"webapi":{"port":8080,"protocol":"TCP"}},"type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3","webApi":{"enabled":true,"listenAddr":"0.0.0.0:8080"}}` | Values for Ghost |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.commandOverride | list | `[]` | command override for the validator |
 | ghost.env | object | `{"normal":{},"raw":{}}` | Environment variable listing |

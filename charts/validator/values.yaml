@@ -116,6 +116,7 @@ global:
 ghost:
   # Deprecated: use `chainRpcUrl` instead - remove after FINSHED release
   rpcUrl: null
+  ethRpcUrl: null
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
