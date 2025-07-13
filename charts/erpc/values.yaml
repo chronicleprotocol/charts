@@ -423,25 +423,52 @@ erpc:
         #   endpoint: repository://evm-public-endpoints.erpc.cloud
         #   autoIgnoreUnsupportedMethods: true
         - id: eth-public-blast
-          chainId: 1
+
           endpoint: https://eth-mainnet.public.blastapi.io
           group: fallback
           rateLimitBudget: freemium
-          # -- (OPTIONAL) statePollerInterval used to periodically fetch the latest/finalized/sync states.
-          # To disable state polling set this value to 0, which means no regular calls to RPC for latest/finalized/sync states.
-          # The consequence of this is all data will be considered "unfinalized" or "unknown" despite their block numbers (and where if theye're actually finalized or not).
-          # DEFAULT: 30s.
-          statePollerInterval: 30s
-          # -- (OPTIONAL) nodeType is optional and you can manually set it to "full" or "archive".
-          # -- DEFAULT: archive
-          nodeType: full
-          # (OPTIONAL) maxAvailableRecentBlocks limits the maximum number of recent blocks to be served by this upstream.
-          # -- DEFAULT: 128 (for "full" nodes).
-          maxAvailableRecentBlocks: 128
-          getLogsMaxBlockRange: 1000
+
+          evm:
+            # (OPTIONAL) chainId is optional and will be detected from the endpoint (eth_chainId),
+            # but it is recommended to set it explicitly, for faster initialization.
+            # DEFAULT: auto-detected.
+            chainId: 1
+            # (OPTIONAL) statePollerInterval used to periodically fetch the latest/finalized/sync states.
+            # DEFAULT: 30s.
+            statePollerInterval: 30s
+            # (OPTIONAL) statePollerDebounce prevents too many Polls for latest/finalized block numbers during integrity checks.
+            # This ideally must be close (or lower than) the block time of the chain, but not too low to avoid thundering herd (e.g <1s is too low).
+            # DEFAULT: 5s (or equal to block time if the chainId is a known chain)
+            statePollerDebounce: 5s
+            # (OPTIONAL) nodeType is optional and you can manually set it to "full" or "archive".
+            # DEFAULT: archive
+            nodeType: full
+            # (OPTIONAL) maxAvailableRecentBlocks limits the maximum number of recent blocks to be served by this upstream.
+            # DEFAULT: 128 (for "full" nodes).
+            maxAvailableRecentBlocks: 128
+            # (OPTIONAL) getLogsAutoSplittingRangeThreshold limits the maximum block range for eth_getLogs requests.
+            # This is used to automatically split the request into smaller sub-requests if the range is too high.
+            # Set to -1 to disable this behavior.
+            # DEFAULT: 10000 (10000 blocks)
+            getLogsAutoSplittingRangeThreshold: 10000
+            # (OPTIONAL) getLogsMaxAllowedRange limits the maximum block range for eth_getLogs requests.
+            # This is used to reject getLogs request if the range is beyond the limit and returns an error to the caller of eRPC.
+            getLogsMaxAllowedRange: 10000
+            # (OPTIONAL) getLogsMaxAllowedAddresses limits the maximum number of addresses for eth_getLogs requests.
+            # This is used to reject getLogs request if the number of addresses is beyond the limit and returns an error to the caller of eRPC.
+            getLogsMaxAllowedAddresses: 10000
+            # (OPTIONAL) getLogsMaxAllowedTopics limits the maximum number of topics for eth_getLogs requests.
+            # This is used to reject getLogs request if the number of topics is beyond the limit and returns an error to the caller of eRPC.
+            getLogsMaxAllowedTopics: 10000
+            # (OPTIONAL) getLogsSplitOnError is used to split the getLogs request if upstream complains about the range being too large,
+            # or if the request timeouts due to too many addresses/topics.
+            # Set to true to enable this behavior.
+            # DEFAULT: false
+            getLogsSplitOnError: false
 
         - id: sep-public-node
-          chainId: '11155111'
+          evm:
+            chainId: 11155111
           endpoint: https://ethereum-sepolia-rpc.publicnode.com
           # -- [optional] - additional failsafe settings for this upstream
           failsafe:
