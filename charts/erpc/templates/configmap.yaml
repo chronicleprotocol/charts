@@ -71,9 +71,9 @@ data:
           - id: {{ $upstream.id }}
             endpoint: {{ $upstream.endpoint }}
             rateLimitBudget: {{ $upstream.rateLimitBudget }}
-            {{- if $upstream.chainId }}
+            {{- if $upstream.evm }}
             evm:
-              chainId: {{ $upstream.chainId }}
+              {{- $upstream.evm | toYaml | nindent 14 }}
             {{- end }}
               {{- if $upstream.statePollerInterval }}
               statePollerInterval: {{ $upstream.statePollerInterval }}
