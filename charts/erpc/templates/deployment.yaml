@@ -32,6 +32,7 @@ spec:
       serviceAccountName: {{ include "erpc.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds | default 30 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -53,16 +54,14 @@ spec:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
           volumeMounts:
           - name: config
             mountPath: /root/erpc.yaml
             subPath: erpc.yaml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sleep", "{{ .Values.preStopSleepSeconds | default 20 }}"]
 
       volumes:
       - name: config

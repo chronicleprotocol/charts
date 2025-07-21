@@ -14,8 +14,11 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- default is 20 seconds
-preStopSleepSeconds: null
+# -- The duration in seconds the pod needs to terminate gracefully.
+# This should be greater than the sum of erpc.server.waitBeforeShutdown and erpc.server.waitAfterShutdown
+# to allow the application to shut down cleanly.
+terminationGracePeriodSeconds: 70
+
 # -- default RollingUpdate
 updateStrategy: null
 # -- default is 0
@@ -98,39 +101,40 @@ resources: {}
 # -- Liveness probe
 # @default -- See `values.yaml`
 livenessProbe:
-  tcpSocket:
+  httpGet:
+    path: /
     port: http
-  initialDelaySeconds: 60
-  periodSeconds: 30
+  # initialDelaySeconds is not needed when using a startupProbe
+  periodSeconds: 15
+  timeoutSeconds: 2
+  failureThreshold: 3
 
 # -- Readiness probe
 # @default -- See `values.yaml`
 readinessProbe:
-  tcpSocket:
+  httpGet:
+    path: /
     port: http
-  initialDelaySeconds: 10
+  initialDelaySeconds: 5
   periodSeconds: 10
+  timeoutSeconds: 2
+  failureThreshold: 3
 
+# -- Startup probe. Once this succeeds, the liveness probe takes over.
+# @default -- See `values.yaml`
+startupProbe:
+  httpGet:
+    path: /
+    port: http
+  # Allow up to 5 minutes (30 * 10s) for the application to start
+  failureThreshold: 30
+  periodSeconds: 10
+  timeoutSeconds: 2
 nodeSelector: {}
 
 tolerations: []
 
 affinity: {}
-
-redis:
-  # -- If enabled a redis chart will be deployed as a dependency
-  enabled: false
-  auth:
-    password: yourRedisSecret
-  master:
-    persistence:
-      enabled: false
-      size: 8Gi
-  replica:
-    replicaCount: 1
-    persistence:
-      enabled: false
-      size: 8Gi
 
 # -- create env vars from secrets, eg RPC provider API keys (eg, Blast API, DRPC, Infura, Alchemy, etc. )
 env: {}
@@ -156,16 +160,11 @@ env: {}
   #       name: infura-api-key
   #       key: INFURA_API_KEY
 
-# -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
+# -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example; accepts full erpc.yaml config
 erpc:
-  # -- If enabled, the admin API will be enabled ref:
-  admin:
-    auth:
-      strategies:
-        - type: secret
-          secret:
-            value: mysecret
-  # -- eRPC configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
+  logLevel: warn
+
+  # The main server for eRPC to listen for requests.
   server:
     listenV4: true
     httpHostV4: "0.0.0.0"
@@ -176,6 +175,8 @@ erpc:
     readTimeout: 10s
     writeTimeout: 20s
     enableGzip: true
+    waitBeforeShutdown: 30s
+    waitAfterShutdown: 30s
     tls:
       enabled: false
       certFile: "/path/to/cert.pem"
@@ -183,7 +184,7 @@ erpc:
       caFile: "/path/to/ca.pem"  # Optional, for client cert verification
       insecureSkipVerify: false  # Optional, defaults to false
 
-  # -- eRPC Metrics configuration, ref: https://docs.erpc.cloud/config/example#full-config-example
+  # Optional Prometheus metrics server
   metrics:
     enabled: true
     listenV4: true
@@ -191,337 +192,213 @@ erpc:
     listenV6: false
     hostV6: "[::]"
     port: 4001
-  # -- Log level for eRPC. Must be one of `debug`, `info`, `warn`, `error`, `fatal`, or `panic`.
-  logLevel: info
-  # -- provides a DB backend for caching. must be one of `memory`, `redis`, or `postgresql`. ref: https://docs.erpc.cloud/config/database/drivers
-  disableCache: false
 
-  # -- Shared state configuration, ref: https://docs.erpc.cloud/config/database/shared-state
-  sharedState: {}
-    # Unique identifier for a group of eRPC instances that should share state
-    # Recommended if you have multiple separate eRPC clusters
-    # Default: "erpc-default"
-    # clusterKey: "my-local-1"
+  # There are various use-cases of database in erpc, such as caching, dynamic configs, rate limit persistence, etc.
+  database:
+    # `evmJsonRpcCache` defines the destination for caching JSON-RPC cals towards any EVM architecture upstream.
+    # This database is non-blocking on critical path, and is used as best-effort.
+    # Make sure the storage requirements meet your usage, for example caching 70m blocks + 10m txs + 10m traces on Arbitrum needs 200GB of storage.
+    evmJsonRpcCache:
+      # Refer to "Database" section for more details.
+      # Note that table, schema and indexes will be created automatically if they don't exist.
+      connectors:
+        - id: memory-cache
+          driver: memory
+          memory:
+            maxItems: 100000
+        # - id: postgres-cache
+        #   driver: postgresql
+        #   postgresql:
+        #     connectionUri: >-
+        #       postgres://YOUR_USERNAME_HERE:YOUR_PASSWORD_HERE@your.postgres.hostname.here.com:5432/your_database_name
+        #     table: rpc_cache
+      policies:
+        - network: "*"
+          method: "*"
+          finality: finalized
+          connector: memory-cache
+          ttl: 0
+        - network: "*"
+          method: "*"
+          finality: unfinalized
+          connector: memory-cache
+          maxItemSize: 1MB
+          ttl: 5s
+        - network: "*"
+          method: "*"
+          finality: unknown
+          connector: memory-cache
+          ttl: 5s
 
-    # Storage backend configuration
-    # Local "memory" is used by default
-    # connector:
-    #   # Storage driver: memory, redis, postgresql (memory is default)
-    #   driver: redis
-    #   # Redis-specific configuration
-    #   redis:
-    #     addr: "my-redis-host:6379"
-    #     password: ""
-    #     db: 0
-    #     connPoolSize: 10
-
-  cacheConfig:
-    # -- can provide multiple connectors
-    connectors:
-      - id: memory-cache
-        driver: memory
-    # -- can provide multiple policies to work with all connectors configured
-    policies:
-      # -- Example: Cache all methods with finalized data including empty responses
-      - network: "*"
-        method: "*"
-        finality: finalized
-        empty: allow
-        minItemSize: 1Mb
-        maxItemSize: 10Mb
-        params: []
-        connector: memory-cache
-        ttl: 0
-      # -- Example: Cache unfinalized data only for 5 seconds (getLogs of a recent block) except empty responses
-      - network: "*"
-        method: "*"
-        finality: unfinalized
-        empty: ignore
-        connector: memory-cache
-        ttl: 5s
-      # -- Example: Cache unknown finalization data (eth_trace*) only for 10 seconds
-      - network: "*"
-        method: "*"
-        finality: unknown
-        empty: ignore
-        connector: memory-cache
-        ttl: 10s
-      # -- Example: Cache realtime data only for 2 seconds (eth_blockNumber, eth_gasPrice, etc) to reduce costs yet fresh enough data
-      - network: "*"
-        method: "*"
-        finality: realtime
-        empty: ignore
-        connector: memory-cache
-        ttl: 2s
-
-  # -- Projects define the networks and chains that eRPC will proxy for. ref: https://docs.erpc.cloud/config/projects
+  # Each project is a collection of networks and upstreams.
+  # For example "backend", "indexer", "frontend", and you want to use only 1 project you can name it "main"
+  # The main purpose of multiple projects is different failsafe policies (more aggressive and costly, or less costly and more error-prone)
   projects:
-
-    # -- each project must have a unique id, and is used in the URL structure: fqdn/{project_id}/{network-architecture}/{chain-id}
     - id: main
-      # -- A network represents a chain in EVM, and it is a local grouping for upstreams. ref: https://docs.erpc.cloud/config/projects/networks
-      networkIds:
-      - '1'  # -- Eth mainnet
-      - '11155111'  # -- Sepolia
-      # -- Provider config, reg https://docs.erpc.cloud/config/projects/providers#advanced-config
-      providers:
-        - id: alchemy-prod
-          vendor: alchemy
-          settings:
-            apiKey: xxxxx
-          onlyNetworks:
-            - evm:1
-            - evm:137
-          upstreamIdTemplate: "some-name"
-          overrides:
-            "evm:*":
-              rateLimitBudget: freemium
-              jsonRpc:
-                supportsBatch: true
-                batchMaxSize: 20
-                batchMaxWait: "30ms"
-              ignoreMethods:
-                - "eth_getBlockByNumber"
-              allowMethods:
-                - "eth_getLogs"
-              failsafe:
-                timeout:
-                  duration: "30s"
-                hedge:
-                  quantile: 0.99
-                  maxCount: 3
-                retry:
-                  maxAttempts: 3
-                  delay: "100ms"
-                  jitter: "0ms"
-                  backoffMaxDelay: "1s"
-                  backoffFactor: 1.5
 
-      # -- Selection Policy ref https://docs.erpc.cloud/config/projects/selection-policies
-      selectionPolicy:
-        # Every 1 minute evaluate which upstreams must be included,
-        # based on the arbitrary logic (e.g., <90% error rate and <10 block lag):
-        evalInterval: 1m
+      # Optionally you can define a self-imposed rate limite budget for each project
+      # This is useful if you want to limit the number of requests per second or daily allowance.
+      rateLimitBudget: frontend-budget
 
-        # Freeform TypeScript-based logic to select upstreams to be included by returning them:
-        evalFunction: |
-          (upstreams, method) => {
-
-            const defaults = upstreams.filter(u => u.config.group !== 'fallback')
-            const fallbacks = upstreams.filter(u => u.config.group === 'fallback')
-
-            // Maximum allowed error rate.
-            const maxErrorRate = parseFloat(process.env.ROUTING_POLICY_MAX_ERROR_RATE || '0.7')
-
-            // Maximum allowed block head lag.
-            const maxBlockHeadLag = parseFloat(process.env.ROUTING_POLICY_MAX_BLOCK_HEAD_LAG || '10')
-
-            // Minimum number of healthy upstreams that must be included in default group.
-            const minHealthyThreshold = parseInt(process.env.ROUTING_POLICY_MIN_HEALTHY_THRESHOLD || '1')
-
-            // Filter upstreams that are healthy based on error rate and block head lag.
-            const healthyOnes = defaults.filter(
-              u => u.metrics.errorRate < maxErrorRate && u.metrics.blockHeadLag < maxBlockHeadLag
-            )
-
-            // If there are enough healthy upstreams, return them.
-            if (healthyOnes.length >= minHealthyThreshold) {
-              return healthyOnes
-            }
-
-            // The reason all upstreams are returned is to be less harsh and still consider default nodes (in case they have intermittent issues)
-            // Order of upstreams does not matter as that will be decided by the upstream scoring mechanism
-            return upstreams
-          }
-
-        # To isolate selection evaluation and result to each "method" separately change this flag to true
-        evalPerMethod: false
-
-        # When an upstream is excluded, you can give it a chance on a regular basis
-        # to handle a certain number of sample requests again, so that metrics are refreshed.
-        # For example, to see if error rate is improving after 5 minutes, or still too high.
-        # This is conceptually similar to how a circuit-breaker works in a "half-open" state.
-        # Resampling is not always needed because the "evm state poller" component will still make
-        # requests for the "latest" block, which still updates errorRate.
-        resampleExcluded: false
-        resampleInterval: 5m
-        resampleCount: 100
-
-      # -- Apply auth to project level. ref: https://docs.erpc.cloud/config/auth
-      authStrategies: {}
-        # - type: secret
-        #   rateLimitBudget: freemium
-        #   secret:
-        #     value: "some-random-secret-value"
-        # - type: secret
-        #   rateLimitBudget: premium
-        #   secret:
-        #     value: "some-random-secret2-value"
-      networkFailsafe: {}
-      # -- Network defaults enable for all networks
-      networkDefaults:
-        evm:
-          integrity:
-            # eth_blockNumber and eth_getBlockByNumber if the chosen upstream returns a block older than the highest known block,
-            # it will return the highest known block instead.
-            # This _might_ cause an extra upstream request for eth_getBlockByNumber(latest) calls.
-            enforceHighestBlock: true
-
-            # When eth_getLogs end-range is a specific blockNumber ensure only upstreams whose
-            # latest block is equal or more handle it, otherwise return an error (i.e. MissingData) for client to retry.
-            # This might cause more requests if evm state poller has lagging latest block vs eth_getLogs end-range;
-            # it _might_ send an additional eth_blockNumber to other upstreams to see which one definitively has the requested range.
-            enforceGetLogsBlockRange: true
-        failsafe:
-          timeout:
-            duration: "30s"
-          hedge:
-            quantile: 0.99
-            maxCount: 3
-          retry:
-            maxAttempts: 3
-            delay: "100ms"
-            jitter: "0ms"
-            backoffMaxDelay: "1s"
-            backoffFactor: 1.5
-      upstreamDefaults:
-        # -- Default group for all upstreams
-        group: "default"
-
-        # -- Default JSON-RPC settings
-        jsonRpc:
-          supportsBatch: true
-          batchMaxSize: 10
-          batchMaxWait: "50ms"
-
-        # -- Default failsafe policies
-        failsafe:
-          timeout:
-            duration: "15s"
-          retry:
-            maxAttempts: 3
-            delay: "300ms"
-            jitter: "100ms"
-            backoffMaxDelay: "5s"
-            backoffFactor: 1.5
-          circuitBreaker:
-            failureThresholdCount: 160
-            failureThresholdCapacity: 200
-            halfOpenAfter: "5m"
-            successThresholdCount: 3
-            successThresholdCapacity: 3
-
-        # Default method filters
-        ignoreMethods:
-          - "eth_traceTransaction"
-          - "alchemy_*"
-        allowMethods:
-          - "eth_getLogs"
-      # -- A upstream is defined to handle 1 or more networks (a.k.a. chains). ref: https://docs.erpc.cloud/config/projects/upstreams
-      upstreams:
-        # - id: erpc-public
-        #   endpoint: repository://evm-public-endpoints.erpc.cloud
-        #   autoIgnoreUnsupportedMethods: true
-        - id: eth-public-blast
-
-          endpoint: https://eth-mainnet.public.blastapi.io
-          group: fallback
-          rateLimitBudget: freemium
-
+      # This array configures network-specific (a.k.a chain-specific) features.
+      # For each network "architecture" and corresponding network id (e.g. evm.chainId) is required.
+      # Remember defining networks is OPTIONAL, so only provide these only if you want to override defaults.
+      networks:
+        - architecture: evm
           evm:
-            # (OPTIONAL) chainId is optional and will be detected from the endpoint (eth_chainId),
-            # but it is recommended to set it explicitly, for faster initialization.
-            # DEFAULT: auto-detected.
             chainId: 1
-            # (OPTIONAL) statePollerInterval used to periodically fetch the latest/finalized/sync states.
-            # DEFAULT: 30s.
-            statePollerInterval: 30s
-            # (OPTIONAL) statePollerDebounce prevents too many Polls for latest/finalized block numbers during integrity checks.
-            # This ideally must be close (or lower than) the block time of the chain, but not too low to avoid thundering herd (e.g <1s is too low).
-            # DEFAULT: 5s (or equal to block time if the chainId is a known chain)
-            statePollerDebounce: 5s
-            # (OPTIONAL) nodeType is optional and you can manually set it to "full" or "archive".
-            # DEFAULT: archive
-            nodeType: full
-            # (OPTIONAL) maxAvailableRecentBlocks limits the maximum number of recent blocks to be served by this upstream.
-            # DEFAULT: 128 (for "full" nodes).
-            maxAvailableRecentBlocks: 128
-            # (OPTIONAL) getLogsAutoSplittingRangeThreshold limits the maximum block range for eth_getLogs requests.
-            # This is used to automatically split the request into smaller sub-requests if the range is too high.
-            # Set to -1 to disable this behavior.
-            # DEFAULT: 10000 (10000 blocks)
-            getLogsAutoSplittingRangeThreshold: 10000
-            # (OPTIONAL) getLogsMaxAllowedRange limits the maximum block range for eth_getLogs requests.
-            # This is used to reject getLogs request if the range is beyond the limit and returns an error to the caller of eRPC.
-            getLogsMaxAllowedRange: 10000
-            # (OPTIONAL) getLogsMaxAllowedAddresses limits the maximum number of addresses for eth_getLogs requests.
-            # This is used to reject getLogs request if the number of addresses is beyond the limit and returns an error to the caller of eRPC.
-            getLogsMaxAllowedAddresses: 10000
-            # (OPTIONAL) getLogsMaxAllowedTopics limits the maximum number of topics for eth_getLogs requests.
-            # This is used to reject getLogs request if the number of topics is beyond the limit and returns an error to the caller of eRPC.
-            getLogsMaxAllowedTopics: 10000
-            # (OPTIONAL) getLogsSplitOnError is used to split the getLogs request if upstream complains about the range being too large,
-            # or if the request timeouts due to too many addresses/topics.
-            # Set to true to enable this behavior.
-            # DEFAULT: false
-            getLogsSplitOnError: false
-
-        - id: sep-public-node
-          evm:
-            chainId: 11155111
-          endpoint: https://ethereum-sepolia-rpc.publicnode.com
-          # -- [optional] - additional failsafe settings for this upstream
+          # Refer to "Failsafe" section for more details.
+          # On network-level "timeout" is applied for the whole lifecycle of the request (including however many retries)
           failsafe:
+          - matchMethod: "*"    # Default policy for all methods
+            timeout:
+              duration: 30s
+            retry:
+              maxAttempts: 3
+              delay: 0ms
+            # Defining a "hedge" is highly-recommended on network-level because if upstream A is being slow for
+            # a specific request, it can start a new parallel hedged request to upstream B, for whichever responds faster.
+            hedge:
+              delay: 500ms
+              maxCount: 1
+            circuitBreaker:
+              failureThresholdCount: 160
+              failureThresholdCapacity: 200
+              halfOpenAfter: 5m
+              successThresholdCount: 3
+              successThresholdCapacity: 3
+        - architecture: evm
+          evm:
+            chainId: 42161
+          failsafe:
+          - matchMethod: "*"
+            timeout:
+              duration: 30s
+            retry:
+              maxAttempts: 3
+              delay: 0ms
+            hedge:
+              delay: 500ms
+              maxCount: 1
+
+      # Each upstream supports 1 or more networks (chains)
+      upstreams:
+        - id: blastapi-chain-42161
+          type: evm
+          endpoint: https://arbitrum-one.blastapi.io/xxxxxxx-xxxxxx-xxxxxxx
+          # Defines which budget to use when hadnling requests of this upstream.
+          rateLimitBudget: global-blast
+          # chainId is optional and will be detected from the endpoint (eth_chainId) but it is recommended to set it explicitly, for faster initialization.
+          evm:
+            chainId: 42161
+          # Which methods must never be sent to this upstream:
+          ignoreMethods:
+            - "alchemy_*"
+            - "eth_traceTransaction"
+          # Refer to "Failsafe" section for more details:
+          failsafe:
+          - matchMethod: "*"    # Default policy for all methods
             timeout:
               duration: 15s
             retry:
               maxAttempts: 2
-              delay: 1000ms
-              backoffMaxDelay: 10s
-              backoffFactor: 0.3
-              jitter: 500ms
-          rateLimitBudget: freemium
-          rateLimitAutoTune:
-            enabled: true
-            adjustmentPeriod: 1m
-            errorRateThreshold: 0.1
-            increaseFactor: 1.05
-            decreaseFactor: 0.9
-            minBudget: 0
-            maxBudget: 10_000
+              delay: 500ms
+              backoffMaxDelay: 3s
+              backoffFactor: 1.2
+              jitter: 0ms
+        - id: blastapi-chain-1
+          type: evm
+          endpoint: https://eth-mainnet.blastapi.io/xxxxxxx-xxxxxx-xxxxxxx
+          rateLimitBudget: global-blast
+          evm:
+            chainId: 1
+          failsafe:
+          - matchMethod: "*"
+            timeout:
+              duration: 15s
+            retry:
+              maxAttempts: 2
+              delay: 500ms
+              backoffMaxDelay: 3s
+              backoffFactor: 1.2
+              jitter: 0ms
+        - id: quiknode-chain-42161
+          type: evm
+          endpoint: https://xxxxxx-xxxxxx.arbitrum-mainnet.quiknode.pro/xxxxxxxxxxxxxxxxxxxxxxxx/
+          rateLimitBudget: global-quicknode
+          # You can enable auto-ignoring unsupported methods, instead of defining them explicitly.
+          # NOTE: some providers (e.g. dRPC) are not consistent with "unsupported method" responses,
+          # so this feature might mark methods as unsupported that are actually supported!
+          autoIgnoreUnsupportedMethods: true
+          # To allow auto-batching requests towards the upstream, use these settings.
+          # Remember if "supportsBatch" is false, you still can send batch requests to eRPC
+          # but they will be sent to upstream as individual requests.
           jsonRpc:
             supportsBatch: true
-            batchMaxSize: 100
+            batchMaxSize: 10
             batchMaxWait: 100ms
+          evm:
+            chainId: 42161
+          failsafe:
+          - matchMethod: "*"
+            timeout:
+              duration: 15s
+            retry:
+              maxAttempts: 2
+              delay: 500ms
+              backoffMaxDelay: 3s
+              backoffFactor: 1.2
+              jitter: 0ms
 
-          headers:
-            SomeHeader: "Bearer mytoken"
-          # Which methods must never be sent to this upstream.
-          # For example this can be used to avoid archive calls (traces) to full nodes
-          ignoreMethods:
-            - "alchemy_*"
-          # -- Explicitly allowed methods will take precedence over ignoreMethods.
-          # For example if you only want eth_getLogs to be served, set ignore methods to "*" and allowMethods to "eth_getLogs".
-          allowMethods:
-            - "eth_getLogs"
-          # By default a dynamic mechanism automatically adds "Unsupported" methods to ignoreMethods,
-          # based on errors returned by the upstream. Set this to false to disable this behavior.
-          autoIgnoreUnsupportedMethods: true
-          # Determines when to include or exclude upstreams depending on their health and performance
+          # "id" is a unique identifier to distinguish in logs and metrics.
+        - id: alchemy-multi-chain-example
+          # For certain known providers (such as Alchemy) you use a custom protocol name
+          # which allows a single upstream to import "all chains" supported by that provider.
+          # Note that these chains are hard-coded in the repo, so if they support a new chain eRPC must be updated.
+          endpoint: alchemy://XXXX_YOUR_ALCHEMY_API_KEY_HERE_XXXX
+          rateLimitBudget: global
+          failsafe:
+          - matchMethod: "*"
+            timeout:
+              duration: 15s
+            retry:
+              maxAttempts: 2
+              delay: 500ms
+              backoffMaxDelay: 3s
+              backoffFactor: 1.2
+              jitter: 0ms
 
-
-  # -- Define rate limiters for upstreams. ref: https://docs.erpc.cloud/config/projects/rate-limiters
+  # Rate limiter allows you to create "shared" budgets for upstreams.
+  # For example upstream A and B can use the same budget, which means both of them together must not exceed the defined limits.
   rateLimiters:
-    - id: freemium
-      rules:
-        - method: '*'
-          maxCount: 100
-          period: 1s
-    - id: premium
-      rules:
-        - method: '*'
-          maxCount: 1000
-          period: 2s
+    budgets:
+      - id: global
+        rules:
+          - method: "*"
+            maxCount: 20000
+            period: 1s
+            waitTime: 1s
+      - id: default-budget
+        rules:
+          - method: "*"
+            maxCount: 10000
+            period: 1s
+            waitTime: 100ms
+      - id: global-blast
+        rules:
+          - method: "*"
+            maxCount: 1000
+            period: 1s
+      - id: global-quicknode
+        rules:
+          - method: "*"
+            maxCount: 300
+            period: 1s
+      - id: frontend-budget
+        rules:
+          - method: "*"
+            maxCount: 500
+            period: 1s
 
 
 # -- If true, create a ServiceMonitor CRD for prometheus operator
