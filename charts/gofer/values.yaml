@@ -10,11 +10,17 @@ logFormat: "text"
 goferMode: "agent"
 
 # -- Environment variable listing
-env: {}
-  # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
-  # normal:
-  #   CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
+env:
+  # -- un-encrypted env vars passed to the pod
+  normal: {}
+    # GOLOG_LOG_LEVEL: pubsub=debug
+    # FOO: bar
+  raw: {}
+    # - name: FOO
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: foo-secret
+    #       key: foo-key
 
 image:
   repository: ghcr.io/chronicleprotocol/gofer

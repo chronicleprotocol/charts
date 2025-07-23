@@ -42,9 +42,6 @@ spec:
             - {{ . | quote }}
             {{- end }}
           {{- end }}
-          {{- if .Values.configHcl }}
-          args: [ "-c", "/config/gofer.hcl", "{{ .Values.goferMode }}", "-v", "{{ .Values.logLevel | default "debug" }}"]
-          {{- else }}
           args:
             {{- if .Values.argsOverride }}
             {{- range .Values.argsOverride }}
@@ -56,7 +53,6 @@ spec:
             {{- range $arg := .Values.extraArgs }}
             - "{{ $arg }}"
             {{- end }}
-          {{- end }}
           ports:
           {{- range $key, $val := .Values.service.ports }}
             - name: {{ $key }}
@@ -73,12 +69,6 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-          {{- if .Values.configHcl }}
-          - name: config
-            mountPath: /config/gofer.hcl
-            subPath: gofer.hcl
-          {{- end }}
           env:
             ### Logging
             - name: CFG_LOG_LEVEL
@@ -86,13 +76,10 @@ spec:
             - name: CFG_LOG_FORMAT
               value: {{ .Values.logFormat | default "text" | quote }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
-
-      volumes:
-      {{- if .Values.configHcl }}
-      - name: config
-        configMap:
-          name: {{ include "gofer.fullname" . -}}-config
-      {{- end }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.ghost.env.raw`
+          {{- if .Values.env.raw }}
+            {{- toYaml .Values.env.raw | nindent 12 }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

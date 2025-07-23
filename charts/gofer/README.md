@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.48](https://img.shields.io/badge/AppVersion-0.48-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -21,7 +21,8 @@ A Helm chart for deploying gofer to Kubernetes
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
-| env | object | `{}` | Environment variable listing |
+| env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
+| env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
 | goferMode | string | `"agent"` | can be "agent" or "watch" or "proxy" |
