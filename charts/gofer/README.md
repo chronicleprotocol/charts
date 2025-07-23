@@ -51,8 +51,9 @@ A Helm chart for deploying gofer to Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.ports.gofer.port | int | `9090` |  |
-| service.ports.gofer.protocol | string | `"TCP"` |  |
+| service.ports.gofer.port | int | `8080` |  |
+| service.ports.healthcheck.port | int | `9100` |  |
+| service.ports.prometheus.port | int | `9090` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -63,7 +64,7 @@ A Helm chart for deploying gofer to Kubernetes
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
 | serviceMonitor.path | string | `"/metrics"` | Path to scrape |
-| serviceMonitor.port | string | `"gofer"` | port to scrape |
+| serviceMonitor.port | string | `"prometheus"` | port to scrape |
 | serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |

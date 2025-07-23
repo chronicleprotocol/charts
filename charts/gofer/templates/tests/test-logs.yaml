@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "gofer.fullname" . }}-test-logs"
+  labels:
+    {{- include "gofer.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook-weight": "5"
+    "helm.sh/hook": test
+spec:
+  serviceAccountName: {{ include "gofer.serviceAccountName" . }}-test
+
+  containers:
+    - name: test-logs
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo 'Running tests';
+          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=gofer' -o jsonpath='{.items[0].metadata.name}') | grep 'Configured model'
+  restartPolicy: Never
