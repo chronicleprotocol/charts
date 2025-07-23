@@ -16,16 +16,19 @@ A Helm chart for deploying gofer to Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| argsOverride | list | `[]` | Note: If you want to override the default command and args, use `argsOverride` and `entryPointOverride`. |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
+| entryPointOverride | list | `[]` |  |
 | env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
 | env.normal | object | `{}` | un-encrypted env vars passed to the pod |
+| extraArgs | list | `[]` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
-| goferMode | string | `"agent"` | can be "agent" or "watch" or "proxy" |
+| goferMode | string | `"run"` | can be `run`, `models`, `data`, or `proxy` |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
 | image.tag | string | `""` |  |

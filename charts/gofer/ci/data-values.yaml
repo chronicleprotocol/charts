@@ -1,0 +1,5 @@
+goferMode: "data"
+extraArgs:
+  - "BTC/USD"
+  - "--format"
+  - "plain"

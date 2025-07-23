@@ -6,8 +6,24 @@ replicaCount: 1
 
 logLevel: "debug"
 logFormat: "text"
-# -- can be "agent" or "watch" or "proxy"
-goferMode: "agent"
+# -- can be `run`, `models`, `data`, or `proxy`
+goferMode: "run"
+
+extraArgs: []
+  # -- extra args to pass to the gofer binary, uses .Values.goferMode as the first arg
+  # eg: - could be used to use a custom config file
+  # - "-c"
+  # - "ipfs://Qm......."
+
+
+# -- Note: If you want to override the default command and args, use `argsOverride` and `entryPointOverride`.
+argsOverride: []
+  # eg: - could be used to use a custom config file
+  # - "foo"
+  # - "-c"
+  # - "ipfs://Qm......."
+
+entryPointOverride: []
 
 # -- Environment variable listing
 env:
