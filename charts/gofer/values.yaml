@@ -6,15 +6,37 @@ replicaCount: 1
 
 logLevel: "debug"
 logFormat: "text"
-# -- can be "agent" or "watch" or "proxy"
-goferMode: "agent"
+# -- can be `run`, `models`, `data`, or `proxy`
+goferMode: "run"
+
+extraArgs: []
+  # -- extra args to pass to the gofer binary, uses .Values.goferMode as the first arg
+  # eg: - could be used to use a custom config file
+  # - "-c"
+  # - "ipfs://Qm......."
+
+
+# -- Note: If you want to override the default command and args, use `argsOverride` and `entryPointOverride`.
+argsOverride: []
+  # eg: - could be used to use a custom config file
+  # - "foo"
+  # - "-c"
+  # - "ipfs://Qm......."
+
+entryPointOverride: []
 
 # -- Environment variable listing
-env: {}
-  # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/gofer#environment-variables
-  # normal:
-  #   CFG_ETH_RPC_URLS: "https://eth-mainnet.public.blastapi.io,https://eth.public-rpc.com"
+env:
+  # -- un-encrypted env vars passed to the pod
+  normal: {}
+    # GOLOG_LOG_LEVEL: pubsub=debug
+    # FOO: bar
+  raw: {}
+    # - name: FOO
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: foo-secret
+    #       key: foo-key
 
 image:
   repository: ghcr.io/chronicleprotocol/gofer
@@ -52,8 +74,11 @@ service:
   type: ClusterIP
   ports:
     gofer:
+      port: 8080
+    prometheus:
       port: 9090
-      protocol: TCP
+    healthcheck:
+      port: 9100
 
 ingress:
   enabled: false
@@ -79,7 +104,7 @@ livenessProbe: {}
   # periodSeconds: 120
   # -- for proxy mode:
   # httpGet:
-  #   path: /livez
+  #   path: /healthz
   #   port: gofer
   # initialDelaySeconds: 60
   # periodSeconds: 120
@@ -92,7 +117,7 @@ readinessProbe: {}
   # periodSeconds: 10
   # -- for proxy mode:
   # httpGet:
-  #   path: /readyz
+  #   path: /healthz
   #   port: gofer
   # initialDelaySeconds: 60
   # periodSeconds: 60
@@ -133,7 +158,7 @@ serviceMonitor:
   # https://github.com/coreos/prometheus-operator
   enabled: false
   # -- port to scrape
-  port: gofer
+  port: prometheus
   # -- Path to scrape
   path: /metrics
   # -- Alternative namespace for ServiceMonitor

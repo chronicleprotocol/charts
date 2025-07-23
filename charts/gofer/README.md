@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.48](https://img.shields.io/badge/AppVersion-0.48-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -16,15 +16,19 @@ A Helm chart for deploying gofer to Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| argsOverride | list | `[]` | Note: If you want to override the default command and args, use `argsOverride` and `entryPointOverride`. |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | configHcl | object | `{}` |  |
-| env | object | `{}` | Environment variable listing |
+| entryPointOverride | list | `[]` |  |
+| env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
+| env.normal | object | `{}` | un-encrypted env vars passed to the pod |
+| extraArgs | list | `[]` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `""` |  |
-| goferMode | string | `"agent"` | can be "agent" or "watch" or "proxy" |
+| goferMode | string | `"run"` | can be `run`, `models`, `data`, or `proxy` |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/gofer"` |  |
 | image.tag | string | `""` |  |
@@ -47,8 +51,9 @@ A Helm chart for deploying gofer to Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
-| service.ports.gofer.port | int | `9090` |  |
-| service.ports.gofer.protocol | string | `"TCP"` |  |
+| service.ports.gofer.port | int | `8080` |  |
+| service.ports.healthcheck.port | int | `9100` |  |
+| service.ports.prometheus.port | int | `9090` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -59,7 +64,7 @@ A Helm chart for deploying gofer to Kubernetes
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
 | serviceMonitor.path | string | `"/metrics"` | Path to scrape |
-| serviceMonitor.port | string | `"gofer"` | port to scrape |
+| serviceMonitor.port | string | `"prometheus"` | port to scrape |
 | serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |

@@ -1,9 +1,5 @@
 goferMode: "proxy"
-
-service:
-  ports:
-    gofer:
-      port: 8080
+extraArgs: []
 
 env:
   normal:
