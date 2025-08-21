@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
+![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -53,7 +53,7 @@ A Helm chart for deploying gofer to Kubernetes
 | securityContext | object | `{}` |  |
 | service.ports.gofer.port | int | `8080` |  |
 | service.ports.healthcheck.port | int | `9100` |  |
-| service.ports.prometheus.port | int | `9090` |  |
+| service.ports.metrics.port | int | `9090` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -64,7 +64,7 @@ A Helm chart for deploying gofer to Kubernetes
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
 | serviceMonitor.path | string | `"/metrics"` | Path to scrape |
-| serviceMonitor.port | string | `"prometheus"` | port to scrape |
+| serviceMonitor.port | string | `"metrics"` | port to scrape |
 | serviceMonitor.relabelings | list | `[]` | ServiceMonitor relabelings |
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |

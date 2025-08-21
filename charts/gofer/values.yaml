@@ -75,7 +75,7 @@ service:
   ports:
     gofer:
       port: 8080
-    prometheus:
+    metrics:
       port: 9090
     healthcheck:
       port: 9100
@@ -158,7 +158,7 @@ serviceMonitor:
   # https://github.com/coreos/prometheus-operator
   enabled: false
   # -- port to scrape
-  port: prometheus
+  port: metrics
   # -- Path to scrape
   path: /metrics
   # -- Alternative namespace for ServiceMonitor
