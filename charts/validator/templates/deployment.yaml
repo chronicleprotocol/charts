@@ -99,7 +99,7 @@ spec:
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-
+            
             ### -- WEB API
             {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
@@ -147,11 +147,17 @@ spec:
           {{- end }}
 
           {{- if .Values.global.metrics.enabled }}
-          ### Metrics
-            - name: CFG_PROMETHEUS_ENABLE
+          #### Metrics
+            - name: CFG_TELEMETRY_PORT
+              value: {{ .Values.global.metrics.port | default "9090" | quote }}
+            - name: CFG_METRICS_ENABLE
               value: {{ .Values.global.metrics.enabled | quote }}
             - name: CFG_METRICS_HOST
               value: {{ .Values.global.metrics.host | default "0.0.0.0" | quote }}
+            - name: CFG_METRICS_PORT
+              value: {{ .Values.global.metrics.port | default "9090" | quote }}
+            - name: CFG_METRICS_PATH
+              value: {{ .Values.global.metrics.path | default "/metrics" | quote }}
           {{- end }}
 
           ### Logging

@@ -3,9 +3,9 @@ global:
   logFormat: text
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/validator/values.yaml
   liveness:
-    enabled: false
+    enabled: true
   readiness:
-    enabled: false
+    enabled: true
 
 ghost:
   watchdogInterval: "5s"
@@ -24,6 +24,10 @@ ghost:
       CFG_ETH_KEYS: '{"address":"535e1946bd6f571e9e7f53433b3756478586384d","crypto":{"cipher":"aes-128-ctr","ciphertext":"b782b4988c2ec5904f2adf9b3db0984d0032cfe34e1740e093d724e844fbc453","cipherparams":{"iv":"a34d149bb369fbec1e295352cf733829"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"094aa5e2499767c050a6c817a124d642259b235b52f6d8cb374461ef02b9d2e9"},"mac":"5405b9d0878959fa28d9751b5a0d3ee41c875807c66df69f14d63ee231d43cb7"},"id":"4ca6d42e-5e38-466e-934d-8f0ac799d99c","version":3}'
 
       WATCHDOG_ETH_FROM: "0x0000000000000000000000000000000000000000"
+  
+  commandOverride:
+    - "/usr/local/bin/chronicle-app"
+    - "run"
 
 vao:
   watchdogInterval: "5s"

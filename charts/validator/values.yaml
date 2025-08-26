@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.61.8@sha256:85ada75fb83b1776e8b27f8ef489c68e5a04dc87727323f542429a931b28d6da"
+    tag: "0.61.9@sha256:fce183d29a47bdf97618646e3c9782a0840ccf082a42e0cb4f5f1d81513c82d3"
 
   imagePullSecrets: []
 
@@ -87,7 +87,7 @@ global:
 
   # -- Metrics port for the validator, used by the service and the service monitor
   metrics:
-    enabled: false
+    enabled: true
     port: 9090
 
   # -- Resources constraints for the validator, CPU, Memory, etc.
@@ -125,7 +125,7 @@ ghost:
   # watchdogInterval: "300s"
 
   # -- command override for the validator
-  commandOverride: []
+  commandOverride:
     # default (baked in the image):
     # - "/usr/local/bin/watchdog"
     # - "/usr/local/bin/chronicle-app"
