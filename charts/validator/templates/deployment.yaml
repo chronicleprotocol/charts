@@ -146,6 +146,14 @@ spec:
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
           {{- end }}
 
+          {{- if .Values.global.metrics.enabled }}
+          ### Metrics
+            - name: CFG_PROMETHEUS_ENABLE
+              value: {{ .Values.global.metrics.enabled | quote }}
+            - name: CFG_METRICS_HOST
+              value: {{ .Values.global.metrics.host | default "0.0.0.0" | quote }}
+          {{- end }}
+
           ### Logging
             - name: CFG_LOG_LEVEL
               value: {{ .Values.global.logLevel | default "warning" | quote }}

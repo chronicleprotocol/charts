@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.60.25@sha256:d953c448567aac3574f2191e41a12a5472052a471108cda488455e59a10c364d"
+    tag: "0.61.8@sha256:85ada75fb83b1776e8b27f8ef489c68e5a04dc87727323f542429a931b28d6da"
 
   imagePullSecrets: []
 
@@ -87,7 +87,7 @@ global:
 
   # -- Metrics port for the validator, used by the service and the service monitor
   metrics:
-    enabled: true
+    enabled: false
     port: 9090
 
   # -- Resources constraints for the validator, CPU, Memory, etc.

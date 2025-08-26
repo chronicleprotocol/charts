@@ -13,5 +13,5 @@ spec:
       image: busybox
       command: ['sleep']
       args:
-        - '60'
+        - '30'
   restartPolicy: Never
