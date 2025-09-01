@@ -148,7 +148,7 @@ spec:
 
           #### Metrics
             - name: CFG_METRICS_ENABLE
-              value: {{ .Values.global.metrics.enabled | quote }}
+              value: {{ .Values.global.metrics.enabled | default true | quote }}
           {{- if .Values.global.metrics.enabled }}
             - name: CFG_TELEMETRY_PORT
               value: {{ .Values.global.metrics.port | default "9090" | quote }}
