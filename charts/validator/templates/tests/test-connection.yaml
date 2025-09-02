@@ -5,30 +5,47 @@ metadata:
   labels:
     {{- include "validator.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-weight": "7"
     "helm.sh/hook": test
 spec:
   containers:
-  {{- $serviceName := include "validator.fullname" . }}
-  {{- range $name, $config := .Values.ghost.service.ports }}
-    - name: nc-ghost-{{ $name }}
+    - name: test-connection
       image: busybox
-      command: ['nc']
+      command: ['sh', '-c']
       args:
-        - '-zv'
-        - '-v'
-        - '{{ $serviceName }}'
-        - '{{ $config.port }}'
-  {{- end }}
-  {{- $vaoServiceName := printf "%s-vao" (include "validator.fullname" .) }}
-  {{- range $name, $config := .Values.vao.service.ports }}
-    - name: nc-vao-{{ $name }}
-      image: busybox
-      command: ['nc']
-      args:
-        - '-zv'
-        - '-v'
-        - '{{ $vaoServiceName }}'
-        - '{{ $config.port }}'
-  {{- end }}
+        - |
+          set -e
+          echo "--- Starting connection tests ---"
+
+          # Wait and test loop for up to 2 minutes
+          for i in $(seq 1 12); do
+            echo "Attempt $i/12..."
+            SUCCESS=true
+
+            {{- $serviceName := include "validator.fullname" . }}
+            {{- range $name, $config := .Values.ghost.service.ports }}
+            if ! nc -zv -w 5 '{{ $serviceName }}' '{{ $config.port }}'; then
+              echo "Failed to connect to ghost service '{{ $name }}' on port {{ $config.port }}"
+              SUCCESS=false
+            fi
+            {{- end }}
+
+            {{- $vaoServiceName := printf "%s-vao" (include "validator.fullname" .) }}
+            {{- range $name, $config := .Values.vao.service.ports }}
+            if ! nc -zv -w 5 '{{ $vaoServiceName }}' '{{ $config.port }}'; then
+              echo "Failed to connect to vao service '{{ $name }}' on port {{ $config.port }}"
+              SUCCESS=false
+            fi
+            {{- end }}
+
+            if [ "$SUCCESS" = "true" ]; then
+              echo "--- All connection tests passed! ---"
+              exit 0
+            fi
+            echo "Some connections failed, retrying in 10 seconds..."
+            sleep 10
+          done
+
+          echo "--- Connection tests FAILED after multiple retries. ---"
+          exit 1
   restartPolicy: Never

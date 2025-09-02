@@ -65,15 +65,10 @@ spec:
 
           {{- if .Values.global.liveness.enabled }}
             - containerPort: {{ .Values.global.liveness.livenessProbe.httpGet.port }}
-              name: probe-live
+              name: probe-http
               protocol: TCP
           {{- end }}
 
-          {{- if .Values.global.readiness.enabled }}
-            - containerPort: {{ .Values.global.readiness.readinessProbe.httpGet.port }}
-              name: probe-ready
-              protocol: TCP
-          {{- end }}
 
           {{- if .Values.global.liveness.enabled }}
           livenessProbe:

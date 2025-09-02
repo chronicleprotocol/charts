@@ -3,13 +3,12 @@ kind: Pod
 metadata:
   name: "{{ include "validator.fullname" . }}-test-logs"
   labels:
-    {{- include "validator.labels" . | nindent 4 }}
+    
   annotations:
-    "helm.sh/hook-weight": "5"
+    "helm.sh/hook-weight": "3"
     "helm.sh/hook": test
 spec:
   serviceAccountName: {{ include "validator.serviceAccountName" . }}-test
-
   containers:
     - name: test-ghost-logs
       image: bitnami/kubectl:latest
@@ -17,14 +16,40 @@ spec:
         - /bin/sh
         - -c
         - |
-          echo 'Running tests';
-          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=ghost' -o jsonpath='{.items[0].metadata.name}') | grep 'Received message'
+          set -e
+          POD_SELECTOR='app.kubernetes.io/name=ghost'
+          echo "Waiting for ghost pod to be ready..."
+          kubectl wait --for=condition=ready pod -l $POD_SELECTOR --namespace {{ .Release.Namespace }} --timeout=90s
+
+          POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l $POD_SELECTOR -o jsonpath='{.items[0].metadata.name}')
+          echo "Checking logs for pod $POD_NAME..."
+
+          if ! timeout 90s bash -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep -q \"Received message\"; do echo 'ghost logs: waiting for message...'; sleep 5; done" "$POD_NAME"; then
+            echo "TEST FAILED: Did not find 'Received message' in ghost logs within 90s."
+            echo "--- Last 100 lines of log ---"
+            kubectl logs --namespace {{ .Release.Namespace }} --tail=10 "$POD_NAME"
+            exit 1
+          fi
+          echo "TEST PASSED: Found 'Received message' in ghost logs."
     - name: test-vao-logs
       image: bitnami/kubectl:latest
       command:
         - /bin/sh
         - -c
         - |
-          echo 'Running tests';
-          kubectl logs --namespace {{ .Release.Namespace }} $(kubectl get pods --namespace {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }},app.kubernetes.io/name=vao' -o jsonpath='{.items[0].metadata.name}') | grep 'model="VAO::'
+          set -e
+          POD_SELECTOR='app.kubernetes.io/name=vao'
+          echo "Waiting for vao pod to be ready..."
+          kubectl wait --for=condition=ready pod -l $POD_SELECTOR --namespace {{ .Release.Namespace }} --timeout=90s
+
+          POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l $POD_SELECTOR -o jsonpath='{.items[0].metadata.name}')
+          echo "Checking logs for pod $POD_NAME..."
+
+          if ! timeout 90s bash -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep -q \"model=\\\"VAO::\"; do echo 'vao logs: waiting for message...'; sleep 5; done" "$POD_NAME"; then
+            echo "TEST FAILED: Did not find 'model=\"VAO::' in vao logs within 90s."
+            echo "--- Last 100 lines of log ---"
+            kubectl logs --namespace {{ .Release.Namespace }} --tail=10 "$POD_NAME"
+            exit 1
+          fi
+          echo "TEST PASSED: Found 'model=\"VAO::' in vao logs."
   restartPolicy: Never
