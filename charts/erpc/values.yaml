@@ -283,11 +283,11 @@ erpc:
 
       # Each upstream supports 1 or more networks (chains)
       upstreams:
-        - id: blastapi-chain-42161
+        - id: public-arb1
           type: evm
-          endpoint: https://arbitrum-one.blastapi.io/xxxxxxx-xxxxxx-xxxxxxx
+          endpoint: https://arb1.arbitrum.io/rpc
           # Defines which budget to use when hadnling requests of this upstream.
-          rateLimitBudget: global-blast
+          rateLimitBudget: default-budget
           # chainId is optional and will be detected from the endpoint (eth_chainId) but it is recommended to set it explicitly, for faster initialization.
           evm:
             chainId: 42161
@@ -306,57 +306,12 @@ erpc:
               backoffMaxDelay: 3s
               backoffFactor: 1.2
               jitter: 0ms
-        - id: blastapi-chain-1
+        - id: public-eth
           type: evm
-          endpoint: https://eth-mainnet.blastapi.io/xxxxxxx-xxxxxx-xxxxxxx
-          rateLimitBudget: global-blast
+          endpoint: https://ethereum-rpc.publicnode.com
+          rateLimitBudget: public-node
           evm:
             chainId: 1
-          failsafe:
-          - matchMethod: "*"
-            timeout:
-              duration: 15s
-            retry:
-              maxAttempts: 2
-              delay: 500ms
-              backoffMaxDelay: 3s
-              backoffFactor: 1.2
-              jitter: 0ms
-        - id: quiknode-chain-42161
-          type: evm
-          endpoint: https://xxxxxx-xxxxxx.arbitrum-mainnet.quiknode.pro/xxxxxxxxxxxxxxxxxxxxxxxx/
-          rateLimitBudget: global-quicknode
-          # You can enable auto-ignoring unsupported methods, instead of defining them explicitly.
-          # NOTE: some providers (e.g. dRPC) are not consistent with "unsupported method" responses,
-          # so this feature might mark methods as unsupported that are actually supported!
-          autoIgnoreUnsupportedMethods: true
-          # To allow auto-batching requests towards the upstream, use these settings.
-          # Remember if "supportsBatch" is false, you still can send batch requests to eRPC
-          # but they will be sent to upstream as individual requests.
-          jsonRpc:
-            supportsBatch: true
-            batchMaxSize: 10
-            batchMaxWait: 100ms
-          evm:
-            chainId: 42161
-          failsafe:
-          - matchMethod: "*"
-            timeout:
-              duration: 15s
-            retry:
-              maxAttempts: 2
-              delay: 500ms
-              backoffMaxDelay: 3s
-              backoffFactor: 1.2
-              jitter: 0ms
-
-          # "id" is a unique identifier to distinguish in logs and metrics.
-        - id: alchemy-multi-chain-example
-          # For certain known providers (such as Alchemy) you use a custom protocol name
-          # which allows a single upstream to import "all chains" supported by that provider.
-          # Note that these chains are hard-coded in the repo, so if they support a new chain eRPC must be updated.
-          endpoint: alchemy://XXXX_YOUR_ALCHEMY_API_KEY_HERE_XXXX
-          rateLimitBudget: global
           failsafe:
           - matchMethod: "*"
             timeout:
@@ -389,7 +344,7 @@ erpc:
           - method: "*"
             maxCount: 1000
             period: 1s
-      - id: global-quicknode
+      - id: public-node
         rules:
           - method: "*"
             maxCount: 300
