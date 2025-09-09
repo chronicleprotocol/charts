@@ -65,15 +65,10 @@ spec:
 
           {{- if .Values.global.liveness.enabled }}
             - containerPort: {{ .Values.global.liveness.livenessProbe.httpGet.port }}
-              name: probe-live
+              name: probe-http
               protocol: TCP
           {{- end }}
 
-          {{- if .Values.global.readiness.enabled }}
-            - containerPort: {{ .Values.global.readiness.readinessProbe.httpGet.port }}
-              name: probe-ready
-              protocol: TCP
-          {{- end }}
 
           {{- if .Values.global.liveness.enabled }}
           livenessProbe:
@@ -99,7 +94,7 @@ spec:
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-
+            
             ### -- WEB API
             {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
@@ -144,6 +139,20 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.ghost.ethConfig.ethPass.existingSecret }}
                   key: {{ .Values.ghost.ethConfig.ethPass.key }}
+          {{- end }}
+
+          #### Metrics
+            - name: CFG_METRICS_ENABLE
+              value: {{ .Values.global.metrics.enabled | default true | quote }}
+          {{- if .Values.global.metrics.enabled }}
+            - name: CFG_TELEMETRY_PORT
+              value: {{ .Values.global.metrics.port | default "9090" | quote }}
+            - name: CFG_METRICS_HOST
+              value: {{ .Values.global.metrics.host | default "0.0.0.0" | quote }}
+            - name: CFG_METRICS_PORT
+              value: {{ .Values.global.metrics.port | default "9090" | quote }}
+            - name: CFG_METRICS_PATH
+              value: {{ .Values.global.metrics.path | default "/metrics" | quote }}
           {{- end }}
 
           ### Logging
