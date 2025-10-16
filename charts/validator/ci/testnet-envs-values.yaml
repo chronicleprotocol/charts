@@ -15,7 +15,11 @@ ghost:
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
-
+  # commandOverride:
+  #   - "/usr/local/bin/chronicle-app"
+  #   - "run"
+  #   - "-c"
+  #   - "ipfs://..."
   env:
     normal:
       CFG_ENVIRONMENT: "stage"
@@ -36,6 +40,11 @@ vao:
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
+  # commandOverride:
+  #   - "/usr/local/bin/chronicle-app"
+  #   - "run"
+  #   - "-c"
+  #   - "ipfs://...."
 
   env:
     normal:
