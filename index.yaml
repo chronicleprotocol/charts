@@ -607,6 +607,23 @@ entries:
     version: 0.0.1
   erpc:
   - apiVersion: v2
+    appVersion: 0.0.57
+    created: "2025-10-16T17:21:36.293618903Z"
+    description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
+      reorg-aware permanent caching to Kubernetes
+    digest: 3ea4b6d3ab45009121918d65d68d9db8da2594b23e6f1043600f43048b35e355
+    icon: https://avatars.githubusercontent.com/u/6142249
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: erpc
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.5.3/erpc-0.5.3.tgz
+    version: 0.5.3
+  - apiVersion: v2
     appVersion: 0.0.55
     created: "2025-09-08T09:36:55.289945337Z"
     description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
@@ -4581,4 +4598,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-16T17:01:48.401355194Z"
+generated: "2025-10-16T17:21:36.294146441Z"
