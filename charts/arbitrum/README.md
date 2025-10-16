@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.6.7-a7c9f1e](https://img.shields.io/badge/AppVersion-v3.6.7--a7c9f1e-informational?style=flat-square)
+![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.7.6-c0fe95e](https://img.shields.io/badge/AppVersion-v3.7.6--c0fe95e-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
