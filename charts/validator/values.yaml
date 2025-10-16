@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.60.25@sha256:d953c448567aac3574f2191e41a12a5472052a471108cda488455e59a10c364d"
+    tag: "0.61.13@sha256:d230400a477042ff6af80d25725aaad85d8ddbfe32e989a347584d63efaee4bc"
 
   imagePullSecrets: []
 
@@ -125,7 +125,7 @@ ghost:
   # watchdogInterval: "300s"
 
   # -- command override for the validator
-  commandOverride: []
+  commandOverride:
     # default (baked in the image):
     # - "/usr/local/bin/watchdog"
     # - "/usr/local/bin/chronicle-app"
