@@ -297,6 +297,21 @@ entries:
     version: 0.0.1
   beacons:
   - apiVersion: v2
+    appVersion: v6.1.2
+    created: "2025-10-16T16:54:09.476766015Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: cba55e9e1437a746df2bc3c99f3711d7f18748956b2b6284dc3e492a54b99fcc
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.16/beacons-0.0.16.tgz
+    version: 0.0.16
+  - apiVersion: v2
     appVersion: v6.0.0
     created: "2025-04-25T06:19:04.564133096Z"
     description: A Helm chart for deploying a beacon node to Kubernetes
@@ -1809,6 +1824,23 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/hyperliquid-0.1.0/hyperliquid-0.1.0.tgz
     version: 0.1.0
   lighthouse:
+  - apiVersion: v2
+    appVersion: v7.1.0
+    created: "2025-10-16T16:54:09.648701934Z"
+    description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
+      on Kubernetes
+    digest: 8d0077e9cd0f55b3ae3d768d63660803f7a0e6c5f45e70526a3cf416c0ca4a75
+    icon: https://avatars.githubusercontent.com/u/22672004
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: lighthouse
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.7/lighthouse-0.0.7.tgz
+    version: 0.0.7
   - apiVersion: v2
     appVersion: v7.0.0
     created: "2025-04-25T06:19:04.99083382Z"
@@ -4517,4 +4549,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-16T16:35:19.441787741Z"
+generated: "2025-10-16T16:54:09.649198453Z"
