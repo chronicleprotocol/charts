@@ -9,7 +9,7 @@ global:
 
 ghost:
   watchdogInterval: "5s"
-  rpcUrl: https://eth.llamarpc.com
+  rpcUrl: https://eth.drpc.org
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
