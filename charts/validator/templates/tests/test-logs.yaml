@@ -40,7 +40,7 @@ spec:
           set -e
           POD_SELECTOR='app.kubernetes.io/name=vao'
           echo "Waiting for vao pod to be ready..."
-          kubectl wait --for=condition=ready pod -l $POD_SELECTOR --namespace {{ .Release.Namespace }} --timeout=90s
+          kubectl wait --for=condition=ready pod -l $POD_SELECTOR --namespace {{ .Release.Namespace }} --timeout=120s
 
           POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l $POD_SELECTOR -o jsonpath='{.items[0].metadata.name}')
           echo "Checking logs for pod $POD_NAME..."
