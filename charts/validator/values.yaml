@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.63.0@sha256:89a76dc9a69e90a81964acd53505c420145b59b9a48edf43525650b81e1ca692"
+    tag: "0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"
 
   imagePullSecrets: []
 
