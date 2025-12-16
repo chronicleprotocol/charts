@@ -94,7 +94,7 @@ spec:
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-            
+
             ### -- WEB API
             {{- if .Values.ghost.webApi.enabled }}
             - name: CFG_WEBAPI_ENABLE
@@ -173,7 +173,7 @@ spec:
           {{- end }}
 
           resources:
-            {{- toYaml .Values.global.resources | nindent 12 }}
+            {{- toYaml ( .Values.ghost.resources | default .Values.global.resources ) | nindent 12 }}
 
 
       {{- with .Values.global.nodeSelector }}
