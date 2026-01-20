@@ -52,9 +52,6 @@ service:
     # rpc:
     #   port: 9100
     #   protocol: TCP
-    # webapi:
-    #   port: 8080
-    #   protocol: TCP
   annotations:
     {}
     # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
@@ -173,9 +170,6 @@ env:
 # It is in HCL format.
 # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
 configHcl: {}
-
-tor-proxy:
-  enabled: true
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
