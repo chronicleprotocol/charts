@@ -11,12 +11,12 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"
+    tag: "0.69.5@sha256:f2a019314471438a9a68e45db438e29fc5311f221e243ee101289453ea378b9e"
 
   imagePullSecrets: []
 
   nameOverride: ""
-  # -- Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing
+  # -- Override the release name. NB only change this if you know what you are doing
   fullnameOverride: "ghost"
 
   serviceAccount:
@@ -85,6 +85,10 @@ global:
       initialDelaySeconds: 30
       periodSeconds: 60
 
+  # -- Connection test : helm test that verifies service ports are reachable
+  connectionTest:
+    enabled: true
+
   # -- Metrics port for the validator, used by the service and the service monitor
   metrics:
     enabled: true
@@ -137,9 +141,9 @@ ghost:
     # - "-c"
     # - "ipfs://Qm......."
 
-  # -- WEB API (tor-proxy)
+  # -- WEB API
   webApi:
-    # -- Enables the web api and deploys the tor-proxy subchart
+    # -- Enables the web api
     enabled: true
     # -- Listen address for the web api
     listenAddr: "0.0.0.0:8080"
@@ -193,6 +197,9 @@ ghost:
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 vao:
+  # -- Enable VAO deployment (requires ETH keys to be configured)
+  enabled: true
+
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
   # -- WATCHDOG polling interval (in seconds)
@@ -249,11 +256,6 @@ vao:
     #   mountPath: /app/keys/keyfile
     #   subPath: keyfile.json  # Mount specific file from secret
     #   readOnly: true
-
-# -- Values for Tor Proxy (subchart of ghost)
-tor-proxy:
-  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)
-  enabled: true
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator

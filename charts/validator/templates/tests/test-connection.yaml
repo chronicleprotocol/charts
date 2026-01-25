@@ -1,3 +1,4 @@
+{{- if .Values.global.connectionTest.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -30,12 +31,14 @@ spec:
             fi
             {{- end }}
 
+            {{- if .Values.vao.enabled }}
             {{- $vaoServiceName := printf "%s-vao" (include "validator.fullname" .) }}
             {{- range $name, $config := .Values.vao.service.ports }}
             if ! nc -zv -w 5 '{{ $vaoServiceName }}' '{{ $config.port }}'; then
               echo "Failed to connect to vao service '{{ $name }}' on port {{ $config.port }}"
               SUCCESS=false
             fi
+            {{- end }}
             {{- end }}
 
             if [ "$SUCCESS" = "true" ]; then
@@ -49,3 +52,4 @@ spec:
           echo "--- Connection tests FAILED after multiple retries. ---"
           exit 1
   restartPolicy: Never
+{{- end }}

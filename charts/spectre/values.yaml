@@ -171,10 +171,6 @@ tolerations: []
 
 affinity: {}
 
-tor-proxy:
-  # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml)
-  enabled: true
-
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
   # https://github.com/coreos/prometheus-operator
