@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.4.8](https://img.shields.io/badge/Version-0.4.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.66.2](https://img.shields.io/badge/AppVersion-0.66.2-informational?style=flat-square)
+![Version: 0.4.9](https://img.shields.io/badge/Version-0.4.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.66.2](https://img.shields.io/badge/AppVersion-0.66.2-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -28,15 +28,15 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.service.ports.webapi | object | `{"port":8080,"protocol":"TCP"}` | webapi listen port for the validator service |
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
-| ghost.webApi | object | `{"enabled":true,"listenAddr":"0.0.0.0:8080"}` | WEB API (tor-proxy) |
-| ghost.webApi.enabled | bool | `true` | Enables the web api and deploys the tor-proxy subchart |
+| ghost.webApi | object | `{"enabled":true,"listenAddr":"0.0.0.0:8080"}` | WEB API |
+| ghost.webApi.enabled | bool | `true` | Enables the web api |
 | ghost.webApi.listenAddr | string | `"0.0.0.0:8080"` | Listen address for the web api |
 | global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
 | global.affinity | object | `{}` | pod Affinity spec applied validator |
 | global.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | global.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
 | global.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
-| global.fullnameOverride | string | `"ghost"` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
+| global.fullnameOverride | string | `"ghost"` | Override the release name. NB only change this if you know what you are doing |
 | global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"}` | Image for the validator |
 | global.image.tag | string | `"0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"` | Overrides the image tag whose default is the chart appVersion. |
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
@@ -64,8 +64,6 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"60s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
-| tor-proxy | object | `{"enabled":true}` | Values for Tor Proxy (subchart of ghost) |
-| tor-proxy.enabled | bool | `true` | values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml) |
 | vao.argsOverride | list | `[]` | args override for the validator |
 | vao.commandOverride | list | `[]` | command override for the validator |
 | vao.env | object | `{"normal":{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"},"raw":{}}` | Environment variable listing |
