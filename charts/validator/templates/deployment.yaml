@@ -101,6 +101,13 @@ spec:
               value: {{ .Values.ghost.webApi.enabled | quote }}
             - name: CFG_WEBAPI_LISTEN_ADDR
               value: {{ .Values.ghost.webApi.listenAddr | quote }}
+            - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
+              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
+            - name: CFG_WEB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "validator.fullname" . }}-tor-secret
+                  key: onionAddress
             {{- end }}
 
             ### -- CHAIN and RPC (target or main chain)

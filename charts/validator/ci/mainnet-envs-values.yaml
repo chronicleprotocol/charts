@@ -3,12 +3,9 @@ global:
   logFormat: text
   # values for ghost: https://github.com/chronicleprotocol/charts/blob/main/charts/validator/values.yaml
   liveness:
-    enabled: false
+    enabled: true
   readiness:
-    enabled: false
-  # Connection test requires libp2p port which needs ETH keys to initialize
-  connectionTest:
-    enabled: false
+    enabled: true
 
 ghost:
   watchdogInterval: "5s"
@@ -32,9 +29,7 @@ ghost:
   #   - "-c"
   #   - "ipfs://"
 
-# Disable VAO deployment in CI - requires ETH keys to be configured
 vao:
-  enabled: false
   watchdogInterval: "5s"
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`

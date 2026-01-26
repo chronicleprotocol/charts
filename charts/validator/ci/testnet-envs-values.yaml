@@ -6,9 +6,6 @@ global:
     enabled: false
   readiness:
     enabled: false
-  # Connection test requires libp2p port which needs ETH keys to initialize
-  connectionTest:
-    enabled: false
   chainId: "11155111"
   chainName: sep
 ghost:
@@ -38,9 +35,7 @@ ghost:
 
       WATCHDOG_ETH_FROM: "0x0000000000000000000000000000000000000000"
 
-# Disable VAO deployment in CI - requires ETH keys to be configured
 vao:
-  enabled: false
   watchdogConfigReg: "0x43b9395BBB1d7A7a5862993256C5572f2c95663D"
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`

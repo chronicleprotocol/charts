@@ -1,4 +1,3 @@
-{{- if .Values.vao.enabled }}
 {{- if .Values.global.metrics.enabled }}
 apiVersion: v1
 kind: Service
@@ -19,5 +18,4 @@ spec:
       targetPort: {{ .Values.global.metrics.port }}
   selector:
     {{- include "validatorVao.selectorLabels" . | nindent 4 }}
-{{- end }}
 {{- end }}
