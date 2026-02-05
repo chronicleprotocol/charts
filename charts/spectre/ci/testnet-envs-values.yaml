@@ -48,6 +48,14 @@ inlineConfig: |
       listen_path = "/healthz"
     }
   }
+  transport {
+    libp2p {
+      disable_discovery = true
+      ethereum_key      = "default"
+      listen_addrs      = explode(var.separator, env("CFG_LIBP2P_LISTEN_ADDRS", "/ip4/0.0.0.0/tcp/8000"))
+      feeds             = []
+    }
+  }
   spectre {
     scheduler = tonumber(env("CFG_SPECTRE_INTERVAL", "120"))
     scribe {
