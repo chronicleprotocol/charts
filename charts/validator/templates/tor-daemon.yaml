@@ -1,0 +1,10 @@
+apiVersion: tor.k8s.torproject.org/v1alpha2
+kind: Tor
+metadata:
+  name: {{ include "validator.fullname" . }}-socks
+spec:
+  config: |
+    # ghost validator svc
+    HiddenServiceDir /var/lib/tor/data/authorized_clients
+    HiddenServiceVersion 3
+    HiddenServicePort 8888 {{ include "validator.fullname" . }}:{{ .Values.ghost.service.ports.webapi.port }}
