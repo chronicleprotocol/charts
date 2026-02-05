@@ -49,21 +49,11 @@ configsUrl: ""
 inlineConfig: ""
 
 env:
-  normal:
-    # webapi - receive only (Spectre)
-    CFG_WEBAPI_ENABLE: 1
+  normal: {}
     # CFG_MODELS: |-
     #   "LIDO_LST/1DAY"
     #   "ETH/BTC"
     # CFG_SPECTRE_PAIRS:  "MKR/USD"
-    # receiving
-    CFG_WEBAPI_LISTEN_ADDR: ":8080"
-    # sending (disabled)
-    CFG_WEBAPI_SOCKS5_PROXY_ADDR: ""
-    # on-chain address book
-    CFG_WEBAPI_ETH_ADDR_BOOK: ""
-    # local address book
-    CFG_WEBAPI_STATIC_ADDR_BOOK: ""
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
   # normal:
@@ -73,7 +63,6 @@ env:
   #    CFG_FEEDS: "${ETH_FROM_A},${ETH_FROM_B},${ETH_FROM_C}"
   #    CFG_LIBP2P_BOOTSTRAP_ADDRS: "/dns4/bootstrap.local/tcp/8000/p2p/12D3KooWJgSBDkfdkoXNBBS91uaM1FRE4GowChEgr4SWDKEz75Rq"
   #    CFG_GOFER_OPENEXCHANGERATES_API_KEY:
-  #    CFG_WEBAPI_ENABLE: 0
   #    CFG_ETH_RPC_URLS: ${ETH_RPCS} # comma separated list of ethereum rpc urls
   #    CFG_ETH_CHAIN_ID: ${ETH_CHID} # ethereum chain id
   #    CFG_ARB_RPC_URLS: ${ARB_RPCS} # comma separated list of arbitrum rpc urls

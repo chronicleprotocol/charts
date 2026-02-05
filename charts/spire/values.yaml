@@ -158,16 +158,6 @@ env:
     # CFG_LIBP2P_PK_SEED: "1234567981234567981234567981234567981234123456798123456798123456" # 64 bytes libp2p for bootstrap only
     # CFG_LIBP2P_BOOTSTRAP_ADDRS: |-
     #   /dns/bootstrap.some.domain/tcp/8000/p2p/<some_libp2p_pub_key>
-    # # webapi - receive only (Spire Stream)
-    # CFG_WEBAPI_ENABLE: 1
-    # ## receiving
-    # CFG_WEBAPI_LISTEN_ADDR: ":8080"
-    # ## sending
-    # CFG_WEBAPI_SOCKS5_PROXY_ADDR: "" # no proxy
-    # ### on-chain address book
-    # CFG_WEBAPI_ETH_ADDR_BOOK: "" # no addr book contract
-    # ### local address book
-    # CFG_WEBAPI_STATIC_ADDR_BOOK: "" # no addresses
 
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.
