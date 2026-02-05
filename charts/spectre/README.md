@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.42.2](https://img.shields.io/badge/AppVersion-0.42.2-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -25,11 +25,6 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | chainType | string | `nil` | can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia` |
 | configsUrl | string | `""` | config url for the app, if provided, will override the default config. can be an ipfs url or a http url |
 | entryPointOverride | list | `[]` |  |
-| env.normal.CFG_WEBAPI_ENABLE | int | `1` |  |
-| env.normal.CFG_WEBAPI_ETH_ADDR_BOOK | string | `""` |  |
-| env.normal.CFG_WEBAPI_LISTEN_ADDR | string | `":8080"` |  |
-| env.normal.CFG_WEBAPI_SOCKS5_PROXY_ADDR | string | `""` |  |
-| env.normal.CFG_WEBAPI_STATIC_ADDR_BOOK | string | `""` |  |
 | environment | string | `"stage"` | CFG_ENVIRONMENT can be one of `stage` or `prod` |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
@@ -84,7 +79,6 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | serviceMonitor.scrapeTimeout | string | `"60s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tolerations | list | `[]` |  |
-| tor-proxy.enabled | bool | `true` | values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/onion-service.yaml) |
 | txType | string | `nil` | can be one of `legacy`or `eip1559` |
 
 ----------------------------------------------

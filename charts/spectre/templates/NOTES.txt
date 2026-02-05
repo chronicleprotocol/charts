@@ -1,6 +1,2 @@
 1. Get the application pods by running these commands:
   kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "spectre.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}"
-{{- if index .Values "tor-proxy" "enabled" }}
-2. Get the tor onion address:
-  kubectl get onion --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "spectre.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
-{{- end -}}
