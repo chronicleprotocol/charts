@@ -102,6 +102,9 @@ securityContext: {}
 service:
   type: ClusterIP
   ports:
+    metrics:
+      port: 9090
+      protocol: TCP
     listen:
       port: 8080
       protocol: TCP
@@ -184,6 +187,8 @@ serviceMonitor:
   scrapeTimeout: 60s
   # -- ServiceMonitor relabelings
   relabelings: []
+  # -- ServiceMonitor metricRelabelings
+  metricRelabelings: []
 
 # -- Extra K8s manifests to deploy
 extraObjects: []
