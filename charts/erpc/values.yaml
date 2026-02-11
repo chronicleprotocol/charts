@@ -381,5 +381,7 @@ serviceMonitor:
   scrapeTimeout: 30s
   # -- ServiceMonitor relabelings
   relabelings: []
+  # -- ServiceMonitor metricRelabelings
+  metricRelabelings: []
 
 extraObjects: []
