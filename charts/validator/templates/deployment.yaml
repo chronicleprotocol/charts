@@ -94,21 +94,6 @@ spec:
             ### -- LIBP2P
             - name: CFG_LIBP2P_LISTEN_ADDRS
               value: "/ip4/0.0.0.0/tcp/{{ .Values.ghost.service.ports.libp2p.port | default 8000 }}"
-            
-            ### -- WEB API
-            {{- if .Values.ghost.webApi.enabled }}
-            - name: CFG_WEBAPI_ENABLE
-              value: {{ .Values.ghost.webApi.enabled | quote }}
-            - name: CFG_WEBAPI_LISTEN_ADDR
-              value: {{ .Values.ghost.webApi.listenAddr | quote }}
-            - name: CFG_WEBAPI_SOCKS5_PROXY_ADDR
-              value: "{{ include "validator.fullname" . }}-socks-tor-svc:9050"
-            - name: CFG_WEB_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "validator.fullname" . }}-tor-secret
-                  key: onionAddress
-            {{- end }}
 
             ### -- CHAIN and RPC (target or main chain)
             - name: CFG_CHAIN_NAME
@@ -173,7 +158,7 @@ spec:
           {{- end }}
 
           resources:
-            {{- toYaml .Values.global.resources | nindent 12 }}
+            {{- toYaml ( .Values.ghost.resources | default .Values.global.resources ) | nindent 12 }}
 
 
       {{- with .Values.global.nodeSelector }}
