@@ -137,26 +137,6 @@ ghost:
     # - "-c"
     # - "ipfs://Qm......."
 
-  # -- WEB API (tor-proxy)
-  webApi:
-    # -- Enables the web api and deploys the tor-proxy subchart
-    enabled: true
-    # -- Listen address for the web api
-    listenAddr: "0.0.0.0:8080"
-
-  # -- Resources constraints for the validator, CPU, Memory, etc.
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
-
   # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
     # ethFrom:
