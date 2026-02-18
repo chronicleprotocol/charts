@@ -55,10 +55,6 @@ spec:
             - "--config"
             - "config.hcl"
             {{- end }}
-            - "-v"
-            - "{{ .Values.logLevel | default "debug" }}"
-            - "--log.format"
-            - "{{ .Values.logFormat | default "text" }}"
             {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -86,6 +82,10 @@ spec:
               value: "{{ .Values.chainType }}"
             - name: CFG_CHAIN_TX_TYPE
               value: "{{ .Values.txType }}"
+            - name: CFG_LOG_LEVEL
+              value: "{{ .Values.logLevel | default "debug" }}"
+            - name: CFG_LOG_FORMAT
+              value: "{{ .Values.logFormat | default "text" }}"
           {{- if .Values.ethConfig }}
             - name: CFG_ETH_FROM
               valueFrom:
