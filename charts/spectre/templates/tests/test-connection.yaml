@@ -10,6 +10,7 @@ spec:
   containers:
   {{- $serviceName := include "spectre.fullname" . }}
   {{- range $name, $config := .Values.service.ports }}
+  {{- if ne $name "metrics" }}
     - name: nc-{{ $name }}
       image: busybox
       command: ['nc']
@@ -18,5 +19,6 @@ spec:
         - '-v'
         - '{{ $serviceName }}'
         - '{{ $config.port }}'
+  {{- end }}
   {{- end }}
   restartPolicy: Never
