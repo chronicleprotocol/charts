@@ -35,7 +35,6 @@ spec:
           securityContext:
             {{- toYaml .Values.global.securityContext | nindent 12 }}
           image: "{{ .Values.vao.image.repository | default .Values.global.image.repository }}:{{ .Values.vao.image.tag | default .Values.global.image.tag | default .Chart.AppVersion }}"
-
           {{- if .Values.vao.commandOverride }}
           command:
             {{- range .Values.vao.commandOverride }}
@@ -162,8 +161,13 @@ spec:
       volumes:
         {{- range .Values.vao.extraVolumes }}
         - name: {{ .name }}
+          {{- if .secretName }}
           secret:
             secretName: {{ .secretName }}
+          {{- else if .configMapName }}
+          configMap:
+            name: {{ .configMapName }}
+          {{- end }}
         {{- end }}
       {{- end }}
 
