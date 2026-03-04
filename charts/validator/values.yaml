@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "0.71.5"
+    tag: "0.66.2@sha256:eddc24c2e5c199bfe99397e9f5c46eaebfaa179b34fda027dc7499601aefc557"
 
   imagePullSecrets: []
 
@@ -114,10 +114,6 @@ global:
 
 # -- Values for Ghost
 ghost:
-  # -- Image tag for the validator (overrides global image if set)
-  image:
-    repository: null
-    tag: null
   # Deprecated: use `chainRpcUrl` instead - remove after FINSHED release
   rpcUrl: null
 
@@ -140,6 +136,13 @@ ghost:
     # - "run"
     # - "-c"
     # - "ipfs://Qm......."
+
+  # -- WEB API (tor-proxy)
+  webApi:
+    # -- Enables the web api and deploys the tor-proxy subchart
+    enabled: true
+    # -- Listen address for the web api
+    listenAddr: "0.0.0.0:8080"
 
   # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both
   ethConfig: {}
@@ -176,6 +179,10 @@ ghost:
       libp2p:
         port: 8000
         protocol: TCP
+      # -- webapi listen port for the validator service
+      webapi:
+        port: 8080
+        protocol: TCP
       # to add more port-mappings, add them here:
       # https:
       #   port: 8443
@@ -186,10 +193,6 @@ ghost:
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 vao:
-  # -- Image tag for the validator (overrides global image if set)
-  image:
-    repository: null
-    tag: null
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
   # -- WATCHDOG polling interval (in seconds)
@@ -222,19 +225,6 @@ vao:
       #     secretKeyRef:
       #       name: foo-secret
       #       key: foo-key
-
-  # -- Resources constraints for the validator, CPU, Memory, etc.
-  resources: {}
-    # We usually recommend not to specify default resources and to leave this as a conscious
-    # choice for the user. This also increases chances charts run on environments with little
-    # resources, such as Minikube. If you do want to specify resources, uncomment the following
-    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
 
   # -- Service type for the validator
   service:
