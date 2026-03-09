@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.5.1-pre.1](https://img.shields.io/badge/Version-0.5.1--pre.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.71.6](https://img.shields.io/badge/AppVersion-0.71.6-informational?style=flat-square)
+![Version: 0.5.1-pre.2](https://img.shields.io/badge/Version-0.5.1--pre.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.71.6](https://img.shields.io/badge/AppVersion-0.71.6-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -29,11 +29,14 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
 | global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
+| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":"true","name":""},"tolerations":[]}` | Global values for the validator chart, values are used across the chart resources |
 | global.affinity | object | `{}` | pod Affinity spec applied validator |
 | global.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | global.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
 | global.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
 | global.fullnameOverride | string | `"ghost"` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
+| global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""}` | Image for the validator |
+| global.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""}` | Image for the validator |
 | global.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":30,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
