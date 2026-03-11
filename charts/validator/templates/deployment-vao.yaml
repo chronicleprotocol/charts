@@ -82,9 +82,9 @@ spec:
             - name: WATCHDOG_CONFIG_REGISTRY
               value: {{ .Values.vao.watchdogConfigReg | quote }}
 
-            {{- if .Values.ghost.watchdogInterval }}
+            {{- if .Values.vao.watchdogInterval }}
             - name: WATCHDOG_INTERVAL
-              value: {{ .Values.ghost.watchdogInterval | quote }}
+              value: {{ .Values.vao.watchdogInterval | quote }}
             - name: WATCHDOG_SCHEDULE
               value: ""
             {{- end }}
@@ -102,7 +102,7 @@ spec:
               value: {{ .Values.ghost.rpcUrl | quote }}
               {{- if .Values.global.chainTxType }}
             - name: CFG_CHAIN_TX_TYPE
-              value: {{ .Values.global.chainTxType | default "eip1559" quote }}
+              value: {{ .Values.global.chainTxType | default "eip1559" | quote }}
               {{- end }}
 
           ### -- ETH KEYSTORE FROM EXISTING SECRET
