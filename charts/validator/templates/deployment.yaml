@@ -104,7 +104,7 @@ spec:
               value: {{ .Values.ghost.rpcUrl | quote }}
               {{- if .Values.global.chainTxType }}
             - name: CFG_CHAIN_TX_TYPE
-              value: {{ .Values.global.chainTxType | default "eip1559" quote }}
+              value: {{ .Values.global.chainTxType | default "eip1559" | quote }}
               {{- end }}
 
           ### -- ETH KEYSTORE FROM EXISTING SECRET
