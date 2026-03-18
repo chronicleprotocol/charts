@@ -1,6 +1,6 @@
 # erpc
 
-![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.61](https://img.shields.io/badge/AppVersion-0.0.61-informational?style=flat-square)
+![Version: 0.6.3](https://img.shields.io/badge/Version-0.6.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.63](https://img.shields.io/badge/AppVersion-0.0.63-informational?style=flat-square)
 
 A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-aware permanent caching to Kubernetes
 
@@ -53,11 +53,12 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| serviceMonitor | object | `{"annotations":{},"enabled":false,"interval":"1m","labels":{},"namespace":null,"path":"/metrics","port":"metrics","relabelings":[],"scheme":"http","scrapeTimeout":"30s","tlsConfig":{}}` | If true, create a ServiceMonitor CRD for prometheus operator |
+| serviceMonitor | object | `{"annotations":{},"enabled":false,"interval":"1m","labels":{},"metricRelabelings":[],"namespace":null,"path":"/metrics","port":"metrics","relabelings":[],"scheme":"http","scrapeTimeout":"30s","tlsConfig":{}}` | If true, create a ServiceMonitor CRD for prometheus operator |
 | serviceMonitor.annotations | object | `{}` | Additional ServiceMonitor annotations |
 | serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
 | serviceMonitor.interval | string | `"1m"` | ServiceMonitor scrape interval |
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
+| serviceMonitor.metricRelabelings | list | `[]` | ServiceMonitor metricRelabelings |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
 | serviceMonitor.path | string | `"/metrics"` | Path to scrape |
 | serviceMonitor.port | string | `"metrics"` | port to scrape |
