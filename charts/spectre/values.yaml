@@ -9,7 +9,8 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
-  # When set, pins the image by digest (e.g. "sha256:abc..."). Takes precedence over tag.
+  # When set, pins the image by digest (e.g. "sha256:abc...") while tag remains
+  # empty. Set image.tag to override the default pinned digest.
   digest: "sha256:c87e4d6944941c09019102da22bbd458649f54488627b2acbff21a51112215af"
 
 # -- CFG_ENVIRONMENT can be one of `stage` or `prod`
