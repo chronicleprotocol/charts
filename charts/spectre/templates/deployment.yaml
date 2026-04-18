@@ -107,19 +107,31 @@ spec:
           {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- if .Values.inlineConfig }}
+          {{- if or .Values.inlineConfig .Values.securityContext.readOnlyRootFilesystem }}
           volumeMounts:
+            {{- if .Values.securityContext.readOnlyRootFilesystem }}
+            - name: tmp
+              mountPath: /tmp
+            {{- end }}
+            {{- if .Values.inlineConfig }}
             - name: inline-config
               mountPath: /config.hcl
               subPath: config.hcl
               readOnly: true
+            {{- end }}
           {{- end }}
 
-      {{- if .Values.inlineConfig }}
+      {{- if or .Values.inlineConfig .Values.securityContext.readOnlyRootFilesystem }}
       volumes:
+        {{- if .Values.securityContext.readOnlyRootFilesystem }}
+        - name: tmp
+          emptyDir: {}
+        {{- end }}
+        {{- if .Values.inlineConfig }}
         - name: inline-config
           configMap:
             name: inline-config
+        {{- end }}
       {{- end }}
 
       {{- with .Values.nodeSelector }}

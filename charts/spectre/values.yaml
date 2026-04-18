@@ -101,10 +101,10 @@ podSecurityContext: {}
   # seccompProfile:
   #   type: RuntimeDefault
 
-# Container-level security context. Safe defaults: spectre does not write to
-# the filesystem, so readOnlyRootFilesystem is enabled without needing a
-# writable emptyDir. runAsNonRoot lives on podSecurityContext and is disabled
-# pending an upstream image rebuild with a non-root USER.
+# Container-level security context. The chart mounts an emptyDir at /tmp when
+# readOnlyRootFilesystem is enabled because spectre creates /tmp/chronicle at
+# startup. runAsNonRoot lives on podSecurityContext and is disabled pending an
+# upstream image rebuild with a non-root USER.
 securityContext:
   allowPrivilegeEscalation: false
   readOnlyRootFilesystem: true
