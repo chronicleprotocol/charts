@@ -9,6 +9,8 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
+  # When set, pins the image by digest (e.g. "sha256:abc..."). Takes precedence over tag.
+  digest: "sha256:c87e4d6944941c09019102da22bbd458649f54488627b2acbff21a51112215af"
 
 # -- CFG_ENVIRONMENT can be one of `stage` or `prod`
 environment: stage
@@ -88,16 +90,29 @@ serviceAccount:
 
 podAnnotations: {}
 
+# Pod-level security context. Left unset by default because the upstream spectre
+# image currently runs as root (no USER in Dockerfile, distroless/base without
+# :nonroot tag). Once the image is rebuilt as non-root, enable the block below.
 podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+  # runAsUser: 65532
+  # runAsGroup: 65532
+  # fsGroup: 65532
+  # seccompProfile:
+  #   type: RuntimeDefault
+
+# Container-level security context. Safe defaults: spectre does not write to
+# the filesystem, so readOnlyRootFilesystem is enabled without needing a
+# writable emptyDir. runAsNonRoot lives on podSecurityContext and is disabled
+# pending an upstream image rebuild with a non-root USER.
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+revisionHistoryLimit: 3
 
 service:
   type: ClusterIP
@@ -162,6 +177,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: kubernetes.io/hostname
+  #   whenUnsatisfiable: ScheduleAnyway
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: spectre
 
 serviceMonitor:
   # -- If true, a ServiceMonitor CRD is created for a prometheus operator
