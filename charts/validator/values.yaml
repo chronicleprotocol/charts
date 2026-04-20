@@ -112,6 +112,15 @@ global:
   # -- pod Affinity spec applied validator
   affinity: {}
 
+  # -- Topology spread constraints applied to both ghost and vao pods
+  topologySpreadConstraints: []
+    # - maxSkew: 1
+    #   topologyKey: kubernetes.io/hostname
+    #   whenUnsatisfiable: ScheduleAnyway
+    #   labelSelector:
+    #     matchLabels:
+    #       app.kubernetes.io/name: ghost
+
 # -- Values for Ghost
 ghost:
   # -- Image tag for the validator (overrides global image if set)
