@@ -147,6 +147,15 @@ tolerations: []
 
 affinity: {}
 
+# -- Topology spread constraints for the gofer pods. Use to spread replicas across nodes or zones.
+topologySpreadConstraints: []
+  # - maxSkew: 1
+  #   topologyKey: kubernetes.io/hostname
+  #   whenUnsatisfiable: ScheduleAnyway
+  #   labelSelector:
+  #     matchLabels:
+  #       app.kubernetes.io/name: gofer
+
 # This is a config file for gofer. it can override the default config if supplied
 # It is in HCL format.
 # For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
