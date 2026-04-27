@@ -176,7 +176,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.global.affinity }}
+      {{- $affinity := deepCopy (.Values.global.affinity | default dict) }}
+      {{- with .Values.vao.affinity }}
+      {{- $affinity = mergeOverwrite $affinity . }}
+      {{- end }}
+      {{- with $affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}

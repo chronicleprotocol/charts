@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.0](https://img.shields.io/badge/AppVersion-0.73.0-informational?style=flat-square)
+![Version: 0.6.2](https://img.shields.io/badge/Version-0.6.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.0](https://img.shields.io/badge/AppVersion-0.73.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -64,6 +64,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
 | tor-proxy | object | `{"enabled":true}` | Values for Tor Proxy (subchart of ghost) |
 | tor-proxy.enabled | bool | `true` | values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml) |
+| vao.affinity | object | `{}` | pod Affinity spec applied to the VAO pod. Merged over global.affinity. |
 | vao.argsOverride | list | `[]` | args override for the validator |
 | vao.commandOverride | list | `[]` | command override for the validator |
 | vao.env | object | `{"normal":{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"},"raw":{}}` | Environment variable listing |

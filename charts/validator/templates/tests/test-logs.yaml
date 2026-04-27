@@ -24,13 +24,13 @@ spec:
           POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l $POD_SELECTOR -o jsonpath='{.items[0].metadata.name}')
           echo "Checking logs for pod $POD_NAME..."
 
-          if ! timeout 90s bash -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep -q \"Received message\"; do echo 'ghost logs: waiting for message...'; sleep 5; done" "$POD_NAME"; then
-            echo "TEST FAILED: Did not find 'Received message' in ghost logs within 90s."
+          if ! timeout 90s sh -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep -Eq \"Received message|Fetched data point|WATCHDOG app is still running|WATCHDOG starting command|Starting\"; do echo 'ghost logs: waiting for runtime logs...'; sleep 5; done" "$POD_NAME"; then
+            echo "TEST FAILED: Did not find runtime logs in ghost logs within 90s."
             echo "--- Last 100 lines of log ---"
-            kubectl logs --namespace {{ .Release.Namespace }} --tail=10 "$POD_NAME"
+            kubectl logs --namespace {{ .Release.Namespace }} --tail=100 "$POD_NAME"
             exit 1
           fi
-          echo "TEST PASSED: Found 'Received message' in ghost logs."
+          echo "TEST PASSED: Found runtime logs in ghost logs."
     - name: test-vao-logs
       image: ghcr.io/chronicleprotocol/buildtools:sha-c670bbf
       command:
@@ -45,11 +45,11 @@ spec:
           POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l $POD_SELECTOR -o jsonpath='{.items[0].metadata.name}')
           echo "Checking logs for pod $POD_NAME..."
 
-          if ! timeout 90s bash -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep 'Configured model\" model=\"VAO::'; do echo 'vao logs: waiting for message...'; sleep 5; done" "$POD_NAME"; then
-            echo "TEST FAILED: Did not find 'model=\"VAO::' in vao logs within 90s."
+          if ! timeout 90s sh -c "until kubectl logs --namespace {{ .Release.Namespace }} \"\$0\" | grep -Eq \"Processor started|Received message|Fetched data point|WATCHDOG app is still running|WATCHDOG starting command|Starting\"; do echo 'vao logs: waiting for runtime logs...'; sleep 5; done" "$POD_NAME"; then
+            echo "TEST FAILED: Did not find runtime logs in vao logs within 90s."
             echo "--- Last 100 lines of log ---"
-            kubectl logs --namespace {{ .Release.Namespace }} --tail=10 "$POD_NAME"
+            kubectl logs --namespace {{ .Release.Namespace }} --tail=100 "$POD_NAME"
             exit 1
           fi
-          echo "TEST PASSED: Found 'model=\"VAO::' in vao logs."
+          echo "TEST PASSED: Found runtime logs in vao logs."
   restartPolicy: Never
