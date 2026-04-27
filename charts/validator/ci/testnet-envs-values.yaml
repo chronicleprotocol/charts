@@ -40,11 +40,6 @@ vao:
   service:
     # -- Type of service for the validator, can also be `LoadBalancer`
     type: ClusterIP
-  commandOverride:
-    - "/usr/local/bin/chronicle-app"
-    - "run"
-    - "-c"
-    - "ipfs://bafkreihgn52lzbdcotimrpop3jivywtkophwzskln3enm6jvudct4w3oiu"
 
   env:
     normal:
@@ -69,3 +64,19 @@ vao:
       mountPath: /etc/config
       subPath: config.yaml   # optional
       readOnly: true
+
+extraObjects:
+  - apiVersion: v1
+    kind: Secret
+    metadata:
+      name: test-secret
+    type: Opaque
+    stringData:
+      keyfile: "{}"
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: test-configmap
+    data:
+      config.yaml: |
+        test: true

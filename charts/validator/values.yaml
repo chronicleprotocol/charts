@@ -245,6 +245,9 @@ vao:
     #   cpu: 100m
     #   memory: 128Mi
 
+  # -- pod Affinity spec applied to the VAO pod. Merged over global.affinity.
+  affinity: {}
+
   # -- Service type for the validator
   service:
     # -- Type of service for the validator, only `LoadBalancer` supported for now
