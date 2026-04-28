@@ -151,7 +151,7 @@ logFormat: null
 # Environment variable listing
 env:
   # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/main/cmd/spire#environment-variables
   normal: {}
     # CFG_ITEM_SEPARATOR: "\n"
     # CFG_FEEDS: stage
@@ -161,7 +161,7 @@ env:
 
 # This is a config file for spire. it can override the default config if supplied
 # It is in HCL format.
-# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/master/config.hcl
+# For more information on HCL, see https://github.com/chronicleprotocol/oracle-suite/blob/main/config.hcl
 configHcl: {}
 
 serviceMonitor:

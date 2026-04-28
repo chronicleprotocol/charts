@@ -55,7 +55,7 @@ env:
     #   "ETH/BTC"
     # CFG_SPECTRE_PAIRS:  "MKR/USD"
   # non sensitive variables
-  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/master/cmd/spire#environment-variables
+  # refer to https://github.com/chronicleprotocol/oracle-suite/tree/main/cmd/spire#environment-variables
   # normal:
   #    CFG_ETH_FROM: ${ETH_FROM_D}
   #    CFG_ETH_KEYS: ${ETH_KEYS_D}

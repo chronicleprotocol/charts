@@ -22,7 +22,7 @@ env:
   #   value: "net"
 
   # Ethereum RPC node
-  ## reference https://github.com/chronicleprotocol/archiver/blob/master/env.sample#L21
+  ## reference https://github.com/chronicleprotocol/archiver/blob/main/env.sample#L21
   # - name: ETH_RPC_NODE
   #   value: "https://rpc.chroniclelabs.io/eth"
   # - name: ETH_BLOCK_LIMIT
