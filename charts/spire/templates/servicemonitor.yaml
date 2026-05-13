@@ -36,7 +36,10 @@ spec:
   jobLabel: "{{ .Release.Name }}"
   selector:
     matchLabels:
-      {{- include "spire.selectorLabels" . | nindent 8 }}
+{{ include "spire.selectorLabels" . | nindent 6 }}
+      {{- if .Values.metricsService.enabled }}
+      app.kubernetes.io/component: metrics
+      {{- end }}
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}

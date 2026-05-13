@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -47,6 +47,7 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | liveness | object | `{"enabled":true,"livenessProbe":{"initialDelaySeconds":10,"periodSeconds":10,"tcpSocket":{"port":"libp2p"}}}` | Liveness probe |
 | logFormat | string | `nil` |  |
 | logLevel | string | `nil` |  |
+| metricsService | object | `{"annotations":{},"enabled":false,"port":9090,"protocol":"TCP","targetPort":9090}` | Optional ClusterIP metrics service for scraping metrics without exposing the metrics port on a public LoadBalancer. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -56,8 +57,11 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
+| service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |
+| service.loadBalancerClass | string | `""` | Optional LoadBalancer class, for example service.k8s.aws/nlb. |
 | service.ports.libp2p.port | int | `8000` |  |
 | service.ports.libp2p.protocol | string | `"TCP"` |  |
+| service.trafficDistribution | string | `""` | Optional Kubernetes Service traffic distribution hint, for example PreferSameZone. |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
