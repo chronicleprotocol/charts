@@ -1,0 +1,22 @@
+{{- if .Values.metricsService.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spire.fullname" . }}-metrics
+  annotations:
+  {{- with .Values.metricsService.annotations }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "spire.labels" . | nindent 4 }}
+    app.kubernetes.io/component: metrics
+spec:
+  type: ClusterIP
+  ports:
+    - name: {{ .Values.serviceMonitor.port }}
+      port: {{ .Values.metricsService.port }}
+      targetPort: {{ .Values.metricsService.targetPort }}
+      protocol: {{ .Values.metricsService.protocol }}
+  selector:
+    {{- include "spire.selectorLabels" . | nindent 4 }}
+{{- end }}

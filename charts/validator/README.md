@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.6.3](https://img.shields.io/badge/Version-0.6.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.0](https://img.shields.io/badge/AppVersion-0.73.0-informational?style=flat-square)
+![Version: 0.6.4](https://img.shields.io/badge/Version-0.6.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.73.0](https://img.shields.io/badge/AppVersion-0.73.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,16 +16,19 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"argsOverride":[],"commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"service":{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
+| ghost | object | `{"argsOverride":[],"commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"service":{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.commandOverride | list | `[]` | command override for the validator |
 | ghost.env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
 | ghost.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | ghost.ethConfig | object | `{}` | Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both |
 | ghost.image | object | `{"repository":null,"tag":null}` | Image tag for the validator (overrides global image if set) |
-| ghost.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
+| ghost.service | object | `{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"}` | Service type for the validator |
 | ghost.service.annotations | object | `{}` | Annotations to add to the service |
+| ghost.service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |
+| ghost.service.loadBalancerClass | string | `""` | Optional LoadBalancer class, for example service.k8s.aws/nlb. |
 | ghost.service.ports.libp2p | object | `{"port":8000,"protocol":"TCP"}` | libp2p port for the validator service |
+| ghost.service.trafficDistribution | string | `""` | Optional Kubernetes Service traffic distribution hint, for example PreferSameZone. |
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
 | global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"tolerations":[],"topologySpreadConstraints":[]}` | Global values for the validator chart, values are used across the chart resources |
@@ -72,9 +75,12 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
 | vao.image | object | `{"repository":null,"tag":null}` | Image tag for the validator (overrides global image if set) |
 | vao.resources | object | `{}` | Resources constraints for the validator, CPU, Memory, etc. |
-| vao.service | object | `{"annotations":{},"ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"type":"LoadBalancer"}` | Service type for the validator |
+| vao.service | object | `{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"}` | Service type for the validator |
 | vao.service.annotations | object | `{}` | Annotations to add to the service |
+| vao.service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |
+| vao.service.loadBalancerClass | string | `""` | Optional LoadBalancer class, for example service.k8s.aws/nlb. |
 | vao.service.ports.libp2p | object | `{"port":8001,"protocol":"TCP"}` | libp2p port for the validator service |
+| vao.service.trafficDistribution | string | `""` | Optional Kubernetes Service traffic distribution hint, for example PreferSameZone. |
 | vao.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
 | vao.watchdogConfigReg | string | `"0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"` | WATCHDOG onchain config address |
 

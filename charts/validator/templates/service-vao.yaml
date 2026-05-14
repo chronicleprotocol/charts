@@ -10,6 +10,15 @@ metadata:
     {{- include "validatorVao.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.vao.service.type }}
+  {{- with .Values.vao.service.loadBalancerClass }}
+  loadBalancerClass: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.vao.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.vao.service.trafficDistribution }}
+  trafficDistribution: {{ . | quote }}
+  {{- end }}
   ports:
     {{- range $key, $val := .Values.vao.service.ports }}
     - port: {{ $val.port }}

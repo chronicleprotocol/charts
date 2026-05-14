@@ -13,6 +13,9 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.type }}
+  {{- with .Values.service.trafficDistribution }}
+  trafficDistribution: {{ . | quote }}
+  {{- end }}
   ports:
     {{- range $key, $val := .Values.service.ports }}
     - port: {{ $val.port }}

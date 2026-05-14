@@ -1,6 +1,6 @@
 # erpc
 
-![Version: 0.6.4](https://img.shields.io/badge/Version-0.6.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.64](https://img.shields.io/badge/AppVersion-0.0.64-informational?style=flat-square)
+![Version: 0.6.5](https://img.shields.io/badge/Version-0.6.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.64](https://img.shields.io/badge/AppVersion-0.0.64-informational?style=flat-square)
 
 A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-aware permanent caching to Kubernetes
 
@@ -49,6 +49,7 @@ A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with reorg-awar
 | service.ports.http.protocol | string | `"TCP"` |  |
 | service.ports.metrics.port | int | `4001` |  |
 | service.ports.metrics.protocol | string | `"TCP"` |  |
+| service.trafficDistribution | string | `""` | Optional Kubernetes Service traffic distribution hint, for example PreferSameZone. |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

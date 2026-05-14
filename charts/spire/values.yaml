@@ -44,6 +44,12 @@ securityContext:
 
 service:
   type: ClusterIP
+  # -- Optional LoadBalancer class, for example service.k8s.aws/nlb.
+  loadBalancerClass: ""
+  # -- Optional LoadBalancer traffic policy, for example Local.
+  externalTrafficPolicy: ""
+  # -- Optional Kubernetes Service traffic distribution hint, for example PreferSameZone.
+  trafficDistribution: ""
   ports:
     libp2p:
       port: 8000
@@ -58,6 +64,14 @@ service:
   annotations:
     {}
     # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
+
+# -- Optional ClusterIP metrics service for scraping metrics without exposing the metrics port on a public LoadBalancer.
+metricsService:
+  enabled: false
+  annotations: {}
+  port: 9090
+  targetPort: 9090
+  protocol: TCP
 
 # -- Liveness probe
 liveness:

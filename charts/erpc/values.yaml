@@ -60,6 +60,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  # -- Optional Kubernetes Service traffic distribution hint, for example PreferSameZone.
+  trafficDistribution: ""
   annotations: {}
   labels: {}
   ports:
