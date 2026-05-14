@@ -608,6 +608,23 @@ entries:
   erpc:
   - apiVersion: v2
     appVersion: 0.0.64
+    created: "2026-05-14T01:47:03.689841165Z"
+    description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
+      reorg-aware permanent caching to Kubernetes
+    digest: a2757a623ff0825488779d52dfa0869b12cc9bd1fe094a7167bd3f49c675ec68
+    icon: https://avatars.githubusercontent.com/u/6142249
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: erpc
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.6.5/erpc-0.6.5.tgz
+    version: 0.6.5
+  - apiVersion: v2
+    appVersion: 0.0.64
     created: "2026-04-29T19:47:58.01867136Z"
     description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
       reorg-aware permanent caching to Kubernetes
@@ -3384,6 +3401,21 @@ entries:
   spire:
   - apiVersion: v2
     appVersion: 0.68.3
+    created: "2026-05-14T01:47:03.86294368Z"
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: ae38c67473f9561d151e61ae67022d9fca23663b2cd70722d4e68bf8646870ad
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.3.4/spire-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: 0.68.3
     created: "2026-03-20T14:08:04.274362226Z"
     description: A Helm chart for deploying Chronicle spire to  Kubernetes
     digest: 4182a4ed37a748f6b4147e538c22af343fbf15c9ddccd83082ac1f48c850b5cc
@@ -3994,6 +4026,22 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
   validator:
+  - apiVersion: v2
+    appVersion: 0.73.0
+    created: "2026-05-14T01:47:04.046686385Z"
+    description: A Helm chart for deploying Chronicle Validator on Kubernetes
+    digest: aa49a58b4caba8b013f374351489b69fb9ea885b68b26c9a2f5d3264da10a7a4
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: validator
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/validator-0.6.4/validator-0.6.4.tgz
+    version: 0.6.4
   - apiVersion: v2
     appVersion: 0.73.0
     created: "2026-05-04T19:19:52.30340304Z"
@@ -4904,4 +4952,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-04T19:19:52.303889368Z"
+generated: "2026-05-14T01:47:04.047321437Z"
