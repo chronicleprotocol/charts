@@ -6,8 +6,8 @@
 # -- can be one of `go` or `rs`
 implementation: go
 tags:
-  challengerGo: challenger-go:0.1.2
-  challengerRs: challenger:0.1.1-alpine
+  challengerGo: challenger-go:0.1.2@sha256:c8d5a3c0e96624f48d8f574e4a37c4ca3b98bfd33367bfc121ba017400887bc7
+  challengerRs: challenger:0.1.1-alpine@sha256:c2e7650b2e46a33fe43bc6995afc2baafc7ef49b4e5297d92746ff7a40b217a5
 
 # -- how many replicas to run (default 1)
 replicaCount: 1
