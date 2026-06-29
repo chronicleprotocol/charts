@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.6.5](https://img.shields.io/badge/Version-0.6.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.76.0](https://img.shields.io/badge/AppVersion-0.76.0-informational?style=flat-square)
+![Version: 0.6.6](https://img.shields.io/badge/Version-0.6.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.76.0](https://img.shields.io/badge/AppVersion-0.76.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -38,7 +38,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | global.chainTxType | string | `"eip1559"` | chain tx type for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `eip1559` or `legacy` |
 | global.fullnameOverride | string | `"ghost"` | Override the release name to so tor-proxy can work with the default config. NB only change this if you know what you are doing |
 | global.image | object | `{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":""}` | Image for the validator |
-| global.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| global.image.tag | string | `"0.76.0@sha256:88b50f48d3aae31f646c32207e548c1c3cc2060439c58f6ece49df36f238fb50"` | Image tag PINNED to the multi-arch index digest (RFC-044.4 WS1); bump with appVersion. |
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
 | global.logFormat | string | `"text"` | Log format for the validator, can be one of `json`, `text` |
 | global.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `warning`, `error` |

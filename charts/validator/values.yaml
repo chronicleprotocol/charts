@@ -10,8 +10,8 @@ global:
   image:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
-    # -- Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    # -- Image tag PINNED to the multi-arch index digest (RFC-044.4 WS1); bump with appVersion.
+    tag: "0.76.0@sha256:88b50f48d3aae31f646c32207e548c1c3cc2060439c58f6ece49df36f238fb50"
 
   imagePullSecrets: []
 
