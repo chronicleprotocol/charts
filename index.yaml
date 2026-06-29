@@ -1963,6 +1963,21 @@ entries:
   hyperliquid:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-06-29T14:19:00.893094863Z"
+    description: A Helm chart for running a hyperliquid node
+    digest: a3cd9a3f94a594eb3685c22caa1c3297cf4fcca180ef91e6c720bd7773591c61
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: hyperliquid
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/hyperliquid-0.1.2/hyperliquid-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-03-21T03:45:39.8281892Z"
     description: A Helm chart for running a hyperliquid node
     digest: 131be6e86b6f27ef7fd01ac158db173f3cec5f745f3846b35ef22c2737812717
@@ -5049,4 +5064,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-29T14:18:52.224019233Z"
+generated: "2026-06-29T14:19:00.893585111Z"
