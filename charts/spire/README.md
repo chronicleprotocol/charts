@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.5](https://img.shields.io/badge/Version-0.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -32,7 +32,7 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | fullnameOverride | string | `"spire"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spire"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"0.68.3@sha256:79df4fb203224fa201623ae4d4f158faccfd410ec60f92841d161bb5b081d7ac"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
