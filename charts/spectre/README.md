@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.7](https://img.shields.io/badge/Version-0.3.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -31,7 +31,7 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | fullnameOverride | string | `"spectre"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol/spectre"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"0.68.3@sha256:4e872bc016e882c96fe77a80e39635c1b05179801720a63d4e9a46f632600396"` |  |
 | imagePullSecrets | list | `[]` |  |
 | inlineConfig | string | `""` |  |
 | livenessProbe.enabled | bool | `false` |  |
