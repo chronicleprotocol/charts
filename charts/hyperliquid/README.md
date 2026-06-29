@@ -1,6 +1,6 @@
 # hyperliquid
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
 
 A Helm chart for running a hyperliquid node
 
@@ -20,7 +20,7 @@ A Helm chart for running a hyperliquid node
 | imagePullSecrets | list | `[]` |  |
 | node.image.pullPolicy | string | `"IfNotPresent"` |  |
 | node.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid"` |  |
-| node.image.tag | string | `"latest"` |  |
+| node.image.tag | string | `"sha-8f7962f@sha256:1dff0802956bf3902f93be1baf4afe90405965e7e6cf1b50e3a04e125242804d"` |  |
 | node.persistence.hl_data.accessMode[0] | string | `"ReadWriteOnce"` |  |
 | node.persistence.hl_data.enabled | bool | `false` |  |
 | node.persistence.hl_data.size | string | `"200Gi"` |  |
@@ -31,7 +31,7 @@ A Helm chart for running a hyperliquid node
 | podSecurityContext | object | `{}` |  |
 | pruner.image.pullPolicy | string | `"IfNotPresent"` |  |
 | pruner.image.repository | string | `"ghcr.io/chronicleprotocol/hyperliquid-pruner"` |  |
-| pruner.image.tag | string | `"latest"` |  |
+| pruner.image.tag | string | `"sha-2162952@sha256:7cfd69cd41ceb696e57a42259b52cd31489d5334b86fa1b8c2084bc9f178b328"` |  |
 | pruner.resources | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | securityContext | object | `{}` |  |
