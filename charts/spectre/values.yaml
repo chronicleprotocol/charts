@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spectre
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.68.3@sha256:4e872bc016e882c96fe77a80e39635c1b05179801720a63d4e9a46f632600396"
 
 # -- CFG_ENVIRONMENT can be one of `stage` or `prod`
 environment: stage
