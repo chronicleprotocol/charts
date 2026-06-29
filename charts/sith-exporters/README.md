@@ -1,6 +1,6 @@
 # sith-exporters
 
-![Version: 0.2.4](https://img.shields.io/badge/Version-0.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.4](https://img.shields.io/badge/AppVersion-0.0.4-informational?style=flat-square)
+![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.4](https://img.shields.io/badge/AppVersion-0.0.4-informational?style=flat-square)
 
 A Helm chart for deploying prometheus exporters for Chronicle Oracles to Kubernetes
 
@@ -21,7 +21,7 @@ A Helm chart for deploying prometheus exporters for Chronicle Oracles to Kuberne
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/chronicleprotocol"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"0.0.4@sha256:992d0e793af6531d7d7d3af843466583d1b8fa6a58fd791feae89f4d874b441e"` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
