@@ -13,7 +13,7 @@ node:
   image:
     repository: ghcr.io/chronicleprotocol/hyperliquid
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: sha-8f7962f@sha256:1dff0802956bf3902f93be1baf4afe90405965e7e6cf1b50e3a04e125242804d
   persistence:
     hl_data:
       # Storage class to use for PVCs
@@ -42,7 +42,7 @@ pruner:
   image:
     repository: ghcr.io/chronicleprotocol/hyperliquid-pruner
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: sha-2162952@sha256:7cfd69cd41ceb696e57a42259b52cd31489d5334b86fa1b8c2084bc9f178b328
   resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
