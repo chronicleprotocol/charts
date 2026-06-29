@@ -286,6 +286,27 @@ vao:
     #   subPath: keyfile.json  # Mount specific file from secret
     #   readOnly: true
 
+# -- Helios light client sidecar for trustless Ethereum RPC
+helios:
+  # -- Enable Helios light client sidecar in both ghost and vao pods
+  enabled: false
+  image:
+    repository: ghcr.io/a16z/helios
+    tag: "latest"
+    pullPolicy: Always
+  # -- Consensus layer (beacon API) RPC used by Helios to verify blocks
+  consensusRpc: ""
+  # -- Local RPC port exposed by Helios (ghost/vao connect to this via localhost)
+  port: 8547
+  # -- Resources constraints for the Helios sidecar
+  resources: {}
+    # limits:
+    #   cpu: 200m
+    #   memory: 256Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
 # -- Values for Tor Proxy (subchart of ghost)
 tor-proxy:
   # -- values for tor-proxy, installs [tor-controller](/crds/tor-controller.yaml) and creates an [onionService CRD](/templates/tor-onion-service.yaml)

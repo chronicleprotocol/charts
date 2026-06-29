@@ -101,7 +101,11 @@ spec:
             - name: CFG_CHAIN_ID
               value: {{ .Values.global.chainId | default "1" | quote }}
             - name: CFG_CHAIN_RPC_URLS
+            {{- if .Values.helios.enabled }}
+              value: "http://localhost:{{ .Values.helios.port }}"
+            {{- else }}
               value: {{ .Values.ghost.rpcUrl | quote }}
+            {{- end }}
               {{- if .Values.global.chainTxType }}
             - name: CFG_CHAIN_TX_TYPE
               value: {{ .Values.global.chainTxType | default "eip1559" | quote }}
@@ -160,6 +164,26 @@ spec:
           resources:
             {{- toYaml ( .Values.ghost.resources | default .Values.global.resources ) | nindent 12 }}
 
+      {{- if .Values.helios.enabled }}
+        - name: helios
+          image: "{{ .Values.helios.image.repository }}:{{ .Values.helios.image.tag }}"
+          imagePullPolicy: {{ .Values.helios.image.pullPolicy }}
+          args:
+            - "node"
+            - "--chain=ethereum"
+            - "--execution-rpc={{ .Values.ghost.rpcUrl }}"
+            - "--consensus-rpc={{ .Values.helios.consensusRpc }}"
+            - "--rpc-bind-ip=0.0.0.0"
+            - "--rpc-port={{ .Values.helios.port }}"
+          ports:
+            - name: helios-rpc
+              containerPort: {{ .Values.helios.port }}
+              protocol: TCP
+          {{- with .Values.helios.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- end }}
 
       {{- with .Values.global.nodeSelector }}
       nodeSelector:
