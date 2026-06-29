@@ -555,6 +555,24 @@ entries:
   challenger:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-06-29T14:18:52.223598609Z"
+    description: A Helm chart for deploying the OpPoke Challenger Bot (go and rust)
+      in Kubernetes
+    digest: 791ecc34e9f343b6a0d0a9f19f4c96c0d61ed388b099bce3b37601b0d5d6b601
+    home: https://github.com/chronicleprotocol/challenger
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: challenger
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/challenger-0.1.1/challenger-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2025-05-20T13:52:02.904413579Z"
     description: A Helm chart for deploying the OpPoke Challenger Bot (go and rust)
       in Kubernetes
@@ -5031,4 +5049,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-29T14:18:44.225976274Z"
+generated: "2026-06-29T14:18:52.224019233Z"
