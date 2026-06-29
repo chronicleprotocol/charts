@@ -1726,6 +1726,22 @@ entries:
   gofer:
   - apiVersion: v2
     appVersion: "0.61"
+    created: "2026-06-29T13:19:38.792324954Z"
+    description: A Helm chart for deploying gofer to Kubernetes
+    digest: aa339991c02c2e4325bea08bcc67e5a628b84f0a64c22b787290d99089713e24
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: gofer
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.4.3/gofer-0.4.3.tgz
+    version: 0.4.3
+  - apiVersion: v2
+    appVersion: "0.61"
     created: "2026-04-20T08:45:29.473988992Z"
     description: A Helm chart for deploying gofer to Kubernetes
     digest: ba06faf5ec94cff0c32a64f1976b0f0b7660aaf7a239bbc5c5ddc6f8f7b3851a
@@ -5000,4 +5016,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-29T13:13:36.166880595Z"
+generated: "2026-06-29T13:19:38.793020528Z"
