@@ -42,7 +42,7 @@ image:
   repository: ghcr.io/chronicleprotocol/gofer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.61@sha256:3915d2e41e041ea8aaba26149c48c4290de9df88f5aed6c271702d90ecb27e4c"
 
 imagePullSecrets: []
 nameOverride: ""
