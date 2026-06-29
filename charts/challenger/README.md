@@ -1,6 +1,6 @@
 # challenger
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 A Helm chart for deploying the OpPoke Challenger Bot (go and rust) in Kubernetes
 
@@ -61,8 +61,8 @@ A Helm chart for deploying the OpPoke Challenger Bot (go and rust) in Kubernetes
 | serviceMonitor.scheme | string | `"http"` | ServiceMonitor scheme |
 | serviceMonitor.scrapeTimeout | string | `"30s"` | ServiceMonitor scrape timeout |
 | serviceMonitor.tlsConfig | object | `{}` | ServiceMonitor TLS configuration |
-| tags.challengerGo | string | `"challenger-go:0.1.2"` |  |
-| tags.challengerRs | string | `"challenger:0.1.1-alpine"` |  |
+| tags.challengerGo | string | `"challenger-go:0.1.2@sha256:c8d5a3c0e96624f48d8f574e4a37c4ca3b98bfd33367bfc121ba017400887bc7"` |  |
+| tags.challengerRs | string | `"challenger:0.1.1-alpine@sha256:c2e7650b2e46a33fe43bc6995afc2baafc7ef49b4e5297d92746ff7a40b217a5"` |  |
 | tolerations | list | `[]` |  |
 | transactionType | string | `""` | Transaction type definition, possible values are: legacy, eip1559 or none (default "none") |
 
