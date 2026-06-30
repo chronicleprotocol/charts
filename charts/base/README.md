@@ -1,6 +1,6 @@
 # base
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.1](https://img.shields.io/badge/AppVersion-v0.11.1-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.11.1](https://img.shields.io/badge/AppVersion-v0.11.1-informational?style=flat-square)
 
 A Helm chart for deploying Base RPC nodes on Kubernetes
 
@@ -41,7 +41,7 @@ A Helm chart for deploying Base RPC nodes on Kubernetes
 | geth.service.type | string | `"ClusterIP"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/base-org/node"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v0.11.1@sha256:1aba0ffe55ea83b543ad2a14c299df89e48e932fd7f9bcfbd64c94f907ee2318"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
