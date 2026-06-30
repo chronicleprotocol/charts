@@ -130,7 +130,8 @@ image:
   repository: ghcr.io/base-org/node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a digest for supply-chain integrity (matches appVersion v0.11.1).
+  tag: "v0.11.1@sha256:1aba0ffe55ea83b543ad2a14c299df89e48e932fd7f9bcfbd64c94f907ee2318"
 
 imagePullSecrets: []
 nameOverride: ""
