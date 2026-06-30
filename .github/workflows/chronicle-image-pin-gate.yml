@@ -1,9 +1,15 @@
 name: chronicle-image-pin-gate
 
-# RFC-044.4: a changed chart must NOT render a bare (un-digest-pinned) chronicle
-# image (ghcr.io/chronicleprotocol/*). Renders with `helm template` so it catches
-# the empty `tag:` -> .Chart.AppVersion default case that a line-based diff misses.
-# Pin chart defaults to <tag>@sha256:<multi-arch index digest>.
+# RFC-044.4: a changed chart must NOT render an unpinned or malformed chronicle image
+# (ghcr.io/chronicleprotocol/*). "Pinned" = a real multi-arch index digest: @sha256:
+# followed by EXACTLY 64 lowercase-hex chars. Renders with `helm template` so it catches
+# the empty `tag:` -> .Chart.AppVersion default case a line-based diff misses.
+#
+# Comprehensive by construction: the detector captures the WHOLE ref token and requires a
+# valid 64-hex digest, so it flags bare semver, git-sha tags (sha-xxxxxx), :latest, no-tag,
+# the malformed @sha256- (hyphen, the cosign sig-tag form), and short/over-long/invalid
+# digests. An embedded self-test asserts this on every run, so the detector cannot silently
+# regress.
 
 on:
   pull_request:
@@ -22,11 +28,44 @@ jobs:
         with:
           fetch-depth: 0
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
-      - name: Verify changed charts pin chronicle default images
+      - name: Self-test detector, then gate changed charts
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -uo pipefail
+
+          # --- detector: single source of truth ---
+          # Emit every chronicle image ref that is NOT pinned to a valid @sha256:<64-hex>.
+          detect() {
+            grep -oE "ghcr\.io/chronicleprotocol/[^[:space:]\"']+" \
+              | grep -vE '@sha256:[a-f0-9]{64}([^a-f0-9]|$)' || true
+          }
+
+          # --- self-test: prove coverage of every tag form before trusting the gate ---
+          D=88b50f48d3aae31f646c32207e548c1c3cc2060439c58f6ece49df36f238fb50
+          tfail=0
+          check() {
+            got=$(printf '%s\n' "$2" | detect)
+            if [ "$1" = FLAG ]; then
+              [ -n "$got" ] || { echo "::error::pin-gate self-test: expected FLAG but passed: $2"; tfail=1; }
+            else
+              [ -z "$got" ] || { echo "::error::pin-gate self-test: expected PASS but flagged: $2"; tfail=1; }
+            fi
+          }
+          check FLAG "ghcr.io/chronicleprotocol/ghost:0.76.0"
+          check FLAG "ghcr.io/chronicleprotocol/ghost:sha-d8b7a1b"
+          check FLAG "ghcr.io/chronicleprotocol/ghost"
+          check FLAG "ghcr.io/chronicleprotocol/ghost:latest"
+          check FLAG "ghcr.io/chronicleprotocol/ghost:0.76.0@sha256-$D"
+          check FLAG "ghcr.io/chronicleprotocol/ghost:0.76.0@sha256:abc"
+          check FLAG "ghcr.io/chronicleprotocol/ghost:0.76.0@sha256:${D}ff"
+          check PASS "ghcr.io/chronicleprotocol/ghost:0.76.0@sha256:$D"
+          check PASS "ghcr.io/chronicleprotocol/ghost@sha256:$D"
+          check PASS "ghcr.io/chronicleprotocol/ghost:sha-d8b7a1b@sha256:$D"
+          [ "$tfail" -eq 0 ] || { echo "::error::pin-gate self-test failed (detector regressed); refusing to run"; exit 1; }
+          echo "pin-gate self-test passed (10 cases)"
+
+          # --- gate: render each changed chart, flag unpinned/malformed chronicle images ---
           changed=$(git diff --name-only "${BASE_SHA}...HEAD" -- 'charts/**' \
             | sed -nE 's#^(charts/[^/]+)/.*#\1#p' | sort -u)
           if [ -z "$changed" ]; then echo "No chart changes."; exit 0; fi
@@ -40,11 +79,9 @@ jobs:
               echo "::warning file=$chart/Chart.yaml::$chart did not render; pin check skipped: $(tail -1 /tmp/helmerr 2>/dev/null)"
               continue
             fi
-            bad=$(printf '%s\n' "$rendered" \
-              | grep -oE 'ghcr\.io/chronicleprotocol/[A-Za-z0-9._/-]+(:[A-Za-z0-9._-]+)?(@sha256:[a-f0-9]+)?' \
-              | grep -v '@sha256:' | sort -u || true)
+            bad=$(printf '%s\n' "$rendered" | detect | sort -u)
             if [ -n "$bad" ]; then
-              echo "::error file=$chart/values.yaml::$chart renders UNPINNED chronicle image(s) -- pin to <tag>@sha256:<multi-arch index digest>:"
+              echo "::error file=$chart/values.yaml::$chart renders UNPINNED/malformed chronicle image(s) -- pin to <tag>@sha256:<64-hex multi-arch index digest>:"
               printf '  %s\n' $bad
               fail=1
             fi
