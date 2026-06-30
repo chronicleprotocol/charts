@@ -1,0 +1,53 @@
+name: chronicle-image-pin-gate
+
+# RFC-044.4: a changed chart must NOT render a bare (un-digest-pinned) chronicle
+# image (ghcr.io/chronicleprotocol/*). Renders with `helm template` so it catches
+# the empty `tag:` -> .Chart.AppVersion default case that a line-based diff misses.
+# Pin chart defaults to <tag>@sha256:<multi-arch index digest>.
+
+on:
+  pull_request:
+    paths:
+      - 'charts/**'
+
+permissions:
+  contents: read
+
+jobs:
+  pin-gate:
+    name: chronicle image pin gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
+      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
+      - name: Verify changed charts pin chronicle default images
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -uo pipefail
+          changed=$(git diff --name-only "${BASE_SHA}...HEAD" -- 'charts/**' \
+            | sed -nE 's#^(charts/[^/]+)/.*#\1#p' | sort -u)
+          if [ -z "$changed" ]; then echo "No chart changes."; exit 0; fi
+          fail=0
+          while IFS= read -r chart; do
+            [ -f "$chart/Chart.yaml" ] || continue
+            helm dependency build "$chart" >/dev/null 2>&1 || true
+            vflags=""
+            for v in "$chart"/ci/*-values.yaml; do [ -f "$v" ] && vflags="$vflags -f $v"; done
+            if ! rendered=$(helm template pin-gate "$chart" $vflags 2>/tmp/helmerr); then
+              echo "::warning file=$chart/Chart.yaml::$chart did not render; pin check skipped: $(tail -1 /tmp/helmerr 2>/dev/null)"
+              continue
+            fi
+            bad=$(printf '%s\n' "$rendered" \
+              | grep -oE 'ghcr\.io/chronicleprotocol/[A-Za-z0-9._/-]+(:[A-Za-z0-9._-]+)?(@sha256:[a-f0-9]+)?' \
+              | grep -v '@sha256:' | sort -u || true)
+            if [ -n "$bad" ]; then
+              echo "::error file=$chart/values.yaml::$chart renders UNPINNED chronicle image(s) -- pin to <tag>@sha256:<multi-arch index digest>:"
+              printf '  %s\n' $bad
+              fail=1
+            fi
+          done <<< "$changed"
+          if [ "$fail" -eq 0 ]; then echo "OK: all changed charts pin their chronicle default images."; fi
+          exit "$fail"
