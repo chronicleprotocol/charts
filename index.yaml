@@ -3,6 +3,22 @@ entries:
   arbitrum:
   - apiVersion: v2
     appVersion: v3.7.6-c0fe95e
+    created: "2026-06-30T01:08:17.513890278Z"
+    description: A Helm chart for deploying Arbitrum Nitro on Kubernetes
+    digest: bd5c387bf908c36c5eef6682d7cef3fcc7522079380de435725b7638a6280e04
+    icon: https://avatars.githubusercontent.com/u/43838009
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: arbitrum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/arbitrum-0.3.4/arbitrum-0.3.4.tgz
+    version: 0.3.4
+  - apiVersion: v2
+    appVersion: v3.7.6-c0fe95e
     created: "2025-10-16T16:58:55.395810919Z"
     description: A Helm chart for deploying Arbitrum Nitro on Kubernetes
     digest: 4fbb652ae69bdb52254e7885c5e3491569da4ebddefb634f91d5afb8295a7d5d
@@ -5144,4 +5160,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-30T01:06:27.978190881Z"
+generated: "2026-06-30T01:08:17.514629383Z"
