@@ -2185,6 +2185,19 @@ entries:
   mantle:
   - apiVersion: v2
     appVersion: v0.4.3
+    created: "2026-06-30T01:08:24.933779952Z"
+    description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
+    digest: 7103056388c23a3a914602627b92822120d2bd68af88f196402a2a3b27627a0f
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: mantle
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/mantle-0.1.3/mantle-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v0.4.3
     created: "2024-03-08T06:31:52.67351413Z"
     description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
     digest: 5d8e0d1b9b4da3bb1258e435196cac3f04f13555c95d6f7514978a8f22fbf014
@@ -5160,4 +5173,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-30T01:08:17.514629383Z"
+generated: "2026-06-30T01:08:24.93433817Z"
