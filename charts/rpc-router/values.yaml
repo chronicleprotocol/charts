@@ -17,7 +17,9 @@ image:
   repository: drpcorg/dshackle
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to the appVersion tag + single-arch digest for supply-chain integrity.
+  # drpcorg/dshackle:0.54.0 is single-arch (linux/amd64), no multi-arch index.
+  tag: "0.54.0@sha256:8858fae1859d28a86f563a137cb238824955ff78e069b30fec49ad13ca2b82f6"
 
 imagePullSecrets: []
 nameOverride: ""
