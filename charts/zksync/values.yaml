@@ -63,7 +63,8 @@ image:
   repository: matterlabs/external-node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a digest for supply-chain integrity (multi-arch index).
+  tag: "v24.0.0@sha256:6cbfea4c694a77bb4e02dc82eb804cf1ec05abd0feec779519bc00865c51f1de"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -132,7 +133,8 @@ postgres:
     repository: postgres
     pullPolicy: IfNotPresent
     # Defaults to 14
-    tag: "14"
+    # Pinned to a digest for supply-chain integrity (multi-arch index).
+    tag: "14@sha256:3e7dd0bfd7bfb4fc1278d1a354da44375dfe924bed8eaf83ae14967d84dede5b"
 
   imagePullSecrets: []
   nameOverride: ""
