@@ -1,6 +1,6 @@
 # rpc-router
 
-![Version: 0.2.8](https://img.shields.io/badge/Version-0.2.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.0](https://img.shields.io/badge/AppVersion-0.54.0-informational?style=flat-square)
+![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.54.0](https://img.shields.io/badge/AppVersion-0.54.0-informational?style=flat-square)
 
 A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for Blockchain API, to Kubernetes,
 
@@ -61,7 +61,7 @@ A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load Balancer for B
 | global_method_whitelist | list | `[]` | global method whitelist applied to all upstreams |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"drpcorg/dshackle"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"0.54.0@sha256:8858fae1859d28a86f563a137cb238824955ff78e069b30fec49ad13ca2b82f6"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
