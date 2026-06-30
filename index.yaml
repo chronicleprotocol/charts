@@ -2566,6 +2566,22 @@ entries:
   nitro-celestia-das:
   - apiVersion: v2
     appVersion: v0.5.4
+    created: "2026-06-30T01:08:41.79543711Z"
+    description: A Helm chart for deploying celestia-nitro-das
+    digest: e540347ccc4c7ac3ba00e7e9d20fb13c70f1da38a00dcaaade9e3a80033c5de7
+    icon: https://avatars.githubusercontent.com/u/54859940?s=48&v=4
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: nitro-celestia-das
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nitro-celestia-das-0.1.1/nitro-celestia-das-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v0.5.4
     created: "2025-10-16T17:01:48.400685109Z"
     description: A Helm chart for deploying celestia-nitro-das
     digest: 2bd183068d551b9db860ab3813472eb908f3dc001fe8490058658594e678fa82
@@ -5190,4 +5206,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-30T01:08:34.44558023Z"
+generated: "2026-06-30T01:08:41.796035575Z"
