@@ -1,6 +1,6 @@
 # nethermind
 
-![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.31.9](https://img.shields.io/badge/AppVersion-1.31.9-informational?style=flat-square)
+![Version: 0.0.14](https://img.shields.io/badge/Version-0.0.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.31.9](https://img.shields.io/badge/AppVersion-1.31.9-informational?style=flat-square)
 
 A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 
@@ -26,7 +26,7 @@ A Helm chart for deploying ETH Nethermind nodes on Kubernetes
 | healthChecks.ui.enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"nethermind/nethermind"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"1.31.9@sha256:aeca3b55bda5bbf4ba79bb2c6878c6d3c7f2bba6438970ad91058e46bed3eacf"` | Pinned to a multi-arch digest for supply-chain integrity |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
