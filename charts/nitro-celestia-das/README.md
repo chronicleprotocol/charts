@@ -1,6 +1,6 @@
 # nitro-celestia-das
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.5.4](https://img.shields.io/badge/AppVersion-v0.5.4-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.5.4](https://img.shields.io/badge/AppVersion-v0.5.4-informational?style=flat-square)
 
 A Helm chart for deploying celestia-nitro-das
 
@@ -32,7 +32,7 @@ A Helm chart for deploying celestia-nitro-das
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ghcr.io/celestiaorg/nitro-das-celestia"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v0.5.4@sha256:4ebdd3b42b3148b207de88bbe6a0e4ec76170ff7bd13a9258a10b6e8b014b9f9"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
