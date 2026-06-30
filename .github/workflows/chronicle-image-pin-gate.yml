@@ -66,8 +66,11 @@ jobs:
           echo "pin-gate self-test passed (10 cases)"
 
           # --- gate: render each changed chart, flag unpinned/malformed chronicle images ---
-          changed=$(git diff --name-only "${BASE_SHA}...HEAD" -- 'charts/**' \
-            | sed -nE 's#^(charts/[^/]+)/.*#\1#p' | sort -u)
+          if ! changed=$(git diff --name-only "${BASE_SHA}...HEAD" -- 'charts/**' \
+            | sed -nE 's#^(charts/[^/]+)/.*#\1#p' | sort -u); then
+            echo "::error::pin-gate could not compute the PR diff against ${BASE_SHA}; refusing to pass without a verifiable diff (fail-closed)"
+            exit 1
+          fi
           if [ -z "$changed" ]; then echo "No chart changes."; exit 0; fi
           fail=0
           while IFS= read -r chart; do
