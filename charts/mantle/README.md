@@ -1,6 +1,6 @@
 # mantle
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v0.4.3](https://img.shields.io/badge/AppVersion-v0.4.3-informational?style=flat-square)
 
 A Helm chart for deploying Mantle RPC nodes on Kubernetes
 
@@ -87,7 +87,7 @@ A Helm chart for deploying Mantle RPC nodes on Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"mantlenetworkio/l2geth"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v0.4.3@sha256:6bf383d14291051f819b03f802d20d3dc8aacddae22995538bdcbec55494533c"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
