@@ -46,7 +46,8 @@ image:
   repository: nethermind/nethermind
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a multi-arch digest for supply-chain integrity.
+  tag: "1.31.9@sha256:aeca3b55bda5bbf4ba79bb2c6878c6d3c7f2bba6438970ad91058e46bed3eacf"
 
 imagePullSecrets: []
 nameOverride: ""
