@@ -1,6 +1,6 @@
 # zksync
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v24.0.0](https://img.shields.io/badge/AppVersion-v24.0.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v24.0.0](https://img.shields.io/badge/AppVersion-v24.0.0-informational?style=flat-square)
 
 A Helm chart for deploying zkSync RPC nodes on Kubernetes
 
@@ -26,7 +26,7 @@ A Helm chart for deploying zkSync RPC nodes on Kubernetes
 | httpPort | int | `3060` | ---------------------------------------------------------------------- Port on which to serve the HTTP JSONRPC API. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"matterlabs/external-node"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v24.0.0@sha256:6cbfea4c694a77bb4e02dc82eb804cf1ec05abd0feec779519bc00865c51f1de"` | Pinned to a digest for supply-chain integrity (multi-arch index). |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
@@ -96,7 +96,7 @@ A Helm chart for deploying zkSync RPC nodes on Kubernetes
 | postgres.fullnameOverride | string | `""` |  |
 | postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
 | postgres.image.repository | string | `"postgres"` |  |
-| postgres.image.tag | string | `"14"` |  |
+| postgres.image.tag | string | `"14@sha256:3e7dd0bfd7bfb4fc1278d1a354da44375dfe924bed8eaf83ae14967d84dede5b"` | Pinned to a digest for supply-chain integrity (multi-arch index). |
 | postgres.imagePullSecrets | list | `[]` |  |
 | postgres.livenessProbe.initialDelaySeconds | int | `60` |  |
 | postgres.livenessProbe.periodSeconds | int | `120` |  |
