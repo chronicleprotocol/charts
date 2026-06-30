@@ -1,6 +1,6 @@
 # ethereum-metrics-exporter
 
-![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.4](https://img.shields.io/badge/Version-0.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Prometheus metrics exporter for Ethereum consensus & execution nodes
 
@@ -42,7 +42,7 @@ A Prometheus metrics exporter for Ethereum consensus & execution nodes
 | fullnameOverride | string | `""` | Overrides the chart's computed fullname |
 | image.pullPolicy | string | `"IfNotPresent"` | ethereum-metrics-exporter container pull policy |
 | image.repository | string | `"samcm/ethereum-metrics-exporter"` | ethereum-metrics-exporter container image repository |
-| image.tag | string | `"latest"` | ethereum-metrics-exporter container image tag |
+| image.tag | string | `"0.29.2@sha256:91a2d9a015c17d0d1b83f98a87589d17496042cd379cd0f8c46da97389f571cd"` | ethereum-metrics-exporter container image tag |
 | imagePullSecrets | list | `[]` | Image pull secrets for Docker images |
 | ingress.annotations | object | `{}` | Annotations for Ingress |
 | ingress.enabled | bool | `false` | Ingress resource for the HTTP API |

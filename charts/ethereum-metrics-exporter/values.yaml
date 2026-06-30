@@ -11,7 +11,7 @@ image:
   # -- ethereum-metrics-exporter container image repository
   repository: samcm/ethereum-metrics-exporter
   # -- ethereum-metrics-exporter container image tag
-  tag: latest
+  tag: 0.29.2@sha256:91a2d9a015c17d0d1b83f98a87589d17496042cd379cd0f8c46da97389f571cd
   # -- ethereum-metrics-exporter container pull policy
   pullPolicy: IfNotPresent
 
