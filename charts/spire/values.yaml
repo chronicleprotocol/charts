@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chronicleprotocol/spire
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.68.3@sha256:79df4fb203224fa201623ae4d4f158faccfd410ec60f92841d161bb5b081d7ac"
+  tag: "0.68.3"
 
 imagePullSecrets: []
 nameOverride: ""
