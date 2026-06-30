@@ -10,7 +10,7 @@ data:
 image:
   repository: ghcr.io/celestiaorg/nitro-das-celestia
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "v0.5.4@sha256:4ebdd3b42b3148b207de88bbe6a0e4ec76170ff7bd13a9258a10b6e8b014b9f9"
 
 imagePullSecrets: []
 nameOverride: ""
