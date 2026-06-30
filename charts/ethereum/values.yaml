@@ -17,7 +17,8 @@ image:
   repository: ethereum/client-go
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a digest for supply-chain integrity (matches appVersion v1.16.5).
+  tag: "v1.16.5@sha256:32b878e4144a8de06a1003a2d4b0ba067fd578e0080a719338f18b229cc1e53c"
 
 imagePullSecrets: []
 nameOverride: ""
