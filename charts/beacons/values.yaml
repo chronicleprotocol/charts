@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: gcr.io/prysmaticlabs/prysm/beacon-chain
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "v6.1.2@sha256:8ef452191a3a46db2fb33e92cf80aa23b52ced0f3b54d960b537bceb1f29c7a0"
 
 network: sepolia
 # can be mainnet or sepolia

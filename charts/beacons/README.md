@@ -1,6 +1,6 @@
 # beacons
 
-![Version: 0.0.16](https://img.shields.io/badge/Version-0.0.16-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v6.1.2](https://img.shields.io/badge/AppVersion-v6.1.2-informational?style=flat-square)
+![Version: 0.0.17](https://img.shields.io/badge/Version-0.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v6.1.2](https://img.shields.io/badge/AppVersion-v6.1.2-informational?style=flat-square)
 
 A Helm chart for deploying a beacon node to Kubernetes
 
@@ -28,7 +28,7 @@ A Helm chart for deploying a beacon node to Kubernetes
 | httpPort | int | `3500` | HTTP Port |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"gcr.io/prysmaticlabs/prysm/beacon-chain"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v6.1.2@sha256:8ef452191a3a46db2fb33e92cf80aa23b52ced0f3b54d960b537bceb1f29c7a0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
