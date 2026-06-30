@@ -1484,6 +1484,20 @@ entries:
   ethereum:
   - apiVersion: v2
     appVersion: v1.16.5
+    created: "2026-06-30T01:06:22.157342822Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: 99fe001cb1aa221bf26e967fc866dce2dfae294ecca89123efa8ef1d8489f7b1
+    icon: https://avatars.githubusercontent.com/u/6250754
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.3.1/ethereum-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: v1.16.5
     created: "2025-10-16T16:35:19.441076743Z"
     description: A Helm chart for deploying Ethereum nodes on Kubernetes
     digest: c2095aeccc28c03eec0806fdd4d8944ddd257fd623c19b2ae3e4fe6ccefc0c44
@@ -1725,6 +1739,22 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.1.0/ethereum-0.1.0.tgz
     version: 0.1.0
   ethereum-metrics-exporter:
+  - apiVersion: v2
+    created: "2026-06-30T01:06:22.329513932Z"
+    description: A Prometheus metrics exporter for Ethereum consensus & execution
+      nodes
+    digest: 37fd0e93207fc733f06c589573f638d09f8f03c2c0e78f3d5b3f013977ad48d1
+    home: https://github.com/chronicleprotocol/charts
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: ethereum-metrics-exporter
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-metrics-exporter-0.1.4/ethereum-metrics-exporter-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     created: "2023-05-03T15:15:34.829040311Z"
     description: A Prometheus metrics exporter for Ethereum consensus & execution
@@ -5101,4 +5131,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-30T01:06:08.04840515Z"
+generated: "2026-06-30T01:06:22.330273778Z"
