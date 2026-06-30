@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.3.3](https://img.shields.io/badge/Version-0.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.7.6-c0fe95e](https://img.shields.io/badge/AppVersion-v3.7.6--c0fe95e-informational?style=flat-square)
+![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.7.6-c0fe95e](https://img.shields.io/badge/AppVersion-v3.7.6--c0fe95e-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
@@ -24,7 +24,7 @@ A Helm chart for deploying Arbitrum Nitro on Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"offchainlabs/nitro-node"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v3.7.6-c0fe95e@sha256:9f779fa84b7bbfb9ab7467e2783326887ad7db7818b2cf23f61423e4052fde32"` | Pinned multi-arch digest of the appVersion image |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
