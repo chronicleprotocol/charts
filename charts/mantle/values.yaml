@@ -95,7 +95,8 @@ image:
   repository: mantlenetworkio/l2geth
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a digest for supply-chain integrity. Single-arch (linux/amd64) image; upstream publishes no multi-arch index.
+  tag: "v0.4.3@sha256:6bf383d14291051f819b03f802d20d3dc8aacddae22995538bdcbec55494533c"
 
 imagePullSecrets: []
 nameOverride: ""
