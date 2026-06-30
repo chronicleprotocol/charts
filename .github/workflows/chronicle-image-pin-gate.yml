@@ -10,12 +10,21 @@ name: chronicle-image-pin-gate
 # the malformed @sha256- (hyphen, the cosign sig-tag form), and short/over-long/invalid
 # digests. An embedded self-test asserts this on every run, so the detector cannot silently
 # regress.
+#
+# Auto-pin: for same-repo PRs the gate resolves each changed chart's .image (the standard
+# chronicle chart shape: image.repository + image.tag) to its multi-arch index digest, writes
+# the pin into values.yaml, and pushes ONE commit to the PR branch with the Chronicle bot App
+# token (which re-triggers the gate -> green). The render-flag below stays the verdict, so any
+# non-standard or unresolvable image is still flagged for a manual pin. Fork PRs get no token
+# (secrets are withheld), so they keep the flag-only behaviour.
 
 on:
   pull_request:
     paths:
       - 'charts/**'
 
+# contents:read for the default token; the auto-pin push authenticates with the bot App token
+# (contents:write), not GITHUB_TOKEN.
 permissions:
   contents: read
 
@@ -24,10 +33,38 @@ jobs:
     name: chronicle image pin gate
     runs-on: ubuntu-latest
     steps:
+      # Mint the bot App token FIRST (same-repo PRs only) so the checkout persists it as the git
+      # credential and the auto-pin push is write-capable (push via origin, no extraheader clash).
+      # continue-on-error so a transient mint failure can't block the required gate.
+      - name: Mint Chronicle bot token (same-repo PRs)
+        id: bot-token
+        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+        continue-on-error: true
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.CHRONICLE_GITHUB_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.CHRONICLE_GITHUB_BOT_PRIVATE_KEY }}
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
+          # PR HEAD branch so an auto-pin commit pushes cleanly; persisted credential is the bot
+          # App token for same-repo PRs (write), else the default GITHUB_TOKEN (read).
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ steps.bot-token.outputs.token || github.token }}
       - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
+      # Best effort: public chronicle images resolve anonymously; private ones need this token.
+      # A login failure is fine -- the unresolved image just stays flagged by the render gate.
+      - name: Log in to GHCR for private image digests
+        continue-on-error: true
+        env:
+          GHCR_TOKEN: ${{ secrets.CHRONICLE_IMAGE_PULL_TOKEN }}
+        run: |
+          if [ -n "$GHCR_TOKEN" ]; then
+            echo "$GHCR_TOKEN" | docker login ghcr.io -u "${{ github.repository_owner }}" --password-stdin
+          else
+            echo "no CHRONICLE_IMAGE_PULL_TOKEN; resolving public images only"
+          fi
       - name: Self-test detector, then gate changed charts
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -91,3 +128,45 @@ jobs:
           done <<< "$changed"
           if [ "$fail" -eq 0 ]; then echo "OK: all changed charts pin their chronicle default images."; fi
           exit "$fail"
+      # Auto-pin the standard chronicle chart shape (image.repository + image.tag) for same-repo
+      # PRs and push ONE commit. Skipped without a bot token (fork / mint failure). The render
+      # gate above remains the verdict, so an unresolved or non-standard image stays flagged.
+      - name: Auto-pin chronicle image digests (one commit to the PR branch)
+        if: ${{ always() && github.event.pull_request.head.repo.full_name == github.repository && steps.bot-token.outputs.token != '' }}
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -uo pipefail
+          if ! changed=$(git diff --name-only "${BASE_SHA}...HEAD" -- 'charts/*/values.yaml'); then
+            echo "::warning::auto-pin: could not compute the PR diff; skipping (the render gate still gates)."; exit 0
+          fi
+          [ -n "$changed" ] || { echo "No changed chart values.yaml."; exit 0; }
+          # Loop guard: never re-pin on top of an auto-pin (avoids a push -> re-run -> push cycle).
+          if git log -1 --pretty=%s | grep -q '^ci: auto-pin chronicle image digests'; then
+            echo "::warning::HEAD is already an auto-pin commit; skipping (loop guard)."; exit 0
+          fi
+          pinned_files=""
+          while IFS= read -r f; do
+            [ -f "$f" ] || continue
+            repo=$(yq -r '.image.repository // ""' "$f")
+            tag=$(yq -r '.image.tag // ""' "$f")
+            case "$repo" in ghcr.io/chronicleprotocol/*) ;; *) continue ;; esac
+            case "$tag" in ""|*@sha256:*) continue ;; esac
+            digest=$(docker buildx imagetools inspect "$repo:$tag" --format '{{.Manifest.Digest}}' 2>/dev/null || true)
+            case "$digest" in
+              sha256:*)
+                NEWTAG="$tag@$digest" yq -i '.image.tag = strenv(NEWTAG)' "$f"
+                pinned_files="$pinned_files $f"
+                echo "auto-pinned $f: $repo:$tag -> $tag@$digest"
+                ;;
+              *) echo "::warning file=$f::could not resolve $repo:$tag to an index digest; left for the render gate" ;;
+            esac
+          done <<< "$changed"
+          [ -n "$pinned_files" ] || { echo "No auto-pins to push."; exit 0; }
+          git config user.name "chronicle-github-bot[bot]"
+          git config user.email "chronicle-github-bot[bot]@users.noreply.github.com"
+          git add -- $pinned_files
+          git commit -m "ci: auto-pin chronicle image digests"
+          git push origin "HEAD:${HEAD_REF}"
+          echo "::notice::pushed an auto-pin commit to ${HEAD_REF}; the re-run verifies it."
