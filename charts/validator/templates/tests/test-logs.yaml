@@ -11,7 +11,7 @@ spec:
   serviceAccountName: {{ include "validator.serviceAccountName" . }}-test
   containers:
     - name: test-ghost-logs
-      image: ghcr.io/chronicleprotocol/buildtools:sha-c670bbf
+      image: ghcr.io/chronicleprotocol/buildtools:sha-c670bbf@sha256:ea8bf30723df3e8c0724aa081a6b3f31df072d0da7645f024db3627c7decb1ed
       command:
         - /bin/sh
         - -c
@@ -32,7 +32,7 @@ spec:
           fi
           echo "TEST PASSED: Found runtime logs in ghost logs."
     - name: test-vao-logs
-      image: ghcr.io/chronicleprotocol/buildtools:sha-c670bbf
+      image: ghcr.io/chronicleprotocol/buildtools:sha-c670bbf@sha256:ea8bf30723df3e8c0724aa081a6b3f31df072d0da7645f024db3627c7decb1ed
       command:
         - /bin/sh
         - -c
