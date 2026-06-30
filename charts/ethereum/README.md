@@ -1,6 +1,6 @@
 # ethereum
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.16.5](https://img.shields.io/badge/AppVersion-v1.16.5-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.16.5](https://img.shields.io/badge/AppVersion-v1.16.5-informational?style=flat-square)
 
 A Helm chart for deploying Ethereum nodes on Kubernetes
 
@@ -23,7 +23,7 @@ A Helm chart for deploying Ethereum nodes on Kubernetes
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ethereum/client-go"` |  |
-| image.tag | string | `""` |  |
+| image.tag | string | `"v1.16.5@sha256:32b878e4144a8de06a1003a2d4b0ba067fd578e0080a719338f18b229cc1e53c"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
