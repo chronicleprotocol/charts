@@ -39,7 +39,8 @@ image:
   repository: offchainlabs/nitro-node
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # Pinned to a multi-arch (linux/amd64, linux/arm64) digest for the appVersion.
+  tag: "v3.7.6-c0fe95e@sha256:9f779fa84b7bbfb9ab7467e2783326887ad7db7818b2cf23f61423e4052fde32"
 
 imagePullSecrets: []
 nameOverride: ""
