@@ -164,8 +164,8 @@ jobs:
             esac
           done <<< "$changed"
           [ -n "$pinned_files" ] || { echo "No auto-pins to push."; exit 0; }
-          git config user.name "chronicle-github-bot[bot]"
-          git config user.email "chronicle-github-bot[bot]@users.noreply.github.com"
+          git config user.name "chronicle-github[bot]"
+          git config user.email "294648363+chronicle-github[bot]@users.noreply.github.com"
           git add -- $pinned_files
           git commit -m "ci: auto-pin chronicle image digests"
           git push origin "HEAD:${HEAD_REF}"
