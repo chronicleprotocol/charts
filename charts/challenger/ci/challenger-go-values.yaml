@@ -1,4 +1,5 @@
 implementation: go
+replicaCount: 0
 
 ethRpcUrl: "https://eth.drpc.org"
 

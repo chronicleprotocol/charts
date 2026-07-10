@@ -21,7 +21,7 @@ metadata:
   labels:
     {{- include "challenger.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount | default 1 }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "challenger.selectorLabels" . | nindent 6 }}

@@ -66,6 +66,14 @@ helm template challenger "${chart_dir}" \
 
 assert_contains "${inline_render}" "${inline_rpc}"
 
+zero_replicas_render="${tmp_dir}/zero-replicas-render.yaml"
+helm template challenger "${chart_dir}" \
+  --set implementation=rs \
+  --set replicaCount=0 \
+  >"${zero_replicas_render}"
+
+assert_contains "${zero_replicas_render}" 'replicas: 0'
+
 invalid_render="${tmp_dir}/invalid-render.yaml"
 plaintext_rpc="https://plaintext-should-not-render.example.invalid/rpc"
 if helm template challenger "${chart_dir}" \
