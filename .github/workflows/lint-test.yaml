@@ -36,6 +36,9 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml
 
+      - name: Run challenger RPC secret-reference tests
+        run: bash charts/challenger/ci/test-rpc-secret-refs.sh
+
       - name: Create kind cluster
         uses: helm/kind-action@ef37e7f390d99f746eb8b610417061a60e82a6cc
         if: steps.list-changed.outputs.changed == 'true'

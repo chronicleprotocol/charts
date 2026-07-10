@@ -1,3 +1,19 @@
+{{- $rpcSecrets := .Values.rpcSecrets | default dict -}}
+{{- $ethRpcSecret := get $rpcSecrets "ethRpcUrl" | default dict -}}
+{{- $flashbotsRpcSecret := get $rpcSecrets "flashbotsRpcUrl" | default dict -}}
+{{- $normalEnv := .Values.env.normal | default dict -}}
+{{- if and $ethRpcSecret .Values.ethRpcUrl -}}
+{{- fail "ethRpcUrl and rpcSecrets.ethRpcUrl cannot both be set" -}}
+{{- end -}}
+{{- if and $flashbotsRpcSecret .Values.flashbotsRpcUrl -}}
+{{- fail "flashbotsRpcUrl and rpcSecrets.flashbotsRpcUrl cannot both be set" -}}
+{{- end -}}
+{{- if and $ethRpcSecret (hasKey $normalEnv "ETH_RPC_URL") -}}
+{{- fail "env.normal.ETH_RPC_URL is reserved when rpcSecrets.ethRpcUrl is set" -}}
+{{- end -}}
+{{- if and $flashbotsRpcSecret (hasKey $normalEnv "FLASHBOTS_RPC_URL") -}}
+{{- fail "env.normal.FLASHBOTS_RPC_URL is reserved when rpcSecrets.flashbotsRpcUrl is set" -}}
+{{- end -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,10 +64,18 @@ spec:
             - "{{ $address }}"
           {{- end }}
             - "--rpc-url"
+          {{- if $ethRpcSecret }}
+            - "$(ETH_RPC_URL)"
+          {{- else }}
             - "{{ .Values.ethRpcUrl }}"
-          {{- if .Values.flashbotsRpcUrl }}
+          {{- end }}
+          {{- if or .Values.flashbotsRpcUrl $flashbotsRpcSecret }}
             - "--flashbot-rpc-url"
+            {{- if $flashbotsRpcSecret }}
+            - "$(FLASHBOTS_RPC_URL)"
+            {{- else }}
             - "{{ .Values.flashbotsRpcUrl }}"
+            {{- end }}
           {{- end }}
           {{- if  .Values.ethConfig.ethPrivateKey }}
             - "--secret-key"
@@ -79,6 +103,20 @@ spec:
 
 
           env:
+          {{- if $ethRpcSecret }}
+          - name: ETH_RPC_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ required "rpcSecrets.ethRpcUrl.existingSecret is required" $ethRpcSecret.existingSecret | quote }}
+                key: {{ required "rpcSecrets.ethRpcUrl.key is required" $ethRpcSecret.key | quote }}
+          {{- end }}
+          {{- if $flashbotsRpcSecret }}
+          - name: FLASHBOTS_RPC_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ required "rpcSecrets.flashbotsRpcUrl.existingSecret is required" $flashbotsRpcSecret.existingSecret | quote }}
+                key: {{ required "rpcSecrets.flashbotsRpcUrl.key is required" $flashbotsRpcSecret.key | quote }}
+          {{- end }}
           {{- if .Values.ethConfig.ethPrivateKey }}
           - name: ETH_SECRET_KEY
             valueFrom:

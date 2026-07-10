@@ -40,6 +40,14 @@ ethChainId: "1"
 ethRpcUrl: ""
 # -- provide flashbots RPC
 flashbotsRpcUrl: ""
+# -- Optional existing Secret references for RPC endpoints. Do not combine an entry with its plaintext counterpart.
+rpcSecrets: {}
+  # ethRpcUrl:
+  #   existingSecret: "challenger-rpc"
+  #   key: "ethRpcUrl"
+  # flashbotsRpcUrl:
+  #   existingSecret: "challenger-rpc"
+  #   key: "flashbotsRpcUrl"
 # -- Transaction type definition, possible values are: legacy, eip1559 or none (default "none")
 transactionType: ""
 

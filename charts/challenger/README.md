@@ -1,6 +1,6 @@
 # challenger
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 A Helm chart for deploying the OpPoke Challenger Bot (go and rust) in Kubernetes
 
@@ -43,6 +43,7 @@ A Helm chart for deploying the OpPoke Challenger Bot (go and rust) in Kubernetes
 | readinessProbe.tcpSocket.port | int | `9090` |  |
 | replicaCount | int | `1` | how many replicas to run (default 1) |
 | resources | object | `{}` |  |
+| rpcSecrets | object | `{}` | Optional existing Secret references for RPC endpoints. Do not combine an entry with its plaintext counterpart. |
 | securityContext | object | `{}` |  |
 | service.ports.challenger.port | int | `9090` |  |
 | service.ports.challenger.protocol | string | `"TCP"` |  |
