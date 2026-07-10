@@ -79,7 +79,7 @@ spec:
           {{- end }}
           {{- if  .Values.ethConfig.ethPrivateKey }}
             - "--secret-key"
-            - "${ETH_SECRET_KEY}"
+            - "$(ETH_SECRET_KEY)"
           {{- end }}
           {{- if .Values.ethConfig.ethKeys }}
             - "--keystore"
@@ -104,25 +104,25 @@ spec:
 
           env:
           {{- if $ethRpcSecret }}
-          - name: ETH_RPC_URL
-            valueFrom:
-              secretKeyRef:
-                name: {{ required "rpcSecrets.ethRpcUrl.existingSecret is required" $ethRpcSecret.existingSecret | quote }}
-                key: {{ required "rpcSecrets.ethRpcUrl.key is required" $ethRpcSecret.key | quote }}
+            - name: ETH_RPC_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "rpcSecrets.ethRpcUrl.existingSecret is required" $ethRpcSecret.existingSecret | quote }}
+                  key: {{ required "rpcSecrets.ethRpcUrl.key is required" $ethRpcSecret.key | quote }}
           {{- end }}
           {{- if $flashbotsRpcSecret }}
-          - name: FLASHBOTS_RPC_URL
-            valueFrom:
-              secretKeyRef:
-                name: {{ required "rpcSecrets.flashbotsRpcUrl.existingSecret is required" $flashbotsRpcSecret.existingSecret | quote }}
-                key: {{ required "rpcSecrets.flashbotsRpcUrl.key is required" $flashbotsRpcSecret.key | quote }}
+            - name: FLASHBOTS_RPC_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "rpcSecrets.flashbotsRpcUrl.existingSecret is required" $flashbotsRpcSecret.existingSecret | quote }}
+                  key: {{ required "rpcSecrets.flashbotsRpcUrl.key is required" $flashbotsRpcSecret.key | quote }}
           {{- end }}
           {{- if .Values.ethConfig.ethPrivateKey }}
-          - name: ETH_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.ethConfig.ethPrivateKey.existingSecret }}
-                key: {{ .Values.ethConfig.ethPrivateKey.key }}
+            - name: ETH_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.ethConfig.ethPrivateKey.existingSecret }}
+                  key: {{ .Values.ethConfig.ethPrivateKey.key }}
           {{- end }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
           resources:

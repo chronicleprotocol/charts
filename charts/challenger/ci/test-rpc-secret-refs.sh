@@ -56,6 +56,34 @@ assert_contains "${flashbots_render}" "${flashbots_rpc_placeholder}"
 assert_contains "${flashbots_render}" 'name: FLASHBOTS_RPC_URL'
 assert_contains "${flashbots_render}" 'key: "flashbotsRpcUrl"'
 
+mixed_env_render="${tmp_dir}/mixed-env-render.yaml"
+helm template challenger "${chart_dir}" \
+  --set implementation=rs \
+  --set-string rpcSecrets.ethRpcUrl.existingSecret=challenger-rpc \
+  --set-string rpcSecrets.ethRpcUrl.key=ethRpcUrl \
+  --set-string rpcSecrets.flashbotsRpcUrl.existingSecret=challenger-rpc \
+  --set-string rpcSecrets.flashbotsRpcUrl.key=flashbotsRpcUrl \
+  --set-string env.normal.FOO=bar \
+  >"${mixed_env_render}"
+
+assert_contains "${mixed_env_render}" 'name: ETH_RPC_URL'
+assert_contains "${mixed_env_render}" 'name: FLASHBOTS_RPC_URL'
+assert_contains "${mixed_env_render}" 'name: FOO'
+assert_contains "${mixed_env_render}" 'value: "bar"'
+
+private_key_render="${tmp_dir}/private-key-render.yaml"
+eth_secret_key_placeholder="\$(ETH_SECRET_KEY)"
+helm template challenger "${chart_dir}" \
+  --set implementation=rs \
+  --set-string ethConfig.ethPrivateKey.existingSecret=challenger-eth \
+  --set-string ethConfig.ethPrivateKey.key=ethPrivateKey \
+  --set-string env.normal.FOO=bar \
+  >"${private_key_render}"
+
+assert_contains "${private_key_render}" "${eth_secret_key_placeholder}"
+assert_contains "${private_key_render}" 'name: ETH_SECRET_KEY'
+assert_contains "${private_key_render}" 'name: FOO'
+
 inline_rpc="https://public-backward-compatible.example.invalid"
 inline_render="${tmp_dir}/inline-render.yaml"
 
