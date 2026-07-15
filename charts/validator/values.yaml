@@ -11,7 +11,7 @@ global:
     repository: ghcr.io/chronicleprotocol/ghost
     pullPolicy: Always
     # -- Image tag PINNED to the multi-arch index digest (RFC-044.4 WS1); bump with appVersion.
-    tag: "0.78.2@sha256:970f6074b3b651d64693539aed2f0c8a0be420c7f9170127328f01ae89685081"
+    tag: "0.78.4@sha256:3aa6054e9c55af4954ff8c31569bd59fce30f2b971743afc3b13123908c09e9c"
 
   imagePullSecrets: []
 
