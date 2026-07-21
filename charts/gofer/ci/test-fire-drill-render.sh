@@ -22,6 +22,9 @@ rendered="$(helm template fire-drill "$chart_dir" \
   --show-only templates/deployment.yaml)"
 default_rendered="$(helm template default "$chart_dir" \
   --show-only templates/deployment.yaml)"
+proxy_rendered="$(helm template proxy "$chart_dir" \
+  --values "$chart_dir/ci/proxy-values.yaml" \
+  --show-only templates/deployment.yaml)"
 
 if [[ "$default_rendered" == *'automountServiceAccountToken:'* ]]; then
   printf 'default render must preserve Kubernetes service-account automount behavior\n' >&2
@@ -40,6 +43,14 @@ required=(
 for expected in "${required[@]}"; do
   if [[ "$rendered" != *"$expected"* ]]; then
     printf 'missing rendered fire-drill field: %s\n' "$expected" >&2
+    exit 1
+  fi
+done
+
+for expected in 'path: /healthz' 'port: healthcheck'; do
+  count="$(grep -Fc -- "$expected" <<< "$proxy_rendered" || true)"
+  if [[ "$count" -ne 2 ]]; then
+    printf 'proxy CI fixture must set both probes to %s, found %s\n' "$expected" "$count" >&2
     exit 1
   fi
 done
