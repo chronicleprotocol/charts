@@ -48,6 +48,15 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# -- Override whether Kubernetes mounts the service-account token into gofer pods.
+automountServiceAccountToken: null
+
+# -- Additional containers to run in the gofer pod.
+extraContainers: []
+
+# -- Additional volumes to make available to containers in the gofer pod.
+extraVolumes: []
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

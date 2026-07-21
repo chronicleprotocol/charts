@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.4.3](https://img.shields.io/badge/Version-0.4.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
+![Version: 0.4.4](https://img.shields.io/badge/Version-0.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -17,6 +17,7 @@ A Helm chart for deploying gofer to Kubernetes
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | argsOverride | list | `[]` | Note: If you want to override the default command and args, use `argsOverride` and `entryPointOverride`. |
+| automountServiceAccountToken | string | `nil` | Override whether Kubernetes mounts the service-account token into gofer pods. |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
@@ -26,7 +27,9 @@ A Helm chart for deploying gofer to Kubernetes
 | env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
 | env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | extraArgs | list | `[]` |  |
+| extraContainers | list | `[]` | Additional containers to run in the gofer pod. |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
+| extraVolumes | list | `[]` | Additional volumes to make available to containers in the gofer pod. |
 | fullnameOverride | string | `""` |  |
 | goferMode | string | `"run"` | can be `run`, `models`, `data`, or `proxy` |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
