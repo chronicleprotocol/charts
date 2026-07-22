@@ -7,14 +7,14 @@ env:
 
 livenessProbe:
   httpGet:
-    path: /healthz
-    port: healthcheck
+    path: /livez
+    port: gofer
   initialDelaySeconds: 60
   periodSeconds: 120
 
 readinessProbe:
   httpGet:
-    path: /healthz
-    port: healthcheck
+    path: /readyz
+    port: gofer
   initialDelaySeconds: 60
   periodSeconds: 60
