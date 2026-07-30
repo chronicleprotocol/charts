@@ -1,0 +1,28 @@
+automountServiceAccountToken: false
+
+extraContainers:
+  - name: auxiliary
+    image: registry.k8s.io/pause:3.10.1@sha256:278fb9dbcca9518083ad1e11276933a2e96f23de604a3a08cc3c80002767d24c
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 65532
+    resources:
+      requests:
+        cpu: 1m
+        memory: 4Mi
+      limits:
+        cpu: 10m
+        memory: 16Mi
+    volumeMounts:
+      - name: auxiliary-data
+        mountPath: /var/run/auxiliary
+
+extraVolumes:
+  - name: auxiliary-data
+    emptyDir: {}
