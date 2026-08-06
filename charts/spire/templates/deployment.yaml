@@ -94,6 +94,10 @@ spec:
               value: "{{ .Values.kafka.kafkaEnpoint }}"
           {{- end }}
           {{- include "helpers.list-env-variables" . | indent 12 }}
+          ### -- ADDITIONAL ENV VARS FROM `.Values.env.raw`
+          {{- if .Values.env.raw }}
+            {{- toYaml .Values.env.raw | nindent 12 }}
+          {{- end }}
           volumeMounts:
           {{- if .Values.configHcl }}
           - name: config

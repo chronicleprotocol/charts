@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.3.7](https://img.shields.io/badge/Version-0.3.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.8](https://img.shields.io/badge/Version-0.3.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -25,6 +25,8 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | chainType | string | `nil` | can be one of mainnet: `eth`, `arb`, `opt`, `gno`, `scr`, `zkevm`, `mantle`, or testnets: `gor`, `sep`, `ogor`, `mango`, `testnet-zkEVM-mango`, `mantle-testnet`, `scr-sepolia` |
 | configsUrl | string | `""` | config url for the app, if provided, will override the default config. can be an ipfs url or a http url |
 | entryPointOverride | list | `[]` |  |
+| env.normal | object | `{}` |  |
+| env.raw | list | `[]` | sensitive variables, passed through verbatim as core/v1 EnvVar entries, for values that must come from a Secret |
 | environment | string | `"stage"` | CFG_ENVIRONMENT can be one of `stage` or `prod` |
 | ethConfig | object | `{}` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
@@ -63,6 +65,8 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | service.annotations | object | `{}` |  |
 | service.ports.listen.port | int | `8080` |  |
 | service.ports.listen.protocol | string | `"TCP"` |  |
+| service.ports.metrics.port | int | `9090` |  |
+| service.ports.metrics.protocol | string | `"TCP"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -71,6 +75,7 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | serviceMonitor.enabled | bool | `false` | If true, a ServiceMonitor CRD is created for a prometheus operator https://github.com/coreos/prometheus-operator |
 | serviceMonitor.interval | string | `"60s"` | ServiceMonitor scrape interval |
 | serviceMonitor.labels | object | `{}` | Additional ServiceMonitor labels |
+| serviceMonitor.metricRelabelings | list | `[]` | ServiceMonitor metricRelabelings |
 | serviceMonitor.namespace | string | `nil` | Alternative namespace for ServiceMonitor |
 | serviceMonitor.path | string | `"/metrics"` | Path to scrape |
 | serviceMonitor.port | string | `"metrics"` | port to scrape |
