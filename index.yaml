@@ -3308,6 +3308,22 @@ entries:
   spectre:
   - apiVersion: v2
     appVersion: 0.68.3
+    created: "2026-08-06T03:44:07.089105572Z"
+    description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
+    digest: 34141a09fe7f1e3eada085eb3c8ae1fca400dda15fd29d767876e9238093e6f2
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake/
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.3.8/spectre-0.3.8.tgz
+    version: 0.3.8
+  - apiVersion: v2
+    appVersion: 0.68.3
     created: "2026-06-29T13:13:36.166180884Z"
     description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
     digest: be56b3b109e1b3de150cd111558101282a1fe944b074ad257d730d319cf656e2
@@ -3623,6 +3639,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.1/spectre-0.1.1.tgz
     version: 0.1.1
   spire:
+  - apiVersion: v2
+    appVersion: 0.68.3
+    created: "2026-08-06T03:44:07.279828827Z"
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: 7fad5114313120a88d58024478d8ed55dbd6a968e4cd2c8e19612b3605a57b84
+    maintainers:
+    - name: WesleyCharlesBlake
+      url: https://github.com/WesleyCharlesBlake
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.3.6/spire-0.3.6.tgz
+    version: 0.3.6
   - apiVersion: v2
     appVersion: 0.68.3
     created: "2026-06-29T14:18:44.22546374Z"
@@ -5303,4 +5334,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-03T09:17:50.955412513Z"
+generated: "2026-08-06T03:44:07.281784688Z"
