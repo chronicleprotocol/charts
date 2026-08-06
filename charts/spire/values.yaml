@@ -167,6 +167,13 @@ env:
   # non sensitive variables
   # refer to https://github.com/chronicleprotocol/oracle-suite/tree/main/cmd/spire#environment-variables
   normal: {}
+  # -- sensitive variables, passed through verbatim as core/v1 EnvVar entries, for values that must come from a Secret
+  raw: []
+    # - name: CFG_NATS_TOKEN
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: my-secret
+    #       key: CFG_NATS_TOKEN
     # CFG_ITEM_SEPARATOR: "\n"
     # CFG_FEEDS: stage
     # CFG_LIBP2P_PK_SEED: "1234567981234567981234567981234567981234123456798123456798123456" # 64 bytes libp2p for bootstrap only

@@ -1,6 +1,6 @@
 # spire
 
-![Version: 0.3.5](https://img.shields.io/badge/Version-0.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.6](https://img.shields.io/badge/Version-0.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle spire to  Kubernetes
 
@@ -27,6 +27,7 @@ A Helm chart for deploying Chronicle spire to  Kubernetes
 | customArgs | list | `[]` |  |
 | entryPointOverride | list | `[]` |  |
 | env.normal | object | `{}` |  |
+| env.raw | list | `[]` | sensitive variables, passed through verbatim as core/v1 EnvVar entries, for values that must come from a Secret |
 | extraArgs | list | `[]` |  |
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
 | fullnameOverride | string | `"spire"` |  |

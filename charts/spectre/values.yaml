@@ -50,6 +50,13 @@ inlineConfig: ""
 
 env:
   normal: {}
+  # -- sensitive variables, passed through verbatim as core/v1 EnvVar entries, for values that must come from a Secret
+  raw: []
+    # - name: CFG_NATS_TOKEN
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: my-secret
+    #       key: CFG_NATS_TOKEN
     # CFG_MODELS: |-
     #   "LIDO_LST/1DAY"
     #   "ETH/BTC"
