@@ -46,8 +46,15 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+# Annotations to add to the Deployment itself. Stakater Reloader reads its
+# annotations from the workload metadata, not the pod template, so reloader
+# annotations belong here and NOT under podAnnotations.
+deploymentAnnotations: {}
   # configmap.reloader.stakater.com/reload: "erpc-config"
+  # secret.reloader.stakater.com/reload: "erpc-provider-api-keys"
+
+# Annotations to add to the pod template.
+podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
