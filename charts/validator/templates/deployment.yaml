@@ -70,6 +70,11 @@ spec:
           {{- end }}
 
 
+          {{- if and .Values.global.startup .Values.global.startup.enabled }}
+          startupProbe:
+            {{- toYaml .Values.global.startup.startupProbe | nindent 12 }}
+          {{- end }}
+
           {{- if .Values.global.liveness.enabled }}
           livenessProbe:
             {{- toYaml .Values.global.liveness.livenessProbe | nindent 12 }}

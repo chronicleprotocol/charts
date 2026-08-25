@@ -87,6 +87,22 @@ global:
       periodSeconds: 60
       failureThreshold: 4
 
+  # -- Startup probe : give a slow-starting validator time to serve /healthz before the
+  # liveness probe can kill it. While this probe is running the liveness and readiness
+  # probes are suspended, so startup time and steady-state failure detection are tuned
+  # independently instead of trading off against each other.
+  # Disabled by default to keep existing releases unchanged; enable it for validators
+  # whose startup can exceed the liveness initialDelaySeconds.
+  # failureThreshold x periodSeconds is the startup budget (default 30 x 10s = 5 minutes).
+  startup:
+    enabled: false
+    startupProbe:
+      httpGet:
+        path: /healthz
+        port: 9100
+      periodSeconds: 10
+      failureThreshold: 30
+
   # -- Metrics port for the validator, used by the service and the service monitor
   metrics:
     enabled: true
