@@ -1,3 +1,4 @@
+{{- if .Values.ghost.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -28,3 +29,4 @@ spec:
     {{- end }}
   selector:
     {{- include "validator.selectorLabels" . | nindent 4 }}
+{{- end }}

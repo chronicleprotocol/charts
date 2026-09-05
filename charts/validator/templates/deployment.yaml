@@ -1,3 +1,4 @@
+{{- if .Values.ghost.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -185,3 +186,4 @@ spec:
       topologySpreadConstraints:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

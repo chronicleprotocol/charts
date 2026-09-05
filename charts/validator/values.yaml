@@ -141,6 +141,8 @@ global:
 
 # -- Values for Ghost
 ghost:
+  # -- Whether to deploy the Ghost (defi) container/deployment. Set to `false` to run a single-container release (e.g. VAO-only).
+  enabled: true
   # -- Image tag for the validator (overrides global image if set)
   image:
     repository: null
@@ -219,10 +221,14 @@ ghost:
       # external-dns.alpha.kubernetes.io/hostname: DOMAIN_NAME
 
 vao:
+  # -- Whether to deploy the VAO container/deployment. Set to `false` to run a single-container release (e.g. Ghost-only).
+  enabled: true
   # -- Image tag for the validator (overrides global image if set)
   image:
     repository: null
     tag: null
+  # -- Chain RPC URL(s) for the VAO container's target chain. Falls back to `ghost.rpcUrl` when unset (pre-0.8.0 behavior).
+  rpcUrl: null
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
   # -- WATCHDOG polling interval (in seconds)
@@ -242,6 +248,18 @@ vao:
     # - "run"
     # - "-c"
     # - "ipfs://Qm......."
+
+  # -- Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both. Falls back to `ghost.ethConfig` when unset (pre-0.8.0 behavior).
+  ethConfig: {}
+    # ethFrom:
+    #   existingSecret: ""
+    #   key: ""
+    # ethKeys:
+    #   existingSecret: ""
+    #   key: ""
+    # ethPass:
+    #   existingSecret: ""
+    #   key: ""
 
   # -- Environment variable listing
   env:

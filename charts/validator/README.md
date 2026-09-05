@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.78.5](https://img.shields.io/badge/AppVersion-0.78.5-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.78.5](https://img.shields.io/badge/AppVersion-0.78.5-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -16,9 +16,10 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"argsOverride":[],"commandOverride":[],"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"service":{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
+| ghost | object | `{"argsOverride":[],"commandOverride":[],"enabled":true,"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"service":{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.commandOverride | list | `[]` | command override for the validator |
+| ghost.enabled | bool | `true` | Whether to deploy the Ghost (defi) container/deployment. Set to `false` to run a single-container release (e.g. VAO-only). |
 | ghost.env | object | `{"normal":{},"raw":{}}` | Environment variable listing |
 | ghost.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | ghost.ethConfig | object | `{}` | Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both |
@@ -71,11 +72,14 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | vao.affinity | object | `{}` | pod Affinity spec applied to the VAO pod. Merged over global.affinity. |
 | vao.argsOverride | list | `[]` | args override for the validator |
 | vao.commandOverride | list | `[]` | command override for the validator |
+| vao.enabled | bool | `true` | Whether to deploy the VAO container/deployment. Set to `false` to run a single-container release (e.g. Ghost-only). |
 | vao.env | object | `{"normal":{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"},"raw":{}}` | Environment variable listing |
 | vao.env.normal | object | `{"CFG_DEFI_ENABLE":"0","CFG_VAO_ENABLE":"1"}` | un-encrypted env vars passed to the pod |
+| vao.ethConfig | object | `{}` | Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both. Falls back to `ghost.ethConfig` when unset (pre-0.8.0 behavior). |
 | vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
 | vao.image | object | `{"repository":null,"tag":null}` | Image tag for the validator (overrides global image if set) |
 | vao.resources | object | `{}` | Resources constraints for the validator, CPU, Memory, etc. |
+| vao.rpcUrl | string | `nil` | Chain RPC URL(s) for the VAO container's target chain. Falls back to `ghost.rpcUrl` when unset (pre-0.8.0 behavior). |
 | vao.service | object | `{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"}` | Service type for the validator |
 | vao.service.annotations | object | `{}` | Annotations to add to the service |
 | vao.service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |
