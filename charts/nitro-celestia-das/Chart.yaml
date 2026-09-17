@@ -3,8 +3,6 @@ name: nitro-celestia-das
 description: A Helm chart for deploying celestia-nitro-das
 icon: https://avatars.githubusercontent.com/u/54859940?s=48&v=4
 maintainers:
-  - name: WesleyCharlesBlake
-    url: https://github.com/WesleyCharlesBlake
   - name: chronicleprotocol
     url: https://chroniclelabs.org
 
@@ -21,7 +19,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.1
+version: 0.1.2
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to

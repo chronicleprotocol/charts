@@ -3,8 +3,6 @@ name: lighthouse
 description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon on Kubernetes
 icon: https://avatars.githubusercontent.com/u/22672004
 maintainers:
-  - name: WesleyCharlesBlake
-    url: https://github.com/WesleyCharlesBlake
   - name: chronicleprotocol
     url: https://github.com/chronicleprotocol
 # A chart can be either an 'application' or a 'library' chart.
@@ -20,7 +18,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.8
+version: 0.0.9
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to

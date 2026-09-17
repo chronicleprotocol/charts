@@ -1,6 +1,6 @@
 # arbitrum
 
-![Version: 0.3.4](https://img.shields.io/badge/Version-0.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.7.6-c0fe95e](https://img.shields.io/badge/AppVersion-v3.7.6--c0fe95e-informational?style=flat-square)
+![Version: 0.3.5](https://img.shields.io/badge/Version-0.3.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.7.6-c0fe95e](https://img.shields.io/badge/AppVersion-v3.7.6--c0fe95e-informational?style=flat-square)
 
 A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
@@ -8,7 +8,6 @@ A Helm chart for deploying Arbitrum Nitro on Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://github.com/chronicleprotocol> |
 
 ## Values
