@@ -1,7 +1,8 @@
 repositoryID: 8fa553a4-2e69-481b-a019-f6daa1c73cdc
 owners:
-  - name: WesleyCharlesBlake
-    email: hello@stratonode.dev
+  - name: chronicleprotocol
+    email: devops@chroniclelabs.org
 
-ignore: # (optional, packages that should not be indexed by Artifact Hub)
+ignore: # (optional, packages that should not be indexed by Artifact Hub)
   - name: monitor
+  - name: tor-proxy
