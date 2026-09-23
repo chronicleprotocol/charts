@@ -1,6 +1,6 @@
 # gofer
 
-![Version: 0.4.4](https://img.shields.io/badge/Version-0.4.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
+![Version: 0.4.5](https://img.shields.io/badge/Version-0.4.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.61](https://img.shields.io/badge/AppVersion-0.61-informational?style=flat-square)
 
 A Helm chart for deploying gofer to Kubernetes
 
@@ -8,7 +8,6 @@ A Helm chart for deploying gofer to Kubernetes
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| WesleyCharlesBlake |  | <https://github.com/WesleyCharlesBlake> |
 | chronicleprotocol |  | <https://chroniclelabs.org> |
 
 ## Values
