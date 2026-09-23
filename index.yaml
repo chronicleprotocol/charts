@@ -3,6 +3,20 @@ entries:
   arbitrum:
   - apiVersion: v2
     appVersion: v3.7.6-c0fe95e
+    created: "2026-09-23T00:32:44.436379031Z"
+    description: A Helm chart for deploying Arbitrum Nitro on Kubernetes
+    digest: b0ef6f35d000d9aacc561d06aa631b11b5b60fe4061ec70a9e0cef0547c22c5b
+    icon: https://avatars.githubusercontent.com/u/43838009
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: arbitrum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/arbitrum-0.3.5/arbitrum-0.3.5.tgz
+    version: 0.3.5
+  - apiVersion: v2
+    appVersion: v3.7.6-c0fe95e
     created: "2026-06-30T01:08:17.513890278Z"
     description: A Helm chart for deploying Arbitrum Nitro on Kubernetes
     digest: bd5c387bf908c36c5eef6682d7cef3fcc7522079380de435725b7638a6280e04
@@ -238,6 +252,19 @@ entries:
   base:
   - apiVersion: v2
     appVersion: v0.11.1
+    created: "2026-09-23T00:32:44.635678868Z"
+    description: A Helm chart for deploying Base RPC nodes on Kubernetes
+    digest: 3796ad5c1aefcead40f4bfad3d39410894a33c21037db15ad4a453db449a1190
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: base
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/base-0.0.9/base-0.0.9.tgz
+    version: 0.0.9
+  - apiVersion: v2
+    appVersion: v0.11.1
     created: "2026-06-30T01:06:27.977608976Z"
     description: A Helm chart for deploying Base RPC nodes on Kubernetes
     digest: 91d6cf32ca01b3bf7eddff94d0637acfedb16fa3ee988cebad5060e331f7c77d
@@ -341,6 +368,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/base-0.0.1/base-0.0.1.tgz
     version: 0.0.1
   beacons:
+  - apiVersion: v2
+    appVersion: v6.1.2
+    created: "2026-09-23T00:32:44.93096957Z"
+    description: A Helm chart for deploying a beacon node to Kubernetes
+    digest: b8e0491077c9a1de2ceebd80ebb8627d70e91c98516b699de0d9c27a0cefe390
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: beacons
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/beacons-0.0.18/beacons-0.0.18.tgz
+    version: 0.0.18
   - apiVersion: v2
     appVersion: v6.1.2
     created: "2025-10-16T16:54:09.476766015Z"
@@ -584,6 +624,22 @@ entries:
   challenger:
   - apiVersion: v2
     appVersion: 0.1.0
+    created: "2026-09-23T00:32:45.234124701Z"
+    description: A Helm chart for deploying the OpPoke Challenger Bot (go and rust)
+      in Kubernetes
+    digest: 51faa75a962d9de2ce8e5f9e4e61b2f692fbf01e29da50fc8e2eb465acca5a9e
+    home: https://github.com/chronicleprotocol/challenger
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: challenger
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/challenger-0.1.2/challenger-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.1.0
     created: "2026-06-29T14:18:52.223598609Z"
     description: A Helm chart for deploying the OpPoke Challenger Bot (go and rust)
       in Kubernetes
@@ -653,6 +709,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/challenger-0.0.1/challenger-0.0.1.tgz
     version: 0.0.1
   erpc:
+  - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2026-09-23T00:32:45.545230877Z"
+    description: A Helm chart for deploying eRPC — fault-tolerant evm rpc proxy with
+      reorg-aware permanent caching to Kubernetes
+    digest: 3aa4447777f9cabbe696eb9fef95ffd30d3ef975e5e15233874eb646de598b2f
+    icon: https://avatars.githubusercontent.com/u/6142249
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: erpc
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/erpc-0.7.1/erpc-0.7.1.tgz
+    version: 0.7.1
   - apiVersion: v2
     appVersion: 0.1.1
     created: "2026-08-14T12:13:02.761867095Z"
@@ -1547,6 +1618,20 @@ entries:
   ethereum:
   - apiVersion: v2
     appVersion: v1.16.5
+    created: "2026-09-23T00:32:45.778317223Z"
+    description: A Helm chart for deploying Ethereum nodes on Kubernetes
+    digest: e60bc5d4d98fe16130b00e8d896fd3a7a9040f7e6c36adfc5529d68c671c168a
+    icon: https://avatars.githubusercontent.com/u/6250754
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: ethereum
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-0.3.2/ethereum-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: v1.16.5
     created: "2026-06-30T01:06:22.157342822Z"
     description: A Helm chart for deploying Ethereum nodes on Kubernetes
     digest: 99fe001cb1aa221bf26e967fc866dce2dfae294ecca89123efa8ef1d8489f7b1
@@ -1803,6 +1888,20 @@ entries:
     version: 0.1.0
   ethereum-metrics-exporter:
   - apiVersion: v2
+    created: "2026-09-23T00:32:46.007451605Z"
+    description: A Prometheus metrics exporter for Ethereum consensus & execution
+      nodes
+    digest: 22795c9a486986c1666097269f57ea8ecebb7c6f7e4239d8934bc33fff1c54bd
+    home: https://github.com/chronicleprotocol/charts
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: ethereum-metrics-exporter
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/ethereum-metrics-exporter-0.1.5/ethereum-metrics-exporter-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
     created: "2026-06-30T01:06:22.329513932Z"
     description: A Prometheus metrics exporter for Ethereum consensus & execution
       nodes
@@ -1835,6 +1934,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/ethereum-metrics-exporter-0.1.3/ethereum-metrics-exporter-0.1.3.tgz
     version: 0.1.3
   gofer:
+  - apiVersion: v2
+    appVersion: "0.61"
+    created: "2026-09-23T00:32:46.241843318Z"
+    description: A Helm chart for deploying gofer to Kubernetes
+    digest: 7dbf6208c5abf9674d46aa2a990f72f844d494d40b52737199b0e79c48eb1fd3
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: gofer
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/gofer-0.4.5/gofer-0.4.5.tgz
+    version: 0.4.5
   - apiVersion: v2
     appVersion: "0.61"
     created: "2026-07-30T23:42:45.162593552Z"
@@ -2072,6 +2185,19 @@ entries:
   hyperliquid:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-09-23T00:32:46.48716758Z"
+    description: A Helm chart for running a hyperliquid node
+    digest: f41e67200b55c99a111bc0b72616127f5f108db83fc2bd653e232a1948761eac
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: hyperliquid
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/hyperliquid-0.1.3/hyperliquid-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-06-29T14:19:00.893094863Z"
     description: A Helm chart for running a hyperliquid node
     digest: a3cd9a3f94a594eb3685c22caa1c3297cf4fcca180ef91e6c720bd7773591c61
@@ -2116,6 +2242,21 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/hyperliquid-0.1.0/hyperliquid-0.1.0.tgz
     version: 0.1.0
   lighthouse:
+  - apiVersion: v2
+    appVersion: v7.1.0
+    created: "2026-09-23T00:32:46.678620833Z"
+    description: A Helm chart for deploying the Lighthouse Consensus Layer / beacon
+      on Kubernetes
+    digest: 3c70f2ea1e5a6ca76f9969ac9ab5cb53a15e3a63367eae037d7df11d3ec86969
+    icon: https://avatars.githubusercontent.com/u/22672004
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: lighthouse
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.9/lighthouse-0.0.9.tgz
+    version: 0.0.9
   - apiVersion: v2
     appVersion: v7.1.0
     created: "2026-06-30T01:08:34.445039843Z"
@@ -2250,6 +2391,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/lighthouse-0.0.1/lighthouse-0.0.1.tgz
     version: 0.0.1
   mantle:
+  - apiVersion: v2
+    appVersion: v0.4.3
+    created: "2026-09-23T00:32:46.919472719Z"
+    description: A Helm chart for deploying Mantle RPC nodes on Kubernetes
+    digest: 8c42321f2e2be4007093c2f6ab69a7c4af1d8213a7e9bd20e7fec9132c78f463
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: mantle
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/mantle-0.1.4/mantle-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: v0.4.3
     created: "2026-06-30T01:08:24.933779952Z"
@@ -2420,6 +2574,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/mantle-0.0.1/mantle-0.0.1.tgz
     version: 0.0.1
   nethermind:
+  - apiVersion: v2
+    appVersion: 1.31.9
+    created: "2026-09-23T00:32:47.141248337Z"
+    description: A Helm chart for deploying ETH Nethermind nodes on Kubernetes
+    digest: 66793b90135380028cb231ef23b1a7f9b4a8e1f4fb1574f2269cd5761b7f2590
+    icon: https://avatars.githubusercontent.com/u/43478154
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: nethermind
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.15/nethermind-0.0.15.tgz
+    version: 0.0.15
   - apiVersion: v2
     appVersion: 1.31.9
     created: "2025-04-25T06:19:05.176821698Z"
@@ -2614,6 +2782,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/nethermind-0.0.1/nethermind-0.0.1.tgz
     version: 0.0.1
   nitro-celestia-das:
+  - apiVersion: v2
+    appVersion: v0.5.4
+    created: "2026-09-23T00:32:47.407991831Z"
+    description: A Helm chart for deploying celestia-nitro-das
+    digest: d04c85f1967609b1a2dd1a5f4cb5b42df4f82a86238f225f8529ddd05d566816
+    icon: https://avatars.githubusercontent.com/u/54859940?s=48&v=4
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: nitro-celestia-das
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/nitro-celestia-das-0.1.2/nitro-celestia-das-0.1.2.tgz
+    version: 0.1.2
   - apiVersion: v2
     appVersion: v0.5.4
     created: "2026-06-30T01:08:41.79543711Z"
@@ -2820,6 +3002,25 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/relay-0.0.1/relay-0.0.1.tgz
     version: 0.0.1
   rpc-router:
+  - apiVersion: v2
+    appVersion: 0.54.0
+    created: "2026-09-23T00:32:47.64987656Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.x.x
+    description: A Helm chart for deploying p2p-org Dshackle - Fault Tolerant Load
+      Balancer for Blockchain API, to Kubernetes,
+    digest: 446bd8f3dc4ff0656836ee139b4c5055c793dbe400c5f34d8fe06356af013501
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: rpc-router
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/rpc-router-0.2.10/rpc-router-0.2.10.tgz
+    version: 0.2.10
   - apiVersion: v2
     appVersion: 0.54.0
     created: "2026-06-30T01:06:07.934089845Z"
@@ -3207,6 +3408,22 @@ entries:
   safe-watcher:
   - apiVersion: v2
     appVersion: 1.2.1
+    created: "2026-09-23T00:32:47.899617348Z"
+    description: A Helm chart for deploy Safe-Watcher to Kubernetes
+    digest: 13365836a2e290df285353df5be6c446d9603c342d09e19b55e13715adbb7d67
+    icon: https://avatars.githubusercontent.com/u/79740422
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: safe-watcher
+    sources:
+    - https://github.com/Gearbox-protocol/safe-watcher
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/safe-watcher-0.0.3/safe-watcher-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 1.2.1
     created: "2025-03-13T16:05:13.381669185Z"
     description: A Helm chart for deploy Safe-Watcher to Kubernetes
     digest: 9c54f90d6609b54d00d824a7344da3a11ca19e0b2496a81bea4a9c69d45d7751
@@ -3242,6 +3459,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/safe-watcher-0.0.1/safe-watcher-0.0.1.tgz
     version: 0.0.1
   sith-exporters:
+  - apiVersion: v2
+    appVersion: 0.0.4
+    created: "2026-09-23T00:32:48.109505396Z"
+    description: A Helm chart for deploying prometheus exporters for Chronicle Oracles
+      to Kubernetes
+    digest: d8836ffb7a98afb2d347f43cc2ef1099d19cf5e3c9e8c3371af7a361d3275530
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: sith-exporters
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/sith-exporters-0.2.6/sith-exporters-0.2.6.tgz
+    version: 0.2.6
   - apiVersion: v2
     appVersion: 0.0.4
     created: "2025-06-04T21:48:29.746559172Z"
@@ -3323,6 +3554,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/sith-exporters-0.1.0/sith-exporters-0.1.0.tgz
     version: 0.1.0
   spectre:
+  - apiVersion: v2
+    appVersion: 0.68.3
+    created: "2026-09-23T00:32:48.349722698Z"
+    description: A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
+    digest: ded20e36321b81c2e7f37357c428b320c3884e987ecb17f39f99b7db974b4977
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: spectre
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.3.9/spectre-0.3.9.tgz
+    version: 0.3.9
   - apiVersion: v2
     appVersion: 0.68.3
     created: "2026-08-06T03:44:07.089105572Z"
@@ -3656,6 +3901,19 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/spectre-0.1.1/spectre-0.1.1.tgz
     version: 0.1.1
   spire:
+  - apiVersion: v2
+    appVersion: 0.68.3
+    created: "2026-09-23T00:32:48.586392935Z"
+    description: A Helm chart for deploying Chronicle spire to  Kubernetes
+    digest: b1588da35ab54d0841a09eb843135ac1de3e3e32abcbd77b48bf233d620d9b5e
+    maintainers:
+    - name: chronicleprotocol
+      url: https://chroniclelabs.org
+    name: spire
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/spire-0.3.7/spire-0.3.7.tgz
+    version: 0.3.7
   - apiVersion: v2
     appVersion: 0.68.3
     created: "2026-08-06T03:44:07.279828827Z"
@@ -4313,6 +4571,20 @@ entries:
     - https://github.com/chronicleprotocol/charts/releases/download/tor-proxy-0.0.1/tor-proxy-0.0.1.tgz
     version: 0.0.1
   validator:
+  - apiVersion: v2
+    appVersion: 0.78.5
+    created: "2026-09-23T00:32:48.785785681Z"
+    description: A Helm chart for deploying Chronicle Validator on Kubernetes
+    digest: f9630b0c7069cdeef7938718418c45d3027f818ed4a5ef17eb8933f924dd9ce0
+    icon: https://avatars.githubusercontent.com/u/87739326
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: validator
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/validator-0.8.1/validator-0.8.1.tgz
+    version: 0.8.1
   - apiVersion: v2
     appVersion: 0.78.5
     created: "2026-09-05T18:26:54.616501675Z"
@@ -5372,6 +5644,19 @@ entries:
   zksync:
   - apiVersion: v2
     appVersion: v24.0.0
+    created: "2026-09-23T00:32:49.02857435Z"
+    description: A Helm chart for deploying zkSync RPC nodes on Kubernetes
+    digest: cca5530144b85b6a1d161a5540a819f1ad613dce663555d0bae093448bd9295e
+    maintainers:
+    - name: chronicleprotocol
+      url: https://github.com/chronicleprotocol
+    name: zksync
+    type: application
+    urls:
+    - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.2/zksync-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: v24.0.0
     created: "2024-05-22T07:05:26.385313921Z"
     description: A Helm chart for deploying zkSync RPC nodes on Kubernetes
     digest: 4e2389fd115af484d806c51ed5045f255dc894cdb284f1fee24d47199ab51674
@@ -5383,4 +5668,4 @@ entries:
     urls:
     - https://github.com/chronicleprotocol/charts/releases/download/zksync-0.1.0/zksync-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-05T18:26:54.61712715Z"
+generated: "2026-09-23T00:32:49.029448605Z"
