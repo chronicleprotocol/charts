@@ -52,7 +52,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           token: ${{ steps.bot-token.outputs.token || github.token }}
-      - uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310
       # Best effort: public chronicle images resolve anonymously; private ones need this token.
       # A login failure is fine -- the unresolved image just stays flagged by the render gate.
       - name: Log in to GHCR for private image digests
