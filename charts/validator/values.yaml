@@ -149,6 +149,10 @@ ghost:
     tag: null
   # Deprecated: use `chainRpcUrl` instead - remove after FINSHED release
   rpcUrl: null
+  # -- Read the Ghost container's CFG_CHAIN_RPC_URLS from an existing Secret instead of `ghost.rpcUrl`, for URLs that carry credentials such as an `api_key` query parameter. When `name` is set, `ghost.rpcUrl` is ignored and `key` is required. The VAO container inherits it when it sets neither `vao.rpcUrlSecret` nor `vao.rpcUrl`.
+  rpcUrlSecret:
+    name: ""
+    key: ""
 
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"
@@ -227,8 +231,12 @@ vao:
   image:
     repository: null
     tag: null
-  # -- Chain RPC URL(s) for the VAO container's target chain. Falls back to `ghost.rpcUrl` when unset (pre-0.8.0 behavior).
+  # -- Chain RPC URL(s) for the VAO container's target chain. When neither this nor `vao.rpcUrlSecret` is set, the VAO container uses the Ghost settings, `ghost.rpcUrlSecret` then `ghost.rpcUrl` (pre-0.8.0 behavior).
   rpcUrl: null
+  # -- Read the VAO container's CFG_CHAIN_RPC_URLS from an existing Secret instead of `vao.rpcUrl`. When `name` is set, `vao.rpcUrl` is ignored and `key` is required.
+  rpcUrlSecret:
+    name: ""
+    key: ""
   # -- WATCHDOG onchain config address
   watchdogConfigReg: "0x064358f9b6428C51F80511D73AFEb3A9e5Cf0213"
   # -- WATCHDOG polling interval (in seconds)

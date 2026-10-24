@@ -105,8 +105,13 @@ spec:
             - name: CFG_CHAIN_ID
               value: {{ .Values.global.chainId | default "1" | quote }}
             - name: CFG_CHAIN_RPC_URLS
-              {{- /* vao.rpcUrl falls back to ghost.rpcUrl to preserve pre-0.8.0 behavior for releases that only set the ghost value */}}
-              value: {{ .Values.vao.rpcUrl | default .Values.ghost.rpcUrl | quote }}
+              {{- /* VAO uses its own rpcUrlSecret/rpcUrl when either is set, else the ghost pair (pre-0.8.0 behavior for releases that only set the ghost values). Within a pair the Secret wins. */}}
+              {{- $vaoRpcUrlSecret := .Values.vao.rpcUrlSecret | default dict }}
+              {{- $rpcSrc := dict "secret" .Values.ghost.rpcUrlSecret "url" .Values.ghost.rpcUrl "path" "ghost.rpcUrlSecret" }}
+              {{- if or $vaoRpcUrlSecret.name .Values.vao.rpcUrl }}
+              {{- $rpcSrc = dict "secret" $vaoRpcUrlSecret "url" .Values.vao.rpcUrl "path" "vao.rpcUrlSecret" }}
+              {{- end }}
+              {{- include "validator.rpcUrlEnvSource" $rpcSrc | nindent 14 }}
               {{- if .Values.global.chainTxType }}
             - name: CFG_CHAIN_TX_TYPE
               value: {{ .Values.global.chainTxType | default "eip1559" | quote }}
