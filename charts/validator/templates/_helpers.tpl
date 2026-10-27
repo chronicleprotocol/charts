@@ -74,3 +74,21 @@ Create the name of the service account to use
 {{- default "default" .Values.global.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+CFG_CHAIN_RPC_URLS source for one container: valueFrom.secretKeyRef when the
+Secret ref has a name, else the plain URL. Takes a dict with "secret" (an
+rpcUrlSecret map, may be nil), "url" (the plain rpcUrl) and "path" (the values
+path, for the error message).
+*/}}
+{{- define "validator.rpcUrlEnvSource" -}}
+{{- $secret := .secret | default dict -}}
+{{- if $secret.name -}}
+valueFrom:
+  secretKeyRef:
+    name: {{ $secret.name | quote }}
+    key: {{ required (printf "%s.key is required when %s.name is set" .path .path) $secret.key | quote }}
+{{- else -}}
+value: {{ .url | quote }}
+{{- end -}}
+{{- end }}

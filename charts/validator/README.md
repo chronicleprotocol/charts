@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.8.2](https://img.shields.io/badge/Version-0.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.81.0](https://img.shields.io/badge/AppVersion-0.81.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.81.0](https://img.shields.io/badge/AppVersion-0.81.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -15,7 +15,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | extraObjects | list | `[]` | Extra K8s manifests to deploy |
-| ghost | object | `{"argsOverride":[],"commandOverride":[],"enabled":true,"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"service":{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
+| ghost | object | `{"argsOverride":[],"commandOverride":[],"enabled":true,"env":{"normal":{},"raw":{}},"ethConfig":{},"image":{"repository":null,"tag":null},"rpcUrl":null,"rpcUrlSecret":{"key":"","name":""},"service":{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"},"watchdogConfigReg":"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"}` | Values for Ghost |
 | ghost.argsOverride | list | `[]` | args override for the validator |
 | ghost.commandOverride | list | `[]` | command override for the validator |
 | ghost.enabled | bool | `true` | Whether to deploy the Ghost (defi) container/deployment. Set to `false` to run a single-container release (e.g. VAO-only). |
@@ -23,6 +23,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.env.normal | object | `{}` | un-encrypted env vars passed to the pod |
 | ghost.ethConfig | object | `{}` | Provide ETH keys from existing secrets : **NB** use only existing secret OR env vars, do not provide both |
 | ghost.image | object | `{"repository":null,"tag":null}` | Image tag for the validator (overrides global image if set) |
+| ghost.rpcUrlSecret | object | `{"key":"","name":""}` | Read the Ghost container's CFG_CHAIN_RPC_URLS from an existing Secret instead of `ghost.rpcUrl`, for URLs that carry credentials such as an `api_key` query parameter. When `name` is set, `ghost.rpcUrl` is ignored and `key` is required. The VAO container inherits it when it sets neither `vao.rpcUrlSecret` nor `vao.rpcUrl`. |
 | ghost.service | object | `{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8000,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"}` | Service type for the validator |
 | ghost.service.annotations | object | `{}` | Annotations to add to the service |
 | ghost.service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |
@@ -78,7 +79,8 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | vao.extraVolumes | list | `[]` | Extra volumes to mount (typically for secrets) |
 | vao.image | object | `{"repository":null,"tag":null}` | Image tag for the validator (overrides global image if set) |
 | vao.resources | object | `{}` | Resources constraints for the validator, CPU, Memory, etc. |
-| vao.rpcUrl | string | `nil` | Chain RPC URL(s) for the VAO container's target chain. Falls back to `ghost.rpcUrl` when unset (pre-0.8.0 behavior). |
+| vao.rpcUrl | string | `nil` | Chain RPC URL(s) for the VAO container's target chain. When neither this nor `vao.rpcUrlSecret` is set, the VAO container uses the Ghost settings, `ghost.rpcUrlSecret` then `ghost.rpcUrl` (pre-0.8.0 behavior). |
+| vao.rpcUrlSecret | object | `{"key":"","name":""}` | Read the VAO container's CFG_CHAIN_RPC_URLS from an existing Secret instead of `vao.rpcUrl`. When `name` is set, `vao.rpcUrl` is ignored and `key` is required. |
 | vao.service | object | `{"annotations":{},"externalTrafficPolicy":"","loadBalancerClass":"","ports":{"libp2p":{"port":8001,"protocol":"TCP"}},"trafficDistribution":"","type":"LoadBalancer"}` | Service type for the validator |
 | vao.service.annotations | object | `{}` | Annotations to add to the service |
 | vao.service.externalTrafficPolicy | string | `""` | Optional LoadBalancer traffic policy, for example Local. |

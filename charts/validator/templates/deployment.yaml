@@ -107,7 +107,7 @@ spec:
             - name: CFG_CHAIN_ID
               value: {{ .Values.global.chainId | default "1" | quote }}
             - name: CFG_CHAIN_RPC_URLS
-              value: {{ .Values.ghost.rpcUrl | quote }}
+              {{- include "validator.rpcUrlEnvSource" (dict "secret" .Values.ghost.rpcUrlSecret "url" .Values.ghost.rpcUrl "path" "ghost.rpcUrlSecret") | nindent 14 }}
               {{- if .Values.global.chainTxType }}
             - name: CFG_CHAIN_TX_TYPE
               value: {{ .Values.global.chainTxType | default "eip1559" | quote }}
