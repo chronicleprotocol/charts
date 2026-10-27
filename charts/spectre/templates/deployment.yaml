@@ -75,7 +75,15 @@ spec:
             - name: CFG_ENVIRONMENT
               value: "{{ .Values.environment | default "prod" }}"
             - name: CFG_CHAIN_RPC_URLS
+            {{- $rpcUrlSecret := .Values.rpcUrlSecret | default dict }}
+            {{- if $rpcUrlSecret.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $rpcUrlSecret.name | quote }}
+                  key: {{ required "rpcUrlSecret.key is required when rpcUrlSecret.name is set" $rpcUrlSecret.key | quote }}
+            {{- else }}
               value: "{{ .Values.rpcUrl }}"
+            {{- end }}
             - name: CFG_CHAIN_ID
               value: "{{ .Values.chainId }}"
             - name: CFG_CHAIN_NAME

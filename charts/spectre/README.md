@@ -1,6 +1,6 @@
 # spectre
 
-![Version: 0.3.9](https://img.shields.io/badge/Version-0.3.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
+![Version: 0.3.10](https://img.shields.io/badge/Version-0.3.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.68.3](https://img.shields.io/badge/AppVersion-0.68.3-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 
@@ -60,6 +60,9 @@ A Helm chart for deploying Chronicle Spectre Relay on Kubernetes
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | rpcUrl | string | `nil` | rpcUrl for the target chain |
+| rpcUrlSecret | object | `{"key":"","name":""}` | Read CFG_CHAIN_RPC_URLS from an existing Secret instead of `rpcUrl`, for URLs that carry credentials such as an `api_key` query parameter. When `name` is set, `rpcUrl` is ignored and `key` is required. |
+| rpcUrlSecret.key | string | `""` | Secret key holding the URL. Spectre takes exactly one URL, so store a single line with no trailing newline. |
+| rpcUrlSecret.name | string | `""` | Secret name, in the release namespace |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
 | service.ports.listen.port | int | `8080` |  |
