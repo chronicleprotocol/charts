@@ -107,6 +107,9 @@ global:
   metrics:
     enabled: true
     port: 9090
+    service:
+      # -- Annotations for the ClusterIP metrics Services (`-metrics`, `-metrics-vao`). Before 0.10.0 they copied `ghost.service.annotations` and `vao.service.annotations`, so load balancer annotations gave each metrics Service its own load balancer.
+      annotations: {}
 
   # -- Resources constraints for the validator, CPU, Memory, etc.
   resources: {}

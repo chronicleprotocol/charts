@@ -1,6 +1,6 @@
 # validator
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.81.0](https://img.shields.io/badge/AppVersion-0.81.0-informational?style=flat-square)
+![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.81.0](https://img.shields.io/badge/AppVersion-0.81.0-informational?style=flat-square)
 
 A Helm chart for deploying Chronicle Validator on Kubernetes
 
@@ -32,7 +32,7 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | ghost.service.trafficDistribution | string | `""` | Optional Kubernetes Service traffic distribution hint, for example PreferSameZone. |
 | ghost.service.type | string | `"LoadBalancer"` | Type of service for the validator, only `LoadBalancer` supported for now |
 | ghost.watchdogConfigReg | string | `"0x94Fea534aef6df5cF66C2DAE5CE0A05d10C068F3"` | WATCHDOG onchain config address |
-| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.81.0@sha256:417b664eee72406bf1f36757b165135e0d71ce6321b9c0b463ec0d882a886de4"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"startup":{"enabled":false,"startupProbe":{"failureThreshold":30,"httpGet":{"path":"/healthz","port":9100},"periodSeconds":10}},"tolerations":[],"topologySpreadConstraints":[]}` | Global values for the validator chart, values are used across the chart resources |
+| global | object | `{"affinity":{},"chainId":1,"chainName":"eth","chainTxType":"eip1559","fullnameOverride":"ghost","image":{"pullPolicy":"Always","repository":"ghcr.io/chronicleprotocol/ghost","tag":"0.81.0@sha256:417b664eee72406bf1f36757b165135e0d71ce6321b9c0b463ec0d882a886de4"},"imagePullSecrets":[],"liveness":{"enabled":true,"livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"logFormat":"text","logLevel":"info","metrics":{"enabled":true,"port":9090,"service":{"annotations":{}}},"nameOverride":"","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"readiness":{"enabled":true,"readinessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}},"replicaCount":1,"resources":{},"securityContext":{},"serviceAccount":{"annotations":{},"create":true,"name":""},"startup":{"enabled":false,"startupProbe":{"failureThreshold":30,"httpGet":{"path":"/healthz","port":9100},"periodSeconds":10}},"tolerations":[],"topologySpreadConstraints":[]}` | Global values for the validator chart, values are used across the chart resources |
 | global.affinity | object | `{}` | pod Affinity spec applied validator |
 | global.chainId | int | `1` | chain id for the "target" or "main" chain we use for the validator. Can be mainnet ethereum `1` or sepolia ethereum `11155111` |
 | global.chainName | string | `"eth"` | chain name for the "target" or "main" chain we use for the validator |
@@ -43,7 +43,8 @@ A Helm chart for deploying Chronicle Validator on Kubernetes
 | global.liveness | object | `{"enabled":true,"livenessProbe":{"failureThreshold":4,"httpGet":{"path":"/healthz","port":9100},"initialDelaySeconds":60,"periodSeconds":60}}` | Liveness probe : restart the validator if the healthcheck endpoint is not reachable |
 | global.logFormat | string | `"text"` | Log format for the validator, can be one of `json`, `text` |
 | global.logLevel | string | `"info"` | Log level for the validator, can be one of `debug`, `info`, `warning`, `error` |
-| global.metrics | object | `{"enabled":true,"port":9090}` | Metrics port for the validator, used by the service and the service monitor |
+| global.metrics | object | `{"enabled":true,"port":9090,"service":{"annotations":{}}}` | Metrics port for the validator, used by the service and the service monitor |
+| global.metrics.service.annotations | object | `{}` | Annotations for the ClusterIP metrics Services (`-metrics`, `-metrics-vao`). Before 0.10.0 they copied `ghost.service.annotations` and `vao.service.annotations`, so load balancer annotations gave each metrics Service its own load balancer. |
 | global.nodeSelector | object | `{}` | Node selector for the validator |
 | global.podAnnotations | object | `{}` | Pod annotations for the validator |
 | global.podSecurityContext | object | `{}` | Pod security context for the validator |

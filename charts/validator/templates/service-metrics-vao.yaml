@@ -4,7 +4,8 @@ kind: Service
 metadata:
   name: {{ include "validator.fullname" . }}-metrics-vao
   annotations:
-  {{- with .Values.vao.service.annotations }}
+  {{- /* Not vao.service.annotations: load balancer annotations there would give this ClusterIP Service its own LB (AWS LBC ignores spec.type). */}}
+  {{- with (.Values.global.metrics.service | default dict).annotations }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
